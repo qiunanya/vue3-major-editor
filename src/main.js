@@ -6,7 +6,11 @@ import App from './App.vue'
 import Vue3MajorEditor from '../dist/vue3-major-editor.js';
 import '../dist/style.css';
 
+// 注入svgIcon组件
+import SvgIcon from "@/components/svgIcon";
+
 const app = createApp(App)
 
 app.use(Vue3MajorEditor)
+app.use(SvgIcon)
 app.mount('#app')
