@@ -1,20 +1,38 @@
 {
-  "name": "vue3-major-editor",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc && vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "vue": "^3.4.21"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-vue": "^5.0.4",
-    "typescript": "^5.2.2",
-    "vite": "^5.2.0",
-    "vue-tsc": "^2.0.6"
-  }
+    "name": "vue3-major-editor",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "main": "./dist/vue3-major-editor.js",
+    "module": "./dist/vue3-major-editor.umd.cjs",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview"
+    },
+    "author": {
+        "name": "nanyaqiu",
+        "email": "1766226354@qq.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/qiunanya/vue3-major-editor.git"
+    },
+    "files": [
+        "dist",
+        "src"
+    ],
+    "license": "MIT",
+    "keywords": [
+        "rich-text",
+        "Vue3-Text",
+        "tiptap"
+    ],
+    "dependencies": {
+        "vue": "^3.4.21"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-vue": "^5.0.4",
+        "vite": "^5.2.0"
+    }
 }
