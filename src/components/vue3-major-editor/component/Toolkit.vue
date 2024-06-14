@@ -1,5 +1,7 @@
 <template>
     <ul class="major-editor-toolkit__group">
+        <li class="icon_item"><UndoIcon></UndoIcon></li>
+        <li class="icon_item"><RedoIcon></RedoIcon></li>
         <li class="icon_item"><BoldIcon></BoldIcon></li>
         <li class="icon_item"><ItalicIcon></ItalicIcon></li>
         <li class="icon_item"><StrikeIcon></StrikeIcon></li>
@@ -10,8 +12,6 @@
         <li class="icon_item"><HorizontalRuleIcon></HorizontalRuleIcon></li>
         <li class="icon_item"><OrderedIcon></OrderedIcon></li>
         <li class="icon_item"><ParagraphIcon></ParagraphIcon></li>
-        <li class="icon_item"><RedoIcon></RedoIcon></li>
-        <li class="icon_item"><UndoIcon></UndoIcon></li>
         <li class="icon_item"><ClearIcon></ClearIcon></li>
         <li class="icon_item"><UnderlineIcon></UnderlineIcon></li>
     </ul>

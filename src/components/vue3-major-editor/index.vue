@@ -3,8 +3,8 @@
         <h2 class="h2">Vue3MajorEditor 1.0</h2>
         <!-- <n-button class="btn">Major-Editor777</n-button> -->
         <Toolkit></Toolkit>
-        <editor-content :editor="editor" />
-        <!-- <RichEditor></RichEditor> -->
+        <!-- <editor-content :editor="editor" /> -->
+        <RichEditor></RichEditor>
     </div>
 </template>
 
