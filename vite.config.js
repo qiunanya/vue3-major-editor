@@ -4,8 +4,6 @@ import { fileURLToPath, URL } from 'node:url';
 import { resolve } from 'path';
 import svgLoader from 'vite-svg-loader';
 import { visualizer } from "rollup-plugin-visualizer";
-import AutoImport from 'unplugin-auto-import/vite'; 
-import Components from "unplugin-vue-components/vite";
 import VueSetuoExtend from 'vite-plugin-vue-setup-extend';
 
 // https://vitejs.dev/config/
@@ -20,18 +18,7 @@ export default defineConfig(({ mode }) => {
             title: "analysis",
             sourcemap: false,
             open: false,
-        }),
-        AutoImport({
-            dts: false,
-            imports: ["vue", "vue-router"]
-        }),
-        Components({
-            dts: false,
-            // relative paths to the directory to search for components.
-            dirs: ['src/components'],
-            // Allow for components to override other components with the same name
-            allowOverrides: false,
-        }),
+        })
     ]
     if (mode === 'lib') {
         return {
@@ -42,6 +29,11 @@ export default defineConfig(({ mode }) => {
                 }
             },
             base: '/',
+            css: {
+                preprocessorOptions: {
+                    additionalData: '@import "@/assets/style/majorVar.scss";'
+                }
+            },
             build: {
                 outDir: 'dist',
                 lib: {
@@ -57,7 +49,9 @@ export default defineConfig(({ mode }) => {
                         // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
                         globals: {
                             vue: "Vue"
-                        }
+                        },
+                        // 禁用警告
+                        exports: 'named'
                     }
                 }
             }
@@ -72,6 +66,11 @@ export default defineConfig(({ mode }) => {
                 }
             },
             base: '/',
+            css: {
+                preprocessorOptions: {
+                    additionalData: '@import "@/assets/style/majorVar.scss";'
+                }
+            },
             build: {
                 outDir: 'app',
                 rollupOptions: {

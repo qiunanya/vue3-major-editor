@@ -1,18 +1,17 @@
 <script setup lang="js">
-import { BoldIcon, ItalicIcon } from "@/assets/icons";
-import HelloWorld from '@/components/HelloWorld.vue'
+// import { BoldIcon, ItalicIcon } from "@/assets/icons";
+import Vue3MajorEditor from "@/components/vue3-major-editor";
 </script>
 
 <template>
-    <div>
+    <!-- <div>
         <a href="https://vitejs.dev" target="_blank">
             <img src="/vite.svg" class="logo" alt="Vite logo" />
         </a>
-        <!-- <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" /> -->
         <BoldIcon></BoldIcon>
         <ItalicIcon></ItalicIcon>
     </div>
-    <HelloWorld msg="Vite + Vue" />
+    <HelloWorld msg="Vite + Vue" /> -->
     <vue3-major-editor></vue3-major-editor>
 </template>
 

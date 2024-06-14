@@ -1,11 +1,14 @@
 <template>
     <div>
-        <button class="btn">Major-Editor</button>
+        <button class="btn">Major-Editor777</button>
+        <ItalicIcon></ItalicIcon>
+        <BoldIcon></BoldIcon>
     </div>
 </template>
 
-<script setup lang="ts">
-defineOptions({ name: 'Vue3MajorEditor' })
+<script setup name="Vue3MajorEditor">
+import { BoldIcon, ItalicIcon } from "@/assets/icons";
+
 </script>
 
-<style lang="css" src="./style.css" scoped></style>
+<style lang="scss" src="./style.scss" scoped></style>
