@@ -15,8 +15,12 @@ const { editor, content } = useSelectCore();
 <style lang="scss" scoped>
 .rich-content-editor__wrap {
     // height: 100%;
-    border: 1px solid #eee;
+    border-left: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    border-right: 1px solid #eee;
     min-height: 30rem;
+    height: 30rem;
     overflow-y: auto;
+    padding: 0 0.4em;
 }
 </style>

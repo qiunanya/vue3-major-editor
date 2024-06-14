@@ -47,15 +47,20 @@ import {
         flex-wrap: wrap;
         align-items: center;
         padding-inline-start: 0;
+        margin-block-end: 0;
+        height: 3em;
         .icon_item {
             width: 1.5em;
             aspect-ratio: 1 / 1;
             padding: 0.3em;
             margin: 0 0.3em;
             cursor: pointer;
+            display: flex;
+            align-items: center;
             svg {
-                width: 1.5em;
-                height: 1.5em;
+                width: 1.2em;
+                flex: 0 0 1.2em;
+                height: 1.2em;
             }
         }
     }
