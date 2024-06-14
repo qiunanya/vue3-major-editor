@@ -2,13 +2,40 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import { fileURLToPath, URL } from 'node:url';
 import { resolve } from 'path';
-import svgLoader from 'vite-svg-loader'
+import svgLoader from 'vite-svg-loader';
+import { visualizer } from "rollup-plugin-visualizer";
+import AutoImport from 'unplugin-auto-import/vite'; 
+import Components from "unplugin-vue-components/vite";
+import VueSetuoExtend from 'vite-plugin-vue-setup-extend';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
+    const vitePlugins = [
+        vue(), 
+        svgLoader(), 
+        VueSetuoExtend(),
+        visualizer({
+            emitFile: true,
+            filename: "analysis.html",
+            title: "analysis",
+            sourcemap: false,
+            open: false,
+        }),
+        AutoImport({
+            dts: false,
+            imports: ["vue", "vue-router"]
+        }),
+        Components({
+            dts: false,
+            // relative paths to the directory to search for components.
+            dirs: ['src/components'],
+            // Allow for components to override other components with the same name
+            allowOverrides: false,
+        }),
+    ]
     if (mode === 'lib') {
         return {
-            plugins: [vue(), svgLoader()],
+            plugins: [...vitePlugins],
             resolve: {
                 alias: {
                     '@': fileURLToPath(new URL('./src', import.meta.url))
@@ -38,7 +65,7 @@ export default defineConfig(({ mode }) => {
     } else {
         // 构建应用
         return {
-            plugins: [vue(), svgLoader()],
+            plugins: [...vitePlugins],
             resolve: {
                 alias: {
                     '@': fileURLToPath(new URL('./src', import.meta.url))
