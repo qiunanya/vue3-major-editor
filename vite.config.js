@@ -68,7 +68,9 @@ export default defineConfig(({ mode }) => {
             base: '/',
             css: {
                 preprocessorOptions: {
-                    additionalData: '@import "@/assets/style/majorVar.scss";'
+                    scss: {
+                        additionalData: '@import "@/assets/style/majorVar.scss";'
+                    }
                 }
             },
             build: {
