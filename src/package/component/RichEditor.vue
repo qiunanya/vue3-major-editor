@@ -15,9 +15,9 @@ const { editor, content } = useSelectCore();
 <style lang="scss" scoped>
 .rich-content-editor__wrap {
     // height: 100%;
-    border-left: 1px solid #eee;
-    border-bottom: 1px solid #eee;
-    border-right: 1px solid #eee;
+    border-left: 1px solid #dedede;
+    border-bottom: 1px solid #dedede;
+    border-right: 1px solid #dedede;
     min-height: 30rem;
     height: 30rem;
     overflow-y: auto;

@@ -41,7 +41,7 @@ import {
 <style lang="scss" scoped>
 .major-editor {
     &-toolkit__group {
-        background: #FAFAFA;
+        background: #dedede;
         list-style: none;
         display: flex;
         flex-wrap: wrap;

@@ -1,6 +1,6 @@
 <script setup lang="js">
 // import { BoldIcon, ItalicIcon } from "@/assets/icons";
-import Vue3MajorEditor from "@/components/vue3-major-editor";
+import Vue3MajorEditor from "@/package/index.vue";
 </script>
 
 <template>

@@ -37,7 +37,7 @@ export default defineConfig(({ mode }) => {
             build: {
                 outDir: 'dist',
                 lib: {
-                    entry: resolve(__dirname, "./src/components/vue3-major-editor/index.js"),
+                    entry: resolve(__dirname, "./src/package/index.js"),
                     name: 'Vue3MajorEditor', // 暴露的全局变量
                     fileName: 'vue3-major-editor' // 输出的包文件名，默认是package.json的name选项
                 },
