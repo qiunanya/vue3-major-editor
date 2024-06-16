@@ -45,6 +45,15 @@ class TextPlugin {
                 case 'HorizontalRule':
                     this.editor.chain().focus().setHorizontalRule().run()
                     break;
+                case 'Blockquote':
+                    this.editor.chain().focus().toggleBlockquote().run()
+                    break;
+                case 'BulletList':
+                    this.editor.chain().focus().toggleBulletList().run()
+                    break;
+                case 'OrderedList':
+                    this.editor.chain().focus().toggleOrderedList().run()
+                    break;
                 default:
                     break;
             }

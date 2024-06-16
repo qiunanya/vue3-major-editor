@@ -11,8 +11,8 @@ import {
 } from 'naive-ui'
 
 // 测试组件
-import Vue3MajorEditor from '../lib';
-import '../lib/style.css';
+// import Vue3MajorEditor from '../lib';
+// import '../lib/style.css';
 
 
 const app = createApp(App)
@@ -20,6 +20,6 @@ const app = createApp(App)
 const naive = create({
     components: [NButton]
 })
-app.use(Vue3MajorEditor as any)
+// app.use(Vue3MajorEditor)
 app.use(naive)
 app.mount('#app')

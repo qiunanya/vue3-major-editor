@@ -3,7 +3,7 @@ import { ref } from 'vue'
 // import HelloWorld from './components/HelloWorld.vue'
 import Vue3MajorEditor from '../packages/index.vue';
 
-const testStr = ref<string>("<p>欢迎使用<code>vue3-major-editor</code>编辑器, 🎉</p>它是一款简洁的丰富文本。")
+const testStr = ref<string>("<p>欢迎使用<em>basic</em><code>vue3-major-editor</code>编辑器, 🎉</p>它是一款简洁的丰富文本。")
 </script>
 
 <template>
