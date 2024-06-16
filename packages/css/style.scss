@@ -1,4 +1,3 @@
-@import "@/assets/style/majorVar.scss";
 // 此处样式，打包后和组件内部样式会重合，解决：要么引入打包的样式，要么引入组件样式，不能都引入
 .vue3-major-editor__root {
     width: 100%;

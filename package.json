@@ -1,12 +1,13 @@
 {
     "name": "vue3-major-editor",
-    "private": true,
-    "version": "0.0.0",
+    "private": false,
+    "version": "0.0.1",
     "type": "module",
-    "main": "./dist/vue3-major-editor.js",
-    "module": "./dist/vue3-major-editor.umd.cjs",
+    "main": "./lib/index.js",
+    "module": "./lib/index.umd.cjs",
+    "types": "./lib/index.d.ts",
     "scripts": {
-        "dev": "vite",
+        "dev": "vite --host 0.0.0.0",
         "build:lib": "vite build --mode lib",
         "build:app": "vite build",
         "preview": "vite preview"
@@ -20,8 +21,10 @@
         "url": "https://github.com/qiunanya/vue3-major-editor.git"
     },
     "files": [
-        "dist",
-        "src"
+        "lib",
+        "LICENSE",
+        "README.md",
+        "package.json"
     ],
     "license": "MIT",
     "keywords": [
@@ -36,17 +39,24 @@
         "@tiptap/starter-kit": "^2.4.0",
         "@tiptap/vue-3": "^2.4.0",
         "events": "^3.3.0",
+        "ts-node": "^10.9.2",
+        "vite-plugin-static-copy": "^1.0.5",
         "vue": "^3.4.21"
     },
     "devDependencies": {
+        "@rollup/plugin-terser": "^0.4.4",
+        "@types/events": "^3.0.3",
+        "@types/node": "^20.14.2",
         "@vitejs/plugin-vue": "^5.0.4",
         "naive-ui": "^2.38.2",
+        "rollup-plugin-copy": "^3.5.0",
         "rollup-plugin-visualizer": "^5.9.2",
         "sass": "^1.77.5",
-        "unplugin-auto-import": "^0.17.2",
-        "unplugin-vue-components": "^0.26.0",
+        "typescript": "^5.2.2",
         "vite": "^5.2.0",
+        "vite-plugin-dts": "^3.9.1",
         "vite-plugin-vue-setup-extend": "^0.4.0",
-        "vite-svg-loader": "^5.1.0"
+        "vite-svg-loader": "^5.1.0",
+        "vue-tsc": "^2.0.6"
     }
 }

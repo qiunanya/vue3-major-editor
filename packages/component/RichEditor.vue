@@ -4,12 +4,13 @@
     </div>
 </template>
 
-<script setup name="RichEditor">
-import { nextTick, ref } from "vue";
-import { Editor, EditorContent } from "@tiptap/vue-3";
-import { useSelectCore } from "@/hooks/useSelect";
+<script setup lang="ts" name="RichEditor">
+import { EditorContent } from "@tiptap/vue-3";
+import { useSelectCore } from "../../src/hooks/useSelect";
 
-const { editor, content } = useSelectCore();
+const { editor } = useSelectCore();
+// console.log(editor, 12346);
+
 </script>
 
 <style lang="scss" scoped>

@@ -1,4 +1,4 @@
-import { createDiscreteApi, darkTheme, lightTheme } from "naive-ui";
+import { createDiscreteApi } from "naive-ui";
 
 /**
  * 挂载 Naive-ui 脱离上下文的 API
