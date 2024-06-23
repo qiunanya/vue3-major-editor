@@ -1,0 +1,15 @@
+// 此处样式，打包后和组件内部样式会重合，解决：要么引入打包的样式，要么引入组件样式，不能都引入
+.vue3-major-editor__root {
+    width: 100%;
+    height: 100%;
+    .rich-content-editor__wrap {
+        // height: 100%;
+        border-left: 1px solid #dedede;
+        border-bottom: 1px solid #dedede;
+        border-right: 1px solid #dedede;
+        min-height: 30rem;
+        height: 30rem;
+        overflow-y: auto;
+        padding: 0 0.4em;
+    }   
+}

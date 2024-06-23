@@ -1,62 +1,28 @@
 {
-    "name": "vue3-major-editor",
-    "private": false,
-    "version": "0.0.1",
-    "type": "module",
-    "main": "./lib/index.js",
-    "module": "./lib/index.umd.cjs",
-    "types": "./lib/index.d.ts",
-    "scripts": {
-        "dev": "vite --host 0.0.0.0",
-        "build:lib": "vite build --mode lib",
-        "build:app": "vite build",
-        "preview": "vite preview"
-    },
-    "author": {
-        "name": "nanyaqiu",
-        "email": "1766226354@qq.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/qiunanya/vue3-major-editor.git"
-    },
-    "files": [
-        "lib",
-        "LICENSE",
-        "README.md",
-        "package.json"
-    ],
-    "license": "MIT",
-    "keywords": [
-        "rich-text",
-        "Vue3-Text",
-        "tiptap"
-    ],
-    "dependencies": {
-        "@tiptap/extension-color": "^2.4.0",
-        "@tiptap/extension-text-style": "^2.4.0",
-        "@tiptap/pm": "^2.4.0",
-        "@tiptap/starter-kit": "^2.4.0",
-        "@tiptap/vue-3": "^2.4.0",
-        "events": "^3.3.0",
-        "ts-node": "^10.9.2",
-        "vite-plugin-static-copy": "^1.0.5",
-        "vue": "^3.4.21"
-    },
-    "devDependencies": {
-        "@rollup/plugin-terser": "^0.4.4",
-        "@types/events": "^3.0.3",
-        "@types/node": "^20.14.2",
-        "@vitejs/plugin-vue": "^5.0.4",
-        "naive-ui": "^2.38.2",
-        "rollup-plugin-copy": "^3.5.0",
-        "rollup-plugin-visualizer": "^5.9.2",
-        "sass": "^1.77.5",
-        "typescript": "^5.2.2",
-        "vite": "^5.2.0",
-        "vite-plugin-dts": "^3.9.1",
-        "vite-plugin-vue-setup-extend": "^0.4.0",
-        "vite-svg-loader": "^5.1.0",
-        "vue-tsc": "^2.0.6"
-    }
+  "name": "demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.5",
+    "typescript": "^5.4.5",
+    "vite": "^5.3.1",
+    "vite-plugin-dts": "^3.9.1",
+    "vite-svg-loader": "^5.1.0",
+    "vite-plugin-vue-setup-extend": "^0.4.0",
+    "naive-ui": "^2.38.2"
+  },
+  "dependencies": {
+    "@types/node": "^20.14.5",
+    "ts-node": "^10.9.2",
+    "vue-router": "4",
+    "vue": "3.4.29",
+    "sass": "^1.77.5"
+  }
 }

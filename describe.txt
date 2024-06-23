@@ -1,0 +1,16 @@
+两种方式解决pnpm安装本地依赖问题：
+
+👉 1、新版本的pnpm 虽然配备pnpm-workspace.yaml工作区间，但使用pnpm安装本地包时还是会去npmjs官网下载，需要手动录入本地包名，在pnpm i xx包名
+👉 2、修改.npmrc文件内容，优先本地workspace
+.npmrc文件内容如下：
+link-workspace-packages = true
+prefer-workspace-packages = true
+recursive-install = true
+shamefully-hoist = true
+
+在pnpm安装本地依赖
+pnpm add @majoreditor/ui
+测试成功
+
+✨ 更新所有包依赖
+pnpm install --recursive

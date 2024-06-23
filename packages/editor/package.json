@@ -1,0 +1,35 @@
+{
+    "name": "@major/editor",
+    "private": "false",
+    "version": "1.0.0",
+    "description": "",
+    "type": "module",
+    "scripts": {
+        "build": "vite build",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "files": [
+        "lib",
+        "es"
+    ],
+    "keywords": [
+        "vue3",
+        "rich-text",
+        "editor"
+    ],
+    "author": "qiuny",
+    "license": "MIT",
+    "dependencies": {
+        "events": "^3.3.0"
+    },
+    "devDependencies": {
+        "@tiptap/core": "^2.4.0",
+        "@tiptap/extension-bold": "^2.4.0",
+        "@tiptap/extension-color": "^2.4.0",
+        "@tiptap/extension-text-style": "^2.4.0",
+        "@tiptap/pm": "^2.4.0",
+        "@tiptap/starter-kit": "^2.4.0",
+        "@tiptap/vue-3": "^2.4.0",
+        "@tiptap/extension-underline": "^2.4.0"
+    }
+}
