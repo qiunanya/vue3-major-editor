@@ -8,11 +8,13 @@
                 </svg>
             </a>
         </section>
-        <Vue3MajorEditor @onCreated="onCreated" @onUpdate="onUpdate" @onBlur="onBlur"></Vue3MajorEditor>
+        <!-- v-model:content="htmlContent" -->
+        <Vue3MajorEditor v-model:content="htmlContent" @onCreated="onCreated" @onUpdate="onUpdate" @onBlur="onBlur"></Vue3MajorEditor>
     </div>
 </template>
 
 <script setup lang="ts">
+    import { ref } from "vue";
     import { Editor, EditorEvents } from "@tiptap/vue-3";
 
     // 按需引入Button组件
@@ -20,6 +22,16 @@
 
     // 引入组件
     import { Vue3MajorEditor } from '@major/editor';
+
+    const htmlContent = ref(`<ul data-type="taskList">
+          <li data-type="taskItem" data-checked="true">flour</li>
+          <li data-type="taskItem" data-checked="true">baking powder</li>
+          <li data-type="taskItem" data-checked="true">salt</li>
+          <li data-type="taskItem" data-checked="false">sugar</li>
+          <li data-type="taskItem" data-checked="false">milk</li>
+          <li data-type="taskItem" data-checked="false">eggs</li>
+          <li data-type="taskItem" data-checked="false">butter</li>
+        </ul>`)
 
     const onCreated = (editor:Editor) => {
         console.log(editor, 'onCreated');

@@ -11,26 +11,35 @@
 <script setup lang="ts" name="Vue3MajorEditor">
 import { ref, onBeforeUnmount, provide } from "vue";
 import { Color } from "@tiptap/extension-color";
+import Document from '@tiptap/extension-document';
 import ListItem from "@tiptap/extension-list-item";
 import TextStyle from "@tiptap/extension-text-style";
 import Underline from "@tiptap/extension-underline";
-import { Editor, EditorEvents, EditorContent } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
+import TaskItem from '@tiptap/extension-task-item';
+import TaskList from '@tiptap/extension-task-list';
+import { Editor, EditorEvents, EditorContent } from "@tiptap/vue-3";
+
 // 顶部工具
 import Toolkit from "./components/Toolkit.vue";
+
 // 引入核心类
 import MajorEditor from "./core/MajorEditor";
+
 // 插件
 import TextPlugin from "./plugins/TextPlugin";
+
 // 自定义扩展
 import LineHeightExtension from "./extends/LineHeightExtension"; 
 
 const editor = ref<any>(null);
 // const contents = ref('<p>I’m running Tiptap with Vue.js. 🎉</p>')
 const contents = defineModel<string>("content", {
-    default: "<p>欢迎使用vue3-major-editor编辑器 🎉</p><br>欢迎订阅交流",
+    default: "<p>欢迎使用vue3-major-editor编辑器 🎉</p>欢迎订阅交流",
     required: false,
 });
+console.log(contents.value, 77777);
+
 
 // emit
 const emits = defineEmits([
@@ -43,15 +52,27 @@ const emits = defineEmits([
     "onContentError",
 ]);
 
+const CustomDocument = Document.extend({
+  content: 'taskList',
+})
+
+const CustomTaskItem = TaskItem.extend({
+  content: 'inline*',
+})
+
 const majorEditor = new MajorEditor();
 editor.value = new Editor({
     content: contents.value,
     extensions: [
         Color.configure({ types: [TextStyle.name, ListItem.name] }),
-        // TextStyle,
         StarterKit,
         Underline,
-        LineHeightExtension
+        LineHeightExtension,
+        // CustomDocument,
+        CustomTaskItem.configure({
+            nested: true // 任务允许嵌套
+        }),
+        TaskList
     ],
 });
 const onCreated = (editor: Editor) => {
