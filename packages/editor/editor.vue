@@ -18,6 +18,7 @@ import Underline from "@tiptap/extension-underline";
 import StarterKit from "@tiptap/starter-kit";
 import TaskItem from '@tiptap/extension-task-item';
 import TaskList from '@tiptap/extension-task-list';
+import TextAlign from '@tiptap/extension-text-align';
 import { Editor, EditorEvents, EditorContent } from "@tiptap/vue-3";
 
 // 顶部工具
@@ -38,7 +39,6 @@ const contents = defineModel<string>("content", {
     default: "<p>欢迎使用vue3-major-editor编辑器 🎉</p>欢迎订阅交流",
     required: false,
 });
-console.log(contents.value, 77777);
 
 
 // emit
@@ -72,7 +72,10 @@ editor.value = new Editor({
         CustomTaskItem.configure({
             nested: true // 任务允许嵌套
         }),
-        TaskList
+        TaskList,
+        TextAlign.configure({
+            types: ['heading', 'paragraph'],
+        })
     ],
 });
 const onCreated = (editor: Editor) => {

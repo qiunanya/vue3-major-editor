@@ -230,6 +230,24 @@
             </template>
             <span>任务列表</span>
         </NTooltip>
+        <NPopselect v-model:value="selectTextAlign" trigger="hover" :options="textAlignOptions"
+            :on-update:value="handleTextAlign">
+            <NTooltip placement="top" trigger="hover">
+                <template #trigger>
+                    <button class="is-active" data-toolbar-type="toolbar-btn">
+                        <svg viewBox="0 0 1024 1024" width="200" height="200">
+                            <path
+                                d="M114.259 124.62h795.48c27.76 0 50.26 22.5 50.26 50.26 0 27.76-22.5 50.26-50.26 50.26h-795.48c-27.76 0-50.26-22.5-50.26-50.26 0-27.76 22.5-50.26 50.26-50.26zM114.259 798.86h456.6c27.76 0 50.26 22.5 50.26 50.26 0 27.76-22.5 50.26-50.26 50.26h-456.6c-27.76 0-50.26-22.5-50.26-50.26 0-27.76 22.5-50.26 50.26-50.26zM114.259 349.37h456.6c27.76 0 50.26 22.5 50.26 50.26 0 27.76-22.5 50.26-50.26 50.26h-456.6c-27.76 0-50.26-22.5-50.26-50.26 0-27.76 22.5-50.26 50.26-50.26zM114.259 574.16h795.48c27.76 0 50.26 22.5 50.26 50.26 0 27.76-22.5 50.26-50.26 50.26h-795.48c-27.76 0-50.26-22.5-50.26-50.26 0-27.76 22.5-50.26 50.26-50.26z">
+                            </path>
+                        </svg>
+                        <svg viewBox="0 0 1024 1024" width="200" height="200">
+                            <path d="M209.656 344.031l298.604 335.938 306.084-335.839-604.688-0.099z"></path>
+                        </svg>
+                    </button>
+                </template>
+                <span>文本对齐方式</span>
+            </NTooltip>
+        </NPopselect>
     </div>
     <div>
         <slot></slot>
@@ -247,9 +265,28 @@ const { majorEditor, editor } = useSelectCore();
 const { message, dialog } = useNaiveDiscrete();
 // const dialog = useDialog()
 
-const selectHvalue = ref<string>("4");
-const selectLineHeight = ref<string>("1.5");
+const selectHvalue = ref("4");
+const selectLineHeight = ref("1.5");
+const selectTextAlign = ref('left')
 const optionsHT = ref<Array<SelectOption>>([]);
+const textAlignOptions = ref<Array<SelectOption>>([
+    {
+        label: '左对齐',
+        value: 'left'
+    },
+    {
+        label: '居中对齐',
+        value: 'center'
+    },
+    {
+        label: '右对齐',
+        value: 'right'
+    },
+    {
+        label: '两端对齐',
+        value: 'justify'
+    }
+]);
 const lineHeightOptions = ref<Array<SelectOption>>([
     {
         label: '1',
@@ -281,6 +318,13 @@ const lineHeightOptions = ref<Array<SelectOption>>([
     }
 ]);
 
+const handleTextAlign = (val: string) => {
+    selectTextAlign.value = val
+    console.log(val, 8744);
+    if (editor) {
+        editor.chain().focus().setTextAlign(val).run()
+    }
+}
 const handleLineHeight = (val: string) => {
     selectLineHeight.value = val
     majorEditor.setTextStyle("lineHeight", { lineHeight: val });

@@ -9,7 +9,7 @@
             </a>
         </section>
         <!-- v-model:content="htmlContent" -->
-        <Vue3MajorEditor v-model:content="htmlContent" @onCreated="onCreated" @onUpdate="onUpdate" @onBlur="onBlur"></Vue3MajorEditor>
+        <Vue3MajorEditor @onCreated="onCreated" @onUpdate="onUpdate" @onBlur="onBlur"></Vue3MajorEditor>
     </div>
 </template>
 
