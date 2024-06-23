@@ -181,7 +181,7 @@
             <span>段落</span>
         </NTooltip>
         <NPopselect v-model:value="selectHvalue" trigger="hover" :options="optionsHT" :on-update:value="handleHeading">
-            <NTooltip placement="bottom" trigger="hover">
+            <NTooltip placement="top" trigger="hover">
                 <template #trigger>
                     <button class="is-active" data-major-editor-toolbar="toolbar-btn_item">
                         <svg viewBox="0 0 1024 1024" width="200" height="200">
@@ -345,12 +345,14 @@ initialize();
 
     [data-major-editor-toolbar="toolbar-btn_item"] {
         display: flex;
+        align-items: center;
         padding: 0.5em;
         outline: none;
         border: none;
         border-radius: 0.2em;
         background: transparent;
         cursor: pointer;
+        height: 100%;
     }
 }
 </style>

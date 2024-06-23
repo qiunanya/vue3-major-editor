@@ -13,12 +13,12 @@
         "lib": ["esnext", "dom"], // 编译时用的库
     },
     "include": [
-        "packages/**/*.ts",
-        "packages/**/*.d.ts",
+        "./**/*.ts",
+        "./**/*.d.ts",
         // 添加vue文件，保证ts类型校验通过
-        "packages/**/*.vue",
+        "./**/*.vue",
     ],
-    "exclude": ["node_modules", "packages/node_modules", "play/node_modules", "packages/**/vite.config.ts"],
+    "exclude": ["node_modules", "./**/vite.config.ts"],
     "vueCompilerOptions": {
         "target": 3
     }
