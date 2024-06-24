@@ -5,6 +5,7 @@ import { fileURLToPath, URL } from "node:url";
 import svgLoader from "vite-svg-loader";
 import VueSetuoExtend from "vite-plugin-vue-setup-extend";
 import viteCompression from "vite-plugin-compression";
+import terser from '@rollup/plugin-terser';
 
 export default defineConfig({
     resolve: {
@@ -77,7 +78,8 @@ export default defineConfig({
     },
     plugins: [
         vue(),
-        svgLoader(),
+        // svgLoader(),
+        terser(),
         VueSetuoExtend(),
         // viteCompression(), // 启用gzip压缩
         dts({
