@@ -20,7 +20,7 @@ export default defineConfig({
         //css分离
         //cssCodeSplit: true,
         lib: {
-            entry: "./src/index.ts",
+            entry: "./index.ts",
             // name: "MyLib",
             // the proper extensions will be added
             // fileName: "my-lib",
@@ -37,7 +37,7 @@ export default defineConfig({
             // },
 
             // 2、自定义构建库模式
-            input: ["./src/index.ts"],
+            input: ["./index.ts"],
             output: [
                 {
                     format: "es",
@@ -70,7 +70,7 @@ export default defineConfig({
         svgLoader(),
         VueSetuoExtend(),
         dts({
-            tsconfigPath: "../../tsconfig.json",
+            tsconfigPath: "./tsconfig.json",
             staticImport: true, // 处理静态导入
             insertTypesEntry: true, // 插入类型入口
             logLevel: 'error',
