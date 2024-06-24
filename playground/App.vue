@@ -9,13 +9,15 @@
             </a>
         </section>
         <!-- v-model:content="htmlContent" -->
-        <Vue3MajorEditor @onCreated="onCreated" @onUpdate="onUpdate" @onBlur="onBlur"></Vue3MajorEditor>
+        <!-- <Vue3MajorEditor @onCreated="onCreated" @onUpdate="onUpdate" @onBlur="onBlur"></Vue3MajorEditor> -->
+        <CustomEditor :message="'CustomEditor'"></CustomEditor>
     </div>
 </template>
 
 <script setup lang="ts">
     import { ref } from "vue";
     import { Editor, EditorEvents } from "@tiptap/vue-3";
+    import CustomEditor from './src/test/CustomEditor';
 
     // 按需引入Button组件
     // import { Button } from '@majoreditor/ui'
