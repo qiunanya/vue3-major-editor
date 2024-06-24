@@ -18,7 +18,7 @@
         // 添加vue文件，保证ts类型校验通过
         "./**/*.vue",
     ],
-    "exclude": ["node_modules", "./**/vite.config.ts", "./package.json"],
+    "exclude": ["./node_modules", "./**/vite.config.ts", "./package.json"],
     "vueCompilerOptions": {
         "target": 3
     }

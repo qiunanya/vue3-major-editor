@@ -44,10 +44,10 @@ export default defineConfig({
                     //不用打包成.es.js,这里我们想把它打包成.js
                     entryFileNames: "[name].js",
                     //让打包目录和我们目录对应
-                    preserveModules: true,
+                    // preserveModules: true,
                     //配置打包根目录
-                    dir: "es",
-                    preserveModulesRoot: "src",
+                    dir: "./dist/es",
+                    // preserveModulesRoot: "src",
                     // 禁用警告
                     exports: "named",
                 },
@@ -55,10 +55,10 @@ export default defineConfig({
                     format: "cjs",
                     entryFileNames: "[name].js",
                     //让打包目录和我们目录对应
-                    preserveModules: true,
+                    // preserveModules: true,
                     //配置打包根目录
-                    dir: "lib",
-                    preserveModulesRoot: "src",
+                    dir: "./dist/lib",
+                    // preserveModulesRoot: "src",
                     // 禁用警告
                     exports: "named",
                 },
@@ -74,7 +74,7 @@ export default defineConfig({
             staticImport: true, // 处理静态导入
             insertTypesEntry: true, // 插入类型入口
             logLevel: 'error',
-            outDir: "./types"
+            outDir: "./dist/types"
         }),
         // dts({
         //     // 指定使用的 tsconfig.json，如果不配置也可以在 components 下新建 tsconfig.json
