@@ -17,10 +17,12 @@ export default defineComponent({
             required: true,
         },
     },
+    emits: ['onBold'],
     setup(props, context) {
         const counter = ref(6);
         const handleIconClick = (evt: Event,bold: string) => {
             console.log(evt, bold);
+            context.emit('onBold', { event: evt, format: bold });
         }
         nextTick(() => {
             console.log("nextTick", counter.value, props.message);

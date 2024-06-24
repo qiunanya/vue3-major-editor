@@ -10,7 +10,7 @@
         </section>
         <!-- v-model:content="htmlContent" -->
         <!-- <Vue3MajorEditor @onCreated="onCreated" @onUpdate="onUpdate" @onBlur="onBlur"></Vue3MajorEditor> -->
-        <CustomEditor :message="'CustomEditor'"></CustomEditor>
+        <CustomEditor :message="'CustomEditor'" @onBold="onBold"></CustomEditor>
     </div>
 </template>
 
@@ -43,6 +43,10 @@
     }
     const onBlur = (editor:Editor) => {
         // console.log(editor, 'onBlur');
+    }
+    function onBold(val:any) {
+        console.log(val, 4444);
+        
     }
 </script>
 
