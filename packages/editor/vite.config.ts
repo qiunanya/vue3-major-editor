@@ -15,12 +15,12 @@ export default defineConfig({
     },
     build: {
         target: "modules",
-        //打包文件目录
+        // 打包文件目录
         outDir: "dist",
-        //压缩
-        minify: false,
-        //css分离
-        //cssCodeSplit: true,
+        // 压缩
+        minify: true,
+        // css分离
+        // cssCodeSplit: true,
         lib: {
             entry: "./index.ts",
             // name: "MyLib",
@@ -79,7 +79,7 @@ export default defineConfig({
     plugins: [
         vue(),
         // svgLoader(),
-        terser(),
+        terser(), // 开启压缩
         VueSetuoExtend(),
         // viteCompression(), // 启用gzip压缩
         dts({
