@@ -19,6 +19,7 @@ export default defineComponent({
     },
     emits: ['onBold'],
     setup(props, context) {
+        // 上下文context包括：emit,slots,expose, attrs
         const counter = ref(6);
         const handleIconClick = (evt: Event,bold: string) => {
             console.log(evt, bold);
