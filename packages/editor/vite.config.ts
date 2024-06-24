@@ -4,6 +4,7 @@ import dts from "vite-plugin-dts";
 import { fileURLToPath, URL } from "node:url";
 import svgLoader from "vite-svg-loader";
 import VueSetuoExtend from "vite-plugin-vue-setup-extend";
+import viteCompression from "vite-plugin-compression";
 
 export default defineConfig({
     resolve: {
@@ -14,7 +15,7 @@ export default defineConfig({
     build: {
         target: "modules",
         //打包文件目录
-        outDir: "es",
+        outDir: "dist",
         //压缩
         minify: false,
         //css分离
@@ -29,13 +30,6 @@ export default defineConfig({
             //1、 vite官方推荐库模式，更复杂的，高级构建流程，可以直接使用 Rollup 或 esbuild
             //忽略打包vue文件
             external: ["vue"],
-            // output: {
-            //     // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
-            //     globals: {
-            //         vue: "Vue",
-            //     },
-            // },
-
             // 2、自定义构建库模式
             input: ["./index.ts"],
             output: [
@@ -62,6 +56,22 @@ export default defineConfig({
                     // 禁用警告
                     exports: "named",
                 },
+                {
+                    name: "Vue3MajorEditor",
+                    format: "umd",
+                    entryFileNames: "[name].umd.js",
+                    //让打包目录和我们目录对应
+                    // preserveModules: true,
+                    //配置打包根目录
+                    dir: "./dist/umd",
+                    // preserveModulesRoot: "src",
+                    // 禁用警告
+                    exports: "named",
+                    // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
+                    globals: {
+                        vue: "Vue"
+                    }
+                }
             ],
         },
     },
@@ -69,6 +79,7 @@ export default defineConfig({
         vue(),
         svgLoader(),
         VueSetuoExtend(),
+        // viteCompression(), // 启用gzip压缩
         dts({
             tsconfigPath: "./tsconfig.json",
             staticImport: true, // 处理静态导入

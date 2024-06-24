@@ -4,8 +4,13 @@
     "version": "1.0.0",
     "description": "",
     "type": "module",
+    "main": "./dist/lib/index.js",
+    "module": "./dist/es/index.js",
+    "umd": "./dist/umd/index.umd.js",
+    "types": "./dist/tppes/index.d.ts",
     "scripts": {
-        "build": "vite build",
+        "build": "pnpm run clean && vite build",
+        "clean": "rimraf dist",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "files": [
@@ -20,7 +25,6 @@
     "author": "qiuny",
     "license": "MIT",
     "dependencies": {
-        "events": "^3.3.0",
         "@tiptap/core": "^2.4.0",
         "@tiptap/extension-bold": "^2.4.0",
         "@tiptap/extension-color": "^2.4.0",
@@ -31,9 +35,7 @@
         "@tiptap/extension-underline": "^2.4.0",
         "@tiptap/pm": "^2.4.0",
         "@tiptap/starter-kit": "^2.4.0",
-        "@tiptap/vue-3": "^2.4.0"
-    },
-    "devDependencies": {
-        
+        "@tiptap/vue-3": "^2.4.0",
+        "events": "^3.3.0"
     }
 }
