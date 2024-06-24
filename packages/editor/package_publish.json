@@ -4,6 +4,10 @@
     "version": "1.0.0",
     "description": "",
     "type": "module",
+    "main": "./dist/lib/index.js",
+    "module": "./dist/es/index.js",
+    "umd": "./dist/umd/index.umd.js",
+    "types": "./dist/tppes/index.d.ts",
     "scripts": {
         "build": "pnpm run clean && vite build",
         "clean": "rimraf dist",
