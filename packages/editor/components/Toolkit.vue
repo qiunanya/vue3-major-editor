@@ -325,20 +325,7 @@
         </NTooltip>
     </div>
 
-    <n-modal
-        v-model:show="showModal"
-        preset="dialog"
-        title="上传图片"
-        content="你确认?"
-        positive-text="确认"
-        negative-text="算了"
-        @positive-click="onNegativeClick"
-        @negative-click="onPositiveClick"
-    >
-        <div>
-            <input type="file" accept="image/*" @change="onChangeFile">
-        </div>
-    </n-modal>
+    <UploadImage ref="UploadImageRef" @uploadImageSuccess="uploadImageSuccess"></UploadImage>
 </template>
 
 <script lang="ts" setup name="Toolkit">
@@ -348,12 +335,19 @@ import type { SelectOption } from "naive-ui";
 import { useSelectCore } from "../hooks/useSelect";
 import { useNaiveDiscrete } from "../hooks/navie-ui";
 import { v4 as uuidV4 } from 'uuid';
+import UploadImage from "./UploadImage.vue";
 
 const { majorEditor, editor } = useSelectCore();
 const { message, dialog, modal } = useNaiveDiscrete();
 // const dialog = useDialog()
 
-const showModal = ref(false)
+const emits = defineEmits(['onUploadImage'])
+
+interface UploadImageType {
+    initialize: () => void;
+}
+
+const UploadImageRef = ref<UploadImageType | null>(null)
 const selectHvalue = ref("4");
 const selectLineHeight = ref("1.5");
 const selectTextAlign = ref("left");
@@ -451,46 +445,12 @@ const handleTaskList = () => {
     }
 };
 
-const onNegativeClick = () =>{
-    message.success('Cancel')
-    showModal.value = false
-}
-const onPositiveClick = () => {
-    message.success('Submit')
-    showModal.value = false
-}
-const onChangeFile = (evt: Event) => {
-    const input = evt.target as HTMLInputElement;
-    const file = input.files as FileList;
-    if (file && file.length) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          const base64 = event.target?.result as string;
-          editor.commands.setImage({ src: base64 });
-        };
-        reader.readAsDataURL(file[0]);
-    }
-}
 const handleUploadImg = () => {
-    showModal.value = true
-    // const url = window.prompt('URL')
-    // if (url) {
-    //     editor.chain().focus().setImage({ src: url, alt: 'image', title: ''}).run()
-    // }
-    // 选择图片文件
-    // const fileInput:HTMLInputElement = document.createElement('input');
-    // fileInput.type = 'file';
-    // fileInput.accept = 'image/*';
-    // fileInput.onchange = () => {
-        
-    //     const file = fileInput.files[0];
-    //     const reader = new FileReader();
-    //     reader.onload = (event: Event) => {
-    //         const base64 = event.target?.result as string;
-    //         editor.commands.setImage({ src: base64 });
-    //     };
-    //     reader.readAsDataURL(file);
-    // };
+    UploadImageRef.value&&UploadImageRef.value.initialize()
+}
+
+const uploadImageSuccess = ({ file, formData }:{file:FileList, formData:FormData }) => {
+    emits('onUploadImage', { file, formData })
 }
 
 function handleClearContent() {

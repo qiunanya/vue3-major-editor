@@ -9,7 +9,14 @@
             </a>
         </section>
         <!-- v-model:content="htmlContent" -->
-        <Vue3TiptapEditor @onCreated="onCreated" @onUpdate="onUpdate" @onBlur="onBlur"></Vue3TiptapEditor>
+        <Vue3TiptapEditor 
+            v-model:content="htmlContent" 
+            :imageInner="imageInner" 
+            @onCreated="onCreated" 
+            @onUpdate="onUpdate" 
+            @onBlur="onBlur" 
+            @onUploadImage="onUploadImage">
+        </Vue3TiptapEditor>
         <!-- <CustomEditor :message="'CustomEditor'" @onBold="onBold"></CustomEditor> -->
     </div>
 </template>
@@ -19,21 +26,16 @@
     import { Editor, EditorEvents } from "@tiptap/vue-3";
     import CustomEditor from './src/test/CustomEditor';
 
+    // true:图片内部处理，默认转化为base64, false: 不自动转化数据，需要外部处理后添加到编辑器
+    const imageInner = ref(false)
+
     // 按需引入Button组件
     // import { Button } from '@majoreditor/ui'
 
     // 引入组件
     import { Vue3TiptapEditor } from "vue3-tiptap-editor";
 
-    const htmlContent = ref(`<ul data-type="taskList">
-          <li data-type="taskItem" data-checked="true">flour</li>
-          <li data-type="taskItem" data-checked="true">baking powder</li>
-          <li data-type="taskItem" data-checked="true">salt</li>
-          <li data-type="taskItem" data-checked="false">sugar</li>
-          <li data-type="taskItem" data-checked="false">milk</li>
-          <li data-type="taskItem" data-checked="false">eggs</li>
-          <li data-type="taskItem" data-checked="false">butter</li>
-        </ul>`)
+    const htmlContent = ref(`<p>欢迎使用vue3-major-editor编辑器 🎉</p>欢迎订阅交流,<img src='https://placehold.co/800x400'/>`)
 
     const onCreated = (editor:Editor) => {
         console.log(editor, 'onCreated');
@@ -46,6 +48,21 @@
     }
     function onBold(val:any) {
         console.log(val, 4444);
+        
+    }
+    // 仅支持base64和URL两种模式
+    const onUploadImage = ({ file, formData, editor }:{ file:FileList, formData:FormData, editor: Editor }) => {
+        for (let i = 0; i < file.length; i++) {
+            if (file[i]) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const base64 = event.target?.result as string;
+                    editor.commands.setImage({ src: base64 });
+                };
+                reader.readAsDataURL(file[i]);
+            }
+        }
+        console.log(file, formData, editor, 'onUploadImage');
         
     }
 </script>

@@ -1,7 +1,7 @@
 <template>
     <div class="vue3-major-editor__root major-editor">
         <!-- <n-button class="btn">Major-Editor777</n-button> -->
-        <Toolkit></Toolkit>
+        <Toolkit @onUploadImage="onUploadImageCall"></Toolkit>
         <div class="rich-content-editor__wrap">
             <EditorContent :editor="editor"></EditorContent>
         </div>
@@ -10,6 +10,7 @@
 
 <script setup lang="ts" name="Vue3MajorEditor">
 import { ref, onBeforeUnmount, provide } from "vue";
+import type { PropType } from 'vue';
 import { Color } from "@tiptap/extension-color";
 import Document from '@tiptap/extension-document';
 import ListItem from "@tiptap/extension-list-item";
@@ -34,13 +35,20 @@ import TextPlugin from "./plugins/TextPlugin";
 // 自定义扩展
 import LineHeightExtension from "./extends/LineHeightExtension"; 
 
+// 导入props参数类型
+import { EditorProps } from './typings/config';
+
 const editor = ref<any>(null);
 // const contents = ref('<p>I’m running Tiptap with Vue.js. 🎉</p>')
 const contents = defineModel<string>("content", {
-    default: "<p>欢迎使用vue3-major-editor编辑器 🎉</p>欢迎订阅交流,<img src='https://placehold.co/800x400'/>",
+    default: "请输入内容",
     required: false,
 });
 
+// props
+const props = withDefaults(defineProps<EditorProps>(), {
+    imageInner: true
+})
 
 // emit
 const emits = defineEmits([
@@ -51,6 +59,7 @@ const emits = defineEmits([
     "onBlur",
     "onDestroyed",
     "onContentError",
+    "onUploadImage"
 ]);
 
 const CustomDocument = Document.extend({
@@ -58,7 +67,7 @@ const CustomDocument = Document.extend({
 })
 
 const CustomTaskItem = TaskItem.extend({
-  content: 'inline*',
+  content: 'inline',
 })
 
 const majorEditor = new MajorEditor();
@@ -86,6 +95,9 @@ editor.value = new Editor({
         })
     ],
 });
+const onUploadImageCall = ({ file, formData }:{ file:FileList, formData:FormData }) => {
+    emits('onUploadImage', { file, formData, editor: editor.value })
+}
 const onCreated = (editor: Editor) => {
     emits("onCreated", editor);
 };
@@ -130,6 +142,7 @@ majorEditor.registerPlugin(TextPlugin);
 provide("majorEditor", majorEditor);
 provide("editor", editor.value);
 provide("content", contents.value);
+provide('props', props)
 onBeforeUnmount(() => {
     editor.value.off("create", onCreated);
     editor.value.off("update", onUpdate);
