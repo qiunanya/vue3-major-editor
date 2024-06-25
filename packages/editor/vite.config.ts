@@ -57,22 +57,22 @@ export default defineConfig({
                     // 禁用警告
                     exports: "named",
                 },
-                {
-                    name: "Vue3MajorEditor",
-                    format: "umd",
-                    entryFileNames: "[name].umd.js",
-                    //让打包目录和我们目录对应
-                    // preserveModules: true,
-                    //配置打包根目录
-                    dir: "./dist/umd",
-                    // preserveModulesRoot: "src",
-                    // 禁用警告
-                    exports: "named",
-                    // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
-                    globals: {
-                        vue: "Vue"
-                    }
-                }
+                // {
+                //     name: "Vue3MajorEditor",
+                //     format: "umd",
+                //     entryFileNames: "[name].umd.js",
+                //     //让打包目录和我们目录对应
+                //     // preserveModules: true,
+                //     //配置打包根目录
+                //     dir: "./dist/umd",
+                //     // preserveModulesRoot: "src",
+                //     // 禁用警告
+                //     exports: "named",
+                //     // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
+                //     globals: {
+                //         vue: "Vue"
+                //     }
+                // }
             ],
         },
     },

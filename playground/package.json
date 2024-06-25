@@ -12,6 +12,6 @@
     "author": "",
     "license": "MIT",
     "dependencies": {
-        "@major/editor": "workspace:^"
+        "vue3-tiptap-editor": "workspace:^"
     }
 }
