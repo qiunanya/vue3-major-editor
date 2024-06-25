@@ -18,6 +18,7 @@ import Underline from "@tiptap/extension-underline";
 import StarterKit from "@tiptap/starter-kit";
 import TaskItem from '@tiptap/extension-task-item';
 import TaskList from '@tiptap/extension-task-list';
+import Images from '@tiptap/extension-image'
 import TextAlign from '@tiptap/extension-text-align';
 import { Editor, EditorEvents, EditorContent } from "@tiptap/vue-3";
 
@@ -36,7 +37,7 @@ import LineHeightExtension from "./extends/LineHeightExtension";
 const editor = ref<any>(null);
 // const contents = ref('<p>I’m running Tiptap with Vue.js. 🎉</p>')
 const contents = defineModel<string>("content", {
-    default: "<p>欢迎使用vue3-major-editor编辑器 🎉</p>欢迎订阅交流",
+    default: "<p>欢迎使用vue3-major-editor编辑器 🎉</p>欢迎订阅交流,<img src='https://placehold.co/800x400'/>",
     required: false,
 });
 
@@ -75,6 +76,13 @@ editor.value = new Editor({
         TaskList,
         TextAlign.configure({
             types: ['heading', 'paragraph'],
+        }),
+        Images.configure({
+            inline: true,
+            allowBase64: true,
+            HTMLAttributes: {
+                class: 'my-custom-img-class',
+            },
         })
     ],
 });

@@ -11,15 +11,17 @@ export const useNaiveDiscrete = () => {
         message, 
         dialog, 
         notification, 
-        loadingBar 
+        loadingBar,
+        modal 
     } = createDiscreteApi(
-            ["message", "dialog", "notification", "loadingBar"]
+            ["message", "dialog", "notification", "loadingBar", 'modal']
         );
     
     return {
         message,
         dialog,
         notification,
-        loadingBar
+        loadingBar,
+        modal
     }
 }
