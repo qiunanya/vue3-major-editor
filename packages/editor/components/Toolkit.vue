@@ -88,6 +88,17 @@
             </template>
             <span>斜体</span>
         </NTooltip>
+        <NTooltip placement="top" trigger="hover">
+            <template #trigger>
+                <button class="is-active" data-toolbar-type="toolbar-btn">
+                    <svg viewBox="0 0 1024 1024" width="200" height="200"><path d="M0.239888 1024 0.239888 896.059972 1023.760112 896.059972 1023.760112 1024 0.239888 1024ZM677.762299 538.531563 340.22452 538.531563 246.924254 768.775636 127.444261 768.775636 451.420397 0.031985 582.990723 0.031985 895.244354 768.775636 767.576199 768.775636 677.762299 538.531563ZM512.223895 114.122505 374.59241 453.73931 644.689802 453.73931 512.223895 114.122505Z"></path></svg>
+                    <svg viewBox="0 0 1024 1024" width="200" height="200">
+                        <path d="M209.656 344.031l298.604 335.938 306.084-335.839-604.688-0.099z"></path>
+                    </svg>
+                </button>
+            </template>
+            <span>字体颜色</span>
+        </NTooltip>
         <NTooltip placement="bottom" trigger="hover">
             <template #trigger>
                 <button
@@ -330,7 +341,7 @@
 
 <script lang="ts" setup name="Toolkit">
 import { ref, h, computed } from "vue";
-import { NPopselect, NTooltip, NCard, NModal } from "naive-ui";
+import { NPopselect, NTooltip, NPopover, NModal } from "naive-ui";
 import type { SelectOption } from "naive-ui";
 import { useSelectCore } from "../hooks/useSelect";
 import { useNaiveDiscrete } from "../hooks/navie-ui";
