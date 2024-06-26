@@ -33,7 +33,7 @@ import MajorEditor from "./core/MajorEditor";
 import TextPlugin from "./plugins/TextPlugin";
 
 // 自定义扩展
-import LineHeightExtension from "./extends/LineHeightExtension"; 
+import CusLineHeightExt from "./extends/CusLineHeightExt"; 
 
 // 导入props参数类型
 import { EditorProps } from './typings/config';
@@ -77,7 +77,7 @@ editor.value = new Editor({
         Color.configure({ types: [TextStyle.name, ListItem.name] }),
         StarterKit,
         Underline,
-        LineHeightExtension,
+        CusLineHeightExt,
         // CustomDocument,
         CustomTaskItem.configure({
             nested: true // 任务允许嵌套
