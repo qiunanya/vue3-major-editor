@@ -35,7 +35,8 @@
     // 引入组件
     import { Vue3TiptapEditor } from "vue3-tiptap-editor";
 
-    const htmlContent = ref(`<p>欢迎使用vue3-major-editor编辑器 🎉</p>欢迎订阅交流,<img src='https://placehold.co/800x400'/>`)
+    // const htmlContent = ref(`<p>欢迎使用vue3-major-editor编辑器 🎉</p>欢迎订阅交流,<img src='https://placehold.co/800x400'/>`)
+    const htmlContent = ref("")
 
     const onCreated = (editor:Editor) => {
         console.log(editor, 'onCreated');

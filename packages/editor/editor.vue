@@ -22,6 +22,7 @@ import TaskList from '@tiptap/extension-task-list';
 import Images from '@tiptap/extension-image'
 import TextAlign from '@tiptap/extension-text-align';
 import { Editor, EditorEvents, EditorContent } from "@tiptap/vue-3";
+import Placeholder from '@tiptap/extension-placeholder';
 
 // 顶部工具
 import Toolkit from "./components/Toolkit.vue";
@@ -41,7 +42,7 @@ import { EditorProps } from './typings/config';
 const editor = ref<any>(null);
 // const contents = ref('<p>I’m running Tiptap with Vue.js. 🎉</p>')
 const contents = defineModel<string>("content", {
-    default: "请输入内容",
+    default: "",
     required: false,
 });
 
@@ -92,6 +93,15 @@ editor.value = new Editor({
             HTMLAttributes: {
                 class: 'my-custom-img-class',
             },
+        }),
+        Placeholder.configure({
+            placeholder: 'Write something ...',
+            // Use different placeholders depending on the node type:
+            // placeholder: ({ node }) => {
+            //     console.log(node, 1111);
+                
+            //     return "Write something ..."
+            // } ,
         })
     ],
 });
