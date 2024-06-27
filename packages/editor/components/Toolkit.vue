@@ -88,17 +88,43 @@
             </template>
             <span>斜体</span>
         </NTooltip>
-        <NTooltip placement="top" trigger="hover">
+        <NPopover style="max-height: 270px;max-width: 300px;" trigger="click" placement="right" scrollable>
             <template #trigger>
-                <button class="is-active" data-toolbar-type="toolbar-btn">
-                    <svg viewBox="0 0 1024 1024" width="200" height="200"><path d="M0.239888 1024 0.239888 896.059972 1023.760112 896.059972 1023.760112 1024 0.239888 1024ZM677.762299 538.531563 340.22452 538.531563 246.924254 768.775636 127.444261 768.775636 451.420397 0.031985 582.990723 0.031985 895.244354 768.775636 767.576199 768.775636 677.762299 538.531563ZM512.223895 114.122505 374.59241 453.73931 644.689802 453.73931 512.223895 114.122505Z"></path></svg>
-                    <svg viewBox="0 0 1024 1024" width="200" height="200">
-                        <path d="M209.656 344.031l298.604 335.938 306.084-335.839-604.688-0.099z"></path>
-                    </svg>
-                </button>
+                <NTooltip placement="top" trigger="hover">
+                    <template #trigger>
+                        <button class="is-active" data-toolbar-type="toolbar-btn">
+                            <svg viewBox="0 0 1024 1024" width="200" height="200"><path d="M0.239888 1024 0.239888 896.059972 1023.760112 896.059972 1023.760112 1024 0.239888 1024ZM677.762299 538.531563 340.22452 538.531563 246.924254 768.775636 127.444261 768.775636 451.420397 0.031985 582.990723 0.031985 895.244354 768.775636 767.576199 768.775636 677.762299 538.531563ZM512.223895 114.122505 374.59241 453.73931 644.689802 453.73931 512.223895 114.122505Z"></path></svg>
+                            <svg viewBox="0 0 1024 1024" width="200" height="200">
+                                <path d="M209.656 344.031l298.604 335.938 306.084-335.839-604.688-0.099z"></path>
+                            </svg>
+                        </button>
+                    </template>
+                    <span>字体颜色</span>
+                </NTooltip>
             </template>
-            <span>字体颜色</span>
-        </NTooltip>
+            <div data-color-picker="major-color-picker" class="major-color-picker__wrap">
+                <p style="margin: 5px 0;">颜色面板</p>
+                <div style="display: flex;flex-wrap: wrap;">
+                    <span v-for="(item, index) in colorList" :key="index" 
+                        :style="{ 
+                            background: item.value,
+                            width: '2rem',
+                            height: '2rem',
+                            margin: '0.2rem',
+                            borderRadius: '0.4rem'
+                        }"
+                        @click.stop="handleColorPicker(item.value)"></span>
+                   
+                </div>
+                <p style="margin: 5px 0;">颜色选择器</p>
+                <input 
+                    class="color-input__picker cursor" 
+                    v-model="selectColor" 
+                    type="color" 
+                    list=""
+                    @input="onChangeColor"/>
+            </div>
+        </NPopover>
         <NTooltip placement="bottom" trigger="hover" v-if="editor">
             <template #trigger>
                 <button
@@ -347,6 +373,7 @@ import { useSelectCore } from "../hooks/useSelect";
 import { useNaiveDiscrete } from "../hooks/navie-ui";
 import { v4 as uuidV4 } from 'uuid';
 import UploadImage from "./UploadImage.vue";
+import { colorList } from '../tools/colors';
 
 const { majorEditor, editor } = useSelectCore();
 const { message, dialog, modal } = useNaiveDiscrete();
@@ -358,6 +385,7 @@ interface UploadImageType {
     initialize: () => void;
 }
 
+const selectColor = ref('#94ddde')
 const UploadImageRef = ref<UploadImageType | null>(null)
 const selectHvalue = ref("4");
 const selectLineHeight = ref("1.5");
@@ -507,6 +535,17 @@ function getHList() {
     }
 }
 
+const onChangeColor = (evt:Event) => {
+    const target = evt.target as HTMLInputElement;
+    majorEditor.setTextStyle('Color', {
+        color: target.value
+    });
+}
+const handleColorPicker = (color:string) => {
+    majorEditor.setTextStyle('Color', {
+        color
+    });
+}
 function initialize() {
     getHList();
 }
@@ -528,7 +567,6 @@ initialize();
             fill: #18a058;
         }
     }
-
     svg:focus,
     svg:active {
         border: 0;

@@ -77,7 +77,8 @@ const majorEditor = new MajorEditor();
 editor = new Editor({
     content: contents.value,
     extensions: [
-        Color.configure({ types: [TextStyle.name, ListItem.name] }),
+        TextStyle,
+        Color,
         StarterKit,
         Underline,
         CusLineHeightExt,
