@@ -64,6 +64,9 @@ const CusLineHeightExt = Extension.create<LineHeightOptions>({
                             if (attributes && attributes.lineHeight && attributes.lineHeight.defaultValue) {
                                 return {};
                             }
+                            if (attributes.lineHeight == '') {
+                                return {}
+                            }
                             return {
                                 style: `line-height: ${attributes.lineHeight};`,
                             };
