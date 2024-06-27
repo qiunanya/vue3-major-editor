@@ -7,9 +7,13 @@
                     <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path>
                 </svg>
             </a>
+            <button style="margin: 0 10px;" @click="getHtml">获取HTML</button>
+            <button style="margin-right:10px;" @click="getJson">获取Json</button>
+            <button style="margin-right:10px;" @click="getText">获取Text</button>
         </section>
         <!-- v-model:content="htmlContent" -->
-        <Vue3TiptapEditor 
+        <Vue3TiptapEditor
+            ref="vue3TiptapEditorRef" 
             v-model:content="htmlContent" 
             :imageInner="imageInner" 
             @onCreated="onCreated" 
@@ -35,8 +39,15 @@
     // 引入组件
     import { Vue3TiptapEditor } from "vue3-tiptap-editor";
 
-    // const htmlContent = ref(`<p>欢迎使用vue3-major-editor编辑器 🎉</p>欢迎订阅交流,<img src='https://placehold.co/800x400'/>`)
-    const htmlContent = ref("")
+    interface Vue3TiptapEditorOptions {
+        getHTML: () => string
+        getJSON: () => object
+        getTEXT: () => string
+    }
+
+    const vue3TiptapEditorRef = ref<Vue3TiptapEditorOptions | null>(null)
+    const htmlContent = ref(`<p>欢迎使用vue3-major-editor编辑器 🎉</p>欢迎订阅交流,<img src='https://placehold.co/800x400'/>`)
+    // const htmlContent = ref("")
 
     const onCreated = (editor:Editor) => {
         console.log(editor, 'onCreated');
@@ -65,6 +76,22 @@
         }
         console.log(file, formData, editor, 'onUploadImage');
         
+    }
+
+    function getHtml() {
+        if (vue3TiptapEditorRef.value) {
+            console.log(vue3TiptapEditorRef.value.getHTML(), 'HTML');
+        }
+    }
+    function getJson() {
+        if (vue3TiptapEditorRef.value) {
+            console.log(vue3TiptapEditorRef.value.getJSON(), 'JSON');
+        }
+    }
+    function getText() {
+        if (vue3TiptapEditorRef.value) {
+            console.log(vue3TiptapEditorRef.value.getTEXT(), 'TEXT');
+        }
     }
 </script>
 

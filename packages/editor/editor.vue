@@ -23,6 +23,7 @@ import Images from '@tiptap/extension-image'
 import TextAlign from '@tiptap/extension-text-align';
 import { Editor, EditorEvents, EditorContent } from "@tiptap/vue-3";
 import Placeholder from '@tiptap/extension-placeholder';
+import { } from "@tiptap/core";
 
 // 顶部工具
 import Toolkit from "./components/Toolkit.vue";
@@ -153,6 +154,23 @@ provide("majorEditor", majorEditor);
 provide("editor", editor.value);
 provide("content", contents.value);
 provide('props', props)
+
+const getHTML = () => {
+    return majorEditor.getHtml()
+}
+const getJSON = () => {
+    return majorEditor.getJson()
+}
+const getTEXT = () => {
+    return majorEditor.getText()
+}
+// expose
+defineExpose({
+    getHTML,
+    getJSON,
+    getTEXT
+})
+
 onBeforeUnmount(() => {
     editor.value.off("create", onCreated);
     editor.value.off("update", onUpdate);

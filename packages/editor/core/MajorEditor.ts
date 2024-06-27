@@ -66,6 +66,18 @@ class MajorEditor extends EventEmitter {
         return true
     }
 
+    getHtml () {
+        return this.editor?.getHTML()
+    }
+
+    getJson () {
+        return this.editor?.getJSON()
+    }
+
+    getText () {
+        return this.editor?.getText()
+    }
+
     get tiptapEditor () {
         return this.editor
     }

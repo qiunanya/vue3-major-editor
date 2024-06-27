@@ -130,7 +130,7 @@
         margin: 1.5rem 0;
         max-width: 100%;
         &.ProseMirror-selectednode {
-            outline: 3px solid var(--purple);
+            outline: 3px solid var(--selected-border);
         }
     }
     /* Placeholder (at the top) */
