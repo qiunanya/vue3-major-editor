@@ -24,6 +24,10 @@ import TextAlign from '@tiptap/extension-text-align';
 import { Editor, EditorEvents, EditorContent, BubbleMenu } from "@tiptap/vue-3";
 import Placeholder from '@tiptap/extension-placeholder';
 import { EditorState, Transaction } from '@tiptap/pm/state';
+import Table from '@tiptap/extension-table'
+import TableCell from '@tiptap/extension-table-cell'
+import TableHeader from '@tiptap/extension-table-header'
+import TableRow from '@tiptap/extension-table-row'
 
 // 顶部工具
 import Toolkit from "./components/Toolkit.vue";

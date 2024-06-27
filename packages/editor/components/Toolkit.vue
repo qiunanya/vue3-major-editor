@@ -360,6 +360,24 @@
             </template>
             <span>添加图片</span>
         </NTooltip>
+        <NPopover style="max-height: 340px;max-width: 335px;" trigger="click" placement="bottom" scrollable>
+            <template #trigger>
+                <NTooltip placement="top" trigger="hover">
+                    <template #trigger>
+                        <button class="is-active" data-toolbar-type="toolbar-btn">
+                            <svg viewBox="0 0 1024 1024"><path d="M938.666667 42.666667H85.333333C38.4 42.666667 0 81.066667 0 128v768c0 46.933333 38.4 85.333333 85.333333 85.333333h853.333334c46.933333 0 85.333333-38.4 85.333333-85.333333V128c0-46.933333-38.4-85.333333-85.333333-85.333333zM298.666667 896H85.333333v-213.333333h213.333334v213.333333z m0-298.666667H85.333333V384h213.333334v213.333333z m341.333333 298.666667H384v-213.333333h256v213.333333z m0-298.666667H384V384h256v213.333333z m298.666667 298.666667h-213.333334v-213.333333h213.333334v213.333333z m0-298.666667h-213.333334V384h213.333334v213.333333z m0-298.666666H85.333333V128h853.333334v170.666667z"></path></svg>
+                        </button>
+                    </template>
+                    <span>表格</span>
+                </NTooltip>
+            </template>
+            <div class="major-table-picker__wrap">
+                <p style="margin: 5px 0;">表格面板</p>
+                <div ref="tableFilterWrapRef" class="table-filter__wrap" @mousedown="onMousedown">
+                    <span class="table-column-item" v-for="(item, index) in 100" :key="index">{{ index + 1 }}</span>
+                </div>
+            </div>
+        </NPopover>
     </div>
 
     <UploadImage ref="UploadImageRef" @uploadImageSuccess="uploadImageSuccess"></UploadImage>
@@ -373,7 +391,7 @@ import { useSelectCore } from "../hooks/useSelect";
 import { useNaiveDiscrete } from "../hooks/navie-ui";
 import { v4 as uuidV4 } from 'uuid';
 import UploadImage from "./UploadImage.vue";
-import { colorList } from '../tools/colors';
+import { colorList, alignList, lineHeighList } from '../tools';
 
 const { majorEditor, editor } = useSelectCore();
 const { message, dialog, modal } = useNaiveDiscrete();
@@ -381,85 +399,51 @@ const { message, dialog, modal } = useNaiveDiscrete();
 
 const emits = defineEmits(['onUploadImage'])
 
-interface UploadImageType {
-    initialize: () => void;
+// 表格
+const tableFilterWrapRef=ref<HTMLElement|null>(null)
+let startTop = 0,endTop = 0,startLeft = 0,endLeft = 0;
+const onMousedown = (evt:MouseEvent) => {
+    if (tableFilterWrapRef.value) {
+        startTop = evt.y - tableFilterWrapRef.value.getBoundingClientRect().top
+        startLeft = evt.x - tableFilterWrapRef.value.getBoundingClientRect().left
+        console.log(startTop, startLeft, 123);
+    }
+    
 }
 
-const selectColor = ref('#94ddde')
-const UploadImageRef = ref<UploadImageType | null>(null)
-const selectHvalue = ref("4");
-const selectLineHeight = ref("1.5");
+// 对齐
 const selectTextAlign = ref("left");
-const optionsHT = ref<Array<SelectOption>>([]);
-const textAlignOptions = ref<Array<SelectOption>>([
-    {
-        label: "左对齐",
-        value: "left",
-    },
-    {
-        label: "居中对齐",
-        value: "center",
-    },
-    {
-        label: "右对齐",
-        value: "right",
-    },
-    {
-        label: "两端对齐",
-        value: "justify",
-    },
-]);
-const lineHeightOptions = ref<Array<SelectOption>>([
-    {
-        label: "1",
-        value: "1",
-    },
-    {
-        label: "1.5",
-        value: "1.5",
-    },
-    {
-        label: "1.6",
-        value: "1.6",
-    },
-    {
-        label: "1.75",
-        value: "1.75",
-    },
-    {
-        label: "2",
-        value: "2",
-    },
-    {
-        label: "3",
-        value: "3",
-    },
-    {
-        label: "4",
-        value: "4",
-    },
-]);
-
+const textAlignOptions = ref<Array<SelectOption>>(alignList);
 const handleTextAlign = (val: string) => {
     selectTextAlign.value = val;
     if (majorEditor.editor) {
         majorEditor.editor.chain().focus().setTextAlign(val).run();
     }
 };
+
+// 设置行高
+const selectLineHeight = ref("1.5");
+const lineHeightOptions = ref<Array<SelectOption>>(lineHeighList);
 const handleLineHeight = (val: string) => {
     selectLineHeight.value = val;
     majorEditor.setTextStyle("lineHeight", { lineHeight: val });
 };
+
+// 设置标题
+const optionsHT = ref<Array<SelectOption>>([]);
+const selectHvalue = ref("4");
 const handleHeading = (val: string) => {
     majorEditor.setTextStyle("Heading", {
         level: +val,
     });
 };
 
+// 设置文本样式
 function handleTextStyle(key: string) {
     majorEditor.setTextStyle(key);
 }
 
+// 创建任务列表
 const handleTaskList = () => {
     if (editor) {
         // 查看是否存在任务
@@ -484,14 +468,19 @@ const handleTaskList = () => {
     }
 };
 
+// 上传图片
+interface UploadImageType {
+    initialize: () => void;
+}
+const UploadImageRef = ref<UploadImageType | null>(null)
 const handleUploadImg = () => {
     UploadImageRef.value&&UploadImageRef.value.initialize()
 }
-
 const uploadImageSuccess = ({ file, formData }:{file:FileList, formData:FormData }) => {
     emits('onUploadImage', { file, formData })
 }
 
+// 清空文本
 function handleClearContent() {
     const texts = editor.getText();
     if (!texts) {
@@ -518,6 +507,7 @@ function handleClearContent() {
     });
 }
 
+// 是否允许撤销|重做
 const isRedo = computed(() => {
     return editor&&editor.can().chain().focus().redo().run() || false
 });
@@ -535,6 +525,8 @@ function getHList() {
     }
 }
 
+// 设置字体颜色
+const selectColor = ref('#94ddde')
 const onChangeColor = (evt:Event) => {
     const target = evt.target as HTMLInputElement;
     majorEditor.setTextStyle('Color', {
@@ -546,6 +538,7 @@ const handleColorPicker = (color:string) => {
         color
     });
 }
+
 function initialize() {
     getHList();
 }
@@ -554,6 +547,25 @@ initialize();
 </script>
 
 <style lang="scss" scoped>
+.major-table-picker__wrap {
+    display: flex;
+    flex-wrap: wrap;
+    .table-filter__wrap {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        column-gap: 0.15rem;
+        row-gap: 0.15rem;
+        .table-column-item {
+            text-align: center;
+            width: 1.8rem;
+            height: 1.5rem;
+            // margin: 0.2rem;
+            border-radius: 0.1rem;
+            background: #f0f0f0;
+            // border: 1px solid #18a058;
+        }
+    }
+}
 .vue3-major-editor__toolbar {
     display: flex;
     flex-wrap: wrap;
@@ -593,3 +605,4 @@ initialize();
     }
 }
 </style>
+../tools
