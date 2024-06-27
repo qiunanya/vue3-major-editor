@@ -12,6 +12,23 @@ interface TextStyleOptions {
     color?: string;
     lineHeight?: string | number;
 }
+type keyOptins = 
+| 'Bold'
+| 'Italic'
+| 'Underline'
+| 'Strike'
+| 'Code'
+| 'HorizontalRule'
+| 'Blockquote'
+| 'BulletList'
+| 'OrderedList'
+| 'Paragraph'
+| 'CodeBlock'
+| 'lineHeight'
+| 'Color'
+| 'Heading'
+| 'backgroundColor';
+
 class TextPlugin {
     public majorEditor: MajorEditors | null = null;
     public editor: Editor;
@@ -32,7 +49,7 @@ class TextPlugin {
         //     console.log(this.editor.isActive('code'), 'selectionUpdate');
         // })
     }
-    setTextStyle (key?: string, _opts?: TextStyleOptions) {
+    setTextStyle (key?: keyOptins, _opts?: TextStyleOptions) {
         if (this.editor) {
             const chain = this.editor.chain().focus()
             switch (key) {
