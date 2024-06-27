@@ -3,7 +3,7 @@ import { Editor } from '@tiptap/vue-3'
 
 
 class MajorEditor extends EventEmitter {
-    private editor:Editor | null = null;
+    public editor:Editor | null = null;
     [key: string]: any;
     // 自定义事件
     private customEvents: string[] = [];
@@ -19,7 +19,7 @@ class MajorEditor extends EventEmitter {
         this.editor = editor
     }
 
-    registerPlugin(plugin:IPluginClass, options?: IPluginOption)  {
+    use(plugin:IPluginClass, options?: IPluginOption)  {
         if (this._checkPlugin(plugin) &&this.editor) {
             this._saveCustomAttr(plugin)
             const pluginStance = new plugin(this, this.editor, options || {}) as IPluginClass

@@ -61,11 +61,11 @@ const CusLineHeightExt = Extension.create<LineHeightOptions>({
                         parseHTML: (element) =>
                             element.style.lineHeight.replace(/"/g, ""),
                         renderHTML: (attributes) => {
-                            if (!attributes.lineHeight) {
+                            if (attributes && attributes.lineHeight && attributes.lineHeight.defaultValue) {
                                 return {};
                             }
                             return {
-                                style: `line-height: ${attributes.lineHeight}`,
+                                style: `line-height: ${attributes.lineHeight};`,
                             };
                         },
                     },

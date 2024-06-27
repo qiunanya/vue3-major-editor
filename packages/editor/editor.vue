@@ -1,6 +1,6 @@
 <template>
     <div class="vue3-major-editor__root major-editor">
-        <!-- <n-button class="btn">Major-Editor777</n-button> -->
+        <!-- <button class="btn" ref="btnRef">Major-Editor777</button> -->
         <Toolkit @onUploadImage="onUploadImageCall"></Toolkit>
         <div class="rich-content-editor__wrap">
             <EditorContent :editor="editor"></EditorContent>
@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts" name="Vue3MajorEditor">
-import { ref, onBeforeUnmount, provide } from "vue";
+import { ref, onBeforeUnmount, provide, nextTick } from "vue";
 import type { PropType } from 'vue';
 import { Color } from "@tiptap/extension-color";
 import Document from '@tiptap/extension-document';
@@ -21,9 +21,9 @@ import TaskItem from '@tiptap/extension-task-item';
 import TaskList from '@tiptap/extension-task-list';
 import Images from '@tiptap/extension-image'
 import TextAlign from '@tiptap/extension-text-align';
-import { Editor, EditorEvents, EditorContent } from "@tiptap/vue-3";
+import { Editor, EditorEvents, EditorContent, BubbleMenu } from "@tiptap/vue-3";
 import Placeholder from '@tiptap/extension-placeholder';
-import { } from "@tiptap/core";
+import { EditorState, Transaction } from '@tiptap/pm/state';
 
 // 顶部工具
 import Toolkit from "./components/Toolkit.vue";
@@ -40,8 +40,8 @@ import CusLineHeightExt from "./extends/CusLineHeightExt";
 // 导入props参数类型
 import { EditorProps } from './typings/config';
 
-const editor = ref<any>(null);
-// const contents = ref('<p>I’m running Tiptap with Vue.js. 🎉</p>')
+let editor:Editor;
+const btnRef = ref(null)
 const contents = defineModel<string>("content", {
     default: "",
     required: false,
@@ -60,8 +60,8 @@ const emits = defineEmits([
     "onFocused",
     "onBlur",
     "onDestroyed",
-    "onContentError",
-    "onUploadImage"
+    "onUploadImage",
+    'onTransaction'
 ]);
 
 const CustomDocument = Document.extend({
@@ -73,7 +73,8 @@ const CustomTaskItem = TaskItem.extend({
 })
 
 const majorEditor = new MajorEditor();
-editor.value = new Editor({
+
+editor = new Editor({
     content: contents.value,
     extensions: [
         Color.configure({ types: [TextStyle.name, ListItem.name] }),
@@ -97,61 +98,26 @@ editor.value = new Editor({
         }),
         Placeholder.configure({
             placeholder: 'Write something ...',
-            // Use different placeholders depending on the node type:
-            // placeholder: ({ node }) => {
-            //     console.log(node, 1111);
-                
-            //     return "Write something ..."
-            // } ,
         })
     ],
 });
-const onUploadImageCall = ({ file, formData }:{ file:FileList, formData:FormData }) => {
-    emits('onUploadImage', { file, formData, editor: editor.value })
-}
-const onCreated = (editor: Editor) => {
-    emits("onCreated", editor);
-};
-const onUpdate = (editor: Editor) => {
-    emits("onUpdate", editor);
-};
-const onSelectionUpdate = (editor: Editor) => {
-    emits("onSelectionUpdate", editor);
-};
-const onFocused = ({ editor, event }: { editor: Editor; event: EditorEvents }) => {
-    emits("onFocused", { editor: event });
-};
-const onBlur = ({ editor, event }: { editor: Editor; event: EditorEvents }) => {
-    emits("onBlur", { editor: event });
-};
-const onDestroyed = () => {
-    emits("onDestroyed", "destroyed");
-};
-const onContentError = ({ editor, event }: { editor: Editor; event: EditorEvents }) => {
-    emits("onContentError", { editor: event });
-};
-// The editor is ready.
-editor.value.on("create", onCreated);
-// The content has changed.
-editor.value.on("update", onUpdate);
-// The selection has changed.
-editor.value.on("selectionUpdate", onSelectionUpdate);
-// The editor is focused.
-editor.value.on("focus", onFocused);
-// The editor isn’t focused anymore.
-editor.value.on("blur", onBlur);
-// The editor is being destroyed.
-editor.value.on("destroy", onDestroyed);
-// The editor content does not match the schema.
-editor.value.on("contentError", onContentError);
+
+nextTick(() => {
+    console.log(editor, 777);
+    
+})
 
 // init majorEditor
-majorEditor.init(editor.value);
+majorEditor.init(editor);
 // init plugin
-majorEditor.registerPlugin(TextPlugin);
+majorEditor.use(TextPlugin);
+
+const onUploadImageCall = ({ file, formData }:{ file:FileList, formData:FormData }) => {
+    emits('onUploadImage', { file, formData, editor: editor })
+}
 
 provide("majorEditor", majorEditor);
-provide("editor", editor.value);
+provide("editor", editor);
 provide("content", contents.value);
 provide('props', props)
 
@@ -172,14 +138,7 @@ defineExpose({
 })
 
 onBeforeUnmount(() => {
-    editor.value.off("create", onCreated);
-    editor.value.off("update", onUpdate);
-    editor.value.off("selectionUpdate", onSelectionUpdate);
-    editor.value.off("focus", onFocused);
-    editor.value.off("blur", onBlur);
-    editor.value.off("destroy", onDestroyed);
-    editor.value.off("contentError", onContentError);
-    editor.value && editor.value.destroy();
+    editor && editor.destroy();
 });
 </script>
 

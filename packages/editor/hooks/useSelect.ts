@@ -15,6 +15,7 @@ export const useSelectCore = ():UseSelectCoreType => {
     const editor = inject('editor') as Editor;
     const content = inject('content') as string;
     const props = inject('props') as EditorProps;
+    
     return {
         majorEditor,
         editor,

@@ -15,10 +15,7 @@
         <Vue3TiptapEditor
             ref="vue3TiptapEditorRef" 
             v-model:content="htmlContent" 
-            :imageInner="imageInner" 
-            @onCreated="onCreated" 
-            @onUpdate="onUpdate" 
-            @onBlur="onBlur" 
+            :imageInner="imageInner"
             @onUploadImage="onUploadImage">
         </Vue3TiptapEditor>
         <!-- <CustomEditor :message="'CustomEditor'" @onBold="onBold"></CustomEditor> -->
@@ -46,22 +43,9 @@
     }
 
     const vue3TiptapEditorRef = ref<Vue3TiptapEditorOptions | null>(null)
-    const htmlContent = ref(`<p>欢迎使用vue3-major-editor编辑器 🎉</p>欢迎订阅交流,<img src='https://placehold.co/800x400'/>`)
-    // const htmlContent = ref("")
+    // const htmlContent = ref(`<p>欢迎使用vue3-major-editor编辑器 🎉</p>欢迎订阅交流,<img src='https://placehold.co/800x400'/>`)
+    const htmlContent = ref("")
 
-    const onCreated = (editor:Editor) => {
-        console.log(editor, 'onCreated');
-    }
-    const onUpdate = (editor:Editor) => {
-        // console.log(editor, 'onUpdate');
-    }
-    const onBlur = (editor:Editor) => {
-        // console.log(editor, 'onBlur');
-    }
-    function onBold(val:any) {
-        console.log(val, 4444);
-        
-    }
     // 仅支持base64和URL两种模式
     const onUploadImage = ({ file, formData, editor }:{ file:FileList, formData:FormData, editor: Editor }) => {
         for (let i = 0; i < file.length; i++) {

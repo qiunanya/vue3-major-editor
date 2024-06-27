@@ -48,12 +48,12 @@
             </template>
             <span>清空文档</span>
         </NTooltip>
-        <NTooltip placement="bottom" trigger="hover">
+        <NTooltip placement="bottom" trigger="hover" v-if="editor">
             <template #trigger>
                 <button
                     :class="[
                         {
-                            'is-cell_active': editor.isActive('bold'),
+                            'is-cell_active': editor&&editor.isActive('bold'),
                         },
                     ]"
                     data-toolbar-type="toolbar-btn"
@@ -68,7 +68,7 @@
             </template>
             <span>加粗</span>
         </NTooltip>
-        <NTooltip placement="bottom" trigger="hover">
+        <NTooltip placement="bottom" trigger="hover" v-if="editor">
             <template #trigger>
                 <button
                     :class="[
@@ -99,7 +99,7 @@
             </template>
             <span>字体颜色</span>
         </NTooltip>
-        <NTooltip placement="bottom" trigger="hover">
+        <NTooltip placement="bottom" trigger="hover" v-if="editor">
             <template #trigger>
                 <button
                     :class="[
@@ -119,7 +119,7 @@
             </template>
             <span>下划线</span>
         </NTooltip>
-        <NTooltip placement="bottom" trigger="hover">
+        <NTooltip placement="bottom" trigger="hover" v-if="editor">
             <template #trigger>
                 <button
                     :class="[
@@ -139,7 +139,7 @@
             </template>
             <span>删除线</span>
         </NTooltip>
-        <NTooltip placement="bottom" trigger="hover">
+        <NTooltip placement="bottom" trigger="hover" v-if="editor">
             <template #trigger>
                 <button
                     :class="[
@@ -159,7 +159,7 @@
             </template>
             <span>代码标签</span>
         </NTooltip>
-        <NTooltip placement="bottom" trigger="hover">
+        <NTooltip placement="bottom" trigger="hover" v-if="editor">
             <template #trigger>
                 <button
                     :class="[
@@ -414,8 +414,8 @@ const lineHeightOptions = ref<Array<SelectOption>>([
 
 const handleTextAlign = (val: string) => {
     selectTextAlign.value = val;
-    if (editor) {
-        editor.chain().focus().setTextAlign(val).run();
+    if (majorEditor.editor) {
+        majorEditor.editor.chain().focus().setTextAlign(val).run();
     }
 };
 const handleLineHeight = (val: string) => {
@@ -490,8 +490,13 @@ function handleClearContent() {
     });
 }
 
-const isRedo = computed(() => editor.can().chain().focus().redo().run());
-const isUndo = computed(() => editor.can().chain().focus().undo().run());
+const isRedo = computed(() => {
+    return editor&&editor.can().chain().focus().redo().run() || false
+});
+const isUndo = computed(() => {
+    return editor&&editor.can().chain().focus().undo().run() || false
+});
+
 
 function getHList() {
     optionsHT.value = [];
