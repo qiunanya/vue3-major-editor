@@ -309,7 +309,7 @@
             </template>
             <span>添加图片</span>
         </NTooltip>
-        <NPopover style="max-height: 340px;max-width: 335px;" trigger="click" placement="bottom" scrollable>
+        <NPopover style="max-height: 340px;max-width: 335px;" trigger="click" placement="bottom" scrollable :on-update:show="doTable">
             <template #trigger>
                 <NTooltip placement="top" trigger="hover">
                     <template #trigger>
@@ -325,13 +325,17 @@
                 </NTooltip>
             </template>
             <div class="major-table-picker__wrap">
-                <p style="margin: 5px 0;">表格面板 <a href="#" class="reset__btn">重置</a></p>
+                <p style="margin: 5px 0; display: flex; align-items: center;">
+                    <strong>{{tbOptions.row}}</strong>行x<strong>{{tbOptions.column}}</strong>列, 
+                    表头: <input type="checkbox" v-model="tbOptions.isWithHeaderRow">
+                    <a href="#" class="confirm__btn" @click.stop="handleTable">确定</a>
+                </p>
                 <div ref="tableFilterWrapRef" class="table-filter__wrap" 
-                    @mousedown="onMousedown"
-                    @mousemove="onMousemove"
-                    @mouseleave="onMouseleave"
-                    @mouseup="onMouseup">
-                    <span class="table-column-item" v-for="(item, index) in 100" :key="index">{{ index + 1 }}</span>
+                    @mousedown.stop="onMousedown"
+                    @mousemove.stop="onMousemove"
+                    @mouseleave.stop="onMouseleave"
+                    @mouseup.stop="onMouseup">
+                    <span class="table-column-item" v-for="(item, index) in 100" :key="index"></span>
                     <div ref="maskRef" class="table-mask__wrap"></div>
                 </div>
             </div>
@@ -342,14 +346,14 @@
 </template>
 
 <script lang="ts" setup name="Toolkit">
-import { ref, h, computed } from "vue";
+import { ref, h, computed, reactive } from "vue";
 import { NPopselect, NTooltip, NPopover, NModal } from "naive-ui";
 import type { SelectOption } from "naive-ui";
 import { useSelectCore } from "../hooks/useSelect";
 import { useNaiveDiscrete } from "../hooks/navie-ui";
 import { v4 as uuidV4 } from 'uuid';
 import UploadImage from "./UploadImage.vue";
-import { colorList, alignList, lineHeighList } from '../tools';
+import { colorList, alignList, lineHeighList } from '../tools/config';
 
 const { majorEditor, editor } = useSelectCore();
 const { message, dialog, modal } = useNaiveDiscrete();
@@ -358,29 +362,54 @@ const { message, dialog, modal } = useNaiveDiscrete();
 const emits = defineEmits(['onUploadImage'])
 
 // 表格
+const tbOptions = reactive({
+    row: 0,
+    column: 0,
+    isWithHeaderRow: true
+})
 const tableFilterWrapRef = ref<HTMLElement | null>(null)
 const maskRef = ref<HTMLElement | null>(null)
-let startTop = 0, endTop = 0, startLeft = 0, endLeft = 0, selectList = [];
+let startTop = 0, endTop = 0, startLeft = 0, endLeft = 0, selectedCells = [];
 const isMouseDown = ref(false)
+const doTable = (val:boolean) => {
+    if (val) {
+        tbOptions.row = 0
+        tbOptions.column = 0
+    }
+}
+const handleTable = () => {
+    if (tbOptions.column==0 || editor.isActive('table')) return
+    editor
+    .chain()
+    .focus()
+    .insertTable({
+        rows: tbOptions.row,
+        cols: tbOptions.column,
+        withHeaderRow: tbOptions.isWithHeaderRow
+    }).run()
+}
 const onMousedown = (evt: MouseEvent) => {
     if (tableFilterWrapRef.value) {
         isMouseDown.value = true
-        const { top, left } = tableFilterWrapRef.value.getBoundingClientRect();
-        startTop = evt.y - top
-        startLeft = evt.x - left
-        // console.log(startTop, startLeft, evt.y, evt.x, 123);
+        // const { top, left } = tableFilterWrapRef.value.getBoundingClientRect();
+        // 动态获取鼠标按下起点坐标, 不设置，则起点坐标是父元素的左上角坐标值
+        // startTop = evt.y - top
+        // startLeft = evt.x - left
+        
         // 恢复子元素样式
         const childrenList = tableFilterWrapRef.value.children
         for (let i = 0; i < childrenList.length; i++) {
             const child = childrenList[i] as HTMLElement
-            child.style.background = '#f0f0f0'
-            child.style.color = "#333"
+            if (child.className!=='table-mask__wrap') {
+                child.style.background = '#f0f0f0'
+                child.style.color = "#333"
+            }
         }
     }
 }
 const onMousemove = (evt: MouseEvent) => {
     if (isMouseDown.value) {
-        getMousePosition(evt)
+        calculateSelectedCells(evt)
     }
 }
 const onMouseleave = (evt: MouseEvent) => {
@@ -394,35 +423,21 @@ function resetPosition () {
     if (maskRef.value && tableFilterWrapRef.value) {
         maskRef.value.style.width = '0px';
         maskRef.value.style.height = '0px';
+        maskRef.value.style.border = 'none';
         startLeft = 0;
         startTop = 0;
         endLeft = 0;
         endTop = 0;
     }
 }
-function getMousePosition(evt:MouseEvent) {
+function calculateSelectedCells(evt:MouseEvent) {
     if (maskRef.value && tableFilterWrapRef.value) {
         const { top, left } = tableFilterWrapRef.value.getBoundingClientRect();
         const childrenList = tableFilterWrapRef.value.children
-        // 获取遮罩层位置信息
-        const maskPosition = maskRef.value.getBoundingClientRect()
+    
         // 鼠标移动触发时，先清空数据
-        selectList = []
-
-        for (let i = 0; i < childrenList.length; i++) {
-            // 获取每个子元素的位置信息
-            const { left, top, right, bottom } = childrenList[i].getBoundingClientRect()
-            if (
-                right > maskPosition.left && bottom > maskPosition.top && left < maskPosition.right && top < maskPosition.bottom
-            ) {
-                const child = childrenList[i] as HTMLElement
-                child.style.background = '#18a058'
-                child.style.color = "#fff"
-                // 获取选中的子元素索引
-                selectList.push(i+1)
-                // console.log(selectList);
-            }
-        }
+        selectedCells = []
+        let minRow = 10, maxRow = 0, minCol = 10, maxCol = 0;
         // 获取移动中的鼠标位置
         endTop = evt.y - top;
         endLeft = evt.x - left;
@@ -436,6 +451,48 @@ function getMousePosition(evt:MouseEvent) {
         const maskHeight = Math.abs(startTop - endTop)
         maskRef.value.style.width = maskWidth + 'px'
         maskRef.value.style.height = maskHeight + 'px'
+        maskRef.value.style.border = '1px solid #18a058'
+
+        // 获取遮罩层位置信息
+        const maskPosition = maskRef.value.getBoundingClientRect()
+        
+        for (let i = 0; i < childrenList.length; i++) {
+            // 获取每个子元素的位置信息
+            const { left, top, right, bottom } = childrenList[i].getBoundingClientRect()
+
+            // 判断子元素和遮罩是否有重叠
+            if (
+                right > maskPosition.left && 
+                bottom > maskPosition.top && 
+                left < maskPosition.right && 
+                top < maskPosition.bottom
+            ) {
+                const child = childrenList[i] as HTMLElement
+                
+                if(child.className!=='table-mask__wrap') {
+                    child.style.background = 'rgba(24, 160, 88, 0.1)'
+                    // child.style.color = "#18a058"
+                    // 获取选中的子元素索引
+                    // selectedCells.push(i+1)
+                    // console.log(selectedCells);
+                    // 行索引
+                    const row = Math.floor(i / 10);
+                    // 列索引
+                    const col = i % 10;
+                    minRow = Math.min(minRow, row);
+                    maxRow = Math.max(maxRow, row);
+                    minCol = Math.min(minCol, col);
+                    maxCol = Math.max(maxCol, col);
+                }
+            } else {
+                const child = childrenList[i] as HTMLElement
+                // child.style.color = "#333"
+                child.style.background = '#f0f0f0'
+            }
+        }
+
+        tbOptions.row = maxRow - minRow + 1;
+        tbOptions.column = maxCol - minCol + 1;
     }
 }
 
@@ -578,7 +635,7 @@ initialize();
 .major-table-picker__wrap {
     display: flex;
     flex-wrap: wrap;
-    .reset__btn {
+    .confirm__btn {
         padding: 0;
         padding-inline: 0;
         margin-left: 0.5rem;
@@ -605,8 +662,9 @@ initialize();
             position: absolute;
             width: 0px;
             height: 0px;
-            background-color: #000;
-            opacity: 0.4;
+            // background-color: #000;
+            // border: 1px solid #18a058;
+            // opacity: 0.4;
         }
     }
 }

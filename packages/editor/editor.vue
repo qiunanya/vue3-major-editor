@@ -101,6 +101,12 @@ editor = new Editor({
                 class: 'my-custom-img-class',
             },
         }),
+        Table.configure({
+          resizable: true,
+        }),
+        TableRow,
+        TableHeader,
+        TableCell,
         Placeholder.configure({
             placeholder: 'Write something ...',
         })
