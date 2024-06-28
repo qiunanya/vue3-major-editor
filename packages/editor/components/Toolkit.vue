@@ -378,7 +378,10 @@ const doTable = (val:boolean) => {
     }
 }
 const handleTable = () => {
-    if (tbOptions.column==0 || editor.isActive('table')) return
+    if (tbOptions.column==0 || editor.isActive('table')) {
+        message.info('未选中数据或者表格不能嵌套')
+        return
+    }
     editor
     .chain()
     .focus()
