@@ -1,7 +1,7 @@
 import { inject } from 'vue'
 import { Editor } from '@tiptap/vue-3'
 import MajorEditor from '../core/MajorEditor'
-import { EditorProps } from '../typings/config';
+import { EditorProps } from '../typings/interfaces';
 
 type MajorEditors = MajorEditor
 export interface UseSelectCoreType {

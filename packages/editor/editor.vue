@@ -1,7 +1,7 @@
 <template>
     <div class="vue3-major-editor__root major-editor">
         <!-- <button class="btn" ref="btnRef">Major-Editor777</button> -->
-        <Toolkit @onUploadImage="onUploadImageCall"></Toolkit>
+        <Toolkit v-if="isShowToolbar" @onUploadImage="onUploadImageCall"></Toolkit>
         <div class="rich-content-editor__wrap">
             <EditorContent :editor="editor"></EditorContent>
         </div>
@@ -37,15 +37,16 @@ import MajorEditor from "./core/MajorEditor";
 
 // 插件
 import TextPlugin from "./plugins/TextPlugin";
+import TablePlugin from "./plugins/TablePlugin";
+import ContextMenu from "./plugins/ContextMenu";
 
 // 自定义扩展
 import CusLineHeightExt from "./extends/CusLineHeightExt"; 
 
 // 导入props参数类型
-import { EditorProps } from './typings/config';
+import { EditorProps } from './typings/interfaces';
 
 let editor:Editor;
-const btnRef = ref(null)
 const contents = defineModel<string>("content", {
     default: "",
     required: false,
@@ -53,7 +54,9 @@ const contents = defineModel<string>("content", {
 
 // props
 const props = withDefaults(defineProps<EditorProps>(), {
-    imageInner: true
+    imageInner: true,
+    isEnable: true,
+    isShowToolbar: true
 })
 
 // emit
@@ -111,17 +114,21 @@ editor = new Editor({
             placeholder: 'Write something ...',
         })
     ],
+    onCreate({editor}) {
+        const currentContent = editor.getHTML();
+        const newContent = currentContent + '<p><br></p>';
+        editor.commands.setContent(newContent);
+    }
 });
 
-nextTick(() => {
-    console.log(editor, 777);
-    
-})
-
 // init majorEditor
-majorEditor.init(editor);
+majorEditor.init(editor, props);
 // init plugin
 majorEditor.use(TextPlugin);
+majorEditor.use(TablePlugin);
+majorEditor.use(ContextMenu);
+console.log(props);
+
 
 const onUploadImageCall = ({ file, formData }:{ file:FileList, formData:FormData }) => {
     emits('onUploadImage', { file, formData, editor: editor })
@@ -154,3 +161,4 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss" src="./style/index.scss"></style>
+./typings/interfaces

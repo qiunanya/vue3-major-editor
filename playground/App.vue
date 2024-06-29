@@ -16,6 +16,8 @@
             ref="vue3TiptapEditorRef" 
             v-model:content="htmlContent" 
             :imageInner="imageInner"
+            :isEnable="true"
+            :isShowToolbar="true"
             @onUploadImage="onUploadImage">
         </Vue3TiptapEditor>
         <!-- <CustomEditor :message="'CustomEditor'" @onBold="onBold"></CustomEditor> -->

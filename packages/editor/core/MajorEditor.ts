@@ -1,6 +1,6 @@
 import EventEmitter from 'events';
 import { Editor } from '@tiptap/vue-3'
-
+import { EditorProps } from '../typings/interfaces';
 
 class MajorEditor extends EventEmitter {
     public editor:Editor | null = null;
@@ -15,8 +15,9 @@ class MajorEditor extends EventEmitter {
     constructor() {
         super()
     }
-    init (editor:Editor) {
+    init (editor:Editor, _opt:EditorProps) {
         this.editor = editor
+        this.editor.setEditable(_opt.isEnable)
     }
 
     use(plugin:IPluginClass, options?: IPluginOption)  {
