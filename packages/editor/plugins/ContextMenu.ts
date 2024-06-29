@@ -4,7 +4,6 @@
 
 import { Editor } from '@tiptap/vue-3';
 import MajorEditor from '../core/MajorEditor';
-// 导入props参数类型
 import { ContextMenuOptions } from '../typings/interfaces';
 
 type MajorEditors = MajorEditor
