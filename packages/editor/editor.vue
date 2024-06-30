@@ -19,15 +19,16 @@ import Underline from "@tiptap/extension-underline";
 import StarterKit from "@tiptap/starter-kit";
 import TaskItem from '@tiptap/extension-task-item';
 import TaskList from '@tiptap/extension-task-list';
-import Images from '@tiptap/extension-image'
+import Images from '@tiptap/extension-image';
 import TextAlign from '@tiptap/extension-text-align';
 import { Editor, EditorEvents, EditorContent, BubbleMenu } from "@tiptap/vue-3";
 import Placeholder from '@tiptap/extension-placeholder';
 import { EditorState, Transaction } from '@tiptap/pm/state';
-import Table from '@tiptap/extension-table'
-import TableCell from '@tiptap/extension-table-cell'
-import TableHeader from '@tiptap/extension-table-header'
-import TableRow from '@tiptap/extension-table-row'
+import Table from '@tiptap/extension-table';
+import TableCell from '@tiptap/extension-table-cell';
+import TableHeader from '@tiptap/extension-table-header';
+import TableRow from '@tiptap/extension-table-row';
+import Link from '@tiptap/extension-link';
 
 // 顶部工具
 import Toolkit from "./components/Toolkit.vue";
@@ -113,6 +114,10 @@ editor = new Editor({
         TableRow,
         TableHeader,
         TableCell,
+        Link.configure({
+            openOnClick: false,
+            protocols: ['https']
+        }),
         Placeholder.configure({
             placeholder: 'Write something ...',
         })
