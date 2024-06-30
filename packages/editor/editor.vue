@@ -46,6 +46,9 @@ import CusLineHeightExt from "./extends/CusLineHeightExt";
 // 导入props参数类型
 import { EditorProps } from './typings/interfaces';
 
+// 过滤编辑器类容，防止xss攻击, 生产环境
+import DOMPurify from 'dompurify';
+
 let editor:Editor;
 const contents = defineModel<string>("content", {
     default: "",
@@ -82,7 +85,7 @@ const CustomTaskItem = TaskItem.extend({
 const majorEditor = new MajorEditor();
 
 editor = new Editor({
-    content: contents.value,
+    content: DOMPurify.sanitize(contents.value),
     extensions: [
         TextStyle,
         Color,
@@ -123,12 +126,12 @@ editor = new Editor({
 
 // init majorEditor
 majorEditor.init(editor, props);
+
 // init plugin
 majorEditor.use(TextPlugin);
 majorEditor.use(TablePlugin);
 majorEditor.use(ContextMenu);
-console.log(props);
-
+console.log(majorEditor);
 
 const onUploadImageCall = ({ file, formData }:{ file:FileList, formData:FormData }) => {
     emits('onUploadImage', { file, formData, editor: editor })
