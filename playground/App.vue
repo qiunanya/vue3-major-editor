@@ -48,7 +48,8 @@
     // const htmlContent = ref(`<p>欢迎使用vue3-tiptap-editor编辑器 🎉</p>欢迎订阅交流,<img src='https://placehold.co/800x400'/>`)
     const htmlContent = ref(`
         <p>欢迎使用vue3-tiptap-editor编辑器 🎉</p>欢迎订阅交流,
-        <a herf="https://www.baidu.con">测试链接</a>`)
+        <a href="https://en.wikipedia.org/wiki/World_Wide_Web">world wide web</a>
+        <a href="https://www.baidu.con">66666</a>`)
 
     // 仅支持base64和URL两种模式
     const onUploadImage = ({ file, formData, editor }:{ file:FileList, formData:FormData, editor: Editor }) => {
