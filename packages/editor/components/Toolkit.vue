@@ -1,31 +1,7 @@
 <template>
     <div class="vue3-major-editor__toolbar" data-major-editor="true">
-        <NTooltip placement="bottom" trigger="hover">
-            <template #trigger>
-                <button :style="{ cursor: !isUndo ? 'not-allowed' : 'pointer' }" data-toolbar-type="toolbar-btn"
-                    @click="editor.chain().focus().undo().run()" :disabled="!isUndo">
-                    <svg viewBox="0 0 1024 1024" width="200" height="200">
-                        <path
-                            d="M223.300267 221.320533h410.555733c214.493867 0 388.437333 173.192533 388.437333 386.798934 0 213.674667-173.943467 386.8672-388.437333 386.8672H116.053333a64.580267 64.580267 0 0 1-64.7168-64.512c0-35.566933 29.013333-64.443733 64.7168-64.443734h517.802667a258.389333 258.389333 0 0 0 258.935467-257.911466 258.389333 258.389333 0 0 0-258.935467-257.8432h-415.061333L293.546667 424.823467a64.3072 64.3072 0 0 1-28.672 108.7488 64.853333 64.853333 0 0 1-62.941867-17.6128L19.114667 333.687467a64.375467 64.375467 0 0 1 0-91.204267L201.9328 60.074667a64.9216 64.9216 0 0 1 91.613867 0c25.258667 25.122133 25.258667 65.9456 0 91.136l-70.314667 70.0416z"
-                            :fill="!isUndo ? '#666' : ''"></path>
-                    </svg>
-                </button>
-            </template>
-            <span>撤销</span>
-        </NTooltip>
-        <NTooltip placement="bottom" trigger="hover">
-            <template #trigger>
-                <button :style="{ cursor: !isRedo ? 'not-allowed' : 'pointer' }" data-toolbar-type="toolbar-btn"
-                    @click="editor.chain().focus().redo().run()" :disabled="!isRedo">
-                    <svg viewBox="0 0 1092 1024" width="200" height="200">
-                        <path
-                            d="M828.893867 220.091733H418.338133C203.844267 220.091733 29.969067 393.216 29.969067 606.890667c0 213.674667 173.8752 386.798933 388.369066 386.798933h517.802667a64.580267 64.580267 0 0 0 64.7168-64.443733 64.580267 64.580267 0 0 0-64.7168-64.443734H418.338133A258.389333 258.389333 0 0 1 159.402667 606.890667a258.389333 258.389333 0 0 1 258.935466-257.911467h415.1296l-74.888533 74.615467a64.3072 64.3072 0 0 0 28.672 108.7488 64.853333 64.853333 0 0 0 62.941867-17.6128l183.022933-182.272a64.375467 64.375467 0 0 0 0-91.272534L850.193067 58.914133a64.9216 64.9216 0 0 0-91.5456 0 64.3072 64.3072 0 0 0 0 91.136l70.314666 70.0416z"
-                            :fill="!isRedo ? '#666' : ''"></path>
-                    </svg>
-                </button>
-            </template>
-            <span>重做</span>
-        </NTooltip>
+        <Undo></Undo>
+        <Redo></Redo>
         <NTooltip placement="bottom" trigger="hover">
             <template #trigger>
                 <button :class="[{ 'is-disable': !editor.isEditable }]" data-toolbar-type="toolbar-btn" @click="handleClearContent">
@@ -415,6 +391,10 @@ import { v4 as uuidV4 } from 'uuid';
 import UploadImage from "./UploadImage.vue";
 import Links from "./Links.vue";
 import { colorList, alignList, lineHeighList } from '../tools/config';
+
+// 导入工具组件
+import Undo from "./toolbar/Undo.vue";
+import Redo from "./toolbar/Redo.vue";
 
 const { majorEditor, editor } = useSelectCore();
 const { message, dialog, modal } = useNaiveDiscrete();

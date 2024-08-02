@@ -48,8 +48,6 @@ const imagesTemp:Ref<TranserType> = ref({
 const emits = defineEmits(['uploadImageSuccess'])
 
 const onUpdatedTab = (val: string) => {
-    console.log(props, 5555);
-    
     tabPane.value = val
     if (val === 'link') {
         editor.commands.setImage({ src: imageLink.value });

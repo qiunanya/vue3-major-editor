@@ -1,0 +1,30 @@
+svg:focus,
+svg:active {
+    border: 0;
+    outline: none;
+}
+
+svg {
+    width: 1.3em;
+    flex: 0 0 1.3em;
+    height: 1.2em;
+    fill: rgb(51, 54, 57);
+}
+
+.toolbar_btn {
+    display: flex;
+    align-items: center;
+    padding: 0.5em 0.5em;
+    outline: none;
+    border: none;
+    border-radius: 0.2em;
+    // background: transparent;
+    cursor: pointer;
+    height: 3em;
+    &.is-disable {
+        cursor: not-allowed;
+        svg {
+            fill: #666;
+        }
+    }
+}
