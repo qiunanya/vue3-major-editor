@@ -27,5 +27,5 @@ const isUndo = computed(() => {
 </script>
 
 <style lang="scss">
-@import "./css/common.scss";
+@import "../../style/toolbar.scss";
 </style>

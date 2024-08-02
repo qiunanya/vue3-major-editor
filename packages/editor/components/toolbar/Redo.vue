@@ -27,5 +27,5 @@ const isRedo = computed(() => {
 </script>
 
 <style lang="scss">
-@import "./css/common.scss";
+@import "../../style/toolbar.scss";
 </style>
