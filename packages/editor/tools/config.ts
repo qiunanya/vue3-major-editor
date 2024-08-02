@@ -94,7 +94,7 @@ export const colorList = [
     {
         value: "#E9F6FF",
         textTip: "#E9F6FF",
-    },
+    }
 ];
 
 export const alignList = [

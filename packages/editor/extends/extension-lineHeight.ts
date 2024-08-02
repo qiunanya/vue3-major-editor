@@ -41,7 +41,7 @@ export interface LineHeightOptions {
     defaultValue: string,
 }
 
-const CusLineHeightExt = Extension.create<LineHeightOptions>({
+const ExtensionLineHeight = Extension.create<LineHeightOptions>({
     name: "lineHeight",
     addOptions() {
         return {
@@ -94,20 +94,7 @@ const CusLineHeightExt = Extension.create<LineHeightOptions>({
                 return OptionsLine
             }
         }
-    },
-    // error eg
-    // addCommands() {
-    //     return {
-    //         setLineHeight:
-    //             (lineHeight: string | number): Command =>
-    //             ({ chain }: CommandProps) => {
-    //                 return chain()
-    //                     .updateAttributes("paragraph", { lineHeight })
-    //                     .updateAttributes("heading", { lineHeight })
-    //                     .run();
-    //             },
-    //     };
-    // },
+    }
 });
 
-export default CusLineHeightExt;
+export default ExtensionLineHeight;

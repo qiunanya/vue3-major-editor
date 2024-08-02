@@ -42,7 +42,8 @@ import TablePlugin from "./plugins/TablePlugin";
 import ContextMenu from "./plugins/ContextMenu";
 
 // 自定义扩展
-import CusLineHeightExt from "./extends/CusLineHeightExt"; 
+import CusLineHeightExt from "./extends/extension-lineHeight"; 
+import BackgroundColorExt from "./extends/extension-bg-color";
 
 // 导入props参数类型
 import { EditorProps } from './typings/interfaces';
@@ -93,6 +94,7 @@ editor = new Editor({
         StarterKit,
         Underline,
         CusLineHeightExt,
+        BackgroundColorExt,
         // CustomDocument,
         CustomTaskItem.configure({
             nested: true // 任务允许嵌套
@@ -169,4 +171,3 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss" src="./style/index.scss"></style>
-./typings/interfaces

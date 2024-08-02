@@ -72,7 +72,7 @@
             </template>
             <span>斜体</span>
         </NTooltip>
-        <NPopover style="max-height: 270px;max-width: 300px;" trigger="click" placement="right" scrollable>
+        <NPopover ref="npopoverCLRef" style="max-height: 270px;max-width: 300px;" trigger="click" placement="bottom" scrollable>
             <template #trigger>
                 <NTooltip placement="top" trigger="hover">
                     <template #trigger>
@@ -91,20 +91,59 @@
                 </NTooltip>
             </template>
             <div data-color-picker="major-color-picker" class="major-color-picker__wrap">
-                <p style="margin: 5px 0;">颜色面板</p>
+                <p style="margin: 5px 0;">
+                    <span>颜色面板</span>
+                </p>
                 <div style="display: flex;flex-wrap: wrap;">
                     <span v-for="(item, index) in colorList" :key="index" :style="{
-                    background: item.value,
-                    width: '2rem',
-                    height: '2rem',
-                    margin: '0.2rem',
-                    borderRadius: '0.4rem'
-                }" @click.stop="handleColorPicker(item.value)"></span>
+                        background: item.value,
+                        width: '1.5rem',
+                        height: '1.5rem',
+                        margin: '0.2rem',
+                        borderRadius: '0.2rem'
+                    }" @click.stop="handleColorPicker(item.value)"></span>
 
                 </div>
                 <p style="margin: 5px 0;">颜色选择器</p>
                 <input class="color-input__picker cursor" v-model="selectColor" type="color" list=""
                     @input="onChangeColor" />
+                <button style="color: blue;margin-left: 12px;" @click.stop="handleColorPicker('')">取消字体颜色</button>
+            </div>
+        </NPopover>
+        <NPopover ref="npopoverBgRef" style="max-height: 270px;max-width: 300px;" trigger="click" placement="bottom" scrollable>
+            <template #trigger>
+                <NTooltip placement="top" trigger="hover">
+                    <template #trigger>
+                        <button :class="[{ 'is-disable': !editor.isEditable }]" data-toolbar-type="toolbar-btn">
+                            <svg viewBox="0 0 1024 1024" width="200" height="200">
+                                <path d="M0 0m56.888889 0l910.222222 0q56.888889 0 56.888889 56.888889l0 910.222222q0 56.888889-56.888889 56.888889l-910.222222 0q-56.888889 0-56.888889-56.888889l0-910.222222q0-56.888889 56.888889-56.888889Z" fill="#05AFC8"></path>
+                                <path d="M284.444444 853.333333H227.555556L483.555556 170.666667h56.888888L284.444444 853.333333z" fill="#FFFFFF"></path>
+                                <path d="M540.444444 170.666667h-56.888888L739.555556 853.333333h56.888888L540.444444 170.666667z" fill="#FFFFFF"></path>
+                                <path d="M341.333333 625.777778h341.333334v56.888889H341.333333z" fill="#FFFFFF"></path>
+                            </svg>
+                        </button>
+                    </template>
+                    <span>字体背景颜色</span>
+                </NTooltip>
+            </template>
+            <div data-color-picker="major-color-picker" class="major-color-picker__wrap">
+                <p style="margin: 5px 0;">
+                    <span>颜色面板</span>
+                </p>
+                <div style="display: flex;flex-wrap: wrap;">
+                    <span v-for="(item, index) in colorList" :key="index" :style="{
+                    background: item.value,
+                    width: '1.5rem',
+                    height: '1.5rem',
+                    margin: '0.2rem',
+                    borderRadius: '0.2rem'
+                }" @click.stop="handlebColorPicker(item.value)"></span>
+
+                </div>
+                <p style="margin: 5px 0;">颜色选择器</p>
+                <input class="color-input__picker cursor" v-model="selectColor" type="color" list=""
+                    @input="onChangeColor" />
+                <button style="color: blue;margin-left: 12px;" @click.stop="handlebColorPicker('')">取消背景色</button>
             </div>
         </NPopover>
         <NTooltip placement="bottom" trigger="hover" v-if="editor">
@@ -380,6 +419,9 @@ import { colorList, alignList, lineHeighList } from '../tools/config';
 const { majorEditor, editor } = useSelectCore();
 const { message, dialog, modal } = useNaiveDiscrete();
 // const dialog = useDialog()
+
+const npopoverCLRef = ref<InstanceType<typeof NPopover> | null>(null)
+const npopoverBgRef = ref<InstanceType<typeof NPopover> | null>(null)
 
 const emits = defineEmits(['onUploadImage'])
 
@@ -660,6 +702,16 @@ const handleColorPicker = (color: string) => {
     majorEditor.setTextStyle('Color', {
         color
     });
+    
+    if (!npopoverCLRef.value) return 
+    npopoverCLRef.value.setShow(false)
+}
+
+// 设置字体背景色
+const handlebColorPicker = (color: string) => {
+    if (!npopoverBgRef.value) return 
+    npopoverBgRef.value.setShow(false)
+    majorEditor.setTextStyle("backgroundColor", { color })
 }
 
 function initialize() {

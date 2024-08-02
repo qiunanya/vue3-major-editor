@@ -97,7 +97,12 @@ class TextPlugin {
                 case 'Color':
                     if (_opts?.color) {
                         chain.setColor(_opts?.color).run()
-                    }
+                    } else chain.unsetColor().run()
+                    break;
+                case 'backgroundColor': 
+                    if (_opts?.color) {
+                        chain.setBackgroundColor(_opts.color).run()
+                    } else chain.unsetBackgroundColor().run()
                     break;
                 case 'Heading':
                     if (_opts?.level) {
