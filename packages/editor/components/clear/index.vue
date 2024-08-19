@@ -47,7 +47,3 @@ function handleClearContent () {
     });
 }
 </script>
-
-<style lang="scss">
-@import "../../style/toolbar.scss";
-</style>

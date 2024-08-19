@@ -8,7 +8,15 @@ svg {
     width: 1.3em;
     flex: 0 0 1.3em;
     height: 1.2em;
-    fill: rgb(51, 54, 57);
+    // fill: rgb(51, 54, 57);
+}
+
+.is-cell_active {
+
+    // background:rgba(24, 160, 88, 0.1);
+    svg {
+        fill: #18a058;
+    }
 }
 
 .toolbar_btn {
@@ -18,7 +26,6 @@ svg {
     outline: none;
     border: none;
     border-radius: 0.2em;
-    // background: transparent;
     cursor: pointer;
     height: 3em;
     &.is-disable {

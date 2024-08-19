@@ -1,0 +1,33 @@
+<template>
+    <NTooltip placement="bottom" trigger="hover">
+        <template #trigger>
+            <button :class="[
+                'toolbar_btn',
+                {
+                    'is-cell_active': editor&&editor.isActive('underline'),
+                },
+                { 'is-disable': !editor.isEditable }
+            ]" data-toolbar-type="toolbar-btn" @click="handleTextStyle('Underline')">
+                <svg viewBox="0 0 1024 1024" width="200" height="200">
+                    <path
+                        d="M512 811.296a312 312 0 0 0 312-312V89.6h-112v409.696a200 200 0 1 1-400 0V89.6h-112v409.696a312 312 0 0 0 312 312zM864 885.792H160a32 32 0 0 0 0 64h704a32 32 0 0 0 0-64z">
+                    </path>
+                </svg>
+            </button>
+        </template>
+        <span>下划线</span>
+    </NTooltip>
+</template>
+
+<script setup lang="ts">
+import { NTooltip } from "naive-ui";
+import { useSelectCore } from "../../hooks/useSelect";
+
+const { majorEditor, editor } = useSelectCore();
+
+// 设置文本样式
+function handleTextStyle(key: string) {
+    if (!editor.isEditable) return
+    majorEditor.setTextStyle(key);
+}
+</script>

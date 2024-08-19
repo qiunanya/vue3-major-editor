@@ -25,7 +25,3 @@ const isRedo = computed(() => {
     return editor && editor.can().chain().focus().redo().run() || false
 });
 </script>
-
-<style lang="scss">
-@import "../../style/toolbar.scss";
-</style>

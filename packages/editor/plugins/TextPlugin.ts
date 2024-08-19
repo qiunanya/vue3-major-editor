@@ -52,6 +52,7 @@ class TextPlugin {
     setTextStyle (key?: keyOptins, _opts?: TextStyleOptions) {
         if (this.editor) {
             const chain = this.editor.chain().focus()
+            
             switch (key) {
                 case 'Bold':
                     // 该命令会失去focus，需要重新选择才能设置效果
@@ -85,6 +86,7 @@ class TextPlugin {
                     break;
                 case 'Paragraph':
                     chain.setParagraph().run()
+                    console.log(key, chain, 5555);
                     break;
                 case 'CodeBlock':
                     chain.toggleCodeBlock().run()

@@ -25,7 +25,3 @@ const isUndo = computed(() => {
     return editor && editor.can().chain().focus().undo().run() || false
 });
 </script>
-
-<style lang="scss">
-@import "../../style/toolbar.scss";
-</style>

@@ -1,0 +1,33 @@
+<template>
+    <NTooltip placement="bottom" trigger="hover">
+        <template #trigger>
+            <button :class="[
+                'toolbar_btn',
+                {
+                    'is-cell_active': editor && editor.isActive('codeBlock'),
+                },
+                { 'is-disable': !editor.isEditable }
+            ]" data-toolbar-type="toolbar-btn" @click="handleTextStyle('BulletList')">
+                <svg viewBox="0 0 1102 1024" width="200" height="200">
+                    <path
+                        d="M93.105231 187.943385a78.769231 78.769231 0 1 1 0-157.538462 78.769231 78.769231 0 0 1 0 157.538462z m0 393.846153a78.769231 78.769231 0 1 1 0-157.538461 78.769231 78.769231 0 0 1 0 157.538461z m0 393.846154a78.769231 78.769231 0 1 1 0-157.538461 78.769231 78.769231 0 0 1 0 157.538461zM276.243692 161.792v-118.153846h787.692308v118.153846h-787.692308z m0.472616 397.233231v-118.153846h788.007384v118.153846H276.716308z m-3.308308 397.154461v-118.153846h789.267692v118.153846H273.329231z"
+                        fill="#333333"></path>
+                </svg>
+            </button>
+        </template>
+        <span>无序列表</span>
+    </NTooltip>
+</template>
+
+<script setup lang="ts">
+import { NTooltip } from "naive-ui";
+import { useSelectCore } from "../../hooks/useSelect";
+
+const { majorEditor, editor } = useSelectCore();
+
+// 设置文本样式
+function handleTextStyle(key: string) {
+    if (!editor.isEditable) return
+    majorEditor.setTextStyle(key);
+}
+</script>

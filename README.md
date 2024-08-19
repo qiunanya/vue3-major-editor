@@ -7,6 +7,11 @@ vue3-tiptap-editor是基于最新tiptap框架开发的vue3富文本组件，具�
 pnpm add @majoreditor/ui
 测试成功
 
+#### pnpm 安装依赖到dev环境
+```js
+pnpm add -D vite-plugin-svg-icons -w
+```
+
 #### 更新所有包依赖
 pnpm install --recursive
 
