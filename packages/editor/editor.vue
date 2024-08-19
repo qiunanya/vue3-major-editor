@@ -93,7 +93,7 @@ editor = new Editor({
         Color,
         StarterKit,
         Underline,
-        CusLineHeightExt,
+        // CusLineHeightExt, // 自定义行高组件会影响setParagraph方法，暂时注掉
         BackgroundColorExt,
         // CustomDocument,
         CustomTaskItem.configure({
@@ -101,7 +101,7 @@ editor = new Editor({
         }),
         TaskList,
         TextAlign.configure({
-            types: ['heading', 'paragraph'],
+            types: ['heading'],
         }),
         Images.configure({
             inline: true,

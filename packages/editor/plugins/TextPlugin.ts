@@ -86,7 +86,6 @@ class TextPlugin {
                     break;
                 case 'Paragraph':
                     chain.setParagraph().run()
-                    console.log(key, chain, 5555);
                     break;
                 case 'CodeBlock':
                     chain.toggleCodeBlock().run()
