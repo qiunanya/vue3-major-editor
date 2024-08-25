@@ -93,7 +93,7 @@ editor = new Editor({
         Color,
         StarterKit,
         Underline,
-        // CusLineHeightExt, // 自定义行高组件会影响setParagraph方法，暂时注掉
+        CusLineHeightExt, // 自定义行高组件会影响setParagraph方法，暂时注掉
         BackgroundColorExt,
         // CustomDocument,
         CustomTaskItem.configure({

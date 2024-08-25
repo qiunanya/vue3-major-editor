@@ -103,7 +103,8 @@
         <OrderedListUI></OrderedListUI>
         <BulletListUI></BulletListUI>
         <HorizontalRuleUI></HorizontalRuleUI>
-        <ParagraphUI></ParagraphUI>
+        <!-- 自定义行高会段落冲突，暂时注释 -->
+        <!-- <ParagraphUI></ParagraphUI> -->
         
         <NPopselect v-model:value="selectHvalue" trigger="hover" :options="optionsHT" :on-update:value="handleHeading">
             <NTooltip placement="top" trigger="hover">
