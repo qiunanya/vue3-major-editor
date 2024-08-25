@@ -27,7 +27,9 @@ type keyOptins =
 | 'lineHeight'
 | 'Color'
 | 'Heading'
-| 'backgroundColor';
+| 'backgroundColor'
+| 'Superscript'
+| 'Subscript';
 
 class TextPlugin {
     public majorEditor: MajorEditors | null = null;
@@ -89,6 +91,12 @@ class TextPlugin {
                     break;
                 case 'CodeBlock':
                     chain.toggleCodeBlock().run()
+                    break;
+                case 'Subscript':
+                    chain.toggleSubscript().run()
+                    break;
+                case 'Superscript':
+                    chain.toggleSuperscript().run()
                     break;
                 case 'lineHeight':
                     if (_opts?.lineHeight) {

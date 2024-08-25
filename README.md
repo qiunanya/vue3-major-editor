@@ -4,8 +4,15 @@ vue3-tiptap-editor是基于最新tiptap框架开发的vue3富文本组件，具�
 
 ### 安装依赖
 #### 在pnpm安装本地依赖
+```js
 pnpm add @majoreditor/ui
+```
 测试成功
+
+#### pnpm 更新依赖指定版本
+```js
+pnpm update xxxx@xx.x.x
+```
 
 #### pnpm 安装依赖到dev环境
 ```js

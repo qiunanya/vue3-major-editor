@@ -20,7 +20,6 @@
             :isShowToolbar="true"
             @onUploadImage="onUploadImage">
         </Vue3TiptapEditor>
-        <!-- <CustomEditor :message="'CustomEditor'" @onBold="onBold"></CustomEditor> -->
     </div>
 </template>
 

@@ -29,6 +29,8 @@ import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
 import TableRow from '@tiptap/extension-table-row';
 import Link from '@tiptap/extension-link';
+import Subscript from '@tiptap/extension-subscript';
+import Superscript from '@tiptap/extension-superscript';
 
 // 顶部工具
 import Toolkit from "./components/Toolkit.vue";
@@ -81,7 +83,7 @@ const CustomDocument = Document.extend({
 })
 
 const CustomTaskItem = TaskItem.extend({
-  content: 'inline',
+  content: 'inline*',
 })
 
 const majorEditor = new MajorEditor();
@@ -93,15 +95,13 @@ editor = new Editor({
         Color,
         StarterKit,
         Underline,
-        CusLineHeightExt, // 自定义行高组件会影响setParagraph方法，暂时注掉
+        CusLineHeightExt, // 自定义行高组件会影响setParagraph方法
         BackgroundColorExt,
         // CustomDocument,
-        CustomTaskItem.configure({
-            nested: true // 任务允许嵌套
-        }),
+        CustomTaskItem,
         TaskList,
         TextAlign.configure({
-            types: ['heading'],
+            types: ['heading','paragraph'],
         }),
         Images.configure({
             inline: true,
@@ -121,7 +121,17 @@ editor = new Editor({
             protocols: ['https']
         }),
         Placeholder.configure({
-            placeholder: 'Write something ...',
+            placeholder: '请输入内容...',
+        }),
+        Subscript.configure({
+            HTMLAttributes: {
+                class: 'custom-subscript-class',
+            },
+        }),
+        Superscript.configure({
+            HTMLAttributes: {
+                class: 'custom-superscript-class',
+            },
         })
     ],
     onCreate({editor}) {

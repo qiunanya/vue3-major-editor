@@ -86,7 +86,9 @@
         <CodeBgUI></CodeBgUI>
         <CodeBlockUI></CodeBlockUI>
         <BlockquoteUI></BlockquoteUI>
-
+        <SubscriptUI></SubscriptUI>
+        <SuperscriptUI></SuperscriptUI>
+        
         <NTooltip placement="bottom" trigger="hover">
             <template #trigger>
                 <button :class="[
@@ -262,6 +264,10 @@ import BulletListUI from './bullet-list/index.vue';
 import HorizontalRuleUI from './horizontal-rule/index.vue';
 // 段落
 import ParagraphUI from './paragraph/index.vue';
+// 上标
+import SuperscriptUI from './superscript/index.vue';
+// 下标
+import SubscriptUI from './subscript/index.vue';
 
 const { majorEditor, editor } = useSelectCore();
 const { message, dialog, modal } = useNaiveDiscrete();
