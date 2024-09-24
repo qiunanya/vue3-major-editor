@@ -141,8 +141,13 @@ importers:
 
   packages/editor: {}
 
+  packages/image-viewer: {}
+
   playground:
     dependencies:
+      image-viewer-vue3:
+        specifier: workspace:^
+        version: link:../packages/image-viewer
       vue3-tiptap-editor:
         specifier: workspace:^
         version: link:../packages/editor

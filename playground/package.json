@@ -12,6 +12,7 @@
     "author": "",
     "license": "MIT",
     "dependencies": {
+        "image-viewer-vue3": "workspace:^",
         "vue3-tiptap-editor": "workspace:^"
     }
 }

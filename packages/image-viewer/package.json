@@ -1,0 +1,26 @@
+{
+    "name": "image-viewer-vue3",
+    "private": "false",
+    "version": "1.0.0",
+    "description": "",
+    "type": "module",
+    "main": "./index.ts",
+    "scripts": {
+        "build": "pnpm run clean && vite build",
+        "clean": "rimraf dist",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "files": [
+        "dist",
+        "LICENSE",
+        "README.md",
+        "package.json"
+    ],
+    "keywords": [
+        "vue3",
+        "rich-text",
+        "editor"
+    ],
+    "author": "qiuny",
+    "license": "MIT"
+}
