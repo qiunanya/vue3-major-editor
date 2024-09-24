@@ -19,6 +19,16 @@
         "type": "git",
         "url": "https://github.com/qiunanya/vue3-major-editor/tree/main/packages/image-viewer"
     },
+    "exports": {
+        ".": {
+            "import": "./dist/vue3-image-viewer.es.ts",
+            "require": "./dist/vue3-image-viewer.umd.ts"
+        },
+        "./dist/style.css": {
+            "import": "./dist/style.css",
+            "require": "./dist/style.css"
+        }
+    },
     "files": [
         "dist",
         "LICENSE",

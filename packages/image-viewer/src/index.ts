@@ -1,6 +1,6 @@
-import { createElementVNode, render, h } from 'vue'
-import ImageViewer from './src/viewer.vue'
-import ImageViewerUI from './src/index.vue'
+import { createElementVNode, render, h, App } from 'vue'
+import ImageViewer from './components/viewer.vue'
+import ImageViewerUI from './components/index.vue'
 import VImageViewer from './directive/v-image-viewer'
 
 
@@ -14,7 +14,7 @@ let vnode;
  * @param {Object || App } app
  * @param {Object} options 
  */
-export default function install(app, options = {}) {
+export default function install(app:App, options = {}) {
     // 这里可以注册指令，因为App对象
     defaultOptions = options
     console.log(app, options, 'install');
@@ -26,7 +26,7 @@ export default function install(app, options = {}) {
 
 // 导出图片预览 API 
 function imageViewerApi (current="", list = []) {
-    var previewBox;
+    var previewBox:HTMLElement | null = null;
     if (previewBox) {
         previewBox&&document.body.removeChild(previewBox);
     } else {
