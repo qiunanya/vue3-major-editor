@@ -5,6 +5,9 @@ import dts from "vite-plugin-dts";
 
 export default defineConfig({
     plugins: [vue(), dts()],
+    server: {
+        port: 3000
+    },
     build: {
         lib: {
             entry: path.resolve(__dirname, "src/index.ts"),

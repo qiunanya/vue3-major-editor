@@ -50,4 +50,4 @@ function close () {
 
 </script>
 
-<style lang="scss" src="../styles/index.scss" scoped></style>
+<style lang="scss" src="../style/index.scss"></style>
