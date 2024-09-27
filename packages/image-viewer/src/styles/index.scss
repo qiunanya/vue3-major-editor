@@ -1,11 +1,19 @@
-.images-viewer-container__root {
-    --active-icon-color: #3A8DF5;
-    background: rgba(0, 0, 0, 0.6);
+.image-viewer-vue3__root {
     position: fixed;
-    top: 0;
-    left: 0;
-    top: 0;
-    bottom: 0;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+}
+.images-viewer-container__wrap {
+    --active-icon-color: #3A8DF5;
+    --active-text-color: var(--text-color, #eee);
+    background: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    top: 0px;
+    bottom: 0px;
     width: 100%;
     height: 100%;
     max-height: 100%;
@@ -18,4 +26,108 @@
     user-select: none;
     z-index: 9999;
     overflow: hidden;
+    .image-viewer-close__btn {
+        position: absolute;
+        top: 42px;
+        right: 43px;
+        background: rgba(0, 0, 0, .3);
+        border-radius: 50%;
+        width: 44px;
+        aspect-ratio: 1 / 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+        cursor: pointer;
+    }
+    .close-icon {
+        transition: fill .3s ease;
+    }
+    .close-icon:hover path {
+        fill: var(--active-icon-color);
+    }
+    .inner-image-wrap {
+        width: 100%;
+        height: 100%;
+        transform-origin: top left;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        perspective: 1000px;
+        transform-style: preserve-3d;
+        overflow: hidden;
+        color: var(--active-text-color);
+    }
+    .inner-image-wrap > .inner-viewer__image {
+        /* width: 100%;
+        height: 100%; */
+        flex: 0 1 auto;
+        z-index: 1;
+        /* transition: all 0.3s ease; */
+        /* display: block; */
+        -webkit-user-select: none;
+        user-select: none;
+        /* 保持宽高比显示，避免图片显示不全和被拉升 */
+        /* object-fit: contain; */
+        /* 图片会显示默认尺寸 */
+        /* margin: auto; */
+        /* 设置宽高为auto也能展示图片默认尺寸 */
+        /* width: auto;
+        height: auto; */
+    }
+  
+    .inner-viewer-action__wrap {
+        overflow: hidden;
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        text-align: center;
+        .toolbar__wrap {
+            padding: 8px 0;
+            overflow: hidden;
+            .tool-icon {
+                margin: 0 4px;
+            }
+            .tool-icon:hover path {
+                fill: var(--active-icon-color);
+            }
+        }
+        .navbar__wrap {
+            background-color: rgba(0, 0, 0, .3);
+            overflow: hidden;
+            .navbar-list-group {
+                box-sizing: content-box;
+                height: 4rem;
+                margin: 0;
+                list-style: none;
+                display: flex;
+                flex-wrap: nowrap;
+                align-items: center;
+                justify-content: center;
+                overflow-x: auto;
+                padding: 1px 0;
+            }
+            .navbar-list-group li.navbar-image__item {
+                display: block;
+                height: 100%;
+                width: 4rem;
+                transition: all .3s ease;
+                opacity: 0.5;
+                margin: 0 0.1rem;
+                background: url('https://picsum.photos/id/20/367/267');
+                background-size: 100% 100%;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+.cus-transition {
+    transition: all .3s ease;
+}
+.is-active-border-color {
+    border: 1px solid var(--active-icon-color);
+    opacity: 1 !important;
 }

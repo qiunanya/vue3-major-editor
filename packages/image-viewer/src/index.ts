@@ -6,7 +6,7 @@ import { ImageViewerOptions, ImageViewerConfig } from './types/image-viewer'
 
 
 // 默认配置
-let defaultOptions = {} 
+let defaultOptions:ImageViewerConfig = {};
 let vnode;
 
 /**
@@ -15,7 +15,7 @@ let vnode;
  * @param { Object | App } app
  * @param { ImageViewerConfig } config 
  */
-export default function install(app:App, config:ImageViewerConfig) {
+export default function install(app:App, config:ImageViewerConfig={}) {
     // 这里可以注册指令，因为App对象
     defaultOptions = config
     console.log(app, config, 'install');

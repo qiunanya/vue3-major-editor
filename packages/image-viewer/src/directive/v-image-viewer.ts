@@ -1,7 +1,7 @@
 import { h, render, DirectiveBinding, VNode } from 'vue';
 import ImageViewerUI from '../components/index.vue'
 const previewBox = document.createElement('div');
-previewBox.classList.add('viewer-box');
+previewBox.classList.add('image-viewer-vue3__root');
 let cusVnode;
 const VImageViewer = {
     // 在绑定元素的 attribute 前
