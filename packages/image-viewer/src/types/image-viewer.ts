@@ -6,6 +6,18 @@ export interface ImageViewerOptions {
 
 // 预览器配置项
 export interface ImageViewerConfig {
-    zoom?: number,
-    roate?: number
+    scaleRatio: number,
+    rotateRatio: number,
+    isEnableDrag: boolean,
+    isEnableWheel: boolean,
+    zIndex: number 
+}
+
+// 按照配置类型
+export interface ImageViewerInstallConfig {
+    scaleRatio?: number,
+    rotateRatio?: number,
+    isEnableDrag?: boolean,
+    isEnableWheel?: boolean,
+    zIndex?: number 
 }

@@ -109,23 +109,28 @@
                 overflow-x: auto;
                 padding: 1px 0;
             }
-            .navbar-list-group li.navbar-image__item {
+            .navbar-list-group li {
+                height: 100%;
+            }
+            .navbar-list-group .navbar-image__item {
                 display: block;
                 height: 100%;
                 width: 4rem;
                 transition: all .3s ease;
                 opacity: 0.5;
                 margin: 0 0.1rem;
-                background: url('https://picsum.photos/id/20/367/267');
-                background-size: 100% 100%;
                 cursor: pointer;
+                &:hover {
+                    opacity: 1;
+                }
             }
         }
     }
 }
 
 .cus-transition {
-    transition: all .3s ease;
+    transform: scale(1);
+    transition: transform 0.3s ease;
 }
 .is-active-border-color {
     border: 1px solid var(--active-icon-color);

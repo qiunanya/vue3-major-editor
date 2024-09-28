@@ -40,6 +40,10 @@ export const useAction = () => {
         imageCore.rotate('-')
     }
 
+    const closeViewer = () => {
+        imageCore.destroyed()
+    }
+
     const loadImage = (evt:Event) => {
         imageCore.setImage(imageRef.value)
 
@@ -47,15 +51,15 @@ export const useAction = () => {
         im.src = (imageRef.value&&imageRef.value.src) as string
 
         if (imageRef.value && imageVieverWidgetRef.value) {
-            const bodyRect = imageVieverWidgetRef.value.getBoundingClientRect()
+            const Rect = imageVieverWidgetRef.value.getBoundingClientRect()
             // 设置图片真实大小，根据可视区域动态设置，图片过大，需要完整显示
-            if (im.width<bodyRect.width&&im.height<bodyRect.height) {
+            if (im.width<Rect.width&&im.height<Rect.height) {
                 imageRef.value.style.width = im.width + 'px'
                 imageRef.value.style.height = im.height + 'px'
             } else {
                 // 避免图片宽度被拉变形，所以大图片宽度 除以 2
-                imageRef.value.style.width = bodyRect.width / 1.3 + 'px'
-                imageRef.value.style.height = bodyRect.height / 1.3 + 'px'
+                imageRef.value.style.width = Rect.width / 1.3 + 'px'
+                imageRef.value.style.height = Rect.height / 1.3 + 'px'
             }
         }
         
@@ -81,6 +85,7 @@ export const useAction = () => {
         zoomIn,
         zoomOut,
         clockwise,
-        counterclockwise
+        counterclockwise,
+        closeViewer
     }
 }
