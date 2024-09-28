@@ -6,9 +6,8 @@
                 <path d="M236.8 848c-12.8 0-22.4-3.2-32-12.8-16-16-16-44.8 0-60.8l604.8-576c16-16 44.8-16 60.8 0s16 44.8 0 60.8l-604.8 576c-9.6 9.6-19.2 12.8-28.8 12.8z" fill="#eee"></path>
             </svg>
         </div>
-        
         <div class="inner-image-wrap">
-            <img ref="imageRef" class="inner-viewer__image cus-transition" @load="loadImage" @error="errorImage" :src="current" alt="" style="width: 120px;height: 120px;">
+            <img ref="imageRef" class="inner-viewer__image cus-transition" @load="loadImage" @error="errorImage" :src="updateImage||current" alt="" style="width: 120px;height: 120px;">
         </div>
         
         <div class="inner-viewer-action__wrap">
@@ -55,9 +54,7 @@
             </div>
             <div class="navbar__wrap">
                 <ul class="navbar-list-group cus-transition">
-                    <!-- <li class="navbar-image__item is-active-border-color"></li> -->
-                    <!-- <li><img class="navbar-image__item is-active-border-color" src="https://picsum.photos/id/20/367/267"/></li>
-                    <li><img class="navbar-image__item" src="https://picsum.photos/id/20/367/267"/></li> -->
+                    <!--<li><img class="navbar-image__item" src="https://picsum.photos/id/20/367/267"/></li> -->
                     <li v-for="(item, index) in images" :key="index">
                         <img class="navbar-image__item" :src="item" @click.stop.prevent="clickImge(item, index)"/>
                     </li>
@@ -67,7 +64,7 @@
     </div>
 </template>
 <script setup>
-import { watch } from 'vue';
+import { watch, ref } from 'vue';
 import { useAction } from './useAction';
 
 const props = defineProps({
@@ -121,9 +118,11 @@ const {
     closeViewer, 
 } = useAction();
 
-const emits = defineEmits(['on-close', 'on-update-current']);
+const emits = defineEmits(['on-close', 'onUpdate:value']);
 
-watch(() => props.current, (newValue, oldValue) => {
+const updateImage = ref('')
+
+watch(() => props.value, (newValue, oldValue) => {
   console.log(`visible 从 ${oldValue} 变为了 ${newValue}`);
 }, {
     deep: true,
@@ -131,10 +130,9 @@ watch(() => props.current, (newValue, oldValue) => {
 });
 
 function clickImge (item, index) {
-    this.current = item
-    // emits('on-update-current', { item, index })
+    updateImage.value = item
     props.onUpdateCurrent(item, index)
-    console.log(item, index)
+    console.log(item, index, updateImage.value)
 }
 
 function close () {
@@ -142,6 +140,7 @@ function close () {
     props.onClose()
     closeViewer()
     emits('on-close')
+    updateImage.value = ""
 }
 
 </script>

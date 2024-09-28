@@ -27,25 +27,28 @@ const VImageViewer = {
         // el.style.color = binding.value
         // console.log(el, binding, vnode, 'mounted');
         // console.log(binding.arg, binding.value, 'binding')
+        
         imageList.push(el.src)
         const currentImage = ref<string>(el.src)
+
         el.addEventListener('click', function(evt) {
-            cusVnode = h(ImageViewerUI, {
-                visible: true,
-                current: currentImage.value,
-                zIndex: config.zIndex,
-                images: imageList,
-                onUpdateCurrent: (item:string, index:number) => {
-                    currentImage.value = item
-                    // cusVnode.props&&(cusVnode.props.current = item)
-                    console.log(item, 7899)
-                },
-                onClose: () => {
-                    // console.log(cusVnode, 'cusVnode')
-                    el.removeEventListener('click', () => {});
-                    document.body.removeChild(previewBox);
-                }
-            })
+            // 初始化 cusVnode，只创建一次
+            if (!cusVnode) {
+                cusVnode = h(ImageViewerUI, {
+                    visible: true,
+                    current: currentImage.value,
+                    zIndex: config.zIndex,
+                    images: imageList,
+                    onUpdateCurrent: (item:string, index:number) => {
+                        
+                    },
+                    onClose: () => {
+                        // console.log(cusVnode, 'cusVnode')
+                        el.removeEventListener('click', () => {});
+                        document.body.removeChild(previewBox);
+                    }
+                })
+            }
             render(cusVnode, previewBox);
             document.body.appendChild(previewBox)
         });
