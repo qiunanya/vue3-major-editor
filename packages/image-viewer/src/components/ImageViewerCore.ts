@@ -35,10 +35,10 @@ class ImageViewerCore {
 
     private initialize () {
         this.config.isEnableWheel&&window.addEventListener('wheel', this.onWheel.bind(this))
-        window.addEventListener('contextmenu', (evt) => {
-            evt.preventDefault();
-            evt.stopPropagation();
-        })
+        // window.addEventListener('contextmenu', (evt) => {
+        //     evt.preventDefault();
+        //     evt.stopPropagation();
+        // })
     }
 
     private onWheel (evt:WheelEvent) {
