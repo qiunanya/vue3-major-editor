@@ -12,6 +12,7 @@ class ImageViewerCore {
     private static total: number = 0;
     private currentImage: HTMLImageElement | null = null;
     private totalRotate = 0;
+    private isMouseDown = false;
 
     private config:ImageViewerConfig = {
         scaleRatio: 1,
@@ -34,6 +35,10 @@ class ImageViewerCore {
 
     private initialize () {
         this.config.isEnableWheel&&window.addEventListener('wheel', this.onWheel.bind(this))
+        window.addEventListener('contextmenu', (evt) => {
+            evt.preventDefault();
+            evt.stopPropagation();
+        })
     }
 
     private onWheel (evt:WheelEvent) {
@@ -154,20 +159,26 @@ class ImageViewerCore {
 
     private onMouseMove (evt:MouseEvent) {
         let this_ = this
+        this.isMouseDown = true
+
         if (this.currentImage) {
             this.currentImage.style.position = 'absolute'
             const offleft = evt.clientX - this.currentImage.offsetLeft;
             const offtop = evt.clientY - this.currentImage.offsetTop; 
+
             document.onmousemove = function (event) {
                 event = event || window.event // 兼容性写法
-                let left = event.clientX - offleft, 
-                top = event.clientY - offtop;
-            
-                this_.currentImage&&(this_.currentImage.style.left = `${left}px`)
-                this_.currentImage&&(this_.currentImage.style.top = `${top}px`)
+                if (this_.isMouseDown) {
+                    let left = event.clientX - offleft, 
+                    top = event.clientY - offtop;
+                
+                    this_.currentImage&&(this_.currentImage.style.left = `${left}px`)
+                    this_.currentImage&&(this_.currentImage.style.top = `${top}px`)
+                }
             }
 
             document.onmouseup = function () {
+                this_.isMouseDown = false
                 document.onmousemove = null
                 document.onmouseup = null
             }

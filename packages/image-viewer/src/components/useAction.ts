@@ -66,8 +66,8 @@ export const useAction = () => {
             }
         }
         
-        console.log('图片加载成功：',evt)
-        console.log('图片信息：', im.height, im.width)
+        // console.log('图片加载成功：',evt)
+        // console.log('图片信息：', im.height, im.width)
     }
 
     const errorImage = (evt:Event) => {
