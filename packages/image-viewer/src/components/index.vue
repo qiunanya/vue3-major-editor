@@ -122,7 +122,7 @@ const emits = defineEmits(['on-close', 'onUpdate:value']);
 
 const updateImage = ref('')
 
-watch(() => props.value, (newValue, oldValue) => {
+watch(() => props.current, (newValue, oldValue) => {
   console.log(`visible 从 ${oldValue} 变为了 ${newValue}`);
 }, {
     deep: true,

@@ -42,7 +42,9 @@ export const useAction = () => {
 
     const closeViewer = () => {
         imageCore.destroyed()
-        imageRef.value = null
+        if (imageRef.value) {
+
+        }
     }
 
     const loadImage = (evt:Event) => {
