@@ -3,6 +3,7 @@
  * 
  * @param { Function } fun 
  * @param { Number } delay 
+ * @author qiuny
  * @returns 
  */
 export const debounce = (fun: Function, delay:number) => {
