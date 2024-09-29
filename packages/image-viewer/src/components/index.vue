@@ -56,7 +56,7 @@
                 <ul class="navbar-list-group cus-transition">
                     <!--<li><img class="navbar-image__item" src="https://picsum.photos/id/20/367/267"/></li> -->
                     <li v-for="(item, index) in images" :key="index">
-                        <img class="navbar-image__item" :src="item" @click.stop.prevent="clickImge(item, index)"/>
+                        <img class="navbar-image__item" :src="item" @click.stop.prevent="onClickNavImage(item, index)"/>
                     </li>
                 </ul>
             </div>
@@ -66,6 +66,7 @@
 <script setup>
 import { watch, ref } from 'vue';
 import { useAction } from './useAction';
+import { debounce } from '../utils';
 
 const props = defineProps({
     visible: {
@@ -128,6 +129,8 @@ watch(() => props.current, (newValue, oldValue) => {
     deep: true,
     immediate: true
 });
+
+const onClickNavImage = debounce(clickImge, 500)
 
 function clickImge (item, index) {
     updateImage.value = item
