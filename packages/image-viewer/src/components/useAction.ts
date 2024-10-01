@@ -1,11 +1,15 @@
 import ImageViewerCore from './ImageViewerCore';
 import { ref, onMounted } from 'vue';
 
-export const useAction = () => {
+export const useAction = (images: string[]) => {
     // const bodyRect = document.body.getBoundingClientRect()
     const imageVieverWidgetRef = ref<HTMLElement | null>(null)
     const imageRef = ref<HTMLImageElement|null>(null)
     const imageCore = ImageViewerCore.getInStance()
+    const currentPage = ref(1)
+    const pageSize = ref(10)
+    const totalPage = ref(0)
+    const pageData = ref<string[]>([])
 
     function inevrtY(evt:Event) {
         evt.preventDefault();
@@ -74,6 +78,36 @@ export const useAction = () => {
         console.log('图片加载错误：',evt)
     }
 
+    const prevPage = () => {
+        if (currentPage.value > 1) {
+            currentPage.value--;
+            pagination(currentPage.value, pageSize.value);
+        }
+    }
+
+    const nextPage = () => {
+        if (currentPage.value < totalPage.value) {
+            currentPage.value++;
+            pagination(currentPage.value, pageSize.value);
+        }
+    }
+
+    const initPage = (current:number, size:number) => {
+        currentPage.value = current
+        pageSize.value = size
+        pagination(current, size)
+    }
+
+    const pagination = (currentPage:number, pageSize:number) => {
+        var num = images.length
+        totalPage.value = Math.ceil(num / pageSize)
+        var startIndex = pageSize * (currentPage - 1)
+        var endIndex = startIndex + pageSize
+        pageData.value = images.slice(startIndex, endIndex)
+    }
+
+    pagination(1, 10)
+
     onMounted(() => {
         // imageCore.setImage(imageRef.value)
     })
@@ -89,6 +123,12 @@ export const useAction = () => {
         zoomOut,
         clockwise,
         counterclockwise,
-        closeViewer
+        closeViewer,
+        pageData,
+        prevPage,
+        nextPage,
+        initPage,
+        currentPage,
+        totalPage
     }
 }

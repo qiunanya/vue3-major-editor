@@ -107,27 +107,37 @@
         .navbar-control__wrap {
             padding: 8px 0;
             overflow: hidden;
+            position: relative;
             .tool-item-icon__btn {
                 margin: 0 4px;
+            }
+            .viewer-pagination__info {
+                position: absolute;
+                left: 20px;
+                color: #eee;
             }
         }
         .navbar-thumbnail__wrap {
             background-color: rgba(0, 0, 0, .3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
             overflow: hidden;
             .navbar-list-group {
-                box-sizing: content-box;
                 height: 4rem;
-                margin: 0;
+                // margin: 4px auto;
+                margin-top: 3px;
+                margin-bottom: 3px;
                 list-style: none;
                 display: flex;
                 flex-wrap: nowrap;
                 align-items: center;
                 justify-content: center;
-                overflow-x: auto;
-                padding: 1px 0;
-            }
-            .navbar-list-group li {
-                height: 100%;
+                // overflow: hidden;
+                // padding: 1px 0px;
+                padding: 0;
+                box-sizing: border-box;
+                line-height: 1;
             }
             .navbar-list-group .navbar-image__item {
                 display: block;
@@ -136,7 +146,12 @@
                 transition: all .3s ease;
                 opacity: 0.5;
                 margin: 0 0.1rem;
+                border: 2px solid transparent;
                 cursor: pointer;
+                &.nav-active-current__img {
+                    opacity: 1;
+                    border: 2px solid var(--active-icon-color);
+                }
                 &:hover {
                     opacity: 1;
                 }

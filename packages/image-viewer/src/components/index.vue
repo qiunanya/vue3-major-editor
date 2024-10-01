@@ -9,28 +9,21 @@
         <div class="inner-image-wrap">
             <img ref="imageRef" class="inner-viewer__image cus-transition" @load="loadImage" @error="errorImage" :src="updateImage||current" alt="" style="width: 120px;height: 120px;">
         </div>
-        <div class="viewer-previous-icon">
+        <div class="viewer-previous-icon" @click.stop.prevent="previous">
             <svg class="icon-is-hover cus-cursor" viewBox="0 0 1024 1024" width="25" height="25">
                 <path d="M758.656 937.344a32 32 0 1 1-45.31199999 45.312l-448.00000001-448.128a32 32 0 0 1 0-45.248l448.00000001-447.936a32 32 0 1 1 45.31199999 45.312l-425.408 425.28000001L758.656 937.344z" fill="#eee"></path>
             </svg>
         </div>
-        <div class="viewer-next-icon">
+        <div class="viewer-next-icon" @click.stop.prevent="next">
             <svg class="icon-is-hover cus-cursor" viewBox="0 0 1024 1024" width="25" height="25">
                 <path d="M265.344 86.656a32 32 0 1 1 45.312-45.312l448 448.128a32 32 0 0 1 0 45.248l-448 447.936a32 32 0 1 1-45.312-45.312l425.408-425.28L265.344 86.656z" fill="#eee"></path>
             </svg> 
         </div>
         <div class="nav-image-viewer__wrap">
-            <p class="viewer-image-name__wrap"></p>
             <div class="navbar-control__wrap">
-                <!-- 上一张 -->
-                <!-- <svg class="viewer-pre-icon icon-is-hover" viewBox="0 0 1024 1024" width="25" height="25">
-                    <path d="M836.266667 163.84c-6.826667 0-13.653333 1.706667-18.773334 6.826667L366.933333 484.693333c-15.36 10.24-18.773333 32.426667-8.533333 47.786667 1.706667 3.413333 5.12 6.826667 8.533333 8.533333L817.493333 853.333333c15.36 10.24 37.546667 6.826667 47.786667-8.533333 3.413333-5.12 6.826667-11.946667 6.826667-18.773333V197.973333c-1.706667-18.773333-17.066667-34.133333-35.84-34.133333zM273.066667 170.666667c-18.773333 0-34.133333 15.36-34.133334 34.133333v614.4c0 18.773333 15.36 34.133333 34.133334 34.133333s34.133333-15.36 34.133333-34.133333V204.8c0-18.773333-15.36-34.133333-34.133333-34.133333z" fill="#eee"></path>
-                </svg>  -->
-                <!-- 下一张 -->
-                <!-- <svg class="viewer-next-icon icon-is-hover" viewBox="0 0 1024 1024" width="25" height="25">
-                    <path d="M250.88 821.76c-28.16 16.384-62.976-4.096-62.976-36.352V238.592c0-32.256 34.816-52.736 62.976-36.352L724.992 476.16c28.16 15.872 28.16 56.32 0 72.704L250.88 821.76z" fill="#eee"></path>
-                    <path d="M735.744 801.792V222.72c0-26.624 21.504-48.64 48.64-48.64h3.072c26.624 0 48.64 21.504 48.64 48.64v579.072c0 26.624-21.504 48.64-48.64 48.64h-3.072c-26.624-0.512-48.64-22.016-48.64-48.64z" fill="#eee"></path>
-                </svg> -->
+                <div class="viewer-pagination__info">
+                    共{{images.length}}张/{{totalPage}}页&nbsp;&nbsp;第{{currentPage}}页
+                </div>
                 <!-- 放大 -->
                 <svg @click.stop.prevent="zoomIn" class="tool-item-icon__btn icon-is-hover" viewBox="0 0 1024 1024" width="25" height="25">
                     <path d="M476.48 903.36C248.96 903.36 64 718.4 64 491.2S248.96 78.72 476.48 78.72s412.48 184.96 412.48 412.48-185.28 412.16-412.48 412.16z m0-741.12c-181.44 0-328.96 147.52-328.96 328.96s147.52 328.96 328.96 328.96 328.96-147.52 328.96-328.96S657.6 162.24 476.48 162.24z" fill="#eee"></path>
@@ -62,12 +55,19 @@
                 </svg>
             </div>
             <div class="navbar-thumbnail__wrap">
-                <ul class="navbar-list-group cus-transition">
-                    <!--<li><img class="navbar-image__item" src="https://picsum.photos/id/20/367/267"/></li> -->
-                    <li v-for="(item, index) in images" :key="index">
-                        <img class="navbar-image__item" :src="item" @click.stop.prevent="onClickNavImage(item, index)"/>
-                    </li>
-                </ul>
+                <svg @click.stop.prevent="prevPage" class="icon-is-hover cus-cursor" viewBox="0 0 1024 1024" width="25" height="25">
+                    <path d="M758.656 937.344a32 32 0 1 1-45.31199999 45.312l-448.00000001-448.128a32 32 0 0 1 0-45.248l448.00000001-447.936a32 32 0 1 1 45.31199999 45.312l-425.408 425.28000001L758.656 937.344z" fill="#eee"></path>
+                </svg>
+                <div class="navbar-list-group">
+                    <img 
+                        :class="['navbar-image__item', {'nav-active-current__img': currentIndex === index }]" 
+                        v-for="(item, index) in pageData" 
+                        :key="index" :src="item"  
+                        @click.stop.prevent="onClickNavImage(item, index)"/>
+                </div>
+                <svg @click.stop.prevent="nextPage" class="icon-is-hover cus-cursor" viewBox="0 0 1024 1024" width="25" height="25">
+                    <path d="M265.344 86.656a32 32 0 1 1 45.312-45.312l448 448.128a32 32 0 0 1 0 45.248l-448 447.936a32 32 0 1 1-45.312-45.312l425.408-425.28L265.344 86.656z" fill="#eee"></path>
+                </svg> 
             </div>
         </div>
     </div>
@@ -125,30 +125,55 @@ const {
     inevrtX,
     clockwise,
     counterclockwise,
-    closeViewer, 
-} = useAction();
+    closeViewer,
+    prevPage,
+    nextPage,
+    pageData,
+    initPage,
+    currentPage,
+    totalPage 
+} = useAction(props.images);
 
 const emits = defineEmits(['on-close', 'onUpdate:value']);
 
 const updateImage = ref('')
+const currentIndex = ref(0)
 
 watch(() => props.current, (newValue, oldValue) => {
-  console.log(`visible 从 ${oldValue} 变为了 ${newValue}`);
+    if (newValue) {
+        const findIndex = props.images.findIndex(el => el === props.current)
+        if (findIndex !== -1) {
+            currentIndex.value = findIndex
+        }
+        initPage(1, 10)
+    }
 }, {
     deep: true,
     immediate: true
 });
 
+const previous = () => {
+    if (currentIndex.value > 0) {
+        currentIndex.value--;
+        updateImage.value = props.images[currentIndex.value]
+    }
+}
+const next = () => {
+    if (currentIndex.value < props.images.length-1) {
+        currentIndex.value++;
+        updateImage.value = props.images[currentIndex.value]
+    }
+}
+
 const onClickNavImage = debounce(clickImge, 360)
 
 function clickImge (item, index) {
+    currentIndex.value = index
     updateImage.value = item
     props.onUpdateCurrent(item, index)
-    console.log(item, index, updateImage.value)
 }
 
 function close () {
-    // props.visible = false
     props.onClose()
     closeViewer()
     emits('on-close')
