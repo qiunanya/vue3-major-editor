@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import path from "path";
 import vue from "@vitejs/plugin-vue";
 import dts from "vite-plugin-dts";
+import pkg from './package.json';
 
 export default defineConfig({
     plugins: [vue(), dts()],
@@ -11,8 +12,9 @@ export default defineConfig({
     build: {
         lib: {
             entry: path.resolve(__dirname, "src/index.ts"),
-            name: "image-viewer-vue3",
-            fileName: (format) => `image-viewer-vue3.${format}.ts`,
+            name: pkg.scope,
+            fileName: 'index',
+            formats:['es','umd','iife']
         },
         rollupOptions: {
             external: ["vue"],

@@ -58,6 +58,7 @@ export const useAction = (images: string[]) => {
         im.src = (imageRef.value&&imageRef.value.src) as string
 
         if (imageRef.value && imageVieverWidgetRef.value) {
+            imageRef.value.style.transform = 'none'
             const Rect = imageVieverWidgetRef.value.getBoundingClientRect()
             // 设置图片真实大小，根据可视区域动态设置，图片过大，需要完整显示
             if (im.width<Rect.width&&im.height<Rect.height) {
@@ -70,7 +71,7 @@ export const useAction = (images: string[]) => {
             }
         }
         
-        // console.log('图片加载成功：',evt)
+        console.log('图片加载成功：',evt)
         // console.log('图片信息：', im.height, im.width)
     }
 

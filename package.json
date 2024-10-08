@@ -10,6 +10,7 @@
     "author": "",
     "license": "MIT",
     "devDependencies": {
+        "@arethetypeswrong/cli": "^0.16.4",
         "@rollup/plugin-terser": "^0.4.4",
         "@vitejs/plugin-vue": "^5.0.5",
         "naive-ui": "^2.38.2",
