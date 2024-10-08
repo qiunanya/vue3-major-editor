@@ -5,13 +5,13 @@
     "version": "1.0.0",
     "description": "image-viewr-vue3 是一款Vue3专属轻量级图片查看器",
     "type": "module",
-    "main": "./dist/index.umd.cjs",
-    "module": "./dist/index.js",
-    "unpkg": "./dist/index.iife.js",
-    "types": "./dist/index.d.ts",
+    "main": "./lib/index.js",
+    "module": "./es/index.js",
+    "types": "./lib/index.d.ts",
     "scripts": {
         "dev": "vite",
         "build": "pnpm run clean && vue-tsc --noEmit && vite build",
+        "build:umd": "pnpm run clean && vue-tsc --noEmit && vite build --config vite.bundle.config.ts",
         "clean": "rimraf dist",
         "test": "echo \"Error: no test specified\" && exit 1",
         "check-exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm"
@@ -26,16 +26,14 @@
     },
     "exports": {
         ".": {
-            "types": "./dist/index.d.js",
-            "import": "./dist/index.js",
-            "require": "./dist/index.umd.cjs"
+            "import": "./es/index.js",
+            "require": "./lib/index.js"
         }
     },
     "files": [
         "dist",
         "LICENSE",
-        "README.md",
-        "package.json"
+        "README.md"
     ],
     "keywords": [
         "vue",

@@ -4,6 +4,9 @@ bin-release/
 [Oo]bj/
 [Bb]in/
 dist
+es
+lib
+umds
 node_modules
 # Other files and folders
 .settings/
