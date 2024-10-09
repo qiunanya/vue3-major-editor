@@ -21,3 +21,5 @@ export interface ImageViewerInstallConfig {
     isEnableWheel?: boolean,
     zIndex?: number 
 }
+
+export {}

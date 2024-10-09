@@ -5,9 +5,9 @@
     "version": "1.0.0",
     "description": "image-viewr-vue3 是一款Vue3专属轻量级图片查看器",
     "type": "module",
-    "main": "./lib/index.js",
-    "module": "./es/index.js",
-    "types": "./lib/index.d.ts",
+    "main": "./dist/lib/index.js",
+    "module": "./dist/es/index.js",
+    "types": "./dist/es/index.d.ts",
     "scripts": {
         "dev": "vite",
         "build": "pnpm run clean && vue-tsc --noEmit && vite build",
@@ -26,14 +26,16 @@
     },
     "exports": {
         ".": {
-            "import": "./es/index.js",
-            "require": "./lib/index.js"
+            "types": "./dist/es/index.d.ts",
+            "import": "./dist/es/index.js",
+            "require": "./dist/lib/index.js"
         }
     },
     "files": [
         "dist",
         "LICENSE",
-        "README.md"
+        "README.md",
+        "package.json"
     ],
     "keywords": [
         "vue",
