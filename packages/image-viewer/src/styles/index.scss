@@ -26,6 +26,11 @@
     user-select: none;
     z-index: 9999;
     overflow: hidden;
+    opacity: 0;
+    transition: opacity 1s ease;
+    &.is-active {
+        opacity: 1;
+    }
     .image-viewer-close__btn {
         position: absolute;
         top: 42px;

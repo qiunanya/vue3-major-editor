@@ -1,5 +1,5 @@
 ### Vue3 图片预览器
-image-viewr-vue3 是一款Vue3专属轻量级图片查看器。
+image-viewr-vue3 是一款Vue3专属轻量级图片查看器。目前仅支持PC端。
 
 #### 实现功能
 * 组件预览图片

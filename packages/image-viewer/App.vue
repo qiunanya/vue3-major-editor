@@ -18,13 +18,22 @@
         <img class="img-item" src="https://picsum.photos/id/19/2500/1667" v-image-viewer/>
         <img class="img-item" src="https://picsum.photos/id/11/2500/1667" v-image-viewer/>
     </div>
+    <div ref="imageViewerWidgetRef" :class="['container__wrap', { 'is-active': visible }]">
+        我是一个带淡入淡出动画的 div
+    </div>
+  <button @click="toggleVisibility">{{ visible ? '隐藏' : '显示' }}</button>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import { onClose } from './src/index'
 
+const visible = ref(false)
 const handleClose = () => {
     onClose()
+}
+const toggleVisibility = () => {
+    visible.value = !visible.value
 }
 </script>
 
@@ -34,5 +43,13 @@ const handleClose = () => {
     aspect-ratio: 1 / 1;
     border-radius: 8px;
     margin: 0 10px;
+}
+.container__wrap {
+  opacity: 0;
+  transition: opacity 5s ease;
+}
+
+.is-active {
+  opacity: 1;
 }
 </style>

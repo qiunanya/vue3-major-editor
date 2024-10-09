@@ -1,4 +1,4 @@
-import { h, render, DirectiveBinding, VNode, ref } from 'vue';
+import { h, render, DirectiveBinding, VNode, ref, nextTick } from 'vue';
 import ImageViewerUI from '../components/index.vue';
 import ImageViewerCore from '../components/ImageViewerCore';
 
