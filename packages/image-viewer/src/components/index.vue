@@ -71,7 +71,7 @@
                     :class="['navbar-image__item', {'nav-active-current__img': currentIndex === index }]" 
                     v-for="(item, index) in pageData" 
                     :key="index" :src="item"  
-                    @click.stop.prevent="onClickNavImage(item, index)"/>
+                    @click.stop.prevent="onClickNavImage($event, item, index)"/>
             </div>
             <svg @click.stop.prevent="nextPage" class="icon-is-hover cus-cursor" viewBox="0 0 1024 1024" width="25" height="25">
                 <path d="M265.344 86.656a32 32 0 1 1 45.312-45.312l448 448.128a32 32 0 0 1 0 45.248l-448 447.936a32 32 0 1 1-45.312-45.312l425.408-425.28L265.344 86.656z" fill="#eee"></path>
@@ -79,11 +79,16 @@
         </div>
     </div>
 </div>
+
+<HotKeys v-model:hotkey="hotkey" :is-active-key.camel="isActiveKey"></HotKeys>
 </template>
 <script setup>
 import { watch, ref } from 'vue';
 import { useAction } from './useAction';
 import { debounce } from '../utils';
+import { FlipAnimate } from './flip-animate';
+import HotKeys from './HotKeys.vue';
+import { useCusShortKey } from '../utils/hotkeys';
 
 const props = defineProps({
     visible: {
@@ -144,6 +149,27 @@ const {
 
 const emits = defineEmits(['on-close', 'onUpdate:value']);
 
+// 快捷键
+const hotkey = ref('')
+const isActiveKey = ref(false)
+useCusShortKey({'->':  (event, handler) => {
+    console.log(event, 55555)
+    toggleHotkey(event, handler, true)
+}})
+// isPrevent：true阻止浏览器默认快捷键
+function toggleHotkey (event, handler, isPrevent = false) {
+    if (isPrevent) {
+        event.preventDefault()
+    }
+
+    const { key } = handler;
+    hotkey.value = key
+    isActiveKey.value = true
+    // setTimeout(() => {
+    //     isActiveKey.value = false
+    // }, 1000)
+}
+
 const updateImage = ref('')
 const currentIndex = ref(0)
 
@@ -175,9 +201,13 @@ const next = () => {
 
 const onClickNavImage = debounce(clickImge, 360)
 
-function clickImge (item, index) {
+function clickImge (evt,item, index) {
+    const firstRect = evt.target.getBoundingClientRect()
+    imageRef.value.src = evt.target.src
+    const lastRect = imageRef.value.getBoundingClientRect()
     currentIndex.value = index
-    updateImage.value = item
+    FlipAnimate(imageRef.value, firstRect, lastRect)
+    // updateImage.value = item
     props.onUpdateCurrent(item, index)
 }
 

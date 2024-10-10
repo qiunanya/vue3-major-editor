@@ -92,6 +92,9 @@ importers:
       events:
         specifier: ^3.3.0
         version: 3.3.0
+      hotkeys-js:
+        specifier: ^3.13.7
+        version: 3.13.7
       sass:
         specifier: ^1.77.5
         version: 1.77.5
@@ -1198,6 +1201,9 @@ packages:
   highlight.js@11.9.0:
     resolution: {integrity: sha512-fJ7cW7fQGCYAkgv4CPfwFHrfd/cLS4Hau96JuJ+ZTOWhjnhoeN1ub1tFmALm/+lW5z4WCAuAV9bm05AP0mS6Gw==}
     engines: {node: '>=12.0.0'}
+
+  hotkeys-js@3.13.7:
+    resolution: {integrity: sha512-ygFIdTqqwG4fFP7kkiYlvayZppeIQX2aPpirsngkv1xM1lP0piDY5QEh68nQnIKvz64hfocxhBaD/uK3sSK1yQ==}
 
   immutable@4.3.6:
     resolution: {integrity: sha512-Ju0+lEMyzMVZarkTn/gqRpdqd5dOPaz1mCZ0SH3JV6iFw81PldE/PEB1hWVEA288HPt4WXW8O7AWxB10M+03QQ==}
@@ -2807,6 +2813,8 @@ snapshots:
   highlight.js@10.7.3: {}
 
   highlight.js@11.9.0: {}
+
+  hotkeys-js@3.13.7: {}
 
   immutable@4.3.6: {}
 
