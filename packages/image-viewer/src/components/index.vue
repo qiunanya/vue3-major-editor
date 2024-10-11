@@ -68,6 +68,7 @@
             </svg>
             <div class="navbar-list-group">
                 <img 
+                    :id="`navImage${index}`"
                     :class="['navbar-image__item', {'nav-active-current__img': currentIndex === index }]" 
                     v-for="(item, index) in pageData" 
                     :key="index" :src="item"  
@@ -78,9 +79,11 @@
             </svg> 
         </div>
     </div>
+
+    <HotKeys v-model:hotkey="hotkey" :is-active-key.camel="isActiveKey"></HotKeys>
+
 </div>
 
-<HotKeys v-model:hotkey="hotkey" :is-active-key.camel="isActiveKey"></HotKeys>
 </template>
 <script setup>
 import { watch, ref } from 'vue';
@@ -152,22 +155,77 @@ const emits = defineEmits(['on-close', 'onUpdate:value']);
 // 快捷键
 const hotkey = ref('')
 const isActiveKey = ref(false)
-useCusShortKey({'->':  (event, handler) => {
-    console.log(event, 55555)
+// next
+useCusShortKey({'right': (event, handler) => {
+    next()
     toggleHotkey(event, handler, true)
 }})
-// isPrevent：true阻止浏览器默认快捷键
-function toggleHotkey (event, handler, isPrevent = false) {
-    if (isPrevent) {
-        event.preventDefault()
+// previous
+useCusShortKey({'left': (event, handler) => {
+    previous()
+    toggleHotkey(event, handler, true)
+}})
+// nextPage
+useCusShortKey({'ctrl+right': (event, handler) => {
+    nextPage()
+    toggleHotkey(event, handler, true)
+}})
+// prevPage
+useCusShortKey({'ctrl+left': (event, handler) => {
+    prevPage()
+    toggleHotkey(event, handler, true)
+}})
+// inevrtY
+useCusShortKey({'ctrl+i+y': (event, handler) => {
+    inevrtY(event)
+    toggleHotkey(event, handler, true)
+}})
+// inevrtX
+useCusShortKey({'ctrl+i+x': (event, handler) => {
+    inevrtX(event)
+    toggleHotkey(event, handler, true)
+}})
+// Rotate 90 degrees clockwise
+useCusShortKey({'ctrl+c+r': (event, handler) => {
+    clockwise(event)
+    toggleHotkey(event, handler, true)
+}})
+// Rotate 90 degrees counterclockwise
+useCusShortKey({'ctrl+c+l': (event, handler) => {
+    counterclockwise(event)
+    toggleHotkey(event, handler, true)
+}})
+// close
+useCusShortKey({'esc':  (event, handler) => {
+    close()
+    toggleHotkey(event, handler, true)
+}})
+// scale
+useCusShortKey({'ctrl+*': (event, handler) => {
+    switch (event.key) {
+        case '-':
+            zoomOut(event)
+            toggleHotkey(event, handler, true, 'ctrl + '+event.key)
+            break;
+        case '+':
+            zoomIn(event)
+            toggleHotkey(event, handler, true, 'ctrl + '+event.key)
+            break;
+        default:
+            break;
     }
+}})
+
+// isPrevent：true阻止浏览器默认快捷键
+function toggleHotkey (event, handler, isPrevent = false, cusKey = "") {
+    if (isPrevent) event.preventDefault()
 
     const { key } = handler;
-    hotkey.value = key
+    hotkey.value = cusKey||key
     isActiveKey.value = true
-    // setTimeout(() => {
-    //     isActiveKey.value = false
-    // }, 1000)
+    setTimeout(() => {
+        isActiveKey.value = false
+    }, 1000)
 }
 
 const updateImage = ref('')
