@@ -1,10 +1,12 @@
-import ImageViewerCore from './ImageViewerCore';
+import ImageViewerCore from './core';
 import { ref, onMounted } from 'vue';
 
 export const useAction = (images: string[]) => {
     // const bodyRect = document.body.getBoundingClientRect()
     const imageVieverWidgetRef = ref<HTMLElement | null>(null)
     const imageRef = ref<HTMLImageElement|null>(null)
+    const loadImageErrorText = ref('')
+    const loading = ref(true)
     const imageCore = ImageViewerCore.getInStance()
     const currentPage = ref(1)
     const pageSize = ref(10)
@@ -70,13 +72,16 @@ export const useAction = (images: string[]) => {
                 imageRef.value.style.height = Rect.height / 1.3 + 'px'
             }
         }
-        
+        loadImageErrorText.value = ""
+        loading.value=false
         // console.log('图片加载成功：',evt)
         // console.log('图片信息：', im.height, im.width)
     }
 
     const errorImage = (evt:Event) => {
-        console.log('图片加载错误：',evt)
+        loading.value = false
+        loadImageErrorText.value = "加载图片失败，请仔细检测图片地址！"
+        // console.log('图片加载错误：',evt)
     }
 
     const prevPage = () => {
@@ -114,6 +119,8 @@ export const useAction = (images: string[]) => {
     })
 
     return {
+        loadImageErrorText,
+        loading,
         errorImage,
         loadImage,
         imageRef,

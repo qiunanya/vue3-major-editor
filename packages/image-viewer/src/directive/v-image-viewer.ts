@@ -1,6 +1,6 @@
 import { h, render, DirectiveBinding, VNode, ref, nextTick } from 'vue';
 import ImageViewerUI from '../components/index.vue';
-import ImageViewerCore from '../components/ImageViewerCore';
+import ImageViewerCore from '../components/core';
 
 const viewerCore = ImageViewerCore.getInStance()
 const config = viewerCore.getConfigOptions()
@@ -37,6 +37,7 @@ const VImageViewer = {
                 current: el.src,
                 zIndex: config.zIndex,
                 images: imageList,
+                image: el,
                 onUpdateCurrent: (item:string, index:number) => {
                     
                 },
@@ -46,6 +47,7 @@ const VImageViewer = {
                     document.body.removeChild(previewBox);
                 }
             })
+            
             render(cusVnode, previewBox);
             document.body.appendChild(previewBox)
         });

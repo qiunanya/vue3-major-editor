@@ -7,14 +7,27 @@
         </svg>
     </div>
     <div class="inner-image-wrap">
-        <img 
+        <!-- <img 
             ref="imageRef" 
             class="inner-viewer__image cus-transition" 
             @load="loadImage" 
             @error="errorImage" 
             :src="updateImage||current" 
             alt="picture" 
-            style="width: 120px;height: 120px;">
+            style="width: 120px;height: 120px;"> -->
+            <div v-if="loadImageErrorText">
+                <p style="color: orange;text-decoration: solid;">{{ loadImageErrorText }}</p>
+                <p>{{ updateImage }}</p>
+            </div>
+            <img 
+                ref="imageRef" 
+                class="inner-viewer__image cus-transition" 
+                @load="loadImage" 
+                @error="errorImage" 
+                src="" 
+                alt="picture" 
+                style="width: 120px;height: 120px;">
+            <LoadingUI v-if="loading"></LoadingUI>
     </div>
     
     <div class="viewer-previous-icon" @click.stop.prevent="previous">
@@ -86,11 +99,12 @@
 
 </template>
 <script setup>
-import { watch, ref } from 'vue';
+import { watch, ref, nextTick } from 'vue';
 import { useAction } from './useAction';
 import { debounce } from '../utils';
 import { FlipAnimate } from './flip-animate';
 import HotKeys from './HotKeys.vue';
+import LoadingUI from './Loading.vue';
 import { useCusShortKey } from '../utils/hotkeys';
 
 const props = defineProps({
@@ -116,6 +130,14 @@ const props = defineProps({
             return 2000
         }
     },
+    image: {
+        type: HTMLImageElement,
+        default: () => {
+            return {
+                src: ""
+            }
+        }
+    },
     onUpdateCurrent: {
         type: Function,
         default: () => {
@@ -130,7 +152,9 @@ const props = defineProps({
     }
 })
 
-const { 
+const {
+    loadImageErrorText,
+    loading, 
     imageRef, 
     imageVieverWidgetRef, 
     loadImage, 
@@ -233,10 +257,21 @@ const currentIndex = ref(0)
 
 watch(() => props.current, (newValue, oldValue) => {
     if (newValue) {
+
         const findIndex = props.images.findIndex(el => el === props.current)
+
         if (findIndex !== -1) {
             currentIndex.value = findIndex
         }
+
+        nextTick().then(res => {
+            const firstRect = props.image.getBoundingClientRect()
+            updateImage.value = imageRef.value.src = props.image.src
+            const lastRect = imageRef.value.getBoundingClientRect()
+            
+            FlipAnimate(imageRef.value, firstRect, lastRect)
+        })
+        
         initPage(1, 10)
     }
 }, {
@@ -247,21 +282,23 @@ watch(() => props.current, (newValue, oldValue) => {
 const previous = () => {
     if (currentIndex.value > 0) {
         currentIndex.value--;
-        updateImage.value = props.images[currentIndex.value]
+        updateImage.value = imageRef.value.src = props.images[currentIndex.value]
     }
 }
+
 const next = () => {
     if (currentIndex.value < props.images.length-1) {
         currentIndex.value++;
-        updateImage.value = props.images[currentIndex.value]
+        updateImage.value = imageRef.value.src = props.images[currentIndex.value]
     }
 }
 
 const onClickNavImage = debounce(clickImge, 360)
 
 function clickImge (evt,item, index) {
+    loadImageErrorText.value = ""
     const firstRect = evt.target.getBoundingClientRect()
-    imageRef.value.src = evt.target.src
+    updateImage.value = imageRef.value.src = evt.target.src
     const lastRect = imageRef.value.getBoundingClientRect()
     currentIndex.value = index
     FlipAnimate(imageRef.value, firstRect, lastRect)

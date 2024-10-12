@@ -3,7 +3,7 @@ import ImageViewer from './components/viewer.vue'
 import ImageViewerUI from './components/index.vue'
 import VImageViewer from './directive/v-image-viewer'
 import { ImageViewerOptions, ImageViewerConfig, ImageViewerInstallConfig } from './types/image-viewer'
-import ImageViewerCore from './components/ImageViewerCore'
+import ImageViewerCore from './components/core'
 
 let vnode;
 const viewerCore = ImageViewerCore.getInStance()
