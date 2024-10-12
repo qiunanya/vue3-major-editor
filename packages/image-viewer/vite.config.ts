@@ -32,7 +32,7 @@ export default defineConfig({
                 {
                     format: 'cjs',
                     dir: 'dist/lib',
-                    entryFileNames: '[name].js',
+                    entryFileNames: '[name].cjs',
                     preserveModulesRoot: 'src',
                     preserveModules: true,
                 },

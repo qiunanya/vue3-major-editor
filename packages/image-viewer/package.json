@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "description": "image-viewr-vue3 是一款Vue3专属轻量级图片查看器",
     "type": "module",
-    "main": "./dist/lib/index.js",
+    "main": "./dist/lib/index.cjs",
     "module": "./dist/es/index.js",
     "types": "./dist/es/index.d.ts",
     "scripts": {
@@ -28,7 +28,7 @@
         ".": {
             "types": "./dist/es/index.d.ts",
             "import": "./dist/es/index.js",
-            "require": "./dist/lib/index.js"
+            "require": "./dist/lib/index.cjs"
         }
     },
     "files": [
