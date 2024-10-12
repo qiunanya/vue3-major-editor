@@ -53,6 +53,7 @@
         "dompurify": "^3.1.5",
         "events": "^3.3.0",
         "hotkeys-js": "^3.13.7",
+        "image-viewer-vue3": "workspace:^",
         "sass": "^1.77.5",
         "ts-node": "^10.9.2",
         "uuid": "^10.0.0",

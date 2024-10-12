@@ -42,7 +42,7 @@
     </div>
     <div class="nav-image-viewer__wrap">
         <div class="navbar-control__wrap">
-            <div class="viewer-pagination__info">
+            <div class="viewer-pagination__info" v-if="images.length">
                 共{{images.length}}张/{{totalPage}}页&nbsp;&nbsp;第{{currentPage}}页
             </div>
             <!-- 放大 -->
@@ -75,7 +75,7 @@
                 <path d="M660.48 106.24L512 291.84l-149.12-185.6h297.6M768 69.12c1.28-19.2-13.44-36.48-33.28-37.12H289.28c-19.2 1.28-33.92 17.92-33.28 37.12 0 8.96 3.2 17.92 8.32 24.96l222.72 277.76a30.72 30.72 0 0 0 49.28 0l222.72-277.76c6.4-7.04 8.96-16 8.96-24.96zM768 954.88c1.28 19.2-13.44 36.48-33.28 37.12H289.28a35.52 35.52 0 0 1-33.28-37.12c0-8.96 3.2-17.92 8.32-24.96l222.72-277.76a30.72 30.72 0 0 1 49.28 0l222.72 277.76c6.4 7.04 8.96 16 8.96 24.96zM800 480h64v64h-64zM928 480h64v64h-64zM672 480h64v64h-64zM544 480h64v64h-64zM416 480h64v64h-64zM288 480h64v64h-64zM160 480h64v64h-64zM32 480h64v64h-64z" fill="#eee"></path>
             </svg>
         </div>
-        <div class="navbar-thumbnail__wrap">
+        <div class="navbar-thumbnail__wrap" v-if="images.length">
             <svg @click.stop.prevent="prevPage" class="icon-is-hover cus-cursor" viewBox="0 0 1024 1024" width="25" height="25">
                 <path d="M758.656 937.344a32 32 0 1 1-45.31199999 45.312l-448.00000001-448.128a32 32 0 0 1 0-45.248l448.00000001-447.936a32 32 0 1 1 45.31199999 45.312l-425.408 425.28000001L758.656 937.344z" fill="#eee"></path>
             </svg>
@@ -132,10 +132,12 @@ const props = defineProps({
     },
     image: {
         type: HTMLImageElement,
+        required: false
+    },
+    from: {
+        type: String,
         default: () => {
-            return {
-                src: ""
-            }
+            return ''
         }
     },
     onUpdateCurrent: {
@@ -265,11 +267,15 @@ watch(() => props.current, (newValue, oldValue) => {
         }
 
         nextTick().then(res => {
-            const firstRect = props.image.getBoundingClientRect()
-            updateImage.value = imageRef.value.src = props.image.src
-            const lastRect = imageRef.value.getBoundingClientRect()
-            
-            FlipAnimate(imageRef.value, firstRect, lastRect)
+            if (props.from === 'api') {
+                imageRef.value.src = newValue
+            } else {
+                const firstRect = props.image.getBoundingClientRect()
+                updateImage.value = imageRef.value.src = props.image.src
+                const lastRect = imageRef.value.getBoundingClientRect()
+                
+                FlipAnimate(imageRef.value, firstRect, lastRect)
+            }
         })
         
         initPage(1, 10)

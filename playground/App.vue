@@ -43,8 +43,8 @@ const open = () => {
 
 <style lang="scss">
 img {
-    width: 200px;
-    height: 200px;
+    width: 100px;
+    height: 100px;
     border-radius: 8px;
     margin: 0 10px;
 }

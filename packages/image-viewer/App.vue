@@ -1,7 +1,7 @@
 <template>
     <div>
         <h3 style="color: #646cff;">image-viewer-vue3 图片预览器</h3>
-        <button @click="handleClose">手动关闭弹窗</button>
+        <!-- <button @click="handleClose">手动关闭弹窗</button> -->
     </div>
     <!-- 指令使用图片预览器 -->
     <div>
@@ -18,15 +18,23 @@
         <img class="img-item" src="https://picsum.photos/id/19/2500/1667" v-image-viewer/>
         <img class="img-item" src="https://picsum.photos/id/11/2500/1667" v-image-viewer/>
     </div>
-    <div ref="imageViewerWidgetRef" :class="['container__wrap', { 'is-active': visible }]">
-        我是一个带淡入淡出动画的 div
+
+    <!-- 组件方式使用图片预览器 -->
+    <div>
+        <h5>组件方式使用图片预览器</h5>
+        <ImageViewerVue3>
+            <img class="img-item" src="https://picsum.photos/id/6/5000/3333"/>
+            <img class="img-item" src="https://picsum.photos/id/10/2500/1667"/>
+            <img class="img-item" src="https://picsum.photos/id/11/2500/1667"/>
+        </ImageViewerVue3>
     </div>
-  <button @click="toggleVisibility">{{ visible ? '隐藏' : '显示' }}</button>
+    
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { onClose } from './src/index'
+import ImageViewerVue3 from "./src/components/viewer.vue"
 
 const visible = ref(false)
 const handleClose = () => {
@@ -43,13 +51,5 @@ const toggleVisibility = () => {
     aspect-ratio: 1 / 1;
     border-radius: 8px;
     margin: 0 10px;
-}
-.container__wrap {
-  opacity: 0;
-  transition: opacity 5s ease;
-}
-
-.is-active {
-  opacity: 1;
 }
 </style>

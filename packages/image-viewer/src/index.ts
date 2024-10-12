@@ -32,8 +32,9 @@ function imageViewerApi (opt:ImageViewerOptions) {
         vnode = h(ImageViewerUI, {
             visible: true,
             current: opt.current,
-            images: opt.images,
+            images: opt.images || [],
             zIndex: config.zIndex,
+            from: 'api',
             onClose: () => {
                 previewBox&&document.body.removeChild(previewBox);
             }

@@ -22,7 +22,9 @@ onMounted(() => {
         images.forEach(el => {
             el.onclick = function (evt) {
                 const { src } = evt.target
-                imageViewerApi(src)
+                imageViewerApi({
+                    current: src
+                })
                 // 传递事件到外部
                 emits('on-click', { evt, image: src })
             }

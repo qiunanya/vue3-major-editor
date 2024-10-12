@@ -8,6 +8,7 @@
     "main": "./dist/lib/index.cjs",
     "module": "./dist/es/index.js",
     "types": "./dist/es/index.d.ts",
+    "style": "./dist/es/style.css",
     "scripts": {
         "dev": "vite",
         "build": "pnpm run clean && vue-tsc --noEmit && vite build",
