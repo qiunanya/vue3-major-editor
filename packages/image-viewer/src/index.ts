@@ -34,7 +34,8 @@ function imageViewerApi (opt:ImageViewerOptions) {
             current: opt.current,
             images: opt.images || [],
             zIndex: config.zIndex,
-            from: 'api',
+            image: opt.imageDom,
+            from: opt.from || 'api',
             onClose: () => {
                 previewBox&&document.body.removeChild(previewBox);
             }

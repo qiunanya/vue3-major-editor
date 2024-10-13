@@ -38,6 +38,7 @@ const VImageViewer = {
                 zIndex: config.zIndex,
                 images: imageList,
                 image: el,
+                from: 'directive',
                 onUpdateCurrent: (item:string, index:number) => {
                     
                 },

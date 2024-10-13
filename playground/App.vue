@@ -37,7 +37,7 @@ import { imageViewerApi } from 'image-viewer-vue3'
 
 const open = (evt) => {
     imageViewerApi({
-        current: evt.target.src
+        current: evt.target.src,
     })
 }
 </script>

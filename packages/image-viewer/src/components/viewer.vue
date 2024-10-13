@@ -23,7 +23,9 @@ onMounted(() => {
             el.onclick = function (evt) {
                 const { src } = evt.target
                 imageViewerApi({
-                    current: src
+                    current: src,
+                    imageDom: el,
+                    from: 'component'
                 })
                 // 传递事件到外部
                 emits('on-click', { evt, image: src })

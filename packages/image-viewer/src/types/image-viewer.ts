@@ -1,7 +1,11 @@
 // API预览接口参数项
+type fromType = 'api' | 'directive' | 'component'
+
 export interface ImageViewerOptions {
     current: string,
     images?: string[],
+    imageDom?:HTMLImageElement,
+    from?: fromType
 }
 
 // 预览器配置项

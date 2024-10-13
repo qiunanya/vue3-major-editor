@@ -45,7 +45,8 @@ const handleClose = () => {
 }
 const toggleApi = (evt) => {
     imageViewerApi({
-        current: evt.target.src
+        current: evt.target.src,
+        imageDom: evt.target
     })
 }
 </script>
