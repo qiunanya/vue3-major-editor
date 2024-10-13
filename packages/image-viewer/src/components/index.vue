@@ -30,12 +30,12 @@
             <LoadingUI v-if="loading"></LoadingUI>
     </div>
     
-    <div class="viewer-previous-icon" @click.stop.prevent="previous">
+    <div class="viewer-previous-icon" @click.stop.prevent="previous" v-if="images.length">
         <svg class="icon-is-hover cus-cursor" viewBox="0 0 1024 1024" width="25" height="25">
             <path d="M758.656 937.344a32 32 0 1 1-45.31199999 45.312l-448.00000001-448.128a32 32 0 0 1 0-45.248l448.00000001-447.936a32 32 0 1 1 45.31199999 45.312l-425.408 425.28000001L758.656 937.344z" fill="#eee"></path>
         </svg>
     </div>
-    <div class="viewer-next-icon" @click.stop.prevent="next">
+    <div class="viewer-next-icon" @click.stop.prevent="next" v-if="images.length">
         <svg class="icon-is-hover cus-cursor" viewBox="0 0 1024 1024" width="25" height="25">
             <path d="M265.344 86.656a32 32 0 1 1 45.312-45.312l448 448.128a32 32 0 0 1 0 45.248l-448 447.936a32 32 0 1 1-45.312-45.312l425.408-425.28L265.344 86.656z" fill="#eee"></path>
         </svg> 

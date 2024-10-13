@@ -19,6 +19,7 @@
         "vite": "^5.3.1",
         "vite-plugin-compression": "^0.5.1",
         "vite-plugin-dts": "^4.2.2",
+        "vite-plugin-style-inject": "^0.0.1",
         "vite-plugin-vue-setup-extend": "^0.4.0",
         "vite-svg-loader": "^5.1.0",
         "vue-tsc": "^2.1.6"
@@ -53,7 +54,6 @@
         "dompurify": "^3.1.5",
         "events": "^3.3.0",
         "hotkeys-js": "^3.13.7",
-        "image-viewer-vue3": "workspace:^",
         "sass": "^1.77.5",
         "ts-node": "^10.9.2",
         "uuid": "^10.0.0",

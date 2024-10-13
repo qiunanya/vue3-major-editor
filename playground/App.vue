@@ -27,8 +27,7 @@
     <!-- API 使用图片预览器 -->
     <div>
         <h5>API 调用图片预览器</h5>
-        <button @click="open" style="display: block;">打开图片预览器</button>
-        <img v-image-viewer src="https://picsum.photos/id/19/2500/1667" alt="" />
+        <img @click="open" src="https://picsum.photos/id/19/2500/1667" alt="" />
     </div>
    
 </template>
@@ -36,8 +35,10 @@
 <script setup>
 import { imageViewerApi } from 'image-viewer-vue3'
 
-const open = () => {
-    imageViewerApi('https://picsum.photos/id/11/2500/1667')
+const open = (evt) => {
+    imageViewerApi({
+        current: evt.target.src
+    })
 }
 </script>
 
