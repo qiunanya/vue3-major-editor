@@ -50,7 +50,7 @@ class ImageViewerCore {
 
         this.config = Object.assign(this.config, opts)
         
-        console.log(this.config, 'config')
+        // console.log(this.config, 'config')
     }
 
     public getConfigOptions () {
