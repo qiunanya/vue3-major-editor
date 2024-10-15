@@ -1,4 +1,5 @@
 import ImageViewerCore from './core';
+import { downloadExe } from '../utils/index';
 import { ref, onMounted } from 'vue';
 
 export const useAction = (images: string[]) => {
@@ -51,6 +52,15 @@ export const useAction = (images: string[]) => {
         if (imageRef.value) {
 
         }
+    }
+
+    const download = (name?: string) => {
+        const url = imageRef.value?.src as string;
+        downloadExe (url)
+    }
+
+    const resetStyle = () => {
+        imageCore.setStyleProperty()
     }
 
     const loadImage = (evt:Event) => {
@@ -119,6 +129,8 @@ export const useAction = (images: string[]) => {
     })
 
     return {
+        resetStyle,
+        download,
         loadImageErrorText,
         loading,
         errorImage,

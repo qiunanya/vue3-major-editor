@@ -191,14 +191,20 @@ class ImageViewerCore {
         this.total +=3
     }
 
+    public setStyleProperty () {
+        if (!this.currentImage) return
+        
+        this.currentImage.style.removeProperty('top')
+        this.currentImage.style.removeProperty('left')
+        this.currentImage.style.removeProperty('position')
+        this.currentImage.style.removeProperty('transform')
+    }
+
     public destroyed() {
         window.removeEventListener('wheel', this.onWheel.bind(this))
 
         if (this.currentImage) {
-            this.currentImage.style.removeProperty('position')
-            this.currentImage.style.removeProperty('left')
-            this.currentImage.style.removeProperty('top')
-            this.currentImage.style.removeProperty('transform')
+            this.setStyleProperty()
         }
     }
 }
