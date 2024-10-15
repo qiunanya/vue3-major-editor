@@ -95,9 +95,6 @@ importers:
       hotkeys-js:
         specifier: ^3.13.7
         version: 3.13.7
-      image-viewer-vue3:
-        specifier: workspace:^
-        version: link:packages/image-viewer
       sass:
         specifier: ^1.77.5
         version: 1.77.5
@@ -160,7 +157,7 @@ importers:
 
   playground:
     dependencies:
-      image-viewer-vue3:
+      images-viewer-vue3:
         specifier: workspace:^
         version: link:../packages/image-viewer
       vue3-tiptap-editor:

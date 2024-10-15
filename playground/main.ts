@@ -1,8 +1,8 @@
 import { createApp } from "vue";
 import App from "./App.vue";
-import ImageViewerVue3 from 'image-viewer-vue3';
+import ImagesViewerVue3 from 'images-viewer-vue3';
 
 const app = createApp(App)
 document.title = "Vue3MajorEditor"
-app.use(ImageViewerVue3)
+app.use(ImagesViewerVue3)
 app.mount("#app")
