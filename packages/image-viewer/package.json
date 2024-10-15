@@ -1,9 +1,8 @@
 {
     "name": "images-viewer-vue3",
     "scope": "ImagesViewerVue3",
-    "private": "false",
-    "version": "1.0.0",
-    "description": "images-viewer-vue3 是一款Vue3专属轻量级图片查看器",
+    "version": "1.0.2",
+    "description": "A lightweight image viewer for Vue3",
     "type": "module",
     "main": "./dist/lib/index.cjs",
     "module": "./dist/es/index.js",

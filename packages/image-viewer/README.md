@@ -47,11 +47,12 @@ Add v-image-viewer to the image tag that needs to be previewed. All imgs with ad
 
 ##### API preview image
 ```js
-<img @click="preview" src="https://picsum.photos/id/19/2500/1667"/>
+<img @click="previewImage" src="https://picsum.photos/id/19/2500/1667"/>
 
+<script setup lang="ts">
 import { imageViewerApi } from 'images-viewer-vue3'
 
-const open = (evt) => {
+const previewImage = (evt) => {
     imageViewerApi({
         current: evt.target.src,
         // Enable flip animation
@@ -60,4 +61,5 @@ const open = (evt) => {
         // images: ['src', ...],
     })
 }
+</script>
 ```
