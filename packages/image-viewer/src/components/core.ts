@@ -191,9 +191,9 @@ class ImageViewerCore {
         this.total +=3
     }
 
-    public setStyleProperty () {
+    public removeStyleProperty () {
         if (!this.currentImage) return
-        
+
         this.currentImage.style.removeProperty('top')
         this.currentImage.style.removeProperty('left')
         this.currentImage.style.removeProperty('position')
@@ -203,9 +203,7 @@ class ImageViewerCore {
     public destroyed() {
         window.removeEventListener('wheel', this.onWheel.bind(this))
 
-        if (this.currentImage) {
-            this.setStyleProperty()
-        }
+        this.removeStyleProperty()
     }
 }
 

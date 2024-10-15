@@ -60,7 +60,7 @@ export const useAction = (images: string[]) => {
     }
 
     const resetStyle = () => {
-        imageCore.setStyleProperty()
+        imageCore.removeStyleProperty()
     }
 
     const loadImage = (evt:Event) => {
