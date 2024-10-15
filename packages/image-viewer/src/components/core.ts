@@ -204,6 +204,8 @@ class ImageViewerCore {
         window.removeEventListener('wheel', this.onWheel.bind(this))
 
         this.removeStyleProperty()
+
+        this.currentImage = null
     }
 }
 

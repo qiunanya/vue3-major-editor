@@ -54,9 +54,13 @@ export const useAction = (images: string[]) => {
         }
     }
 
-    const download = (name?: string) => {
+    const downloads = (evt:Event) => {
         const url = imageRef.value?.src as string;
         downloadExe (url)
+    }
+
+    const destroyedExe = () => {
+        imageCore.destroyed()
     }
 
     const resetStyle = () => {
@@ -129,8 +133,9 @@ export const useAction = (images: string[]) => {
     })
 
     return {
+        destroyedExe,
         resetStyle,
-        download,
+        downloads,
         loadImageErrorText,
         loading,
         errorImage,

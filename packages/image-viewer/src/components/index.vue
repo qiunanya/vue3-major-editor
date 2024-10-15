@@ -79,7 +79,7 @@
                 <path d="M863.153113 702.196507h116.959605a43.887282 43.887282 0 0 1 0 87.774563H863.153113A73.182042 73.182042 0 0 0 789.97107 863.153113v116.959605a43.887282 43.887282 0 0 1-87.774563 0V863.153113A160.956606 160.956606 0 0 1 863.153113 702.196507z m0-380.393014h116.959605a43.887282 43.887282 0 0 0 0-87.774563H863.153113A73.182042 73.182042 0 0 1 789.97107 160.956606V43.887282a43.887282 43.887282 0 0 0-87.774563 0v117.069324a160.846887 160.846887 0 0 0 160.956606 160.846887z m-702.196507 0H43.887282a43.887282 43.887282 0 0 1 0-87.774563h117.069324a73.072324 73.072324 0 0 0 73.072324-73.072324V43.887282a43.887282 43.887282 0 0 1 87.774563 0v117.069324a160.846887 160.846887 0 0 1-160.846887 160.846887z m0 380.393014H43.887282a43.887282 43.887282 0 0 0 0 87.774563h117.069324a73.182042 73.182042 0 0 1 73.072324 73.182043v116.959605a43.887282 43.887282 0 0 0 87.774563 0V863.153113A160.846887 160.846887 0 0 0 160.956606 702.196507z" fill="#eee"></path>
             </svg>
             <!-- 下载 -->
-            <svg @click.stop.prevent="download" class="tool-item-icon__btn icon-is-hover" viewBox="0 0 1024 1024" width="25" height="25">
+            <svg @click.stop.prevent="downloads" class="tool-item-icon__btn icon-is-hover" viewBox="0 0 1024 1024" width="25" height="25">
                 <path d="M768.35456 416a256 256 0 1 0-512 0 192 192 0 1 0 0 384v64a256 256 0 0 1-58.88-505.216 320.128 320.128 0 0 1 629.76 0A256.128 256.128 0 0 1 768.35456 864v-64a192 192 0 0 0 0-384z m-512 384h64v64H256.35456v-64z m448 0h64v64h-64v-64z" fill="#eee"></path>
                 <path d="M539.04256 845.248V512.192a32.448 32.448 0 0 0-32-32.192c-17.664 0-32 14.912-32 32.192v333.056l-36.096-36.096a32.192 32.192 0 0 0-45.056 0.192 31.616 31.616 0 0 0-0.192 45.056l90.88 90.944a31.36 31.36 0 0 0 22.528 9.088 30.08 30.08 0 0 0 22.4-9.088l90.88-90.88a32.192 32.192 0 0 0-0.192-45.12 31.616 31.616 0 0 0-45.056-0.192l-36.096 36.096z" fill="#eee"></path>
             </svg>
@@ -94,7 +94,7 @@
                     :class="['navbar-image__item', {'nav-active-current__img': currentIndex === index }]" 
                     v-for="(item, index) in pageData" 
                     :key="index" :src="item"  
-                    @click.stop.prevent="onClickNavImage($event, item, index)"/>
+                    @click.stop.prevent="onClickNavImage"/>
             </div>
             <svg @click.stop.prevent="nextPage" class="icon-is-hover cus-cursor" viewBox="0 0 1024 1024" width="25" height="25">
                 <path d="M265.344 86.656a32 32 0 1 1 45.312-45.312l448 448.128a32 32 0 0 1 0 45.248l-448 447.936a32 32 0 1 1-45.312-45.312l425.408-425.28L265.344 86.656z" fill="#eee"></path>
@@ -107,14 +107,15 @@
 </div>
 
 </template>
-<script setup>
-import { watch, ref, nextTick } from 'vue';
+<script setup lang="ts">
+import { watch, ref, nextTick, onBeforeUnmount } from 'vue';
 import { useAction } from './useAction';
 import { debounce } from '../utils';
 import { FlipAnimate } from './flip-animate';
 import HotKeys from './HotKeys.vue';
 import LoadingUI from './Loading.vue';
 import { useCusShortKey } from '../utils/hotkeys';
+import { HotkeysEvent } from 'hotkeys-js';
 
 const props = defineProps({
     visible: {
@@ -164,8 +165,9 @@ const props = defineProps({
 })
 
 const {
+    destroyedExe,
     resetStyle,
-    download,
+    downloads,
     loadImageErrorText,
     loading, 
     imageRef, 
@@ -185,7 +187,7 @@ const {
     initPage,
     currentPage,
     totalPage 
-} = useAction(props.images);
+} = useAction(props.images as string[]);
 
 const emits = defineEmits(['on-close', 'onUpdate:value']);
 
@@ -193,56 +195,56 @@ const emits = defineEmits(['on-close', 'onUpdate:value']);
 const hotkey = ref('')
 const isActiveKey = ref(false)
 // next
-useCusShortKey({'right': (event, handler) => {
+useCusShortKey({'right': (event:KeyboardEvent, handler:HotkeysEvent) => {
     next()
     toggleHotkey(event, handler, true)
 }})
 // previous
-useCusShortKey({'left': (event, handler) => {
+useCusShortKey({'left': (event:KeyboardEvent, handler:HotkeysEvent) => {
     previous()
     toggleHotkey(event, handler, true)
 }})
 // nextPage
-useCusShortKey({'ctrl+right': (event, handler) => {
+useCusShortKey({'ctrl+right': (event:KeyboardEvent, handler:HotkeysEvent) => {
     nextPage()
     toggleHotkey(event, handler, true)
 }})
 // prevPage
-useCusShortKey({'ctrl+left': (event, handler) => {
+useCusShortKey({'ctrl+left': (event:KeyboardEvent, handler:HotkeysEvent) => {
     prevPage()
     toggleHotkey(event, handler, true)
 }})
 // inevrtY
-useCusShortKey({'ctrl+i+y': (event, handler) => {
+useCusShortKey({'ctrl+i+y': (event:KeyboardEvent, handler:HotkeysEvent) => {
     inevrtY(event)
     toggleHotkey(event, handler, true)
 }})
 // inevrtX
-useCusShortKey({'ctrl+i+x': (event, handler) => {
+useCusShortKey({'ctrl+i+x': (event:KeyboardEvent, handler:HotkeysEvent) => {
     inevrtX(event)
     toggleHotkey(event, handler, true)
 }})
 // Rotate 90 degrees clockwise
-useCusShortKey({'ctrl+c+r': (event, handler) => {
+useCusShortKey({'ctrl+c+r': (event:KeyboardEvent, handler:HotkeysEvent) => {
     clockwise(event)
     toggleHotkey(event, handler, true)
 }})
 // Rotate 90 degrees counterclockwise
-useCusShortKey({'ctrl+c+l': (event, handler) => {
+useCusShortKey({'ctrl+c+l': (event:KeyboardEvent, handler:HotkeysEvent) => {
     counterclockwise(event)
     toggleHotkey(event, handler, true)
 }})
-useCusShortKey({'ctrl+z': (event, handler) => {
-    resetStyle(event)
+useCusShortKey({'ctrl+z': (event:KeyboardEvent, handler:HotkeysEvent) => {
+    resetStyle()
     toggleHotkey(event, handler, true)
 }})
 // close
-useCusShortKey({'esc':  (event, handler) => {
+useCusShortKey({'esc':  (event:KeyboardEvent, handler:HotkeysEvent) => {
     close()
     toggleHotkey(event, handler, true)
 }})
 // scale
-useCusShortKey({'ctrl+*': (event, handler) => {
+useCusShortKey({'ctrl+*': (event:KeyboardEvent, handler:HotkeysEvent) => {
     switch (event.key) {
         case '-':
             zoomOut(event)
@@ -258,7 +260,7 @@ useCusShortKey({'ctrl+*': (event, handler) => {
 }})
 
 // isPrevent：true阻止浏览器默认快捷键
-function toggleHotkey (event, handler, isPrevent = false, cusKey = "") {
+function toggleHotkey (event:KeyboardEvent, handler:HotkeysEvent, isPrevent = false, cusKey = "") {
     if (isPrevent) event.preventDefault()
 
     const { key } = handler;
@@ -282,6 +284,8 @@ watch(() => props.current, (newValue, oldValue) => {
         }
 
         nextTick().then(res => {
+            if (!imageRef.value) return
+
             if (props.image === void 0) {
                 imageRef.value.src = newValue
             } else {
@@ -301,39 +305,57 @@ watch(() => props.current, (newValue, oldValue) => {
 });
 
 const previous = () => {
+    if (!imageRef.value) return
+
     if (currentIndex.value > 0) {
         currentIndex.value--;
-        updateImage.value = imageRef.value.src = props.images[currentIndex.value]
+        updateImage.value = imageRef.value.src = props.images[currentIndex.value] as string
     }
 }
 
 const next = () => {
+    if (!imageRef.value) return
+
     if (currentIndex.value < props.images.length-1) {
         currentIndex.value++;
-        updateImage.value = imageRef.value.src = props.images[currentIndex.value]
+        updateImage.value = imageRef.value.src = props.images[currentIndex.value] as string
     }
 }
 
 const onClickNavImage = debounce(clickImge, 360)
 
-function clickImge (evt,item, index) {
+function clickImge (evt:Event) {
     loadImageErrorText.value = ""
-    const firstRect = evt.target.getBoundingClientRect()
-    updateImage.value = imageRef.value.src = evt.target.src
-    const lastRect = imageRef.value.getBoundingClientRect()
-    currentIndex.value = index
-    FlipAnimate(imageRef.value, firstRect, lastRect)
-    // updateImage.value = item
-    props.onUpdateCurrent(item, index)
+    if (!imageRef.value) return
+
+    if (evt.target) {
+        const EL = evt.target as HTMLImageElement
+        const firstRect = EL.getBoundingClientRect()
+        const findIndex = pageData.value.findIndex(el => el === EL.src)
+        if (findIndex !== -1) {
+            currentIndex.value = findIndex
+        }
+        updateImage.value = imageRef.value.src = EL.src
+        const lastRect = imageRef.value.getBoundingClientRect()
+       
+        FlipAnimate(imageRef.value, firstRect, lastRect)
+        // updateImage.value = item
+        props.onUpdateCurrent( EL.src, findIndex)
+    }
+    
 }
 
 function close () {
+    destroyedExe()
     props.onClose()
     closeViewer()
     emits('on-close')
     updateImage.value = ""
 }
 
+onBeforeUnmount( () => {
+    destroyedExe()
+})
 </script>
 
 <style lang="scss" src="../styles/index.scss" scoped></style>
