@@ -1,5 +1,4 @@
 <template>
-    
     <h3>图片预览器开发</h3>
     <!-- 指令绑定值1：v-image-viewer="'red'" -->
     <!-- 指令绑定值2：v-image-viewer:zoom="1.5" -->
@@ -36,11 +35,13 @@
 <script setup lang="ts">
 import { imageViewerApi } from 'images-viewer-vue3'
 
-const open = (evt) => {
+const open = (evt:Event) => {
+    if (!evt.target) return
+    const iDom = evt.target as HTMLImageElement
     imageViewerApi({
-        current: evt.target.src,
+        current: iDom.src,
         // Enable flip animation
-        imageDom: evt.target
+        imageDom: iDom
     })
 }
 </script>

@@ -26,7 +26,6 @@
 <script setup lang="ts">
     import { ref } from "vue";
     import { Editor, EditorEvents } from "@tiptap/vue-3";
-    import CustomEditor from './src/test/CustomEditor';
 
     // true:图片内部处理，默认转化为base64, false: 不自动转化数据，需要外部处理后添加到编辑器
     const imageInner = ref(false)
