@@ -1,9 +1,11 @@
 import { defineConfig } from "vite";
-import path from "path";
+import { resolve, dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import vue from "@vitejs/plugin-vue";
 import dts from "vite-plugin-dts";
 import pkg from './package.json';
 import VitePluginStyleInject from 'vite-plugin-style-inject';
+import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 
 export default defineConfig({
     plugins: [
@@ -12,6 +14,9 @@ export default defineConfig({
             outDir: ['dist/es','dist/lib'],
             include: ["src/**/*.ts", "src/**/*.tsx"]
         }),
+        VueI18nPlugin({
+            include: resolve(dirname(fileURLToPath(import.meta.url)), './path/to/src/locales/**')
+        }),
         VitePluginStyleInject()
     ],
     server: {
@@ -19,7 +24,7 @@ export default defineConfig({
     },
     build: {
         lib: {
-            entry: path.resolve(__dirname, "src/index.ts"),
+            entry: fileURLToPath(new URL('./src', import.meta.url)),
             name: pkg.scope,
             // fileName: 'index',
             // formats:['es','cjs']

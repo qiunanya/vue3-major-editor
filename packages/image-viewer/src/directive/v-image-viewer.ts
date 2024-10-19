@@ -1,6 +1,6 @@
-import { h, render, DirectiveBinding, VNode, ref, nextTick } from 'vue';
-import ImageViewerUI from '../components/index.vue';
+import { DirectiveBinding, VNode } from 'vue';
 import ImageViewerCore from '../components/core';
+import { imageViewerApi } from '../index';
 
 const viewerCore = ImageViewerCore.getInStance()
 const config = viewerCore.getConfigOptions()
@@ -31,32 +31,17 @@ const VImageViewer = {
         imageList.push(el.src)
 
         el.addEventListener('click', function(evt) {
-            // 初始化 cusVnode，只创建一次
-            cusVnode = h(ImageViewerUI, {
-                visible: true,
+            imageViewerApi({
                 current: el.src,
-                zIndex: config.zIndex,
                 images: imageList,
-                image: el,
+                zIndex: config.zIndex,
+                imageDom: el,
                 from: 'directive',
-                onUpdateCurrent: (item:string, index:number) => {
-                    
-                },
-                onClose: () => {
-                    // console.log(cusVnode, 'cusVnode')
-                    el.removeEventListener('click', () => {});
-                    document.body.removeChild(previewBox);
-                }
             })
-            
-            render(cusVnode, previewBox);
-            document.body.appendChild(previewBox)
         });
     },
     // 绑定元素的父组件更新前调用
-    beforeUpdate(el:HTMLImageElement, binding:DirectiveBinding, vnode:VNode) {
-        
-    },
+    beforeUpdate(el:HTMLImageElement, binding:DirectiveBinding, vnode:VNode) {},
     // 在绑定元素的父组件
     // 及他自己的所有子节点都更新后调用
     updated(el:HTMLImageElement, binding:DirectiveBinding, vnode:VNode) { },

@@ -31,22 +31,23 @@
         <h5>API 调用图片预览器</h5>
         <img class="img-item" @click="toggleApi" src="https://picsum.photos/id/64/2500/1667" alt="" />
     </div>
-    
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
-import { onClose, imageViewerApi } from './src/index'
-import ImageViewerVue3 from "./src/components/viewer.vue"
+import { onClose, imageViewerApi } from './index'
+import ImageViewerVue3 from "./components/viewer.vue"
 
 const visible = ref(false)
 const handleClose = () => {
     onClose()
 }
-const toggleApi = (evt) => {
+const toggleApi = (evt:Event) => {
+    if (!evt.target) return
+    const iDom = evt.target as HTMLImageElement
     imageViewerApi({
-        current: evt.target.src,
-        imageDom: evt.target
+        current: iDom.src,
+        imageDom: iDom
     })
 }
 </script>

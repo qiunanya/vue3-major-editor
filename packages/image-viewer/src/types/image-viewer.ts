@@ -5,7 +5,8 @@ export interface ImageViewerOptions {
     current: string,
     images?: string[],
     imageDom?:HTMLImageElement,
-    from?: fromType
+    from?: fromType,
+    zIndex?: number,
 }
 
 // 预览器配置项
@@ -17,7 +18,7 @@ export interface ImageViewerConfig {
     zIndex: number 
 }
 
-// 按照配置类型
+// app.use安装配置类型(初始化配置)
 export interface ImageViewerInstallConfig {
     scaleRatio?: number,
     rotateRatio?: number,
