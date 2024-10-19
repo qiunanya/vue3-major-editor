@@ -36,7 +36,7 @@ const VImageViewer = {
                 images: imageList,
                 zIndex: config.zIndex,
                 imageDom: el,
-                from: 'directive',
+                from: 'directive'
             })
         });
     },

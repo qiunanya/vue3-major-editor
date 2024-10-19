@@ -1,5 +1,6 @@
 // API预览接口参数项
 type fromType = 'api' | 'directive' | 'component'
+type langType = 'zh' | 'en'
 
 export interface ImageViewerOptions {
     current: string,
@@ -7,15 +8,17 @@ export interface ImageViewerOptions {
     imageDom?:HTMLImageElement,
     from?: fromType,
     zIndex?: number,
+    language?:langType
 }
 
 // 预览器配置项
-export interface ImageViewerConfig {
+export interface ImageViewerType {
     scaleRatio: number,
     rotateRatio: number,
     isEnableDrag: boolean,
     isEnableWheel: boolean,
-    zIndex: number 
+    zIndex: number,
+    language: langType
 }
 
 // app.use安装配置类型(初始化配置)
@@ -24,7 +27,8 @@ export interface ImageViewerInstallConfig {
     rotateRatio?: number,
     isEnableDrag?: boolean,
     isEnableWheel?: boolean,
-    zIndex?: number 
+    zIndex?: number,
+    language?:langType 
 }
 
 export {}

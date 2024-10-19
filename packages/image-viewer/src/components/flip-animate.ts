@@ -33,6 +33,6 @@ export const FlipAnimate = (element:HTMLElement, firstRect:DOMRect, lastRect:DOM
         }
     );
     player.addEventListener('finish', (evt) => { 
-        console.log('Animation execution completed.')
+        // console.log('Animation execution completed.')
     })
 }

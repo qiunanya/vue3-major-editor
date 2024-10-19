@@ -1,7 +1,7 @@
 export default {
-    pages: {
-        total: '共',
-        pictures: '图片',
-        page: '页' 
+    imagev: {
+        pictures: '张图片',
+        page: '页',
+        current: '当前页' 
     }
 }

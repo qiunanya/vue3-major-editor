@@ -14,9 +14,6 @@ export default defineConfig({
             outDir: ['dist/es','dist/lib'],
             include: ["src/**/*.ts", "src/**/*.tsx"]
         }),
-        VueI18nPlugin({
-            include: resolve(dirname(fileURLToPath(import.meta.url)), './path/to/src/locales/**')
-        }),
         VitePluginStyleInject()
     ],
     server: {

@@ -3,7 +3,7 @@
  * 
  * @author qiuny
  */
-import { ImageViewerConfig } from '../types/image-viewer'
+import { ImageViewerType } from '../types/image-viewer'
 
 class ImageViewerCore {
     // 配置全局变量供外部调用
@@ -14,12 +14,13 @@ class ImageViewerCore {
     private totalRotate = 0;
     private isMouseDown = false;
 
-    private config:ImageViewerConfig = {
+    private config:ImageViewerType = {
         scaleRatio: 1,
         rotateRatio: 90,
         isEnableDrag: true,
         isEnableWheel: true,
-        zIndex: 2000
+        zIndex: 2000,
+        language: 'zh'
     }
     private constructor () {
         // console.log('ImageViewerCore的构造器');
@@ -46,7 +47,7 @@ class ImageViewerCore {
         (evt.deltaY >= 0) && this.zoomOut();
     }
 
-    public setConfigOptions (opts: ImageViewerConfig) {
+    public setConfigOptions (opts: ImageViewerType) {
 
         this.config = Object.assign(this.config, opts)
         

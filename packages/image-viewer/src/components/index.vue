@@ -43,7 +43,9 @@
     <div class="nav-image-viewer__wrap">
         <div class="navbar-control__wrap">
             <div class="viewer-pagination__info" v-if="images.length>=10">
-                共{{images.length}}张/{{totalPage}}页&nbsp;&nbsp;第{{currentPage}}页
+                <span>&nbsp;{{images.length}}&nbsp;{{$t('imagev.pictures')}}&nbsp;</span>
+                <span>/&nbsp;{{totalPage}}&nbsp;{{$t('imagev.page')}}&nbsp;</span>
+                <span>/&nbsp;{{$t('imagev.current')}}&nbsp;{{currentPage}}</span>
             </div>
             <!-- 放大 -->
             <svg @click.stop.prevent="zoomIn" class="tool-item-icon__btn icon-is-hover" viewBox="0 0 1024 1024" width="25" height="25">
@@ -116,6 +118,7 @@ import HotKeys from './HotKeys.vue';
 import LoadingUI from './Loading.vue';
 import { useCusShortKey } from '../utils/hotkeys';
 import { HotkeysEvent } from 'hotkeys-js';
+import { messages, lang } from '../langs/index';
 
 const props = defineProps({
     visible: {
@@ -161,8 +164,31 @@ const props = defineProps({
         default: () => {
             return () => {}
         }
+    },
+    language: {
+        type: String,
+        default: () => {
+            return 'zh'
+        }
     }
 })
+
+const $t = (langStr = "") => {
+    // @ts-ignore
+    const local = messages[props.language]
+    if (local) {
+        const { imagev } = local
+        var tempObj = {}
+
+        Object.keys(imagev).forEach(key => {
+            // @ts-ignore
+            tempObj[`imagev.${key}`] = imagev[key]
+        })
+
+        // @ts-ignore
+        return tempObj[langStr]
+    }
+}
 
 const {
     destroyedExe,

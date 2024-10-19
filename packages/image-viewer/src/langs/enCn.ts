@@ -1,7 +1,7 @@
 export default {
-    pages: {
-        total: 'Total',
-        pictures: 'pictures',
-        page: 'page' 
+    imagev: {
+        pictures: 'Pictures',
+        page: 'Page',
+        current: 'Current page' 
     }
 }
