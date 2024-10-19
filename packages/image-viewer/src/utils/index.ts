@@ -54,3 +54,21 @@ export const downloadExe = (url:string, fileName?:string) => {
         document.body.removeChild(link); 
     })
 }
+
+export const getUserAgent = (): boolean => {
+    // @ts-ignore
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    const isMobileDevice = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase());
+    let flag = false
+    // 如果是移动设备，返回 Mobile
+    if (isMobileDevice) {
+        flag = true
+    }
+
+    // 如果支持触摸，且不是常见的移动设备，返回 Mobile
+    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+        flag = true
+    }
+    
+    return flag;
+}

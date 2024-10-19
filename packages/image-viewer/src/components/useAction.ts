@@ -1,5 +1,5 @@
 import ImageViewerCore from './core';
-import { downloadExe } from '../utils/index';
+import { downloadExe, getUserAgent } from '../utils/index';
 import { ref, onMounted } from 'vue';
 
 export const useAction = (images: string[]) => {
@@ -86,6 +86,7 @@ export const useAction = (images: string[]) => {
                 imageRef.value.style.height = Rect.height / 1.3 + 'px'
             }
         }
+        
         loadImageErrorText.value = ""
         loading.value=false
         // console.log('图片加载成功：',evt)

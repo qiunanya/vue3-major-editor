@@ -17,7 +17,9 @@ export default defineConfig({
         VitePluginStyleInject()
     ],
     server: {
-        port: 3000
+        port: 3000,
+        // 使用手机能够访问,使用默认路由
+        host: '0.0.0.0'
     },
     build: {
         lib: {

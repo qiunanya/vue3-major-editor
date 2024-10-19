@@ -1,11 +1,14 @@
 <template>
-    <div class="loading-image__wrap">
+    <div class="loading-image__wrap" :style="{'--load-size': getUserAgent()?20:''}">
         <span class="item1" style="--i: -0.32s;"></span>
         <span class="item2" style="--i: -0.16s;"></span>
         <span class="item3" style="--i: 0s;"></span>
     </div>
 </template>
+<script setup lang="ts">
+import { getUserAgent } from '../utils';
 
+</script>
 <style lang="scss" scoped>
 .loading-image__wrap {
     .item1 {
@@ -26,9 +29,10 @@
 }
 .loading-image__wrap span {
     display: inline-block;
-    width: 40px;
+    width: calc(var(--load-size, 40) * 1px);
     aspect-ratio: 1;
     border-radius: 50%;
+    margin: 0px 6px;
     animation: loading 1.4s cubic-bezier(0, 0.55, 0.45, 1) infinite;
     -webkit-animation: loading 1.4s cubic-bezier(0, 0.55, 0.45, 1) infinite;
 }

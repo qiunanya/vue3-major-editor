@@ -1,5 +1,5 @@
 ### images-viewer-vue3
-A lightweight image viewer for Vue3, it is based on `flip animation` technology, currently only supports PC.
+A lightweight image viewer for Vue3, it is based on `flip animation` technology, Support PC and h5 mobile web page preview photos, if it is a product developed by vue3.
 
 #### Features
 * Component preview image
@@ -28,7 +28,14 @@ import ImagesViewerVue3 from 'images-viewer-vue3';
 
 const app = createApp(App)
 // Image preview directive will be automatically injected here
-app.use(ImagesViewerVue3)
+app.use(ImagesViewerVue3, {
+    zIndex: 999, // Default 999
+    language: 'zh', // Default language 'zh'
+    scaleRatio: 1, // Default 1
+    rotateRatio: 90, // Default 90 degrees
+    isEnableDrag: true, // Enabled by default
+    isEnableWheel: true, // Enabled by default
+})
 app.mount("#app")
 
 // demo.vue
@@ -53,11 +60,13 @@ Add v-image-viewer to the image tag that needs to be previewed. All imgs with ad
 import { imageViewerApi } from 'images-viewer-vue3'
 
 const previewImage = (evt) => {
+    if (!evt.target) return
+    const iDom = evt.target as HTMLImageElement
     imageViewerApi({
-        current: evt.target.src,
+        current: iDom.src,
         // Enable flip animation
-        imageDom: evt.target,
-        // Picture preview collection
+        imageDom: iDom,
+        // Preview more pictures
         // images: ['src', ...],
     })
 }

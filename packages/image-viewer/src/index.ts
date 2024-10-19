@@ -17,7 +17,7 @@ export default function install(app:App, config?:ImageViewerInstallConfig) {
     }
 
     // console.log(app, config, 'install');
-    console.log(`image-viewer-vue3_v${pkg.version}`)
+    console.log(`images-viewer-vue3_v${pkg.version}`)
     app.directive("image-viewer", VImageViewer)
     app.component('ImagesViewerVue3', ImageViewer)
     app.config.globalProperties.$imageViewerApi = imageViewerApi
