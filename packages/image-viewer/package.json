@@ -33,6 +33,7 @@
     },
     "files": [
         "dist",
+        "umds",
         "LICENSE",
         "README.md",
         "package.json"
