@@ -94,7 +94,7 @@
             </svg>
             <div class="navbar-list-group">
                 <img 
-                    :id="`navImage${index}`"
+                    :id="`${index}`"
                     :class="['navbar-image__item', {'nav-active-current__img': currentIndex === index }]" 
                     v-for="(item, index) in pageData" 
                     :key="index" :src="item"  
@@ -362,10 +362,12 @@ function clickImge (evt:Event) {
     if (evt.target) {
         const EL = evt.target as HTMLImageElement
         const firstRect = EL.getBoundingClientRect()
-        const findIndex = pageData.value.findIndex(el => el === EL.src)
-        if (findIndex !== -1) {
-            currentIndex.value = findIndex
-        }
+        const findIndex = Number(EL.id)
+        currentIndex.value = findIndex
+        // const findIndex = pageData.value.findIndex(el => el === EL.src)
+        // if (findIndex !== -1) {
+        //     currentIndex.value = findIndex
+        // }
         updateImage.value = imageRef.value.src = EL.src
         const lastRect = imageRef.value.getBoundingClientRect()
        

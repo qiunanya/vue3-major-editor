@@ -1,7 +1,7 @@
 {
     "name": "images-viewer-vue3",
     "scope": "ImagesViewerVue3",
-    "version": "1.0.3",
+    "version": "1.0.5",
     "description": "A lightweight image viewer for Vue3",
     "type": "module",
     "main": "./dist/lib/index.cjs",
@@ -13,6 +13,7 @@
         "build": "pnpm run clean && vue-tsc --noEmit && vite build",
         "build:umd": "pnpm run clean && vue-tsc --noEmit && vite build --config vite.bundle.config.ts",
         "clean": "rimraf dist",
+        "build:pro": "pnpm run clean && pnpm build:umd && pnpm build",
         "test": "echo \"Error: no test specified\" && exit 1",
         "check-exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm"
     },
@@ -41,7 +42,12 @@
     "keywords": [
         "vue3.0",
         "image-viewer",
-        "preview-image"
+        "preview-image",
+        "image",
+        "vue3-image",
+        "view-image",
+        "image-browse",
+        "browse-image"
     ],
     "author": "qiuny",
     "license": "MIT"
