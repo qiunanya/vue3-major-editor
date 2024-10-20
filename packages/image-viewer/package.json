@@ -1,7 +1,7 @@
 {
     "name": "images-viewer-vue3",
     "scope": "ImagesViewerVue3",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "description": "A lightweight image viewer for Vue3",
     "type": "module",
     "main": "./dist/lib/index.cjs",
@@ -10,7 +10,7 @@
     "style": "./dist/es/style.css",
     "scripts": {
         "dev": "vite",
-        "build": "pnpm run clean && vue-tsc --noEmit && vite build",
+        "build": "pnpm run clean && vite build --config vite.build.config.ts",
         "build:umd": "pnpm run clean && vue-tsc --noEmit && vite build --config vite.bundle.config.ts",
         "clean": "rimraf dist",
         "build:pro": "pnpm run clean && pnpm build:umd && pnpm build",

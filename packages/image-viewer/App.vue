@@ -35,8 +35,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { onClose, imageViewerApi } from './index'
-import ImageViewerVue3 from "./components/viewer.vue"
+import { onClose, imageViewerApi } from './src/index'
+import ImageViewerVue3 from "./src/components/viewer.vue"
 
 const handleClose = () => {
     onClose()
