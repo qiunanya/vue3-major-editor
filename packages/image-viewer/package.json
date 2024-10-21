@@ -10,8 +10,8 @@
     "style": "./dist/es/style.css",
     "scripts": {
         "dev": "vite",
-        "build": "pnpm run clean && vite build --config vite.build.config.ts",
-        "build:umd": "pnpm run clean && vue-tsc --noEmit && vite build --config vite.bundle.config.ts",
+        "build": "pnpm run clean && vite build",
+        "build:umd": "pnpm run clean && vite build --config vite.bundle.config.ts",
         "clean": "rimraf dist",
         "build:pro": "pnpm run clean && pnpm build:umd && pnpm build",
         "test": "echo \"Error: no test specified\" && exit 1",

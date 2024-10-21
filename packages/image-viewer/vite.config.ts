@@ -11,7 +11,8 @@ export default defineConfig({
         dts({
             outDir: ['dist/es', 'dist/lib'],
             include: ["src/**/*.ts", "src/**/*.tsx"],
-            rollupTypes: true,
+            rollupTypes: false,
+            exclude: ['main.ts']
         }),
         VitePluginStyleInject()
     ],

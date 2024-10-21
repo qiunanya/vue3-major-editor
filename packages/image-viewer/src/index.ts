@@ -4,7 +4,9 @@ import ImageViewerUI from './components/index.vue'
 import VImageViewer from './directive/v-image-viewer'
 import { ImageViewerOptions, ImageViewerType, ImageViewerInstallConfig } from './types/image-viewer'
 import ImageViewerCore from './components/core'
-import pkg from '../package.json';
+import { versions } from './utils/index'
+// 这样导入package.json文件并使用内容，会导致vite-plugin-dts打包生成的声明文件错乱
+// import pkg from '../package.json';
 
 
 let vnode;
@@ -17,7 +19,7 @@ export default function install(app:App, config?:ImageViewerInstallConfig) {
     }
 
     // console.log(app, config, 'install');
-    console.log(`images-viewer-vue3_v${pkg.version}`)
+    console.log(`images-viewer-vue3_v${versions}`)
     app.directive("image-viewer", VImageViewer)
     app.component('ImagesViewerVue3', ImageViewer)
     app.config.globalProperties.$imageViewerApi = imageViewerApi

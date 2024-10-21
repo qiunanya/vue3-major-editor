@@ -4,6 +4,9 @@
     right: 0px;
     bottom: 0px;
     left: 0px;
+}
+
+.nav-scroll-style__wrap {
     // 滚动条样式美化
     ::-webkit-scrollbar {
         width: 6px;
@@ -20,7 +23,6 @@
         background-color: rgba(69,147,251, 0.37);
     }
 }
-
 .images-viewer-container__wrap {
     --active-icon-color: #3A8DF5;
     --active-text-color: var(--text-color, #eee);

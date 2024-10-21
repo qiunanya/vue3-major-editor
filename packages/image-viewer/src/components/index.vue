@@ -1,5 +1,10 @@
 <template>
-<div ref="imageVieverWidgetRef" :class="['images-viewer-container__wrap', {'is-active':visible}]">
+<div 
+    ref="imageVieverWidgetRef" 
+    :class="[
+        'images-viewer-container__wrap', 
+        {'is-active':visible}, 
+        {'nav-scroll-style__wrap':!getUserAgent()}]">
     <div class="image-viewer-close__btn" @click="close">
         <svg class="close-icon icon-is-hover" viewBox="0 0 1024 1024" width="25" height="25">
             <path d="M835.2 854.4c-12.8 0-22.4-3.2-32-12.8L211.2 256C192 240 192 211.2 208 195.2s44.8-16 60.8 0L864 780.8c16 16 16 44.8 0 60.8-6.4 9.6-16 12.8-28.8 12.8z" fill="#eee"></path>
