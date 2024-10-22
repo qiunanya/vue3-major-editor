@@ -12,6 +12,13 @@ A lightweight image viewer for Vue3, it is based on `flip animation` technology,
 * Command preview image
 * API preview image
 
+# Function
+* Rotate image
+* Zoom image
+* Flip image
+* Drag image
+* Download image
+
 # Install 
 
 ```js
