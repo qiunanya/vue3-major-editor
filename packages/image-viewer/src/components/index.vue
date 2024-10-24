@@ -47,10 +47,16 @@
     </div>
     <div class="nav-image-viewer__wrap">
         <div class="navbar-control__wrap">
-            <div :class="['page-text', { 'position': !getUserAgent() }]" v-if="images.length>=10">
+            <div :class="['pagination-wrap', { 'position': !getUserAgent() }]" v-if="images.length>=10">
                 <span>&nbsp;{{images.length}}&nbsp;{{$t('imagev.pictures')}}&nbsp;</span>
                 <span>/&nbsp;{{totalPage}}&nbsp;{{$t('imagev.page')}}&nbsp;</span>
-                <span>/&nbsp;{{$t('imagev.current')}}&nbsp;{{currentPage}}</span>
+                <span>/&nbsp;{{$t('imagev.current')}}&nbsp;{{currentPage}}</span>&nbsp;
+                <select class="page-size-select" name="select" id="page-size-select" @change="changePageSize">
+                    <option value="10" selected>10/{{$t('imagev.page')}}</option>
+                    <option value="15">15/{{$t('imagev.page')}}</option>
+                    <option value="20">20/{{$t('imagev.page')}}</option>
+                    <option value="30">30/{{$t('imagev.page')}}</option>
+                </select>
             </div>
             <div>
                 <!-- 放大 -->
@@ -201,6 +207,7 @@ const $t = (langStr = "") => {
 }
 
 const {
+    changePageSize,
     destroyedExe,
     resetStyle,
     downloads,
@@ -227,58 +234,42 @@ const {
 
 const emits = defineEmits(['on-close', 'onUpdate:value']);
 
-// 快捷键
+// 快捷键提示
 const hotkey = ref('')
 const isActiveKey = ref(false)
+
+// 注册快捷键
+function registerHotkey (keys: string, action: () => void, prevent: boolean = true) {
+    useCusShortKey({
+        [keys]:(event: KeyboardEvent, handler: HotkeysEvent) => {
+            // action(event)
+            action()
+            toggleHotkey(event, handler, prevent)
+        }
+    })
+}
+
 // next
-useCusShortKey({'right': (event:KeyboardEvent, handler:HotkeysEvent) => {
-    next()
-    toggleHotkey(event, handler, true)
-}})
+registerHotkey('right', next)
 // previous
-useCusShortKey({'left': (event:KeyboardEvent, handler:HotkeysEvent) => {
-    previous()
-    toggleHotkey(event, handler, true)
-}})
+registerHotkey('left', previous)
 // nextPage
-useCusShortKey({'ctrl+right': (event:KeyboardEvent, handler:HotkeysEvent) => {
-    nextPage()
-    toggleHotkey(event, handler, true)
-}})
+registerHotkey('ctrl+right', nextPage)
 // prevPage
-useCusShortKey({'ctrl+left': (event:KeyboardEvent, handler:HotkeysEvent) => {
-    prevPage()
-    toggleHotkey(event, handler, true)
-}})
+registerHotkey('ctrl+left', prevPage)
 // inevrtY
-useCusShortKey({'ctrl+i+y': (event:KeyboardEvent, handler:HotkeysEvent) => {
-    inevrtY(event)
-    toggleHotkey(event, handler, true)
-}})
+registerHotkey('ctrl+i+y', inevrtY)
 // inevrtX
-useCusShortKey({'ctrl+i+x': (event:KeyboardEvent, handler:HotkeysEvent) => {
-    inevrtX(event)
-    toggleHotkey(event, handler, true)
-}})
+registerHotkey('ctrl+i+x', inevrtX)
 // Rotate 90 degrees clockwise
-useCusShortKey({'ctrl+c+r': (event:KeyboardEvent, handler:HotkeysEvent) => {
-    clockwise(event)
-    toggleHotkey(event, handler, true)
-}})
+registerHotkey('ctrl+c+r', clockwise)
 // Rotate 90 degrees counterclockwise
-useCusShortKey({'ctrl+c+l': (event:KeyboardEvent, handler:HotkeysEvent) => {
-    counterclockwise(event)
-    toggleHotkey(event, handler, true)
-}})
-useCusShortKey({'ctrl+z': (event:KeyboardEvent, handler:HotkeysEvent) => {
-    resetStyle()
-    toggleHotkey(event, handler, true)
-}})
+registerHotkey('ctrl+c+l', counterclockwise)
+// reset
+registerHotkey('ctrl+z', resetStyle)
 // close
-useCusShortKey({'esc':  (event:KeyboardEvent, handler:HotkeysEvent) => {
-    close()
-    toggleHotkey(event, handler, true)
-}})
+registerHotkey('esc', close)
+
 // scale
 useCusShortKey({'ctrl+*': (event:KeyboardEvent, handler:HotkeysEvent) => {
     switch (event.key) {
@@ -304,7 +295,7 @@ function toggleHotkey (event:KeyboardEvent, handler:HotkeysEvent, isPrevent = fa
     isActiveKey.value = true
     setTimeout(() => {
         isActiveKey.value = false
-    }, 1000)
+    }, 2000)
 }
 
 const updateImage = ref('')
@@ -340,7 +331,7 @@ watch(() => props.current, (newValue, oldValue) => {
     immediate: true
 });
 
-const previous = () => {
+function previous() {
     if (!imageRef.value) return
 
     if (currentIndex.value > 0) {
@@ -349,7 +340,7 @@ const previous = () => {
     }
 }
 
-const next = () => {
+function next() {
     if (!imageRef.value) return
 
     if (currentIndex.value < props.images.length-1) {

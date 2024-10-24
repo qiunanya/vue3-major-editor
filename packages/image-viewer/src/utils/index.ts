@@ -69,9 +69,9 @@ export const getUserAgent = (): boolean => {
     if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
         flag = true
     }
-    
+
     return flag;
 }
 
 
-export const versions = '1.0.6'
+export const versions = '1.0.7'

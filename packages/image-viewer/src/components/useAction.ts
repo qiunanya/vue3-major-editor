@@ -14,36 +14,36 @@ export const useAction = (images: string[]) => {
     const totalPage = ref(0)
     const pageData = ref<string[]>([])
 
-    function inevrtY(evt:Event) {
-        evt.preventDefault();
-        evt.stopPropagation();
+    function inevrtY(evt?:Event) {
+        // evt.preventDefault();
+        // evt.stopPropagation();
         imageCore.horizontalInvert()
     }
-    function inevrtX(evt:Event) {
-        evt.preventDefault();
-        evt.stopPropagation();
+    function inevrtX(evt?:Event) {
+        // evt.preventDefault();
+        // evt.stopPropagation();
         imageCore.verticalInvert()
     }
     
-    function zoomIn(evt:Event) {
-        evt.preventDefault();
-        evt.stopPropagation();
+    function zoomIn(evt?:Event) {
+        // evt.preventDefault();
+        // evt.stopPropagation();
 
         imageCore.zoomIn()
     }
-    function zoomOut(evt:Event) {
-        evt.preventDefault();
-        evt.stopPropagation();
+    function zoomOut(evt?:Event) {
+        // evt.preventDefault();
+        // evt.stopPropagation();
         imageCore.zoomOut()
     }
-    function clockwise (evt:Event) {
-        evt.preventDefault();
-        evt.stopPropagation();
+    function clockwise (evt?:Event) {
+        // evt.preventDefault();
+        // evt.stopPropagation();
         imageCore.rotate('+')
     }
-    function counterclockwise (evt:Event) {
-        evt.preventDefault();
-        evt.stopPropagation();
+    function counterclockwise (evt?:Event) {
+        // evt.preventDefault();
+        // evt.stopPropagation();
         imageCore.rotate('-')
     }
 
@@ -69,7 +69,6 @@ export const useAction = (images: string[]) => {
 
     const loadImage = (evt:Event) => {
         imageCore.setImage(imageRef.value)
-
         const im = new Image()
         im.src = (imageRef.value&&imageRef.value.src) as string
 
@@ -77,7 +76,10 @@ export const useAction = (images: string[]) => {
             // imageRef.value.style.transform = 'none'
             const Rect = imageVieverWidgetRef.value.getBoundingClientRect()
             // 设置图片真实大小，根据可视区域动态设置，图片过大，需要完整显示
-            if (im.width<Rect.width&&im.height<Rect.height) {
+            if (getUserAgent()) {
+                imageRef.value.style.width = Rect.width + 'px'
+                imageRef.value.style.height = Rect.height / 2 + 'px'
+            } else if (im.width<Rect.width&&im.height<Rect.height) {
                 imageRef.value.style.width = im.width + 'px'
                 imageRef.value.style.height = im.height + 'px'
             } else {
@@ -88,7 +90,7 @@ export const useAction = (images: string[]) => {
         }
         
         loadImageErrorText.value = ""
-        loading.value=false
+        loading.value = false
         // console.log('图片加载成功：',evt)
         // console.log('图片信息：', im.height, im.width)
     }
@@ -127,6 +129,11 @@ export const useAction = (images: string[]) => {
         pageData.value = images.slice(startIndex, endIndex)
     }
 
+    const changePageSize = (evt:Event) => {
+        const { value } = evt.target as HTMLSelectElement
+        pagination(1, +value)
+    }
+
     pagination(1, 10)
 
     onMounted(() => {
@@ -134,6 +141,7 @@ export const useAction = (images: string[]) => {
     })
 
     return {
+        changePageSize,
         destroyedExe,
         resetStyle,
         downloads,

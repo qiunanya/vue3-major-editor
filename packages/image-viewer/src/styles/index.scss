@@ -118,6 +118,7 @@
         /* 设置宽高为auto也能展示图片默认尺寸 */
         width: auto;
         height: auto; 
+        object-fit: cover;
     }
   
     .nav-image-viewer__wrap {
@@ -138,8 +139,20 @@
             .tool-item-icon__btn {
                 margin: 0 4px;
             }
-            .page-text {
+            .pagination-wrap {
+                display: flex;
+                align-items: center;
                 color: #eee;
+                .page-size-select {
+                    border-radius: 4px;
+                    outline: none;
+                    background: transparent;
+                    color: #eee;
+                    border-color: #eee;
+                    option {
+                        color: #333; 
+                    }
+                }
             }
             .position {
                 position: absolute;
