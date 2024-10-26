@@ -20,8 +20,8 @@
             :src="updateImage||current" 
             alt="picture" 
             style="width: 120px;height: 120px;"> -->
-            <div v-if="loadImageErrorText">
-                <p style="color: orange;text-decoration: solid;">{{ loadImageErrorText }}</p>
+            <div v-if="loadImageErrorText" style="user-select: text;">
+                <p style="color: orange;text-decoration: solid;">{{ $t('imagev.loadErrorText') }}</p>
                 <p>{{ updateImage }}</p>
             </div>
             <img 
@@ -46,7 +46,10 @@
         </svg> 
     </div>
     <div class="nav-image-viewer__wrap">
-        <div class="navbar-control__wrap">
+        <div :class="[
+            'navbar-control__wrap',
+            { 'padding-b': images.length < 2 }
+        ]">
             <div :class="['pagination-wrap', { 'position': !getUserAgent() }]" v-if="images.length>=10">
                 <span>&nbsp;{{images.length}}&nbsp;{{$t('imagev.pictures')}}&nbsp;</span>
                 <span>/&nbsp;{{totalPage}}&nbsp;{{$t('imagev.page')}}&nbsp;</span>
@@ -105,10 +108,10 @@
             </svg>
             <div class="navbar-list-group">
                 <img 
-                    :id="`${index}`"
+                    :id="`${item.index}`"
                     :class="['navbar-image__item', {'nav-active-current__img': currentIndex === index }]" 
                     v-for="(item, index) in pageData" 
-                    :key="index" :src="item"  
+                    :key="index" :src="item.url"  
                     @click.stop.prevent="onClickNavImage"/>
             </div>
             <svg @click.stop.prevent="nextPage" class="icon-is-hover cus-cursor" viewBox="0 0 1024 1024" width="25" height="25">
@@ -172,7 +175,13 @@ const props = defineProps({
             return () => {}
         }
     },
-    onClose: {
+    handleChange: {
+        type: Function,
+        default: () => {
+            return () => {}
+        }
+    },
+    handleClose: {
         type: Function,
         default: () => {
             return () => {}
@@ -229,10 +238,11 @@ const {
     pageData,
     initPage,
     currentPage,
-    totalPage 
-} = useAction(props.images as string[]);
+    totalPage,
+    currentIndex 
+} = useAction(props.images as string[], props.current);
 
-const emits = defineEmits(['on-close', 'onUpdate:value']);
+const emits = defineEmits(['on-close', 'on-change', 'onUpdate:value']);
 
 // 快捷键提示
 const hotkey = ref('')
@@ -299,17 +309,10 @@ function toggleHotkey (event:KeyboardEvent, handler:HotkeysEvent, isPrevent = fa
 }
 
 const updateImage = ref('')
-const currentIndex = ref(0)
+const activeIndex = ref(-1)
 
 watch(() => props.current, (newValue, oldValue) => {
     if (newValue) {
-
-        const findIndex = pageData.value.findIndex(el => el === props.current)
-
-        if (findIndex !== -1) {
-            currentIndex.value = findIndex
-        }
-
         nextTick().then(res => {
             if (!imageRef.value) return
 
@@ -323,20 +326,27 @@ watch(() => props.current, (newValue, oldValue) => {
                 FlipAnimate(imageRef.value, firstRect, lastRect)
             }
         })
-        
-        initPage(1, 10)
     }
 }, {
     deep: true,
     immediate: true
 });
 
+watch(() => currentPage.value, (n, o) => {
+    if (n) {
+        const findIndex = pageData.value.findIndex(el => el.index === activeIndex.value)
+        if (findIndex === -1) currentIndex.value = -1
+        else currentIndex.value = findIndex
+    }
+})
+
 function previous() {
     if (!imageRef.value) return
 
     if (currentIndex.value > 0) {
         currentIndex.value--;
-        updateImage.value = imageRef.value.src = pageData.value[currentIndex.value]
+        updateImage.value = imageRef.value.src = pageData.value[currentIndex.value].url
+        props.handleChange({image: updateImage.value, index: currentIndex.value })
     }
 }
 
@@ -344,7 +354,8 @@ function next() {
     if (!imageRef.value) return
     if (currentIndex.value < pageData.value.length-1) {
         currentIndex.value++;
-        updateImage.value = imageRef.value.src = pageData.value[currentIndex.value]
+        updateImage.value = imageRef.value.src = pageData.value[currentIndex.value].url
+        props.handleChange({image: updateImage.value, index: currentIndex.value })
     }
 }
 
@@ -357,27 +368,22 @@ function clickImge (evt:Event) {
     if (evt.target) {
         const EL = evt.target as HTMLImageElement
         const firstRect = EL.getBoundingClientRect()
-        const findIndex = Number(EL.id)
-        currentIndex.value = findIndex
-        // const findIndex = pageData.value.findIndex(el => el === EL.src)
-        // if (findIndex !== -1) {
-        //     currentIndex.value = findIndex
-        // }
+        activeIndex.value = Number(EL.id)
+        currentIndex.value = pageData.value.findIndex(el => el.index === activeIndex.value)
         updateImage.value = imageRef.value.src = EL.src
         const lastRect = imageRef.value.getBoundingClientRect()
-       
+        props.handleChange({image: updateImage.value, index: currentIndex.value })
         FlipAnimate(imageRef.value, firstRect, lastRect)
         // updateImage.value = item
-        props.onUpdateCurrent( EL.src, findIndex)
+        props.onUpdateCurrent( EL.src, currentIndex.value)
     }
     
 }
 
 function close () {
     destroyedExe()
-    props.onClose()
+    props.handleClose()
     closeViewer()
-    emits('on-close')
     updateImage.value = ""
 }
 

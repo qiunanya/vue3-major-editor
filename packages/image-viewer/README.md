@@ -82,7 +82,12 @@ Add v-image-viewer to the image tag that needs to be previewed. All imgs with ad
 <img @click="previewImage" src="https://picsum.photos/id/19/2500/1667"/>
 
 <script setup lang="ts">
-import { imageViewerApi } from 'images-viewer-vue3'
+import { imageViewerApi, onUpdate } from 'images-viewer-vue3'
+
+// Monitor current picture information
+onUpdate((image:string, index: number) => {
+    console.log(image, index)
+})
 
 const previewImage = (evt) => {
     if (!evt.target) return

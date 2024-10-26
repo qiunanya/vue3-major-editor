@@ -11,6 +11,7 @@ import { versions } from './utils/index'
 
 let vnode;
 const viewerCore = ImageViewerCore.getInStance()
+var callBack:Function
 
 export default function install(app:App, config?:ImageViewerInstallConfig) {
     // 这里可以注册指令，因为App对象
@@ -42,8 +43,11 @@ function imageViewerApi (opt:ImageViewerOptions) {
             image: opt.imageDom,
             from: opt.from || 'api',
             language: config.language || 'zh',
-            onClose: () => {
-                previewBox&&document.body.removeChild(previewBox);
+            handleChange: ({ image, index }: { image:string, index: number}) => {
+                callBack(image, index)
+            },
+            handleClose: () => {
+                onClose()
             }
         })
 
@@ -64,11 +68,16 @@ function onClose () {
     viewerCore.destroyed()
 }
 
+function onUpdate (fn?:Function) {
+    fn&&(callBack=fn)
+}
+
 const ImageViewerVue3 = ImageViewer
 
 export {
     imageViewerApi,
     VImageViewer,
     ImageViewerVue3,
-    onClose
+    onClose,
+    onUpdate
 }

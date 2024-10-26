@@ -1,8 +1,9 @@
 import ImageViewerCore from './core';
 import { downloadExe, getUserAgent } from '../utils/index';
 import { ref, onMounted } from 'vue';
+import { ImageObjectTypes, AsyncSetImageReturnType } from '../types/image-viewer';
 
-export const useAction = (images: string[]) => {
+export const useAction = (images: string[], currentUrl: string) => {
     // const bodyRect = document.body.getBoundingClientRect()
     const imageVieverWidgetRef = ref<HTMLElement | null>(null)
     const imageRef = ref<HTMLImageElement|null>(null)
@@ -10,9 +11,11 @@ export const useAction = (images: string[]) => {
     const loading = ref(true)
     const imageCore = ImageViewerCore.getInStance()
     const currentPage = ref(1)
+    const currentIndex = ref(-1)
     const pageSize = ref(10)
     const totalPage = ref(0)
-    const pageData = ref<string[]>([])
+    const pageData = ref<ImageObjectTypes[]>([])
+    const originImages = ref<ImageObjectTypes[]>([])
 
     function inevrtY(evt?:Event) {
         // evt.preventDefault();
@@ -60,7 +63,16 @@ export const useAction = (images: string[]) => {
     }
 
     const destroyedExe = () => {
-        imageCore.destroyed()
+        imageVieverWidgetRef.value = null
+        imageRef.value = null
+        loadImageErrorText.value = ''
+        loading.value = true
+        currentPage.value = 1
+        currentIndex.value = -1
+        pageSize.value = 10
+        totalPage.value = 0
+        pageData.value = []
+        originImages.value = []
     }
 
     const resetStyle = () => {
@@ -122,11 +134,14 @@ export const useAction = (images: string[]) => {
     }
 
     const pagination = (currentPage:number, pageSize:number) => {
-        var num = images.length
+        var num = originImages.value.length
         totalPage.value = Math.ceil(num / pageSize)
         var startIndex = pageSize * (currentPage - 1)
         var endIndex = startIndex + pageSize
-        pageData.value = images.slice(startIndex, endIndex)
+        pageData.value = originImages.value.slice(startIndex, endIndex)
+
+        // 激活当前图片索引 currentIndex
+        currentIndex.value = pageData.value.findIndex(el => el.url === currentUrl)
     }
 
     const changePageSize = (evt:Event) => {
@@ -134,7 +149,36 @@ export const useAction = (images: string[]) => {
         pagination(1, +value)
     }
 
-    pagination(1, 10)
+    const asyncSetImage = (): AsyncSetImageReturnType => {
+        return new Promise((resolve, reject) => {
+            if (Array.isArray(images) && images.length > 0) {
+                const filters = images.filter(el => el === null || el === undefined || el === '')
+                const arr = images.filter(el => el).map((el, index) => {
+                    return {
+                        index,
+                        url: el
+                    }
+                })
+                if (filters.length) {
+                    console.warn(`images-viewer-vue3:The image parameter 'images' contains illegal characters:[${JSON.stringify(filters)}]`)
+                }
+                resolve({ data: arr })
+                
+            } else resolve({ data: [] })
+        })
+    }
+
+    const setImageData = async () => {
+        await asyncSetImage().then(res => {
+            originImages.value = res.data;
+        }).catch(err => {
+            console.log('images-viewer-vue3:', JSON.stringify(err))
+        })
+        
+        initPage(1, 10)
+    }
+
+    setImageData()
 
     onMounted(() => {
         // imageCore.setImage(imageRef.value)
@@ -163,6 +207,7 @@ export const useAction = (images: string[]) => {
         nextPage,
         initPage,
         currentPage,
-        totalPage
+        totalPage,
+        currentIndex
     }
 }

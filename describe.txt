@@ -14,3 +14,6 @@ pnpm add @majoreditor/ui
 
 ✨ 更新所有包依赖
 pnpm install --recursive
+
+更新pnpm版本
+pnpm self-update

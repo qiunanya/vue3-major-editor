@@ -31,4 +31,11 @@ export interface ImageViewerInstallConfig {
     language?:langType 
 }
 
+export type ImageObjectTypes = {
+    index: number;
+    url: string;
+};
+
+export type AsyncSetImageReturnType = Promise<{ data: ImageObjectTypes[] } | { data: [] }>
+
 export {}

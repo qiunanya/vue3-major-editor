@@ -11,9 +11,12 @@
         <img class="img-item" src="https://picsum.photos/id/19/2500/1667" v-image-viewer/>
         <img class="img-item" src="https://picsum.photos/id/22/367/267" v-image-viewer/>
         <img class="img-item" src="https://picsum.photos/id/26/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/27/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/28/367/267" v-image-viewer/>
         <img class="img-item" src="https://picsum.photos/id/24/367/267" v-image-viewer/>
         <img class="img-item" src="https://picsum.photos/id/29/4000/2670" v-image-viewer/>
         <img class="img-item" src="https://picsum.photos/id/23/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/19/2500/1667" v-image-viewer/>
         <img class="img-item" src="https://picsum.photos/id/19/2500/1667" v-image-viewer/>
         <img class="img-item" src="https://picsum.photos/id/11/2500/1667" v-image-viewer/>
     </div>
@@ -35,8 +38,12 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { onClose, imageViewerApi } from './src/index'
+import { onClose, imageViewerApi, onUpdate } from './src/index'
 import ImageViewerVue3 from "./src/components/viewer.vue"
+
+onUpdate((image:string, index: number) => {
+    console.log(image, index)
+})
 
 const handleClose = () => {
     onClose()
@@ -46,7 +53,8 @@ const toggleApi = (evt:Event) => {
     const iDom = evt.target as HTMLImageElement
     imageViewerApi({
         current: iDom.src,
-        imageDom: iDom
+        imageDom: iDom,
+        images: []
     })
 }
 </script>
