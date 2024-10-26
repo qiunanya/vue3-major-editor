@@ -304,7 +304,7 @@ const currentIndex = ref(0)
 watch(() => props.current, (newValue, oldValue) => {
     if (newValue) {
 
-        const findIndex = props.images.findIndex(el => el === props.current)
+        const findIndex = pageData.value.findIndex(el => el === props.current)
 
         if (findIndex !== -1) {
             currentIndex.value = findIndex
@@ -336,16 +336,15 @@ function previous() {
 
     if (currentIndex.value > 0) {
         currentIndex.value--;
-        updateImage.value = imageRef.value.src = props.images[currentIndex.value] as string
+        updateImage.value = imageRef.value.src = pageData.value[currentIndex.value]
     }
 }
 
 function next() {
     if (!imageRef.value) return
-
-    if (currentIndex.value < props.images.length-1) {
+    if (currentIndex.value < pageData.value.length-1) {
         currentIndex.value++;
-        updateImage.value = imageRef.value.src = props.images[currentIndex.value] as string
+        updateImage.value = imageRef.value.src = pageData.value[currentIndex.value]
     }
 }
 
