@@ -12,6 +12,7 @@ export const useAction = (images: string[], currentUrl: string) => {
     const imageCore = ImageViewerCore.getInStance()
     const currentPage = ref(1)
     const currentIndex = ref(-1)
+    const activeIndex = ref(-1)
     const pageSize = ref(10)
     const totalPage = ref(0)
     const pageData = ref<ImageObjectTypes[]>([])
@@ -69,6 +70,7 @@ export const useAction = (images: string[], currentUrl: string) => {
         loading.value = true
         currentPage.value = 1
         currentIndex.value = -1
+        activeIndex.value = -1
         pageSize.value = 10
         totalPage.value = 0
         pageData.value = []
@@ -142,6 +144,9 @@ export const useAction = (images: string[], currentUrl: string) => {
 
         // 激活当前图片索引 currentIndex
         currentIndex.value = pageData.value.findIndex(el => el.url === currentUrl)
+        if (currentIndex.value !== -1) {
+            activeIndex.value = pageData.value[currentIndex.value].index
+        }
     }
 
     const changePageSize = (evt:Event) => {
@@ -208,6 +213,7 @@ export const useAction = (images: string[], currentUrl: string) => {
         initPage,
         currentPage,
         totalPage,
-        currentIndex
+        currentIndex,
+        activeIndex
     }
 }

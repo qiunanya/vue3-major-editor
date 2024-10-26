@@ -60,6 +60,7 @@
                     <option value="20">20/{{$t('imagev.page')}}</option>
                     <option value="30">30/{{$t('imagev.page')}}</option>
                 </select>
+                {{ currentIndex }}
             </div>
             <div>
                 <!-- 放大 -->
@@ -239,7 +240,8 @@ const {
     initPage,
     currentPage,
     totalPage,
-    currentIndex 
+    currentIndex,
+    activeIndex 
 } = useAction(props.images as string[], props.current);
 
 const emits = defineEmits(['on-close', 'on-change', 'onUpdate:value']);
@@ -309,7 +311,6 @@ function toggleHotkey (event:KeyboardEvent, handler:HotkeysEvent, isPrevent = fa
 }
 
 const updateImage = ref('')
-const activeIndex = ref(-1)
 
 watch(() => props.current, (newValue, oldValue) => {
     if (newValue) {
