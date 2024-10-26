@@ -20,7 +20,7 @@ export default function install(app:App, config?:ImageViewerInstallConfig) {
     }
 
     // console.log(app, config, 'install');
-    console.log(`images-viewer-vue3_v${versions}`)
+    console.log(`%cimages-viewer-vue3_V${versions}`, "color: #eee;background:#646cff;padding:2px 5px;border-radius:4px;")
     app.directive("image-viewer", VImageViewer)
     app.component('ImagesViewerVue3', ImageViewer)
     app.config.globalProperties.$imageViewerApi = imageViewerApi

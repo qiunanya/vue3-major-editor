@@ -60,7 +60,6 @@
                     <option value="20">20/{{$t('imagev.page')}}</option>
                     <option value="30">30/{{$t('imagev.page')}}</option>
                 </select>
-                {{ currentIndex }}
             </div>
             <div>
                 <!-- 放大 -->
