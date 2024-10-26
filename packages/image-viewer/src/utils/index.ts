@@ -74,4 +74,4 @@ export const getUserAgent = (): boolean => {
 }
 
 
-export const versions = '1.0.10'
+export const versions = '1.0.11'

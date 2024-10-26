@@ -18,6 +18,23 @@
         <img class="img-item" src="https://picsum.photos/id/24/367/267" v-image-viewer/>
         <img class="img-item" src="https://picsum.photos/id/29/4000/2670" v-image-viewer/>
         <img class="img-item" src="https://picsum.photos/id/23/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/23/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/24/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/25/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/26/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/27/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/28/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/29/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/30/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/31/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/32/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/33/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/34/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/35/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/36/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/37/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/23/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/23/367/267" v-image-viewer/>
         <img class="img-item" src="https://picsum.photos/id/19/2500/1667" v-image-viewer/>
         <img class="img-item" src="https://picsum.photos/id/11/2500/1667" v-image-viewer/>
     </div>
@@ -42,7 +59,11 @@
 </template>
 
 <script setup lang="ts">
-import { imageViewerApi } from 'images-viewer-vue3'
+import { imageViewerApi, onUpdate } from 'images-viewer-vue3'
+
+onUpdate((image:string, index: number) => {
+    console.log(image, index)
+})
 
 const open = (evt:Event) => {
     if (!evt.target) return

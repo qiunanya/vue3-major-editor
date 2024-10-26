@@ -11,7 +11,7 @@ import { versions } from './utils/index'
 
 let vnode;
 const viewerCore = ImageViewerCore.getInStance()
-var callBack:Function
+var callBack:Function = (image:string, index: number) => {}
 
 export default function install(app:App, config?:ImageViewerInstallConfig) {
     // 这里可以注册指令，因为App对象
@@ -44,7 +44,7 @@ function imageViewerApi (opt:ImageViewerOptions) {
             from: opt.from || 'api',
             language: config.language || 'zh',
             handleChange: ({ image, index }: { image:string, index: number}) => {
-                callBack(image, index)
+                callBack&&callBack(image, index)
             },
             handleClose: () => {
                 onClose()
@@ -55,6 +55,9 @@ function imageViewerApi (opt:ImageViewerOptions) {
         previewBox.style.zIndex = config.zIndex+'';
         previewBox.classList.add('image-viewer-vue3__root');
         render(vnode, previewBox)
+        document.body.style.overflow = 'hidden'
+        document.body.style.margin = '0px'
+        document.body.style.padding = '0px'
         document.body.appendChild(previewBox)
     }
 }
@@ -63,6 +66,9 @@ function imageViewerApi (opt:ImageViewerOptions) {
 function onClose () {
     const imageViewerDom = document.querySelector('.image-viewer-vue3__root')
     if (imageViewerDom) {
+        document.body.style.removeProperty('overflow')
+        document.body.style.removeProperty('margin')
+        document.body.style.removeProperty('padding')
         document.body.removeChild(imageViewerDom);
     }
     viewerCore.destroyed()

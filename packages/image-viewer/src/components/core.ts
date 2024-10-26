@@ -43,6 +43,8 @@ class ImageViewerCore {
     }
 
     private onWheel (evt:WheelEvent) {
+        // evt.preventDefault()
+        // evt.stopPropagation()
         (evt.deltaY < 0) && this.zoomIn();
         (evt.deltaY >= 0) && this.zoomOut();
     }
