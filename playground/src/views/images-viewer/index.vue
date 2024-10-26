@@ -9,8 +9,17 @@
     <!-- 指令使用图片预览器 -->
     <div>
         <h5>指令使用图片预览器</h5>
-        <img v-image-viewer src="https://picsum.photos/id/19/2500/1667"/>
-        <img v-image-viewer src="https://picsum.photos/id/63/2500/1667"/>
+        <img class="img-item" src="https://picsum.photos/id/10/2500/1667" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/11/2500/1667" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/20/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/19/2500/1667" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/22/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/26/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/24/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/29/4000/2670" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/23/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/19/2500/1667" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/11/2500/1667" v-image-viewer/>
     </div>
    
     <!-- 组件方式使用图片预览器 -->
