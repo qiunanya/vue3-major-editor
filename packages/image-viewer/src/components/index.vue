@@ -349,7 +349,7 @@ watch(() => props.current, (newValue, oldValue) => {
         })
     }
 }, {
-    deep: true,
+    deep: true,  
     immediate: true
 });
 
