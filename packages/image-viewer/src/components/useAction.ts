@@ -10,12 +10,8 @@ export const useAction = (images: string[], currentUrl: string) => {
     const loadImageErrorText = ref('')
     const loading = ref(true)
     const imageCore = ImageViewerCore.getInStance()
-    const currentPage = ref(1)
     const currentIndex = ref(-1)
     const activeIndex = ref(-1)
-    const pageSize = ref(10)
-    const totalPage = ref(0)
-    const pageData = ref<ImageObjectTypes[]>([])
     const originImages = ref<ImageObjectTypes[]>([])
 
     // 虚拟滚动列表
@@ -84,12 +80,8 @@ export const useAction = (images: string[], currentUrl: string) => {
         imageRef.value = null
         loadImageErrorText.value = ''
         loading.value = true
-        currentPage.value = 1
         currentIndex.value = -1
         activeIndex.value = -1
-        pageSize.value = 10
-        totalPage.value = 0
-        pageData.value = []
         originImages.value = []
     }
 
@@ -131,45 +123,6 @@ export const useAction = (images: string[], currentUrl: string) => {
         // console.log('图片加载错误：',evt)
     }
 
-    const prevPage = () => {
-        if (currentPage.value > 1) {
-            currentPage.value--;
-            pagination(currentPage.value, pageSize.value);
-        }
-    }
-
-    const nextPage = () => {
-        if (currentPage.value < totalPage.value) {
-            currentPage.value++;
-            pagination(currentPage.value, pageSize.value);
-        }
-    }
-
-    const initPage = (current:number, size:number) => {
-        currentPage.value = current
-        pageSize.value = size
-        pagination(current, size)
-    }
-
-    const pagination = (currentPage:number, pageSize:number) => {
-        var num = originImages.value.length
-        totalPage.value = Math.ceil(num / pageSize)
-        var startIndex = pageSize * (currentPage - 1)
-        var endIndex = startIndex + pageSize
-        pageData.value = originImages.value.slice(startIndex, endIndex)
-
-        // 激活当前图片索引 currentIndex
-        currentIndex.value = pageData.value.findIndex(el => el.url === currentUrl)
-        if (currentIndex.value !== -1) {
-            activeIndex.value = pageData.value[currentIndex.value].index
-        }
-    }
-
-    const changePageSize = (evt:Event) => {
-        const { value } = evt.target as HTMLSelectElement
-        pagination(1, +value)
-    }
-
     const asyncSetImage = (): AsyncSetImageReturnType => {
         return new Promise((resolve, reject) => {
             if (Array.isArray(images) && images.length > 0) {
@@ -188,16 +141,6 @@ export const useAction = (images: string[], currentUrl: string) => {
             } else resolve({ data: [] })
         })
     }
-
-    const setImageData = async () => {
-        await asyncSetImage().then(res => {
-            originImages.value = res.data;
-        }).catch(err => {
-            console.log('images-viewer-vue3:', JSON.stringify(err))
-        })
-    }
-
-    // setImageData()
 
     // 渲染
     const setRender = () => {
@@ -292,7 +235,6 @@ export const useAction = (images: string[], currentUrl: string) => {
         renderData,
         vnodeUlRef,
         vnodeScrollRef,
-        changePageSize,
         destroyedExe,
         resetStyle,
         downloads,
@@ -309,12 +251,6 @@ export const useAction = (images: string[], currentUrl: string) => {
         clockwise,
         counterclockwise,
         closeViewer,
-        pageData,
-        prevPage,
-        nextPage,
-        initPage,
-        currentPage,
-        totalPage,
         currentIndex,
         activeIndex
     }

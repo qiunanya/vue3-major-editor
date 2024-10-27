@@ -50,18 +50,6 @@
             'navbar-control__wrap',
             { 'padding-b': images.length < 2 }
         ]">
-            <div :class="['pagination-wrap', { 'position': !getUserAgent() }]" v-if="images.length>=10">
-                <span>&nbsp;{{images.length}}&nbsp;{{$t('imagev.pictures')}}&nbsp;</span>
-                <span>/&nbsp;{{totalPage}}&nbsp;{{$t('imagev.page')}}&nbsp;</span>
-                <span>/&nbsp;{{$t('imagev.current')}}&nbsp;{{currentPage}}</span>&nbsp;
-                <select class="page-size-select" name="select" id="page-size-select" @change="changePageSize">
-                    <option value="10" selected>10/{{$t('imagev.page')}}</option>
-                    <option value="15">15/{{$t('imagev.page')}}</option>
-                    <option value="20">20/{{$t('imagev.page')}}</option>
-                    <option value="30">30/{{$t('imagev.page')}}</option>
-                </select>
-                {{  currentIndex }}
-            </div>
             <div>
                 <!-- 放大 -->
                 <svg @click.stop.prevent="zoomIn" class="tool-item-icon__btn icon-is-hover" viewBox="0 0 1024 1024" width="25" height="25">
@@ -104,20 +92,6 @@
             </div>
         </div>
         <div class="navbar-thumbnail__wrap" v-if="images.length>=2">
-            <!-- <svg @click.stop.prevent="prevPage" class="icon-is-hover cus-cursor" viewBox="0 0 1024 1024" width="25" height="25">
-                <path d="M758.656 937.344a32 32 0 1 1-45.31199999 45.312l-448.00000001-448.128a32 32 0 0 1 0-45.248l448.00000001-447.936a32 32 0 1 1 45.31199999 45.312l-425.408 425.28000001L758.656 937.344z" fill="#eee"></path>
-            </svg>
-            <div class="navbar-list-group">
-                <img 
-                    :id="`${item.index}`"
-                    :class="['navbar-image__item', {'nav-active-current__img': currentIndex === index }]" 
-                    v-for="(item, index) in pageData" 
-                    :key="index" :src="item.url"  
-                    @click.stop.prevent="onClickNavImage"/>
-            </div>
-            <svg @click.stop.prevent="nextPage" class="icon-is-hover cus-cursor" viewBox="0 0 1024 1024" width="25" height="25">
-                <path d="M265.344 86.656a32 32 0 1 1 45.312-45.312l448 448.128a32 32 0 0 1 0 45.248l-448 447.936a32 32 0 1 1-45.312-45.312l425.408-425.28L265.344 86.656z" fill="#eee"></path>
-            </svg>  -->
             <div ref="vnodeScrollRef" class="vnode-scroll__wrap" @scroll="onRectScroll">
                 <ul ref="vnodeUlRef" class="list-group">
                     <li :class="['list-group-item', {'nav-active-current__img': currentIndex === item.index }]" 
@@ -125,12 +99,11 @@
                         v-for="(item, index) in renderData" 
                         :key="index" 
                         :data-id="item.index">
-                        <span>{{ item.index }}</span>
-                        <img class="navbar-image" :data-id="item.index" :src="item.url" alt="picture"  @click.stop.prevent="onClickNavImage">
+                        <!-- <span>{{ item.index }}</span> -->
+                        <img class="navbar-image" :data-id="item.index" :src="item.url" alt="picture" @click.stop.prevent="onClickNavImage">
                     </li>
                 </ul>
             </div>
-            
         </div>
     </div>
 
@@ -183,12 +156,6 @@ const props = defineProps({
             return ''
         }
     },
-    onUpdateCurrent: {
-        type: Function,
-        default: () => {
-            return () => {}
-        }
-    },
     handleChange: {
         type: Function,
         default: () => {
@@ -237,7 +204,6 @@ const {
     renderData,
     vnodeUlRef,
     vnodeScrollRef,
-    changePageSize,
     destroyedExe,
     resetStyle,
     downloads,
@@ -254,12 +220,6 @@ const {
     clockwise,
     counterclockwise,
     closeViewer,
-    prevPage,
-    nextPage,
-    pageData,
-    initPage,
-    currentPage,
-    totalPage,
     currentIndex,
     activeIndex 
 } = useAction(props.images as string[], props.current);
@@ -285,10 +245,6 @@ function registerHotkey (keys: string, action: () => void, prevent: boolean = tr
 registerHotkey('right', next)
 // previous
 registerHotkey('left', previous)
-// nextPage
-registerHotkey('ctrl+right', nextPage)
-// prevPage
-registerHotkey('ctrl+left', prevPage)
 // inevrtY
 registerHotkey('ctrl+i+y', inevrtY)
 // inevrtX
@@ -364,33 +320,24 @@ watch(() => currentIndex.value, (n, o) => {
 })
 
 function previous() {
+    if (!imageRef.value) return
     previousImage()
-    // if (!imageRef.value) return
-
-    // if (currentIndex.value > 0) {
-    //     currentIndex.value--;
-    //     updateImage.value = imageRef.value.src = originImages.value[currentIndex.value].url
-    //     props.handleChange({image: updateImage.value, index: currentIndex.value })
-    // }
+    updateImage.value = imageRef.value.src = originImages.value[currentIndex.value].url
+    props.handleChange({image:imageRef.value.src, index: currentIndex.value })
 }
 
 function next() {
+    if (!imageRef.value) return
     nextImage()
-    // if (!imageRef.value) return
-    // if (currentIndex.value < originImages.value.length-1) {
-    //     currentIndex.value++;
-    //     updateImage.value = imageRef.value.src = originImages.value[currentIndex.value].url
-    //     props.handleChange({image: updateImage.value, index: currentIndex.value })
-    // }
-
+    updateImage.value = imageRef.value.src = originImages.value[currentIndex.value].url
+    props.handleChange({image:imageRef.value.src, index: currentIndex.value })
 }
 
-const onClickNavImage = debounce(clickImge, 360)
+const onClickNavImage = debounce(clickImge, 200)
 
 function clickImge (evt:Event) {
     loadImageErrorText.value = ""
     if (!imageRef.value) return
-
     if (evt.target) {
         const EL = evt.target as HTMLImageElement
         const firstRect = EL.getBoundingClientRect()
@@ -400,8 +347,6 @@ function clickImge (evt:Event) {
         const lastRect = imageRef.value.getBoundingClientRect()
         props.handleChange({image: updateImage.value, index: currentIndex.value })
         FlipAnimate(imageRef.value, firstRect, lastRect)
-        // updateImage.value = item
-        props.onUpdateCurrent(EL.src, currentIndex.value)
     }
     
 }
