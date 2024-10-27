@@ -16,8 +16,28 @@
         <img class="img-item" src="https://picsum.photos/id/24/367/267" v-image-viewer/>
         <img class="img-item" src="https://picsum.photos/id/29/4000/2670" v-image-viewer/>
         <img class="img-item" src="https://picsum.photos/id/23/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/24/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/25/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/26/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/27/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/28/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/29/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/30/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/31/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/32/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/33/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/34/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/35/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/36/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/37/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/38/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/10/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/11/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/12/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/13/367/267" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/15/367/267" v-image-viewer/>
         <img class="img-item" src="https://picsum.photos/id/19/2500/1667" v-image-viewer/>
-        <img class="img-item" src="https://picsum.photos/id/19/2500/1667" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/16/2500/1667" v-image-viewer/>
         <img class="img-item" src="https://picsum.photos/id/11/2500/1667" v-image-viewer/>
     </div>
 

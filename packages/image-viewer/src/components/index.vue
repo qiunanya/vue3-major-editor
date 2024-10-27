@@ -60,6 +60,7 @@
                     <option value="20">20/{{$t('imagev.page')}}</option>
                     <option value="30">30/{{$t('imagev.page')}}</option>
                 </select>
+                {{  currentIndex }}
             </div>
             <div>
                 <!-- 放大 -->
@@ -103,7 +104,7 @@
             </div>
         </div>
         <div class="navbar-thumbnail__wrap" v-if="images.length>=2">
-            <svg @click.stop.prevent="prevPage" class="icon-is-hover cus-cursor" viewBox="0 0 1024 1024" width="25" height="25">
+            <!-- <svg @click.stop.prevent="prevPage" class="icon-is-hover cus-cursor" viewBox="0 0 1024 1024" width="25" height="25">
                 <path d="M758.656 937.344a32 32 0 1 1-45.31199999 45.312l-448.00000001-448.128a32 32 0 0 1 0-45.248l448.00000001-447.936a32 32 0 1 1 45.31199999 45.312l-425.408 425.28000001L758.656 937.344z" fill="#eee"></path>
             </svg>
             <div class="navbar-list-group">
@@ -116,7 +117,20 @@
             </div>
             <svg @click.stop.prevent="nextPage" class="icon-is-hover cus-cursor" viewBox="0 0 1024 1024" width="25" height="25">
                 <path d="M265.344 86.656a32 32 0 1 1 45.312-45.312l448 448.128a32 32 0 0 1 0 45.248l-448 447.936a32 32 0 1 1-45.312-45.312l425.408-425.28L265.344 86.656z" fill="#eee"></path>
-            </svg> 
+            </svg>  -->
+            <div ref="vnodeScrollRef" class="vnode-scroll__wrap" @scroll="onRectScroll">
+                <ul ref="vnodeUlRef" class="list-group">
+                    <li :class="['list-group-item', {'nav-active-current__img': currentIndex === item.index }]" 
+                        style="width: 50px;" 
+                        v-for="(item, index) in renderData" 
+                        :key="index" 
+                        :data-id="item.index">
+                        <span>{{ item.index }}</span>
+                        <img class="navbar-image" :data-id="item.index" :src="item.url" alt="picture"  @click.stop.prevent="onClickNavImage">
+                    </li>
+                </ul>
+            </div>
+            
         </div>
     </div>
 
@@ -126,7 +140,7 @@
 
 </template>
 <script setup lang="ts">
-import { watch, ref, nextTick, onBeforeUnmount } from 'vue';
+import { watch, ref, nextTick, onBeforeUnmount, onMounted } from 'vue';
 import { useAction } from './useAction';
 import { debounce, getUserAgent } from '../utils';
 import { FlipAnimate } from './flip-animate';
@@ -216,6 +230,13 @@ const $t = (langStr = "") => {
 }
 
 const {
+    originImages,
+    nextImage,
+    previousImage,
+    onRectScroll,
+    renderData,
+    vnodeUlRef,
+    vnodeScrollRef,
     changePageSize,
     destroyedExe,
     resetStyle,
@@ -332,31 +353,36 @@ watch(() => props.current, (newValue, oldValue) => {
     immediate: true
 });
 
-watch(() => currentPage.value, (n, o) => {
+watch(() => currentIndex.value, (n, o) => {
     if (n) {
-        const findIndex = pageData.value.findIndex(el => el.index === activeIndex.value)
-        if (findIndex === -1) currentIndex.value = -1
-        else currentIndex.value = findIndex
+        if (!imageRef.value) return
+        const findIndex = renderData.value.findIndex(el => el.index === currentIndex.value)
+        if (findIndex) {
+            // updateImage.value = imageRef.value.src = renderData.value[findIndex].url
+        } 
     }
 })
 
 function previous() {
-    if (!imageRef.value) return
+    previousImage()
+    // if (!imageRef.value) return
 
-    if (currentIndex.value > 0) {
-        currentIndex.value--;
-        updateImage.value = imageRef.value.src = pageData.value[currentIndex.value].url
-        props.handleChange({image: updateImage.value, index: currentIndex.value })
-    }
+    // if (currentIndex.value > 0) {
+    //     currentIndex.value--;
+    //     updateImage.value = imageRef.value.src = originImages.value[currentIndex.value].url
+    //     props.handleChange({image: updateImage.value, index: currentIndex.value })
+    // }
 }
 
 function next() {
-    if (!imageRef.value) return
-    if (currentIndex.value < pageData.value.length-1) {
-        currentIndex.value++;
-        updateImage.value = imageRef.value.src = pageData.value[currentIndex.value].url
-        props.handleChange({image: updateImage.value, index: currentIndex.value })
-    }
+    nextImage()
+    // if (!imageRef.value) return
+    // if (currentIndex.value < originImages.value.length-1) {
+    //     currentIndex.value++;
+    //     updateImage.value = imageRef.value.src = originImages.value[currentIndex.value].url
+    //     props.handleChange({image: updateImage.value, index: currentIndex.value })
+    // }
+
 }
 
 const onClickNavImage = debounce(clickImge, 360)
@@ -368,14 +394,14 @@ function clickImge (evt:Event) {
     if (evt.target) {
         const EL = evt.target as HTMLImageElement
         const firstRect = EL.getBoundingClientRect()
-        activeIndex.value = Number(EL.id)
-        currentIndex.value = pageData.value.findIndex(el => el.index === activeIndex.value)
+        activeIndex.value = Number(EL.getAttribute('data-id')) 
+        currentIndex.value = originImages.value.findIndex(el => el.index === activeIndex.value)
         updateImage.value = imageRef.value.src = EL.src
         const lastRect = imageRef.value.getBoundingClientRect()
         props.handleChange({image: updateImage.value, index: currentIndex.value })
         FlipAnimate(imageRef.value, firstRect, lastRect)
         // updateImage.value = item
-        props.onUpdateCurrent( EL.src, currentIndex.value)
+        props.onUpdateCurrent(EL.src, currentIndex.value)
     }
     
 }

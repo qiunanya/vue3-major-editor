@@ -1,6 +1,6 @@
 import ImageViewerCore from './core';
 import { downloadExe, getUserAgent } from '../utils/index';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, nextTick } from 'vue';
 import { ImageObjectTypes, AsyncSetImageReturnType } from '../types/image-viewer';
 
 export const useAction = (images: string[], currentUrl: string) => {
@@ -17,6 +17,22 @@ export const useAction = (images: string[], currentUrl: string) => {
     const totalPage = ref(0)
     const pageData = ref<ImageObjectTypes[]>([])
     const originImages = ref<ImageObjectTypes[]>([])
+
+    // 虚拟滚动列表
+    const vnodeScrollRef = ref<HTMLElement | null>(null)
+    const vnodeUlRef = ref<HTMLElement | null>(null)
+    // +2 撑开listScroll容器使其具有滚动条[可视区域容纳最大item个数]
+    const maxCount = ref(0)
+    // item的宽度
+    const itemWidth = 50
+    // 开始位置索引
+    const startIndex = ref(0)
+    // 结束位置索引
+    const endIndex = ref(0)
+    // 记录到的位置索引
+    const pointerIndex = ref(0)
+    // 最终渲染数据
+    const renderData = ref<ImageObjectTypes[]>([])    
 
     function inevrtY(evt?:Event) {
         // evt.preventDefault();
@@ -179,17 +195,103 @@ export const useAction = (images: string[], currentUrl: string) => {
         }).catch(err => {
             console.log('images-viewer-vue3:', JSON.stringify(err))
         })
-        
-        initPage(1, 10)
     }
 
-    setImageData()
+    // setImageData()
 
-    onMounted(() => {
-        // imageCore.setImage(imageRef.value)
+    // 渲染
+    const setRender = () => {
+        // 计算开始和结束位置
+        const end = startIndex.value + maxCount.value
+        endIndex.value = originImages.value[end] !== void 0 ? end : originImages.value.length
+
+        // 获取数据
+        renderData.value = originImages.value.slice(startIndex.value, endIndex.value)
+    }
+
+    const onRectScroll = (evt:Event) => {
+        if (!vnodeScrollRef.value || !vnodeUlRef.value) return
+        startIndex.value = Math.floor(vnodeScrollRef.value.scrollLeft / (itemWidth))
+        if (pointerIndex.value === startIndex.value) return
+
+        pointerIndex.value = startIndex.value
+
+        setRender()
+
+        if (originImages.value.length - startIndex.value >= maxCount.value) {
+            vnodeUlRef.value.style.transform = `translateX(${startIndex.value * itemWidth}px)`
+        } else {
+            // 滑动到底部，可以加载更多数据
+            return
+        }
+    }
+
+    const initScroll = async (rect:DOMRect) => {
+        await asyncSetImage().then(res => {
+            originImages.value = res.data
+            currentIndex.value = originImages.value.findIndex(el => el.url === currentUrl)
+            console.log(currentIndex.value, 666)
+            // for (let i = 0; i < 100; i++) {
+            //     originImages.value.push({ index:i, url: `index_${i}`})
+            // }
+        }).catch(err => {
+            console.log('images-viewer-vue3:', JSON.stringify(err))
+        })
+        maxCount.value = Math.floor(rect.width/itemWidth) + 2
+        setRender()
+        console.log(maxCount.value, originImages.value, 6666)
+    }
+
+   // 切换图片的方法
+    const switchToImage = (targetIndex:number) => {
+        if (!vnodeScrollRef.value) return
+        const imageWidth = itemWidth + 10; // 假设图片宽度 + 间距
+        const visibleCount = Math.floor(vnodeScrollRef.value.clientWidth / imageWidth); // 视口内可显示的图片数
+
+        // 计算目标图片的起始与结束位置
+        const start = targetIndex * imageWidth;
+        const end = start + imageWidth;
+
+        // 如果目标图片不在当前视口范围，则调整 scrollLeft
+        if (start < vnodeScrollRef.value.scrollLeft || end > vnodeScrollRef.value.scrollLeft + vnodeScrollRef.value.clientWidth) {
+            vnodeScrollRef.value.scrollLeft = targetIndex * imageWidth;
+        }
+
+        // 设置当前索引并渲染
+        startIndex.value = Math.max(0, targetIndex - Math.floor(visibleCount / 2));
+        setRender();
+    };
+
+    // 切换到下一张图片
+    const nextImage = () => {
+        const targetIndex = Math.min(currentIndex.value + 1, originImages.value.length - 1);
+        currentIndex.value = targetIndex;
+        switchToImage(targetIndex);
+    };
+
+    // 切换到上一张图片
+    const previousImage = () => {
+        const targetIndex = Math.max(currentIndex.value - 1, 0);
+        currentIndex.value = targetIndex;
+        switchToImage(targetIndex);
+    };
+
+
+    nextTick(() => {
+        if (vnodeScrollRef.value) {
+            const rect = vnodeScrollRef.value?.getBoundingClientRect()
+            initScroll(rect)
+        }
     })
 
     return {
+        originImages,
+        nextImage,
+        previousImage,
+        onRectScroll,
+        renderData,
+        vnodeUlRef,
+        vnodeScrollRef,
         changePageSize,
         destroyedExe,
         resetStyle,
