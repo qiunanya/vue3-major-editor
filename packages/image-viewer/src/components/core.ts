@@ -262,7 +262,7 @@ class ImageViewerCore {
         const deltaY = touch2.clientY - touch1.clientY;
        
         return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-    }
+    }  
 
     public static addTotal () {
         this.total +=3
