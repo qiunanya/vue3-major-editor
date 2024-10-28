@@ -5,6 +5,9 @@
         'images-viewer-container__wrap', 
         {'is-active':visible}, 
         {'nav-scroll-style__wrap':!getUserAgent()}]">
+    <ul class="image-viewer-info__tag" @click="close">
+       <li>图片原始宽高：{{imageInfo.width}}像素 X {{imageInfo.height}}像素</li>
+    </ul>
     <div class="image-viewer-close__btn" @click="close">
         <svg class="close-icon icon-is-hover" viewBox="0 0 1024 1024" width="25" height="25">
             <path d="M835.2 854.4c-12.8 0-22.4-3.2-32-12.8L211.2 256C192 240 192 211.2 208 195.2s44.8-16 60.8 0L864 780.8c16 16 16 44.8 0 60.8-6.4 9.6-16 12.8-28.8 12.8z" fill="#eee"></path>
@@ -50,6 +53,17 @@
             'navbar-control__wrap',
             { 'padding-b': images.length < 2 }
         ]">
+            <div :class="['pagination-wrap', { 'position': !getUserAgent() }]" v-if="images.length>=10">
+                <span>&nbsp;{{images.length}}&nbsp;{{$t('imagev.pictures')}}&nbsp;</span>
+                <span>/&nbsp;{{currentIndex+1}}&nbsp;{{$t('imagev.leaf')}}&nbsp;</span>
+                <!-- <span>/&nbsp;{{$t('imagev.current')}}&nbsp;{{5}}</span>&nbsp;
+                <select class="page-size-select" name="select" id="page-size-select" @change="6">
+                    <option value="10" selected>10/{{$t('imagev.page')}}</option>
+                    <option value="15">15/{{$t('imagev.page')}}</option>
+                    <option value="20">20/{{$t('imagev.page')}}</option>
+                    <option value="30">30/{{$t('imagev.page')}}</option>
+                </select> -->
+            </div>
             <div>
                 <!-- 放大 -->
                 <svg @click.stop.prevent="zoomIn" class="tool-item-icon__btn icon-is-hover" viewBox="0 0 1024 1024" width="25" height="25">
@@ -197,6 +211,7 @@ const $t = (langStr = "") => {
 }
 
 const {
+    imageInfo,
     originImages,
     nextImage,
     previousImage,

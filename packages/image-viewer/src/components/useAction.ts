@@ -1,6 +1,6 @@
 import ImageViewerCore from './core';
 import { downloadExe, getUserAgent } from '../utils/index';
-import { ref, onMounted, nextTick } from 'vue';
+import { ref, onMounted, nextTick, reactive, toRefs } from 'vue';
 import { ImageObjectTypes, AsyncSetImageReturnType } from '../types/image-viewer';
 
 export const useAction = (images: string[], currentUrl: string) => {
@@ -13,6 +13,10 @@ export const useAction = (images: string[], currentUrl: string) => {
     const currentIndex = ref(-1)
     const activeIndex = ref(-1)
     const originImages = ref<ImageObjectTypes[]>([])
+    const imageInfo = reactive({
+        width: 0,
+        height: 0
+    })
 
     // 虚拟滚动列表
     const vnodeScrollRef = ref<HTMLElement | null>(null)
@@ -91,9 +95,14 @@ export const useAction = (images: string[], currentUrl: string) => {
 
     const loadImage = (evt:Event) => {
         imageCore.setImage(imageRef.value)
-        const im = new Image()
-        im.src = (imageRef.value&&imageRef.value.src) as string
+        const img = new Image()
+        img.src = (imageRef.value&&imageRef.value.src) as string
 
+        const { width, height } = toRefs(imageInfo)
+        width.value = img.width
+        height.value = img.height
+
+        console.log('图片信息：', img.width, img.height)
         if (imageRef.value && imageVieverWidgetRef.value) {
             // imageRef.value.style.transform = 'none'
             const Rect = imageVieverWidgetRef.value.getBoundingClientRect()
@@ -101,9 +110,9 @@ export const useAction = (images: string[], currentUrl: string) => {
             if (getUserAgent()) {
                 imageRef.value.style.width = Rect.width + 'px'
                 imageRef.value.style.height = Rect.height / 2 + 'px'
-            } else if (im.width<Rect.width&&im.height<Rect.height) {
-                imageRef.value.style.width = im.width + 'px'
-                imageRef.value.style.height = im.height + 'px'
+            } else if (img.width<Rect.width&&img.height<Rect.height) {
+                imageRef.value.style.width = img.width + 'px'
+                imageRef.value.style.height = img.height + 'px'
             } else {
                 // 避免图片宽度被拉变形，所以大图片宽度 除以 2
                 imageRef.value.style.width = Rect.width / 1.3 + 'px'
@@ -182,14 +191,16 @@ export const useAction = (images: string[], currentUrl: string) => {
         })
         maxCount.value = Math.floor(rect.width/itemWidth) + 2
         setRender()
-        console.log(maxCount.value, originImages.value, 6666)
+        // console.log(maxCount.value, originImages.value, 6666)
     }
 
    // 切换图片的方法
     const switchToImage = (targetIndex:number) => {
         if (!vnodeScrollRef.value) return
-        const imageWidth = itemWidth + 10; // 假设图片宽度 + 间距
-        const visibleCount = Math.floor(vnodeScrollRef.value.clientWidth / imageWidth); // 视口内可显示的图片数
+        // 假设图片宽度 + 间距
+        const imageWidth = itemWidth + 2; 
+        // 视口内可显示的图片数
+        const visibleCount = Math.floor(vnodeScrollRef.value.clientWidth / imageWidth); 
 
         // 计算目标图片的起始与结束位置
         const start = targetIndex * imageWidth;
@@ -201,7 +212,8 @@ export const useAction = (images: string[], currentUrl: string) => {
         }
 
         // 设置当前索引并渲染
-        startIndex.value = Math.max(0, targetIndex - Math.floor(visibleCount / 2));
+        // startIndex.value = Math.max(0, targetIndex - Math.floor(visibleCount / 2));
+        startIndex.value = Math.max(0, targetIndex - Math.floor(visibleCount));
         setRender();
     };
 
@@ -228,6 +240,7 @@ export const useAction = (images: string[], currentUrl: string) => {
     })
 
     return {
+        imageInfo,
         originImages,
         nextImage,
         previousImage,

@@ -8,6 +8,7 @@
 ul {
     padding: 0;
     list-style: none;
+    margin: 0;
 }
 .nav-scroll-style__wrap {
     // 滚动条样式美化
@@ -51,6 +52,12 @@ ul {
     transition: opacity 1s ease;
     &.is-active {
         opacity: 1;
+    }
+    .image-viewer-info__tag {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        color: #eee;
     }
     .image-viewer-close__btn {
         position: absolute;
@@ -168,49 +175,7 @@ ul {
         }
         .navbar-thumbnail__wrap {
             background-color: rgba(0, 0, 0, .3);
-            // display: flex;
-            // justify-content: center;
-            // align-items: center;
-            // overflow-x: auto;
-            // overflow: hidden;
-            .navbar-list-group {
-                height: 3rem;
-                // margin: 4px auto;
-                margin-top: 3px;
-                margin-bottom: 3px;
-                list-style: none;
-                display: flex;
-                flex-wrap: nowrap;
-                align-items: center;
-                justify-content: center;
-                // overflow: hidden;
-                // padding: 1px 0px;
-                overflow-x: auto;
-                overflow-y: hidden;
-                padding: 0;
-                box-sizing: border-box;
-                line-height: 1;
-            }
-            .navbar-list-group .navbar-image__item {
-                display: block;
-                height: 2.3rem;
-                width: 3rem;
-                object-fit: cover;
-                transition: all .3s ease;
-                opacity: 0.5;
-                margin: 0 0.1rem;
-                border: 2px solid transparent;
-                padding: 3px;
-                border-radius: 3px;
-                cursor: pointer;
-                &.nav-active-current__img {
-                    opacity: 1;
-                    border: 2px solid var(--active-icon-color);
-                }
-                &:hover {
-                    opacity: 1;
-                }
-            }
+            height: 4rem;
             .vnode-scroll__wrap {
                 width: 100%;
                 height: 100%;
@@ -219,12 +184,14 @@ ul {
             .list-group {
                 display: flex;
                 flex-wrap: nowrap;
-                // padding: 5px 0;
+                height: 100%;
                 .list-group-item {
                     flex: 0 0 50px;
+                    height: 3rem;
                     color: red;
                     opacity: 0.5;
                     border: 1px solid transparent;
+                    margin: 0.2rem 0;
                     position: relative;
                     &.nav-active-current__img {
                         opacity: 1;
