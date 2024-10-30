@@ -1,5 +1,5 @@
 import { DirectiveBinding, VNode } from 'vue';
-import ImageViewerCore from '../components/core';
+import ImageViewerCore from '../utils/ViewerCore';
 import { imageViewerApi } from '../index';
 
 const viewerCore = ImageViewerCore.getInStance()

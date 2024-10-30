@@ -107,7 +107,7 @@
                 @mousemove="onMouseMove"
                 @mouseup="onMouseUp"
                 @mouseleave="onMouseLeave">
-                <ul ref="vnodeUlRef" class="list-group">
+                <ul ref="vnodeUlRef" class="list-group" :style="{justifyContent: alignment}">
                     <li :class="['list-group-item', {'nav-active-current__img': currentIndex === item.index }]" 
                         style="width: 50px;" 
                         v-for="(item, index) in renderData" 
@@ -128,9 +128,9 @@
 </template>
 <script setup lang="ts">
 import { watch, ref, nextTick, onBeforeUnmount, onMounted } from 'vue';
-import { useAction } from './useAction';
+import { useToolbar } from '../hooks/toolbar';
 import { debounce, getUserAgent } from '../utils';
-import { FlipAnimate } from './flip-animate';
+import { FlipAnimate } from '../utils/flip-animate';
 import HotKeys from './HotKeys.vue';
 import LoadingUI from './Loading.vue';
 import { useCusShortKey } from '../utils/hotkeys';
@@ -205,6 +205,7 @@ const $t = (langkey = "") => {
 }
 
 const {
+    alignment,
     imageInfo,
     originImages,
     nextImage,
@@ -231,7 +232,7 @@ const {
     closeViewer,
     currentIndex,
     activeIndex 
-} = useAction(props.images as string[], props.current);
+} = useToolbar(props.images as string[], props.current);
 
 const emits = defineEmits(['on-close', 'on-change', 'onUpdate:value']);
 

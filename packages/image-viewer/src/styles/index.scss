@@ -186,6 +186,7 @@ ul {
             }
             .list-group {
                 display: flex;
+                align-items: center;
                 flex-wrap: nowrap;
                 height: 100%;
                 .list-group-item {

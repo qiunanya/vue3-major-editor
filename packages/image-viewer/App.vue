@@ -20,7 +20,7 @@
         <img class="img-item" src="https://picsum.photos/id/25/367/267" v-image-viewer/>
         <img class="img-item" src="https://picsum.photos/id/26/367/267" v-image-viewer/>
         <img class="img-item" src="https://picsum.photos/id/27/367/267" v-image-viewer/>
-        <img class="img-item" src="https://picsum.photos/id/28/367/267" v-image-viewer/>
+        <!-- <img class="img-item" src="https://picsum.photos/id/28/367/267" v-image-viewer/>
         <img class="img-item" src="https://picsum.photos/id/29/367/267" v-image-viewer/>
         <img class="img-item" src="https://picsum.photos/id/30/367/267" v-image-viewer/>
         <img class="img-item" src="https://picsum.photos/id/31/367/267" v-image-viewer/>
@@ -38,7 +38,7 @@
         <img class="img-item" src="https://picsum.photos/id/15/367/267" v-image-viewer/>
         <img class="img-item" src="https://picsum.photos/id/19/2500/1667" v-image-viewer/>
         <img class="img-item" src="https://picsum.photos/id/16/2500/1667" v-image-viewer/>
-        <img class="img-item" src="https://picsum.photos/id/11/2500/1667" v-image-viewer/>
+        <img class="img-item" src="https://picsum.photos/id/11/2500/1667" v-image-viewer/> -->
     </div>
 
     <div>

@@ -1,9 +1,9 @@
-import ImageViewerCore from './core';
+import ImageViewerCore from '../utils/ViewerCore';
 import { downloadExe, getUserAgent } from '../utils/index';
 import { ref, onMounted, nextTick, reactive, toRefs } from 'vue';
 import { ImageObjectTypes, AsyncSetImageReturnType } from '../types/image-viewer';
 
-export const useAction = (images: string[], currentUrl: string) => {
+export const useToolbar = (images: string[], currentUrl: string) => {
     // const bodyRect = document.body.getBoundingClientRect()
     const imageVieverWidgetRef = ref<HTMLElement | null>(null)
     const imageRef = ref<HTMLImageElement|null>(null)
@@ -12,6 +12,7 @@ export const useAction = (images: string[], currentUrl: string) => {
     const imageCore = ImageViewerCore.getInStance()
     const currentIndex = ref(-1)
     const activeIndex = ref(-1)
+    const alignment = ref('flex-start')
     const originImages = ref<ImageObjectTypes[]>([])
     const imageInfo = reactive({
         width: 0,
@@ -189,6 +190,12 @@ export const useAction = (images: string[], currentUrl: string) => {
             console.log('images-viewer-vue3:', JSON.stringify(err))
         })
         maxCount.value = Math.floor(rect.width/itemWidth) + 2
+
+        // 配置导航图片对齐方式
+        if (maxCount.value*itemWidth > rect.width) {
+            alignment.value = 'center'
+        } else alignment.value = 'flex-start'
+        // console.log(maxCount.value*itemWidth, rect.width)
         setRender()
     }
 
@@ -238,6 +245,7 @@ export const useAction = (images: string[], currentUrl: string) => {
     })
 
     return {
+        alignment,
         imageInfo,
         originImages,
         nextImage,

@@ -6,6 +6,6 @@ export const messages = {
     zh
 }
 
-const language = (navigator.language || 'en').toLocaleLowerCase()
+const language = (navigator.language || 'zh').toLocaleLowerCase()
 
 export const lang = localStorage.getItem('lang') as string || language.split('-')[0] || 'zh'

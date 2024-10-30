@@ -194,7 +194,7 @@ class ImageViewerCore {
     private onTouchstart (evt:TouchEvent) {
         if (!this.currentImage) return
 
-        console.log(evt, 'onTouchstart')
+        // console.log(evt, 'onTouchstart')
         const this_ = this
         this.isMouseDown = true
         const touch = evt.touches[0]
