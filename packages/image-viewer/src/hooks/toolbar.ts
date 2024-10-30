@@ -3,6 +3,9 @@ import { downloadExe, getUserAgent } from '../utils/index';
 import { ref, onMounted, nextTick, reactive, toRefs } from 'vue';
 import { ImageObjectTypes, AsyncSetImageReturnType } from '../types/image-viewer';
 
+const DEVICE_TYPE = getUserAgent()
+var distance_value = 0
+
 export const useToolbar = (images: string[], currentUrl: string) => {
     // const bodyRect = document.body.getBoundingClientRect()
     const imageVieverWidgetRef = ref<HTMLElement | null>(null)
@@ -161,19 +164,24 @@ export const useToolbar = (images: string[], currentUrl: string) => {
         // 获取数据
         renderData.value = originImages.value.slice(startIndex.value, endIndex.value)
     }
-
+    
     const onRectScroll = (evt:Event) => {
         if (!vnodeScrollRef.value || !vnodeUlRef.value) return
-        startIndex.value = Math.floor(vnodeScrollRef.value.scrollLeft / (itemWidth))
+        startIndex.value = Math.floor(vnodeScrollRef.value.scrollTop / (itemWidth))
         if (pointerIndex.value === startIndex.value) return
 
         pointerIndex.value = startIndex.value
 
         setRender()
 
+       
         if (originImages.value.length - startIndex.value >= maxCount.value) {
-            vnodeUlRef.value.style.transform = `translateX(${startIndex.value * itemWidth}px)`
+            distance_value = startIndex.value * itemWidth;
+            vnodeUlRef.value.style.transform = `translateY(${distance_value}px)`
         } else {
+            // console.log('设备类型：', DEVICE_TYPE)
+            // 兼容小屏幕，避免最后一个元素被遮挡
+            // vnodeUlRef.value.style.transform = `translateY(${distance_value-50}px)`
             // 滑动到底部，可以加载更多数据
             return
         }
@@ -186,10 +194,11 @@ export const useToolbar = (images: string[], currentUrl: string) => {
             // for (let i = 0; i < 100; i++) {
             //     originImages.value.push({ index:i, url: `index_${i}`})
             // }
+            console.log(originImages.value.length)
         }).catch(err => {
             console.log('images-viewer-vue3:', JSON.stringify(err))
         })
-        maxCount.value = Math.floor(rect.width/itemWidth) + 2
+        maxCount.value = Math.floor(rect.height/itemWidth) + 4
 
         // 配置导航图片对齐方式
         if (originImages.value.length <= maxCount.value) {
@@ -206,15 +215,15 @@ export const useToolbar = (images: string[], currentUrl: string) => {
         // 假设图片宽度 + 间距
         const imageWidth = itemWidth + 2; 
         // 视口内可显示的图片数
-        const visibleCount = Math.floor(vnodeScrollRef.value.clientWidth / imageWidth); 
+        const visibleCount = Math.floor(vnodeScrollRef.value.clientHeight / imageWidth); 
 
         // 计算目标图片的起始与结束位置
         const start = targetIndex * imageWidth;
         const end = start + imageWidth;
 
-        // 如果目标图片不在当前视口范围，则调整 scrollLeft
-        if (start < vnodeScrollRef.value.scrollLeft || end > vnodeScrollRef.value.scrollLeft + vnodeScrollRef.value.clientWidth) {
-            vnodeScrollRef.value.scrollLeft = targetIndex * imageWidth;
+        // 如果目标图片不在当前视口范围，则调整 scrollTop
+        if (start < vnodeScrollRef.value.scrollTop || end > vnodeScrollRef.value.scrollTop + vnodeScrollRef.value.clientHeight) {
+            vnodeScrollRef.value.scrollTop = targetIndex * imageWidth;
         }
 
         // 设置当前索引并渲染

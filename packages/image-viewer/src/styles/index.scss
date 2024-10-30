@@ -30,6 +30,7 @@ ul {
 .images-viewer-container__wrap {
     --active-icon-color: #3A8DF5;
     --active-text-color: var(--text-color, #eee);
+    --nav-height: 90px;
     background: rgba(0, 0, 0, 0.6);
     position: fixed;
     top: 0px;
@@ -53,6 +54,91 @@ ul {
     &.is-active {
         opacity: 1;
     }
+    .navbar-thumbnail__wrap {
+        background-color: rgba(0, 0, 0, 0.6);
+        width: var(--nav-height);
+        flex: 0 0 var(--nav-height);
+        .vnode-scroll__wrap {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto; /* 超出滚动 */
+        }
+        .list-group {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            .list-group-item {
+                width: 100%;
+                height: 3rem;
+                opacity: 0.5;
+                border: 1px solid transparent;
+                margin: 0.2rem 0;
+                position: relative;
+                text-align: center;
+                &.nav-active-current__img {
+                    opacity: 1;
+                    border: 2px solid var(--active-icon-color);
+                }
+                &:hover {
+                    opacity: 1;
+                }
+                span {
+                    position: absolute;
+                    left: 20px;
+                    top: 20px;
+                    color: red;
+                }
+                .navbar-image {
+                    width: 100%;
+                    object-fit: cover;
+                    height: 100%;
+                }
+            }
+        }
+    }
+    .viewer-layout__wrapper {
+        position: absolute;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        display: flex;
+        .inner-image-wrap {
+            flex: 1;
+            width: 100%;
+            height: 100%;
+            transform-origin: top left;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            overflow: hidden;
+            color: var(--active-text-color);
+        }
+        .inner-image-wrap > .inner-viewer__image {
+            /* width: 100%;
+            height: 100%; */
+            flex: 0 1 auto;
+            z-index: 1;
+            /* transition: all 0.3s ease; */
+            /* display: block; */
+            -webkit-user-select: none;
+            user-select: none;
+            /* 保持宽高比显示，避免图片显示不全和被拉升 */
+            /* object-fit: contain; */
+            /* 图片会显示默认尺寸 */
+            /* margin: auto; */
+            /* 设置宽高为auto也能展示图片默认尺寸 */
+            width: auto;
+            height: auto; 
+            object-fit: cover;
+        }
+    }
+    
     .image-viewer-info__tag {
         position: absolute;
         top: 15px;
@@ -99,48 +185,17 @@ ul {
         top: 40%;
         right: 0;
     }
-    .inner-image-wrap {
-        width: 100%;
-        height: 100%;
-        transform-origin: top left;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        perspective: 1000px;
-        transform-style: preserve-3d;
-        overflow: hidden;
-        color: var(--active-text-color);
-    }
-    .inner-image-wrap > .inner-viewer__image {
-        /* width: 100%;
-        height: 100%; */
-        flex: 0 1 auto;
-        z-index: 1;
-        /* transition: all 0.3s ease; */
-        /* display: block; */
-        -webkit-user-select: none;
-        user-select: none;
-        /* 保持宽高比显示，避免图片显示不全和被拉升 */
-        /* object-fit: contain; */
-        /* 图片会显示默认尺寸 */
-        /* margin: auto; */
-        /* 设置宽高为auto也能展示图片默认尺寸 */
-        width: auto;
-        height: auto; 
-        object-fit: cover;
-    }
   
     .nav-image-viewer__wrap {
         overflow: hidden;
         position: absolute;
-        bottom: -100px;
-        left: 0px;
+        bottom: 0px;
+        left: -100px;
         right: 0px;
         text-align: center;
         transition: bottom 0.5s ease-out;
         &.active {
-            bottom: 0px;
+            left: 0px;
         }
         .navbar-control__wrap {
             padding-top: 5px;
@@ -170,52 +225,10 @@ ul {
             }
             .position {
                 position: absolute;
-                left: 10px;
+                left: var(--nav-height);
             }
             &.padding-b {
                 padding-bottom: 0.2rem;
-            }
-        }
-        .navbar-thumbnail__wrap {
-            background-color: rgba(0, 0, 0, .3);
-            height: 4rem;
-            .vnode-scroll__wrap {
-                width: 100%;
-                height: 100%;
-                overflow-x: auto; /* 超出滚动 */
-            }
-            .list-group {
-                display: flex;
-                align-items: center;
-                flex-wrap: nowrap;
-                height: 100%;
-                .list-group-item {
-                    flex: 0 0 50px;
-                    height: 3rem;
-                    color: red;
-                    opacity: 0.5;
-                    border: 1px solid transparent;
-                    margin: 0.2rem 0;
-                    position: relative;
-                    &.nav-active-current__img {
-                        opacity: 1;
-                        border: 2px solid var(--active-icon-color);
-                    }
-                    &:hover {
-                        opacity: 1;
-                    }
-                    span {
-                        position: absolute;
-                        left: 20px;
-                        top: 20px;
-                        color: red;
-                    }
-                    .navbar-image {
-                        width: 100%;
-                        object-fit: cover;
-                        height: 100%;
-                    }
-                }
             }
         }
     }

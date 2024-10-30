@@ -5,24 +5,35 @@
         'images-viewer-container__wrap', 
         {'is-active':visible}, 
         {'nav-scroll-style__wrap':!getUserAgent()}]">
-    <ul class="image-viewer-info__tag" @click="close">
+    <!-- <ul class="image-viewer-info__tag" @click="close">
        <li>{{$t('image.ruleText')}}：{{imageInfo.width}}{{$t('image.px')}} X {{imageInfo.height}}{{$t('image.px')}}</li>
-    </ul>
-    <div class="image-viewer-close__btn" @click="close">
-        <svg class="close-icon icon-is-hover" viewBox="0 0 1024 1024" width="25" height="25">
-            <path d="M835.2 854.4c-12.8 0-22.4-3.2-32-12.8L211.2 256C192 240 192 211.2 208 195.2s44.8-16 60.8 0L864 780.8c16 16 16 44.8 0 60.8-6.4 9.6-16 12.8-28.8 12.8z" fill="#eee"></path>
-            <path d="M236.8 848c-12.8 0-22.4-3.2-32-12.8-16-16-16-44.8 0-60.8l604.8-576c16-16 44.8-16 60.8 0s16 44.8 0 60.8l-604.8 576c-9.6 9.6-19.2 12.8-28.8 12.8z" fill="#eee"></path>
-        </svg>
-    </div>
-    <div class="inner-image-wrap">
-        <!-- <img 
-            ref="imageRef" 
-            class="inner-viewer__image cus-transition" 
-            @load="loadImage" 
-            @error="errorImage" 
-            :src="updateImage||current" 
-            alt="picture" 
-            style="width: 120px;height: 120px;"> -->
+    </ul> -->
+    <div class="viewer-layout__wrapper">
+        <div class="navbar-thumbnail__wrap" v-if="images.length>=2">
+            <!-- @touchmove="onRectScroll"
+                @mousedown="onMouseDown"
+                @mousemove="onMouseMove"
+                @mouseup="onMouseUp"
+                @mouseleave="onMouseLeave" -->
+            <div 
+                ref="vnodeScrollRef" 
+                :class="['vnode-scroll__wrap']" 
+                @scroll="onRectScroll"
+            
+                >
+                <ul ref="vnodeUlRef" class="list-group" :style="{justifyContent: alignment}">
+                    <li :class="['list-group-item', {'nav-active-current__img': currentIndex === item.index }]" 
+                        style="width: 50px;" 
+                        v-for="(item, index) in renderData" 
+                        :key="index" 
+                        :data-id="item.index">
+                        <span>{{ item.index }}</span>
+                        <img class="navbar-image" :data-id="item.index" :src="item.url" alt="picture" @click.stop.prevent="onClickNavImage">
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="inner-image-wrap">
             <div v-if="loadImageErrorText" style="user-select: text;">
                 <p style="color: orange;text-decoration: solid;">{{ $t('image.loadErrorText') }}</p>
                 <p>{{ updateImage }}</p>
@@ -36,18 +47,40 @@
                 alt="picture" 
                 style="width: 120px;height: 120px;">
             <LoadingUI v-if="loading"></LoadingUI>
+        </div>
     </div>
+    <!-- <div class="image-viewer-close__btn" @click="close">
+        <svg class="close-icon icon-is-hover" viewBox="0 0 1024 1024" width="25" height="25">
+            <path d="M835.2 854.4c-12.8 0-22.4-3.2-32-12.8L211.2 256C192 240 192 211.2 208 195.2s44.8-16 60.8 0L864 780.8c16 16 16 44.8 0 60.8-6.4 9.6-16 12.8-28.8 12.8z" fill="#eee"></path>
+            <path d="M236.8 848c-12.8 0-22.4-3.2-32-12.8-16-16-16-44.8 0-60.8l604.8-576c16-16 44.8-16 60.8 0s16 44.8 0 60.8l-604.8 576c-9.6 9.6-19.2 12.8-28.8 12.8z" fill="#eee"></path>
+        </svg>
+    </div> -->
+    <!-- <div class="inner-image-wrap">
+        <div v-if="loadImageErrorText" style="user-select: text;">
+            <p style="color: orange;text-decoration: solid;">{{ $t('image.loadErrorText') }}</p>
+            <p>{{ updateImage }}</p>
+        </div>
+        <img 
+            ref="imageRef" 
+            class="inner-viewer__image cus-transition" 
+            @load="loadImage" 
+            @error="errorImage" 
+            src="" 
+            alt="picture" 
+            style="width: 120px;height: 120px;">
+        <LoadingUI v-if="loading"></LoadingUI>
+    </div> -->
     
-    <div class="viewer-previous-icon" @click.stop.prevent="previous" v-if="images.length>=2">
+    <!-- <div class="viewer-previous-icon" @click.stop.prevent="previous" v-if="images.length>=2">
         <svg class="icon-is-hover cus-cursor" viewBox="0 0 1024 1024" width="25" height="25">
             <path d="M758.656 937.344a32 32 0 1 1-45.31199999 45.312l-448.00000001-448.128a32 32 0 0 1 0-45.248l448.00000001-447.936a32 32 0 1 1 45.31199999 45.312l-425.408 425.28000001L758.656 937.344z" fill="#eee"></path>
         </svg>
-    </div>
-    <div class="viewer-next-icon" @click.stop.prevent="next" v-if="images.length>=2">
+    </div> -->
+    <!-- <div class="viewer-next-icon" @click.stop.prevent="next" v-if="images.length>=2">
         <svg class="icon-is-hover cus-cursor" viewBox="0 0 1024 1024" width="25" height="25">
             <path d="M265.344 86.656a32 32 0 1 1 45.312-45.312l448 448.128a32 32 0 0 1 0 45.248l-448 447.936a32 32 0 1 1-45.312-45.312l425.408-425.28L265.344 86.656z" fill="#eee"></path>
         </svg> 
-    </div>
+    </div> -->
     <div :class="['nav-image-viewer__wrap',{'active': isVisibleNav }]">
         <div :class="[
             'navbar-control__wrap',
@@ -98,7 +131,7 @@
                 </svg>
             </div>
         </div>
-        <div class="navbar-thumbnail__wrap" v-if="images.length>=2">
+        <!-- <div class="navbar-thumbnail__wrap" v-if="images.length>=2">
             <div 
                 ref="vnodeScrollRef" 
                 :class="['vnode-scroll__wrap']" 
@@ -115,12 +148,12 @@
                         v-for="(item, index) in renderData" 
                         :key="index" 
                         :data-id="item.index">
-                        <!-- <span>{{ item.index }}</span> -->
+                        <span>{{ item.index }}</span>
                         <img class="navbar-image" :data-id="item.index" :src="item.url" alt="picture" @click.stop.prevent="onClickNavImage">
                     </li>
                 </ul>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <HotKeys v-model:hotkey="hotkey" :is-active-key.camel="isActiveKey"></HotKeys>

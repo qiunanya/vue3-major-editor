@@ -35,7 +35,7 @@ class ImageViewerCore {
     }
 
     private initialize () {
-        this.config.isEnableWheel&&window.addEventListener('wheel', this.onWheel.bind(this))
+        // this.config.isEnableWheel&&window.addEventListener('wheel', this.onWheel.bind(this))
         // window.addEventListener('contextmenu', (evt) => {
         //     evt.preventDefault();
         //     evt.stopPropagation();
@@ -88,11 +88,11 @@ class ImageViewerCore {
     }
 
     public zoomIn () {
-        this.setZoom('+')
+        // this.setZoom('+')
     }
 
     public zoomOut () {
-        this.setZoom('-')
+        // this.setZoom('-')
     }
 
     public rotate (mark:string="+") {

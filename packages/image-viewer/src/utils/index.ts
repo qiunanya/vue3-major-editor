@@ -73,5 +73,29 @@ export const getUserAgent = (): boolean => {
     return flag;
 }
 
+export const getDeviceType = () => {
+    const userAgent = navigator.userAgent.toLowerCase();
+  
+    if (/android|adr/.test(userAgent)) {
+      return 'Android';
+    }
+    if (/iphone|ipad|ipod|ios/.test(userAgent)) {
+      return 'iOS';
+    }
+    if (/windows phone|iemobile/.test(userAgent)) {
+      return 'Windows Phone';
+    }
+    if (/mobile|blackberry|opera mini|opera mobi/.test(userAgent)) {
+      return 'Other Mobile';
+    }
+    
+    // 额外检测平板设备
+    if (/tablet|ipad/.test(userAgent) && !/mobile/.test(userAgent)) {
+      return 'Tablet';
+    }
+    
+    return 'Desktop';
+  }
+
 
 export const versions = '1.0.11'
