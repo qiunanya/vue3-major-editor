@@ -134,10 +134,14 @@ ul {
     .nav-image-viewer__wrap {
         overflow: hidden;
         position: absolute;
-        bottom: 0px;
+        bottom: -100px;
         left: 0px;
         right: 0px;
         text-align: center;
+        transition: bottom 0.5s ease-out;
+        &.active {
+            bottom: 0px;
+        }
         .navbar-control__wrap {
             padding-top: 5px;
             // overflow: hidden;
@@ -166,8 +170,7 @@ ul {
             }
             .position {
                 position: absolute;
-                left: 20px;
-                
+                left: 10px;
             }
             &.padding-b {
                 padding-bottom: 0.2rem;

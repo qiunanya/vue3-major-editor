@@ -275,7 +275,7 @@ class ImageViewerCore {
         this.currentImage.style.removeProperty('left')
         this.currentImage.style.removeProperty('position')
         this.currentImage.style.removeProperty('transform')
-        this.currentImage = null
+        // this.currentImage = null
     }
 
     public destroyed() {

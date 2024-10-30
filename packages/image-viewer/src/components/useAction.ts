@@ -102,7 +102,7 @@ export const useAction = (images: string[], currentUrl: string) => {
         width.value = img.width
         height.value = img.height
 
-        console.log('图片信息：', img.width, img.height)
+        // console.log('图片信息：', img.width, img.height)
         if (imageRef.value && imageVieverWidgetRef.value) {
             // imageRef.value.style.transform = 'none'
             const Rect = imageVieverWidgetRef.value.getBoundingClientRect()
@@ -182,7 +182,6 @@ export const useAction = (images: string[], currentUrl: string) => {
         await asyncSetImage().then(res => {
             originImages.value = res.data
             currentIndex.value = originImages.value.findIndex(el => el.url === currentUrl)
-            console.log(currentIndex.value, 666)
             // for (let i = 0; i < 100; i++) {
             //     originImages.value.push({ index:i, url: `index_${i}`})
             // }
@@ -191,7 +190,6 @@ export const useAction = (images: string[], currentUrl: string) => {
         })
         maxCount.value = Math.floor(rect.width/itemWidth) + 2
         setRender()
-        // console.log(maxCount.value, originImages.value, 6666)
     }
 
    // 切换图片的方法

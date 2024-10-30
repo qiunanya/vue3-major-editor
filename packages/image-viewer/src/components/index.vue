@@ -6,7 +6,7 @@
         {'is-active':visible}, 
         {'nav-scroll-style__wrap':!getUserAgent()}]">
     <ul class="image-viewer-info__tag" @click="close">
-       <li>图片原始宽高：{{imageInfo.width}}像素 X {{imageInfo.height}}像素</li>
+       <li>{{$t('image.ruleText')}}：{{imageInfo.width}}{{$t('image.px')}} X {{imageInfo.height}}{{$t('image.px')}}</li>
     </ul>
     <div class="image-viewer-close__btn" @click="close">
         <svg class="close-icon icon-is-hover" viewBox="0 0 1024 1024" width="25" height="25">
@@ -24,7 +24,7 @@
             alt="picture" 
             style="width: 120px;height: 120px;"> -->
             <div v-if="loadImageErrorText" style="user-select: text;">
-                <p style="color: orange;text-decoration: solid;">{{ $t('imagev.loadErrorText') }}</p>
+                <p style="color: orange;text-decoration: solid;">{{ $t('image.loadErrorText') }}</p>
                 <p>{{ updateImage }}</p>
             </div>
             <img 
@@ -48,21 +48,14 @@
             <path d="M265.344 86.656a32 32 0 1 1 45.312-45.312l448 448.128a32 32 0 0 1 0 45.248l-448 447.936a32 32 0 1 1-45.312-45.312l425.408-425.28L265.344 86.656z" fill="#eee"></path>
         </svg> 
     </div>
-    <div class="nav-image-viewer__wrap">
+    <div :class="['nav-image-viewer__wrap',{'active': isVisibleNav }]">
         <div :class="[
             'navbar-control__wrap',
             { 'padding-b': images.length < 2 }
         ]">
             <div :class="['pagination-wrap', { 'position': !getUserAgent() }]" v-if="images.length>=10">
-                <span>&nbsp;{{images.length}}&nbsp;{{$t('imagev.pictures')}}&nbsp;</span>
-                <span>/&nbsp;{{currentIndex+1}}&nbsp;{{$t('imagev.leaf')}}&nbsp;</span>
-                <!-- <span>/&nbsp;{{$t('imagev.current')}}&nbsp;{{5}}</span>&nbsp;
-                <select class="page-size-select" name="select" id="page-size-select" @change="6">
-                    <option value="10" selected>10/{{$t('imagev.page')}}</option>
-                    <option value="15">15/{{$t('imagev.page')}}</option>
-                    <option value="20">20/{{$t('imagev.page')}}</option>
-                    <option value="30">30/{{$t('imagev.page')}}</option>
-                </select> -->
+                <span>&nbsp;{{images.length}}&nbsp;{{$t('image.pictures')}}&nbsp;</span>
+                <span>/&nbsp;{{$t('image.the')}}&nbsp;{{currentIndex+1}}&nbsp;{{$t('image.img')}}&nbsp;</span>
             </div>
             <div>
                 <!-- 放大 -->
@@ -106,7 +99,14 @@
             </div>
         </div>
         <div class="navbar-thumbnail__wrap" v-if="images.length>=2">
-            <div ref="vnodeScrollRef" class="vnode-scroll__wrap" @scroll="onRectScroll">
+            <div 
+                ref="vnodeScrollRef" 
+                :class="['vnode-scroll__wrap']" 
+                @scroll="onRectScroll"
+                @mousedown="onMouseDown"
+                @mousemove="onMouseMove"
+                @mouseup="onMouseUp"
+                @mouseleave="onMouseLeave">
                 <ul ref="vnodeUlRef" class="list-group">
                     <li :class="['list-group-item', {'nav-active-current__img': currentIndex === item.index }]" 
                         style="width: 50px;" 
@@ -136,6 +136,7 @@ import LoadingUI from './Loading.vue';
 import { useCusShortKey } from '../utils/hotkeys';
 import { HotkeysEvent } from 'hotkeys-js';
 import { messages, lang } from '../langs/index';
+import { useMouse } from '../hooks/mouse';
 
 const props = defineProps({
     visible: {
@@ -190,23 +191,16 @@ const props = defineProps({
     }
 })
 
-const $t = (langStr = "") => {
+const $t = (langkey = "") => {
     // @ts-ignore
     const local = messages[props.language]
     if (local) {
-        const { imagev } = local
-        var tempObj = {}
-
-        Object.keys(imagev).forEach(key => {
-            // @ts-ignore
-            tempObj[`imagev.${key}`] = imagev[key]
-        })
-
-        // @ts-ignore
-        return tempObj[langStr]
+        const { image } = local
+        const keys = langkey.split('.')
+        return image[keys[1]] || langkey
     } else {
         console.warn(`[images-viewer-vue3]:The current language '${props.language}' is not supported`)
-        return 'unknown'
+        return props.language
     }
 }
 
@@ -240,6 +234,13 @@ const {
 } = useAction(props.images as string[], props.current);
 
 const emits = defineEmits(['on-close', 'on-change', 'onUpdate:value']);
+
+const { onMouseDown,onMouseMove,onMouseUp, onMouseLeave } = useMouse()
+
+const isVisibleNav = ref(false)
+setTimeout(() => {
+    isVisibleNav.value = true
+}, 300);
 
 // 快捷键提示
 const hotkey = ref('')
