@@ -103,10 +103,12 @@
                 ref="vnodeScrollRef" 
                 :class="['vnode-scroll__wrap']" 
                 @scroll="onRectScroll"
+                @touchmove="onRectScroll"
                 @mousedown="onMouseDown"
                 @mousemove="onMouseMove"
                 @mouseup="onMouseUp"
-                @mouseleave="onMouseLeave">
+                @mouseleave="onMouseLeave"
+               >
                 <ul ref="vnodeUlRef" class="list-group" :style="{justifyContent: alignment}">
                     <li :class="['list-group-item', {'nav-active-current__img': currentIndex === item.index }]" 
                         style="width: 50px;" 

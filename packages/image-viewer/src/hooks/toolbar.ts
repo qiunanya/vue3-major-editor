@@ -192,9 +192,10 @@ export const useToolbar = (images: string[], currentUrl: string) => {
         maxCount.value = Math.floor(rect.width/itemWidth) + 2
 
         // 配置导航图片对齐方式
-        if (maxCount.value*itemWidth > rect.width) {
+        if (originImages.value.length <= maxCount.value) {
             alignment.value = 'center'
         } else alignment.value = 'flex-start'
+        // console.log(maxCount.value, 'maxCount')
         // console.log(maxCount.value*itemWidth, rect.width)
         setRender()
     }
