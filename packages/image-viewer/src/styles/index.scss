@@ -5,11 +5,7 @@
     bottom: 0px;
     left: 0px;
 }
-ul {
-    padding: 0;
-    list-style: none;
-    margin: 0;
-}
+
 .nav-scroll-style__wrap {
     // 滚动条样式美化
     ::-webkit-scrollbar {
@@ -30,7 +26,7 @@ ul {
 .images-viewer-container__wrap {
     --active-icon-color: #3A8DF5;
     --active-text-color: var(--text-color, #eee);
-    --nav-height: 90px;
+    --nav-width: 90px;
     background: rgba(0, 0, 0, 0.6);
     position: fixed;
     top: 0px;
@@ -51,53 +47,13 @@ ul {
     overflow: hidden;
     opacity: 0;
     transition: opacity 1s ease;
+    ul {
+        padding: 0;
+        list-style: none;
+        margin: 0;
+    }
     &.is-active {
         opacity: 1;
-    }
-    .navbar-thumbnail__wrap {
-        background-color: rgba(0, 0, 0, 0.6);
-        width: var(--nav-height);
-        flex: 0 0 var(--nav-height);
-        .vnode-scroll__wrap {
-            width: 100%;
-            height: 100%;
-            overflow-y: auto; /* 超出滚动 */
-        }
-        .list-group {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            .list-group-item {
-                width: 80%;
-                height: 3rem;
-                opacity: 0.5;
-                border: 1px solid transparent;
-                margin: 0.2rem 0.3rem;
-                position: relative;
-                border-radius: 6px;
-                &.nav-active-current__img {
-                    opacity: 1;
-                    border: 2px solid var(--active-icon-color);
-                }
-                &:hover {
-                    opacity: 1;
-                }
-                span {
-                    position: absolute;
-                    left: 20px;
-                    top: 20px;
-                    color: red;
-                }
-                .navbar-image {
-                    width: 100%;
-                    object-fit: cover;
-                    height: 100%;
-                    border-radius: 6px;
-                }
-            }
-        }
     }
     .viewer-content__wrapper {
         position: absolute;
@@ -106,6 +62,57 @@ ul {
         left: 0px;
         right: 0px;
         display: flex;
+        .navbar-thumbnail__wrap {
+            background-color: rgba(0, 0, 0, 0.6);
+            width: 0px;
+            overflow: hidden;
+            transition: width 0.3s ease-out;
+            &.active {
+                width: var(--nav-width);
+                // flex: 0 0 var(--nav-height);
+            }
+            .vnode-scroll__wrap {
+                width: 100%;
+                height: 100%;
+                overflow-y: auto; /* 超出滚动 */
+            }
+            .list-group {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                .list-group-item {
+                    width: 80%;
+                    height: 3rem;
+                    opacity: 0.5;
+                    border: 1px solid transparent;
+                    margin: 0.2rem 0.3rem;
+                    position: relative;
+                    border-radius: 6px;
+                    &.nav-active-current__img {
+                        opacity: 1;
+                        border: 2px solid var(--active-icon-color);
+                    }
+                    &:hover {
+                        opacity: 1;
+                    }
+                    span {
+                        position: absolute;
+                        left: 20px;
+                        top: 20px;
+                        color: red;
+                    }
+                    .navbar-image {
+                        width: 100%;
+                        object-fit: cover;
+                        height: 100%;
+                        border-radius: 6px;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
         .inner-image-wrap {
             flex: 1;
             width: 100%;
@@ -196,6 +203,7 @@ ul {
         align-items: center;
         flex-wrap: wrap;
         padding: 10px 0;
+        z-index: 10;
         .tool-item-icon__btn {
             margin: 0 4px;
         }
@@ -216,7 +224,7 @@ ul {
         }
         .position {
             position: absolute;
-            left: var(--nav-height);
+            left: 30px;
         }
     }
 }

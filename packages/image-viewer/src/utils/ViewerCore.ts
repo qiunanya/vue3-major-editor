@@ -42,7 +42,7 @@ class ImageViewerCore {
         // })
     }
 
-    private onWheel (evt:WheelEvent) {
+    public onWheel (evt:WheelEvent) {
         // evt.preventDefault()
         // evt.stopPropagation()
         (evt.deltaY < 0) && this.zoomIn();
@@ -88,11 +88,11 @@ class ImageViewerCore {
     }
 
     public zoomIn () {
-        // this.setZoom('+')
+        this.setZoom('+')
     }
 
     public zoomOut () {
-        // this.setZoom('-')
+        this.setZoom('-')
     }
 
     public rotate (mark:string="+") {
@@ -279,7 +279,7 @@ class ImageViewerCore {
     }
 
     public destroyed() {
-        window.removeEventListener('wheel', this.onWheel.bind(this))
+        // window.removeEventListener('wheel', this.onWheel.bind(this))
 
         this.removeStyleProperty()
 

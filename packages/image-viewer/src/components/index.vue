@@ -5,11 +5,11 @@
         'images-viewer-container__wrap', 
         {'is-active':visible}, 
         {'nav-scroll-style__wrap':!getUserAgent()}]">
-    <!-- <ul class="image-viewer-info__tag" @click="close">
-       <li>{{$t('image.ruleText')}}：{{imageInfo.width}}{{$t('image.px')}} X {{imageInfo.height}}{{$t('image.px')}}</li>
-    </ul> -->
     <div class="viewer-content__wrapper">
-        <div class="navbar-thumbnail__wrap" v-if="images.length>=2">
+        <div :class="[
+            'navbar-thumbnail__wrap',
+            { 'active': isVisibleNav }
+        ]" v-if="images.length>=2">
             <!-- @touchmove="onRectScroll"
                 @mousedown="onMouseDown"
                 @mousemove="onMouseMove"
@@ -28,12 +28,15 @@
                         :key="index" 
                         :data-id="item.index">
                         <span>{{ item.index }}</span>
-                        <img class="navbar-image" :data-id="item.index" :src="item.url" alt="picture" @click.stop.prevent="onClickNavImage">
+                        <img class="navbar-image" :data-id="item.index" :src="item.url" alt="picture" @click.stop.prevent="clickImge($event,item, index)">
                     </li>
                 </ul>
             </div>
         </div>
-        <div class="inner-image-wrap">
+        <div class="inner-image-wrap" @wheel="onWheelListener">
+            <ul class="image-viewer-info__tag" @click="close">
+                <li>{{$t('image.ruleText')}}：{{imageInfo.width}}{{$t('image.px')}} X {{imageInfo.height}}{{$t('image.px')}}</li>
+            </ul>
             <div v-if="loadImageErrorText" style="user-select: text;">
                 <p style="color: orange;text-decoration: solid;">{{ $t('image.loadErrorText') }}</p>
                 <p>{{ updateImage }}</p>
@@ -131,6 +134,7 @@ import { useCusShortKey } from '../utils/hotkeys';
 import { HotkeysEvent } from 'hotkeys-js';
 import { messages, lang } from '../langs/index';
 import { useMouse } from '../hooks/mouse';
+import { ImageObjectTypes } from '../types/image-viewer';
 
 const props = defineProps({
     visible: {
@@ -199,6 +203,7 @@ const $t = (langkey = "") => {
 }
 
 const {
+    onWheelListener,
     alignment,
     imageInfo,
     originImages,
@@ -344,22 +349,27 @@ function next() {
     props.handleChange({image:imageRef.value.src, index: currentIndex.value })
 }
 
-const onClickNavImage = debounce(clickImge, 200)
+// const onClickNavImage = debounce(clickImge, 200)
 
-function clickImge (evt:Event) {
+function clickImge (evt:Event, item: ImageObjectTypes, index:number) {
     loadImageErrorText.value = ""
     if (!imageRef.value) return
+
     if (evt.target) {
         const EL = evt.target as HTMLImageElement
         const firstRect = EL.getBoundingClientRect()
-        activeIndex.value = Number(EL.getAttribute('data-id')) 
+        const imageId = Number(EL.getAttribute('data-id')) 
+
+        // 点击相同照片不更新视图
+        if (imageId === activeIndex.value) return
+
+        activeIndex.value = item.index
         currentIndex.value = originImages.value.findIndex(el => el.index === activeIndex.value)
         updateImage.value = imageRef.value.src = EL.src
         const lastRect = imageRef.value.getBoundingClientRect()
         props.handleChange({image: updateImage.value, index: currentIndex.value })
         FlipAnimate(imageRef.value, firstRect, lastRect)
     }
-    
 }
 
 function close () {

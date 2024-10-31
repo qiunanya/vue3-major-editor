@@ -71,6 +71,10 @@ export const useToolbar = (images: string[], currentUrl: string) => {
         imageCore.rotate('-')
     }
 
+    const onWheelListener = (evt:WheelEvent) => {
+        imageCore.onWheel(evt)
+    }
+
     const closeViewer = () => {
         imageCore.destroyed()
         if (imageRef.value) {
@@ -255,6 +259,7 @@ export const useToolbar = (images: string[], currentUrl: string) => {
     })
 
     return {
+        onWheelListener,
         alignment,
         imageInfo,
         originImages,
