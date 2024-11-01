@@ -2,14 +2,11 @@
 <div 
     ref="imageVieverWidgetRef" 
     :class="[
-        'images-viewer-container__wrap', 
+        'images-viewer-vue3__wrapper', 
         {'is-active':visible}, 
         {'nav-scroll-style__wrap':!getUserAgent()}]">
-    <div class="viewer-content__wrapper">
-        <div :class="[
-            'navbar-thumbnail__wrap',
-            { 'active': isVisibleNav }
-        ]" v-if="images.length>=2">
+    <div class="images-viewer-vue3__content">
+        <div :class="['content-nav__wrapper', { 'nav-active': isVisibleNav }]" v-if="images.length>=2">
             <!-- @touchmove="onRectScroll"
                 @mousedown="onMouseDown"
                 @mousemove="onMouseMove"
@@ -17,24 +14,27 @@
                 @mouseleave="onMouseLeave" -->
             <div 
                 ref="vnodeScrollRef" 
-                :class="['vnode-scroll__wrap']" 
+                :class="['nav-vnode-scroll__wrapper']"
                 @scroll="onRectScroll"
             
                 >
-                <ul ref="vnodeUlRef" class="list-group" :style="{justifyContent: alignment}">
-                    <li :class="['list-group-item', {'nav-active-current__img': currentIndex === item.index }]" 
+                <ul ref="vnodeUlRef" :class="['vnode-list-group']" :style="{justifyContent: alignment}">
+                    <li :class="['list-group-item', {'list-group-item__active': currentIndex === item.index }]" 
                         style="height: 50px;" 
                         v-for="(item, index) in renderData" 
                         :key="index" 
                         :data-id="item.index">
                         <span>{{ item.index }}</span>
-                        <img class="navbar-image" :data-id="item.index" :src="item.url" alt="picture" @click.stop.prevent="clickImge($event,item, index)">
+                        <img class="list-group-item__image" :data-id="item.index" :src="item.url" alt="picture" @click.stop.prevent="clickImge($event,item, index)">
                     </li>
                 </ul>
             </div>
         </div>
-        <div class="inner-image-wrap" @wheel="onWheelListener">
-            <ul class="image-viewer-info__tag" @click="close">
+        <div class="content-viewer-image__wrapper" @wheel="onWheelListener">
+            <svg @click.stop.prevent="setNavState" :class="['icon-is-hover cus-cursor image-collapse-nav__btn', {'rotate-right__btn': !isVisibleNav }]" viewBox="0 0 1024 1024" width="25" height="25">
+                <path fill="#eee" d="M322.12 353.93L104.61 490.77c-18.45 11.61-18.44 38.51 0.02 50.1l217.51 136.64c19.71 12.38 45.33-1.78 45.33-25.06V378.98c0-23.29-25.64-37.45-45.35-25.05zM94.78 125.02h834.44c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5H94.78c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5zM929.22 342.34H444.11c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5h485.11c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5zM929.22 620.66H444.11c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5h485.11c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5zM929.22 898.98H94.78c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5h834.44c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5z"></path>
+            </svg>
+            <ul class="image-info">
                 <li>{{$t('image.ruleText')}}：{{imageInfo.width}}{{$t('image.px')}} X {{imageInfo.height}}{{$t('image.px')}}</li>
             </ul>
             <div v-if="loadImageErrorText" style="user-select: text;">
@@ -43,7 +43,7 @@
             </div>
             <img 
                 ref="imageRef" 
-                class="inner-viewer__image cus-transition" 
+                class="image-viewer__inner cus-transition" 
                 @load="loadImage" 
                 @error="errorImage" 
                 src="" 
@@ -51,12 +51,12 @@
                 style="width: 120px;height: 120px;">
             <LoadingUI v-if="loading"></LoadingUI>
 
-            <div class="navbar-control__wrap">
-                <div :class="['pagination-wrap', { 'position': !getUserAgent() }]" v-if="images.length>=10">
+            <div class="image-viewer__controls">
+                <div :class="['control-info', { 'position': !getUserAgent() }]" v-if="images.length>=10">
                     <span>&nbsp;{{images.length}}&nbsp;{{$t('image.pictures')}}&nbsp;</span>
                     <span>/&nbsp;{{$t('image.the')}}&nbsp;{{currentIndex+1}}&nbsp;{{$t('image.img')}}&nbsp;</span>
                 </div>
-                <div>
+                <div class="control-btns">
                     <!-- 放大 -->
                     <svg @click.stop.prevent="zoomIn" class="tool-item-icon__btn icon-is-hover" viewBox="0 0 1024 1024" width="25" height="25">
                         <path d="M476.48 903.36C248.96 903.36 64 718.4 64 491.2S248.96 78.72 476.48 78.72s412.48 184.96 412.48 412.48-185.28 412.16-412.48 412.16z m0-741.12c-181.44 0-328.96 147.52-328.96 328.96s147.52 328.96 328.96 328.96 328.96-147.52 328.96-328.96S657.6 162.24 476.48 162.24z" fill="#eee"></path>
@@ -99,7 +99,7 @@
             </div>
         </div>
     </div>
-    <div class="image-viewer-close__btn" @click="close">
+    <div class="images-viewer-vue3__close close-btn" @click="close">
         <svg class="close-icon icon-is-hover" viewBox="0 0 1024 1024" width="25" height="25">
             <path d="M835.2 854.4c-12.8 0-22.4-3.2-32-12.8L211.2 256C192 240 192 211.2 208 195.2s44.8-16 60.8 0L864 780.8c16 16 16 44.8 0 60.8-6.4 9.6-16 12.8-28.8 12.8z" fill="#eee"></path>
             <path d="M236.8 848c-12.8 0-22.4-3.2-32-12.8-16-16-16-44.8 0-60.8l604.8-576c16-16 44.8-16 60.8 0s16 44.8 0 60.8l-604.8 576c-9.6 9.6-19.2 12.8-28.8 12.8z" fill="#eee"></path>
@@ -237,11 +237,6 @@ const emits = defineEmits(['on-close', 'on-change', 'onUpdate:value']);
 
 const { onMouseDown,onMouseMove,onMouseUp, onMouseLeave } = useMouse()
 
-const isVisibleNav = ref(false)
-setTimeout(() => {
-    isVisibleNav.value = true
-}, 300);
-
 // 快捷键提示
 const hotkey = ref('')
 const isActiveKey = ref(false)
@@ -303,7 +298,10 @@ function toggleHotkey (event:KeyboardEvent, handler:HotkeysEvent, isPrevent = fa
 }
 
 const updateImage = ref('')
-
+const isVisibleNav = ref(false)
+const setNavState = () => {
+    isVisibleNav.value = !isVisibleNav.value
+}
 watch(() => props.current, (newValue, oldValue) => {
     if (newValue) {
         nextTick().then(res => {
@@ -316,7 +314,11 @@ watch(() => props.current, (newValue, oldValue) => {
                 updateImage.value = imageRef.value.src = props.image.src
                 const lastRect = imageRef.value.getBoundingClientRect()
                 
-                FlipAnimate(imageRef.value, firstRect, lastRect)
+                const player = FlipAnimate(imageRef.value, firstRect, lastRect)
+                player.addEventListener('finish', (evt) => { 
+                    isVisibleNav.value = true
+                    // console.log('Animation execution completed.')
+                })
             }
         })
     }

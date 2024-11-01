@@ -5,7 +5,7 @@ export default {
         page: 'Page',
         current: 'Current page',
         loadErrorText: 'Failed to load the image, please check the image access path carefully!',
-        ruleText: 'Original image width and height',
+        ruleText: 'Image size',
         px: 'px',
         the: 'The',
         img: 'Image'

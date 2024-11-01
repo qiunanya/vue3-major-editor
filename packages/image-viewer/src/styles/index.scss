@@ -23,7 +23,7 @@
         background-color: rgba(69,147,251, 0.37);
     }
 }
-.images-viewer-container__wrap {
+.images-viewer-vue3__wrapper {
     --active-icon-color: #3A8DF5;
     --active-text-color: var(--text-color, #eee);
     --nav-width: 90px;
@@ -55,28 +55,29 @@
     &.is-active {
         opacity: 1;
     }
-    .viewer-content__wrapper {
+    .images-viewer-vue3__content {
         position: absolute;
         top: 0px;
         bottom: 0px;
         left: 0px;
         right: 0px;
         display: flex;
-        .navbar-thumbnail__wrap {
-            background-color: rgba(0, 0, 0, 0.6);
-            width: 0px;
+        .content-nav__wrapper {
+            // background-color: rgba(0, 0, 0, 0.6);
+            width:0px;
             overflow: hidden;
+            // flex: 0 0 var(--nav-width);
             transition: width 0.3s ease-out;
-            &.active {
-                width: var(--nav-width);
-                // flex: 0 0 var(--nav-height);
+            &.nav-active {
+                width: calc(var(--nav-width) - 5px);
             }
-            .vnode-scroll__wrap {
+            .nav-vnode-scroll__wrapper {
                 width: 100%;
                 height: 100%;
                 overflow-y: auto; /* 超出滚动 */
+                background-color: rgba(0, 0, 0, 0.6);
             }
-            .list-group {
+            .vnode-list-group {
                 width: 100%;
                 display: flex;
                 flex-direction: column;
@@ -84,13 +85,12 @@
                 align-items: center;
                 .list-group-item {
                     width: 80%;
-                    height: 3rem;
                     opacity: 0.5;
                     border: 1px solid transparent;
-                    margin: 0.2rem 0.3rem;
+                    // margin: 0 0.2rem 0 0.3rem;
                     position: relative;
                     border-radius: 6px;
-                    &.nav-active-current__img {
+                    &.list-group-item__active {
                         opacity: 1;
                         border: 2px solid var(--active-icon-color);
                     }
@@ -103,7 +103,7 @@
                         top: 20px;
                         color: red;
                     }
-                    .navbar-image {
+                    .list-group-item__image {
                         width: 100%;
                         object-fit: cover;
                         height: 100%;
@@ -113,7 +113,7 @@
                 }
             }
         }
-        .inner-image-wrap {
+        .content-viewer-image__wrapper {
             flex: 1;
             width: 100%;
             height: 100%;
@@ -126,34 +126,66 @@
             transform-style: preserve-3d;
             overflow: hidden;
             color: var(--active-text-color);
-        }
-        .inner-image-wrap > .inner-viewer__image {
-            /* width: 100%;
-            height: 100%; */
-            flex: 0 1 auto;
-            z-index: 1;
-            /* transition: all 0.3s ease; */
-            /* display: block; */
-            -webkit-user-select: none;
-            user-select: none;
-            /* 保持宽高比显示，避免图片显示不全和被拉升 */
-            /* object-fit: contain; */
-            /* 图片会显示默认尺寸 */
-            /* margin: auto; */
-            /* 设置宽高为auto也能展示图片默认尺寸 */
-            width: auto;
-            height: auto; 
-            object-fit: cover;
+            .image-collapse-nav__btn {
+                position: absolute;
+                top: 15px;
+                left: 8px;
+                transition: transform 0.3s ease;
+                &.rotate-right__btn {
+                    transform: scale(-1,-1);
+                }
+            } 
+            .image-info {
+                position: absolute;
+                top: 15px;
+                left: 40%;
+                color: #eee;
+            }
+            .image-viewer__inner {
+                /* width: 100%;
+                height: 100%; */
+                flex: 0 1 auto;
+                z-index: 1;
+                /* transition: all 0.3s ease; */
+                /* display: block; */
+                -webkit-user-select: none;
+                user-select: none;
+                /* 保持宽高比显示，避免图片显示不全和被拉升 */
+                /* object-fit: contain; */
+                /* 图片会显示默认尺寸 */
+                /* margin: auto; */
+                /* 设置宽高为auto也能展示图片默认尺寸 */
+                width: auto;
+                height: auto; 
+                object-fit: cover;
+            }
+            .image-viewer__controls {
+                position: fixed;
+                bottom: 0px;
+                left: 0px;
+                right: 0px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-wrap: wrap;
+                padding: 10px 0;
+                z-index: 10;
+                .tool-item-icon__btn {
+                    margin: 0 4px;
+                }
+                .control-info {
+                    display: flex;
+                    align-items: center;
+                    color: #eee;
+                }
+                .position {
+                    position: absolute;
+                    left: 30px;
+                }
+            }
         }
     }
-    
-    .image-viewer-info__tag {
-        position: absolute;
-        top: 15px;
-        left: 15px;
-        color: #eee;
-    }
-    .image-viewer-close__btn {
+    .images-viewer-vue3__close {
         position: absolute;
         top: 15px;
         right: 15px;
@@ -192,40 +224,6 @@
     .viewer-next-icon {
         top: 40%;
         right: 0;
-    }
-    .navbar-control__wrap {
-        position: fixed;
-        bottom: 0px;
-        left: 0px;
-        right: 0px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-        padding: 10px 0;
-        z-index: 10;
-        .tool-item-icon__btn {
-            margin: 0 4px;
-        }
-        .pagination-wrap {
-            display: flex;
-            align-items: center;
-            color: #eee;
-            .page-size-select {
-                border-radius: 4px;
-                outline: none;
-                background: transparent;
-                color: #eee;
-                border-color: #eee;
-                option {
-                    color: #333; 
-                }
-            }
-        }
-        .position {
-            position: absolute;
-            left: 30px;
-        }
     }
 }
 

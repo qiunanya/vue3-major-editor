@@ -32,7 +32,6 @@ export const FlipAnimate = (element:HTMLElement, firstRect:DOMRect, lastRect:DOM
             easing: "cubic-bezier(0.2, 0, 0.2, 1)"
         }
     );
-    player.addEventListener('finish', (evt) => { 
-        // console.log('Animation execution completed.')
-    })
+    
+    return player
 }
