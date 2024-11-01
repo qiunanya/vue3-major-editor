@@ -6,7 +6,7 @@
         {'is-active':visible}, 
         {'nav-scroll-style__wrap':!getUserAgent()}]">
     <div class="images-viewer-vue3__content">
-        <div :class="['content-nav__wrapper', { 'nav-active': isVisibleNav }]" v-if="images.length>=2">
+        <div :class="['content-nav__wrapper', { 'nav-active': isVisibleNav }]" v-if="isMultipleImage">
             <!-- @touchmove="onRectScroll"
                 @mousedown="onMouseDown"
                 @mousemove="onMouseMove"
@@ -18,7 +18,7 @@
                 @scroll="onRectScroll"
             
                 >
-                <ul ref="vnodeUlRef" :class="['vnode-list-group']" :style="{justifyContent: alignment}">
+                <ul ref="vnodeUlRef" :class="['vnode-list-group']">
                     <li :class="['list-group-item', {'list-group-item__active': currentIndex === item.index }]" 
                         style="height: 50px;" 
                         v-for="(item, index) in renderData" 
@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="content-viewer-image__wrapper" @wheel="onWheelListener">
-            <svg @click.stop.prevent="setNavState" :class="['icon-is-hover cus-cursor image-collapse-nav__btn', {'rotate-right__btn': !isVisibleNav }]" viewBox="0 0 1024 1024" width="25" height="25">
+            <svg v-show="isMultipleImage" @click.stop.prevent="setNavState" :class="['icon-is-hover cus-cursor image-collapse-nav__btn', {'rotate-right__btn': !isVisibleNav }]" viewBox="0 0 1024 1024" width="25" height="25">
                 <path fill="#eee" d="M322.12 353.93L104.61 490.77c-18.45 11.61-18.44 38.51 0.02 50.1l217.51 136.64c19.71 12.38 45.33-1.78 45.33-25.06V378.98c0-23.29-25.64-37.45-45.35-25.05zM94.78 125.02h834.44c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5H94.78c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5zM929.22 342.34H444.11c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5h485.11c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5zM929.22 620.66H444.11c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5h485.11c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5zM929.22 898.98H94.78c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5h834.44c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5z"></path>
             </svg>
             <ul class="image-info">
@@ -203,8 +203,8 @@ const $t = (langkey = "") => {
 }
 
 const {
+    isMultipleImage,
     onWheelListener,
-    alignment,
     imageInfo,
     originImages,
     nextImage,
@@ -338,17 +338,22 @@ watch(() => currentIndex.value, (n, o) => {
 })
 
 function previous() {
-    if (!imageRef.value) return
     previousImage()
-    updateImage.value = imageRef.value.src = originImages.value[currentIndex.value].url
-    props.handleChange({image:imageRef.value.src, index: currentIndex.value })
+    setUpdateImage()
 }
 
 function next() {
-    if (!imageRef.value) return
     nextImage()
-    updateImage.value = imageRef.value.src = originImages.value[currentIndex.value].url
-    props.handleChange({image:imageRef.value.src, index: currentIndex.value })
+    setUpdateImage()
+}
+
+const setUpdateImage = () => {
+    if (!imageRef.value) return
+
+    if (isMultipleImage.value) {
+        updateImage.value = imageRef.value.src = originImages.value[currentIndex.value].url
+        props.handleChange({image:imageRef.value.src, index: currentIndex.value })
+    }
 }
 
 // const onClickNavImage = debounce(clickImge, 200)

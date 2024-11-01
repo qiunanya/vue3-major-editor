@@ -15,12 +15,13 @@ export const useToolbar = (images: string[], currentUrl: string) => {
     const imageCore = ImageViewerCore.getInStance()
     const currentIndex = ref(-1)
     const activeIndex = ref(-1)
-    const alignment = ref('flex-start')
     const originImages = ref<ImageObjectTypes[]>([])
     const imageInfo = reactive({
         width: 0,
         height: 0
     })
+    // 开启左侧导航栏
+    const isMultipleImage = ref(true)
 
     // 虚拟滚动列表
     const vnodeScrollRef = ref<HTMLElement | null>(null)
@@ -161,6 +162,13 @@ export const useToolbar = (images: string[], currentUrl: string) => {
 
     // 渲染
     const setRender = () => {
+        // 更新isMultipleImage状态值
+        if (originImages.value.length > 1) {
+            isMultipleImage.value = true
+        } else {
+            isMultipleImage.value = false
+        }
+
         // 计算开始和结束位置
         const end = startIndex.value + maxCount.value
         endIndex.value = originImages.value[end] !== void 0 ? end : originImages.value.length
@@ -198,16 +206,14 @@ export const useToolbar = (images: string[], currentUrl: string) => {
             // for (let i = 0; i < 100; i++) {
             //     originImages.value.push({ index:i, url: `index_${i}`})
             // }
-            console.log(originImages.value.length)
+            // console.log(originImages.value)
         }).catch(err => {
+            isMultipleImage.value = false
             console.log('images-viewer-vue3:', JSON.stringify(err))
         })
+
         maxCount.value = Math.floor(rect.height/itemWidth) + 4
 
-        // 配置导航图片对齐方式
-        if (originImages.value.length <= maxCount.value) {
-            alignment.value = 'center'
-        } else alignment.value = 'flex-start'
         // console.log(maxCount.value, 'maxCount')
         // console.log(maxCount.value*itemWidth, rect.width)
         setRender()
@@ -259,8 +265,8 @@ export const useToolbar = (images: string[], currentUrl: string) => {
     })
 
     return {
+        isMultipleImage,
         onWheelListener,
-        alignment,
         imageInfo,
         originImages,
         nextImage,
