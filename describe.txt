@@ -9,11 +9,14 @@ recursive-install = true
 shamefully-hoist = true
 
 在pnpm安装本地依赖
-pnpm add @majoreditor/ui
+pnpm add images-viewer-vue3
 测试成功
 
-✨ 更新所有包依赖
-pnpm install --recursive
+pnpm安装远程依赖
+pnpm add images-viewer-vue3
+
+pnpm更新所有包依赖
+pnpm add --recursive
 
 更新pnpm版本
 pnpm self-update
