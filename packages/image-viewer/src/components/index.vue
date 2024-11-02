@@ -55,7 +55,7 @@
 
             <div class="image-viewer__controls">
                 <div :class="['control-info', { 'position': !getUserAgent() }]" v-show="isMultipleImage">
-                    <span>&nbsp;{{images.length}}&nbsp;{{$t('image.pictures')}}&nbsp;</span>
+                    <span>{{$t('image.total')}}&nbsp;{{images.length}}&nbsp;{{$t('image.pictures')}}&nbsp;</span>
                     <span>/&nbsp;{{$t('image.the')}}&nbsp;{{currentIndex+1}}&nbsp;{{$t('image.img')}}&nbsp;</span>
                 </div>
                 <div class="control-svg__btns">

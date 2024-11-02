@@ -1,5 +1,6 @@
 export default {
     image: {
+        total: 'Total',
         pictures: 'Pictures',
         leaf: 'leaf',
         page: 'Page',

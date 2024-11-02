@@ -1,5 +1,6 @@
 export default {
     image: {
+        total: '共',
         pictures: '图片',
         leaf: '张',
         page: '页',
@@ -8,6 +9,6 @@ export default {
         ruleText: '图片尺寸', 
         px: '像素',
         the: '第',
-        img: '图片'
+        img: '张图片'
     }
 }
