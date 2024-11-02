@@ -39,7 +39,7 @@
             </ul>
             <div v-if="loadImageErrorText" style="user-select: text;">
                 <p style="color: orange;text-decoration: solid;">{{ $t('image.loadErrorText') }}</p>
-                <p>{{ updateImage }}</p>
+                <p>{{ updateImageSrc }}</p>
             </div>
             <img 
                 ref="imageRef" 
@@ -48,11 +48,13 @@
                 @error="errorImage" 
                 src="" 
                 alt="picture" 
-                style="width: 120px;height: 120px;">
+                style="width: 120px;height: 120px;"
+                @mouseenter="onMouseEnterImage"
+                >
             <LoadingUI v-if="loading"></LoadingUI>
 
             <div class="image-viewer__controls">
-                <div :class="['control-info', { 'position': !getUserAgent() }]" v-if="images.length>=10">
+                <div :class="['control-info', { 'position': !getUserAgent() }]" v-show="isMultipleImage">
                     <span>&nbsp;{{images.length}}&nbsp;{{$t('image.pictures')}}&nbsp;</span>
                     <span>/&nbsp;{{$t('image.the')}}&nbsp;{{currentIndex+1}}&nbsp;{{$t('image.img')}}&nbsp;</span>
                 </div>
@@ -95,10 +97,18 @@
                         <path d="M768.35456 416a256 256 0 1 0-512 0 192 192 0 1 0 0 384v64a256 256 0 0 1-58.88-505.216 320.128 320.128 0 0 1 629.76 0A256.128 256.128 0 0 1 768.35456 864v-64a192 192 0 0 0 0-384z m-512 384h64v64H256.35456v-64z m448 0h64v64h-64v-64z" ></path>
                         <path d="M539.04256 845.248V512.192a32.448 32.448 0 0 0-32-32.192c-17.664 0-32 14.912-32 32.192v333.056l-36.096-36.096a32.192 32.192 0 0 0-45.056 0.192 31.616 31.616 0 0 0-0.192 45.056l90.88 90.944a31.36 31.36 0 0 0 22.528 9.088 30.08 30.08 0 0 0 22.4-9.088l90.88-90.88a32.192 32.192 0 0 0-0.192-45.12 31.616 31.616 0 0 0-45.056-0.192l-36.096 36.096z"></path>
                     </svg>
-                    <svg class="tool-item-icon__btn icon-is-hover" viewBox="0 0 1024 1024"  >
-                        <path d="M423.687947 757.47897a100.195631 100.195631 0 0 1-100.195631-101.197587V366.716009a100.195631 100.195631 0 0 1 153.299316-85.166286l232.453863 145.283665a100.195631 100.195631 0 0 1 0 170.332573L476.791632 741.447669a100.195631 100.195631 0 0 1-52.101729 15.029345z m0-410.802087a21.041083 21.041083 0 0 0-10.019563 3.005869 20.039126 20.039126 0 0 0-10.019563 17.033257v289.565374a20.039126 20.039126 0 0 0 31.060646 17.033257l232.453863-145.283665a20.039126 20.039126 0 0 0 0-34.066514L433.70751 349.682752a19.03717 19.03717 0 0 0-10.019563-4.007825z"></path>
-                        <path d="M512.862059 1023.999349A511.999674 511.999674 0 0 1 313.472753 40.078252a511.999674 511.999674 0 0 1 398.778611 942.840888 508.993805 508.993805 0 0 1-199.389305 41.080209z m0-943.842844C274.396457 80.156505 81.018889 273.534073 81.018889 511.999674s193.377568 431.84317 431.84317 431.84317 431.84317-194.379524 431.843169-431.84317S750.325704 80.156505 512.862059 80.156505z"></path>
-                    </svg>
+                    <template v-if="playState">
+                        <svg v-if="isMultipleImage" @click.stop.prevent="stopPlay" class="tool-item-icon__btn icon-is-hover" viewBox="0 0 1024 1024">
+                            <path d="M512 2.56C231.424 2.56 3.584 229.888 3.584 510.976S231.424 1018.88 512 1018.88s508.416-227.328 508.416-508.416S793.088 2.56 512 2.56z m0 941.568c-239.616 0-433.664-194.048-433.664-433.664S272.384 76.8 512 76.8s433.664 194.048 433.664 433.664-194.048 433.664-433.664 433.664z"></path>
+                            <path d="M409.6 730.112c-19.968 0-35.84-15.872-35.84-35.84v-332.8c0-19.968 15.872-35.84 35.84-35.84s35.84 15.872 35.84 35.84v332.8c0 19.968-15.872 35.84-35.84 35.84zM614.4 730.112c-19.968 0-35.84-15.872-35.84-35.84v-332.8c0-19.968 15.872-35.84 35.84-35.84s35.84 15.872 35.84 35.84v332.8c0 19.968-15.872 35.84-35.84 35.84z"></path>
+                        </svg>
+                    </template>
+                    <template v-else>
+                        <svg v-if="isMultipleImage" @click.stop.prevent="autoPlay" class="tool-item-icon__btn icon-is-hover" viewBox="0 0 1024 1024">
+                            <path d="M423.687947 757.47897a100.195631 100.195631 0 0 1-100.195631-101.197587V366.716009a100.195631 100.195631 0 0 1 153.299316-85.166286l232.453863 145.283665a100.195631 100.195631 0 0 1 0 170.332573L476.791632 741.447669a100.195631 100.195631 0 0 1-52.101729 15.029345z m0-410.802087a21.041083 21.041083 0 0 0-10.019563 3.005869 20.039126 20.039126 0 0 0-10.019563 17.033257v289.565374a20.039126 20.039126 0 0 0 31.060646 17.033257l232.453863-145.283665a20.039126 20.039126 0 0 0 0-34.066514L433.70751 349.682752a19.03717 19.03717 0 0 0-10.019563-4.007825z"></path>
+                            <path d="M512.862059 1023.999349A511.999674 511.999674 0 0 1 313.472753 40.078252a511.999674 511.999674 0 0 1 398.778611 942.840888 508.993805 508.993805 0 0 1-199.389305 41.080209z m0-943.842844C274.396457 80.156505 81.018889 273.534073 81.018889 511.999674s193.377568 431.84317 431.84317 431.84317 431.84317-194.379524 431.843169-431.84317S750.325704 80.156505 512.862059 80.156505z"></path>
+                        </svg>
+                    </template>
                 </div>
             </div>
         </div>
@@ -207,6 +217,11 @@ const $t = (langkey = "") => {
 }
 
 const {
+    onMouseEnterImage,
+    updateImageSrc,
+    playState,
+    stopPlay,
+    autoPlay,
     isMultipleImage,
     onWheelListener,
     imageInfo,
@@ -235,7 +250,7 @@ const {
     closeViewer,
     currentIndex,
     activeIndex 
-} = useToolbar(props.images as string[], props.current);
+} = useToolbar(props.images as string[], props.current, props.handleChange);
 
 const emits = defineEmits(['on-close', 'on-change', 'onUpdate:value']);
 
@@ -301,7 +316,6 @@ function toggleHotkey (event:KeyboardEvent, handler:HotkeysEvent, isPrevent = fa
     }, 2000)
 }
 
-const updateImage = ref('')
 const isVisibleNav = ref(false)
 const setNavState = () => {
     isVisibleNav.value = !isVisibleNav.value
@@ -315,7 +329,7 @@ watch(() => props.current, (newValue, oldValue) => {
                 imageRef.value.src = newValue
             } else {
                 const firstRect = props.image.getBoundingClientRect()
-                updateImage.value = imageRef.value.src = props.image.src
+                updateImageSrc.value = imageRef.value.src = props.image.src
                 const lastRect = imageRef.value.getBoundingClientRect()
                 
                 const player = FlipAnimate(imageRef.value, firstRect, lastRect)
@@ -336,7 +350,7 @@ watch(() => currentIndex.value, (n, o) => {
         if (!imageRef.value) return
         const findIndex = renderData.value.findIndex(el => el.index === currentIndex.value)
         if (findIndex) {
-            // updateImage.value = imageRef.value.src = renderData.value[findIndex].url
+            // updateImageSrc.value = imageRef.value.src = renderData.value[findIndex].url
         } 
     }
 })
@@ -355,7 +369,7 @@ const setUpdateImage = () => {
     if (!imageRef.value) return
 
     if (isMultipleImage.value) {
-        updateImage.value = imageRef.value.src = originImages.value[currentIndex.value].url
+        updateImageSrc.value = imageRef.value.src = originImages.value[currentIndex.value].url
         props.handleChange({image:imageRef.value.src, index: currentIndex.value })
     }
 }
@@ -376,9 +390,9 @@ function clickImge (evt:Event, item: ImageObjectTypes, index:number) {
 
         activeIndex.value = item.index
         currentIndex.value = originImages.value.findIndex(el => el.index === activeIndex.value)
-        updateImage.value = imageRef.value.src = EL.src
+        updateImageSrc.value = imageRef.value.src = EL.src
         const lastRect = imageRef.value.getBoundingClientRect()
-        props.handleChange({image: updateImage.value, index: currentIndex.value })
+        props.handleChange({image: updateImageSrc.value, index: currentIndex.value })
         FlipAnimate(imageRef.value, firstRect, lastRect)
     }
 }
@@ -387,7 +401,7 @@ function close () {
     destroyedExe()
     props.handleClose()
     closeViewer()
-    updateImage.value = ""
+    updateImageSrc.value = ""
 }
 
 onBeforeUnmount( () => {

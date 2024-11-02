@@ -98,4 +98,4 @@ export const getDeviceType = () => {
   }
 
 
-export const versions = '1.0.11'
+export const versions = '1.0.12'

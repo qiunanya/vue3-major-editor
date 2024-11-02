@@ -213,7 +213,7 @@
         cursor: pointer;
     }
     .icon-is-hover:hover path {
-        fill: var(--active-icon-color);
+        fill: var(--active-icon-color) !important;
     }
 
     .close-icon {

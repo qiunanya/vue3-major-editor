@@ -4,9 +4,10 @@ import { ref, onMounted, nextTick, reactive, toRefs } from 'vue';
 import { ImageObjectTypes, AsyncSetImageReturnType } from '../types/image-viewer';
 
 const DEVICE_TYPE = getUserAgent()
+const AUTO_PLAY_TIME = 3000
 var distance_value = 0
 
-export const useToolbar = (images: string[], currentUrl: string) => {
+export const useToolbar = (images: string[], currentUrl: string, cb:Function) => {
     // const bodyRect = document.body.getBoundingClientRect()
     const imageVieverWidgetRef = ref<HTMLElement | null>(null)
     const imageRef = ref<HTMLImageElement|null>(null)
@@ -15,6 +16,7 @@ export const useToolbar = (images: string[], currentUrl: string) => {
     const imageCore = ImageViewerCore.getInStance()
     const currentIndex = ref(-1)
     const activeIndex = ref(-1)
+    const updateImageSrc = ref('')
     const originImages = ref<ImageObjectTypes[]>([])
     const imageInfo = reactive({
         width: 0,
@@ -219,7 +221,7 @@ export const useToolbar = (images: string[], currentUrl: string) => {
         setRender()
     }
 
-   // 切换图片的方法
+    // 切换图片的方法
     const switchToImage = (targetIndex:number) => {
         if (!vnodeScrollRef.value) return
         // 假设图片宽度 + 间距
@@ -244,6 +246,13 @@ export const useToolbar = (images: string[], currentUrl: string) => {
 
     // 切换到下一张图片
     const nextImage = () => {
+        // 判断是否是最后一张图片
+        if (currentIndex.value === originImages.value.length - 1) {
+            // console.log("已经是最后一张图片了:", currentIndex.value);
+            alert('已经是最后一张图片了')
+            stopPlay()
+            return;
+        }
         const targetIndex = Math.min(currentIndex.value + 1, originImages.value.length - 1);
         currentIndex.value = targetIndex;
         switchToImage(targetIndex);
@@ -251,11 +260,43 @@ export const useToolbar = (images: string[], currentUrl: string) => {
 
     // 切换到上一张图片
     const previousImage = () => {
+        // 判断是否是第一张图片
+        if (currentIndex.value === 0) {
+            // console.log("已经是第一张图片了:", currentIndex.value);
+            return;
+        }
         const targetIndex = Math.max(currentIndex.value - 1, 0);
         currentIndex.value = targetIndex;
         switchToImage(targetIndex);
     };
 
+    // 自动播放
+    var tiemer: NodeJS.Timeout;
+    const playState = ref(false)
+    const autoPlay = () => {
+        playState.value = true
+        tiemer = setInterval(() => {
+            nextImage()
+            console.log()
+            if (imageRef.value) {
+                updateImageSrc.value = imageRef.value.src = originImages.value[currentIndex.value].url
+                cb({image:imageRef.value.src, index: currentIndex.value })
+            }
+        }, AUTO_PLAY_TIME);
+    }
+
+    // 停止播放
+    const stopPlay = () => {
+        playState.value = false
+        clearInterval(tiemer)
+    }
+
+    // 鼠标移入时停止播放
+    const onMouseEnterImage = () => {
+        if (playState.value) {
+            stopPlay();
+        }
+    }
 
     nextTick(() => {
         if (vnodeScrollRef.value) {
@@ -265,6 +306,11 @@ export const useToolbar = (images: string[], currentUrl: string) => {
     })
 
     return {
+        onMouseEnterImage,
+        updateImageSrc,
+        playState,
+        stopPlay,
+        autoPlay,
         isMultipleImage,
         onWheelListener,
         imageInfo,
