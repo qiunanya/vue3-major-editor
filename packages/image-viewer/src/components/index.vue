@@ -272,9 +272,9 @@ function registerHotkey (keys: string, action: () => void, prevent: boolean = tr
 }
 
 // next
-registerHotkey('right', next)
+registerHotkey('right', nextImage)
 // previous
-registerHotkey('left', previous)
+registerHotkey('left', previousImage)
 // inevrtY
 registerHotkey('ctrl+i+y', inevrtY)
 // inevrtX
@@ -287,6 +287,8 @@ registerHotkey('ctrl+c+l', counterclockwise)
 registerHotkey('ctrl+z', resetStyle)
 // close
 registerHotkey('esc', close)
+// autoPlay image
+registerHotkey('space', cusAutoPlay)
 
 // scale
 useCusShortKey({'ctrl+*': (event:KeyboardEvent, handler:HotkeysEvent) => {
@@ -355,23 +357,10 @@ watch(() => currentIndex.value, (n, o) => {
     }
 })
 
-function previous() {
-    previousImage()
-    setUpdateImage()
-}
-
-function next() {
-    nextImage()
-    setUpdateImage()
-}
-
-const setUpdateImage = () => {
-    if (!imageRef.value) return
-
-    if (isMultipleImage.value) {
-        updateImageSrc.value = imageRef.value.src = originImages.value[currentIndex.value].url
-        props.handleChange({image:imageRef.value.src, index: currentIndex.value })
-    }
+function cusAutoPlay () {
+    if (playState.value) {
+        stopPlay()
+    } else autoPlay()
 }
 
 // const onClickNavImage = debounce(clickImge, 200)

@@ -256,6 +256,7 @@ export const useToolbar = (images: string[], currentUrl: string, cb:Function) =>
         const targetIndex = Math.min(currentIndex.value + 1, originImages.value.length - 1);
         currentIndex.value = targetIndex;
         switchToImage(targetIndex);
+        setUpdateImage()
     };
 
     // 切换到上一张图片
@@ -268,7 +269,15 @@ export const useToolbar = (images: string[], currentUrl: string, cb:Function) =>
         const targetIndex = Math.max(currentIndex.value - 1, 0);
         currentIndex.value = targetIndex;
         switchToImage(targetIndex);
+        setUpdateImage()
     };
+
+    const setUpdateImage = () => {
+        if (!imageRef.value) return
+    
+        updateImageSrc.value = imageRef.value.src = originImages.value[currentIndex.value].url
+        cb({image:imageRef.value.src, index: currentIndex.value })
+    }
 
     // 自动播放
     var tiemer: NodeJS.Timeout;
@@ -277,11 +286,7 @@ export const useToolbar = (images: string[], currentUrl: string, cb:Function) =>
         playState.value = true
         tiemer = setInterval(() => {
             nextImage()
-            console.log()
-            if (imageRef.value) {
-                updateImageSrc.value = imageRef.value.src = originImages.value[currentIndex.value].url
-                cb({image:imageRef.value.src, index: currentIndex.value })
-            }
+            setUpdateImage()
         }, AUTO_PLAY_TIME);
     }
 

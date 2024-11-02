@@ -18,6 +18,7 @@ A lightweight image viewer for Vue3, it is based on `flip animation` technology,
 * Flip image
 * Drag image
 * Download image
+* AutoPlay image
 
 # Install 
 
@@ -110,8 +111,6 @@ The `images-viewer-vue3` has built-in commonly used shortcut keys.
 | ------------- |-------------|
 | Right(→) | Next |
 | Left(←) | Previous |
-| Ctrl+Right(→) | Next Page |
-| Ctrl+Left(←) | Previous page |
 | Ctrl+I+Y | Flip Vertically |
 | Ctrl+I+X | Flip Horizontal |
 | Ctrl+C+R | Rotate 90 degrees clockwise |
@@ -119,4 +118,5 @@ The `images-viewer-vue3` has built-in commonly used shortcut keys.
 | Ctrl+Z | Restore initial value |
 | Ctrl+'+' | Zoom |
 | Ctrl+'-' | Zoom out |
+| Space | AutoPlay and StopPlay |
 | ESC | Close Preview |
