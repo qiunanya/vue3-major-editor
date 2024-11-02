@@ -43,9 +43,9 @@
     <div>
         <h5>组件方式使用图片预览器</h5>
         <ImagesViewerVue3>
-            <img src="https://picsum.photos/id/6/5000/3333"/>
-            <img src="https://picsum.photos/id/10/2500/1667"/>
-            <img src="https://picsum.photos/id/11/2500/1667"/>
+            <img class="img-item" src="https://picsum.photos/id/6/5000/3333"/>
+            <img class="img-item" src="https://picsum.photos/id/10/2500/1667"/>
+            <img class="img-item" src="https://picsum.photos/id/11/2500/1667"/>
         </ImagesViewerVue3>
     </div>
     
@@ -53,7 +53,7 @@
     <!-- API 使用图片预览器 -->
     <div>
         <h5>API 调用图片预览器</h5>
-        <img @click="open" src="https://picsum.photos/id/19/2500/1667" alt="" />
+        <img @click="open" class="img-item" src="https://picsum.photos/id/19/2500/1667" alt="" />
     </div>
    
 </template>
@@ -77,7 +77,7 @@ const open = (evt:Event) => {
 </script>
 
 <style lang="scss">
-img {
+.img-item {
     width: 100px;
     height: 100px;
     border-radius: 8px;

@@ -25,7 +25,7 @@ A lightweight image viewer for Vue3, it is based on `flip animation` technology,
 ```js
 npm install images-viewer-vue3
 --or
-pnpm install images-viewer-vue3
+pnpm add images-viewer-vue3
 --or
 yarn add images-viewer-vue3
 ```
