@@ -137,6 +137,7 @@
                 position: absolute;
                 top: 15px;
                 left: 8px;
+                z-index: 10;
                 transition: transform 0.3s ease;
                 &.rotate-right__btn {
                     transform: scale(-1,-1);
