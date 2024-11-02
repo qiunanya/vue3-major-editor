@@ -1,6 +1,6 @@
 import ImageViewerCore from '../utils/ViewerCore';
 import { downloadExe, getUserAgent } from '../utils/index';
-import { ref, onMounted, nextTick, reactive, toRefs } from 'vue';
+import { ref, nextTick, reactive, toRefs } from 'vue';
 import { ImageObjectTypes, AsyncSetImageReturnType } from '../types/image-viewer';
 
 const DEVICE_TYPE = getUserAgent()
@@ -24,6 +24,10 @@ export const useToolbar = (images: string[], currentUrl: string, cb:Function) =>
     })
     // 开启左侧导航栏
     const isMultipleImage = ref(true)
+
+    // 自动播放
+    var tiemer: NodeJS.Timeout;
+    const playState = ref(false)
 
     // 虚拟滚动列表
     const vnodeScrollRef = ref<HTMLElement | null>(null)
@@ -78,13 +82,6 @@ export const useToolbar = (images: string[], currentUrl: string, cb:Function) =>
         imageCore.onWheel(evt)
     }
 
-    const closeViewer = () => {
-        imageCore.destroyed()
-        if (imageRef.value) {
-
-        }
-    }
-
     const downloads = (evt:Event) => {
         const url = imageRef.value?.src as string;
         downloadExe (url)
@@ -98,6 +95,8 @@ export const useToolbar = (images: string[], currentUrl: string, cb:Function) =>
         currentIndex.value = -1
         activeIndex.value = -1
         originImages.value = []
+        imageCore.destroyed()
+        clearInterval(tiemer)
     }
 
     const resetStyle = () => {
@@ -249,7 +248,6 @@ export const useToolbar = (images: string[], currentUrl: string, cb:Function) =>
         // 判断是否是最后一张图片
         if (currentIndex.value === originImages.value.length - 1) {
             // console.log("已经是最后一张图片了:", currentIndex.value);
-            alert('已经是最后一张图片了')
             stopPlay()
             return;
         }
@@ -274,19 +272,20 @@ export const useToolbar = (images: string[], currentUrl: string, cb:Function) =>
 
     const setUpdateImage = () => {
         if (!imageRef.value) return
-    
-        updateImageSrc.value = imageRef.value.src = originImages.value[currentIndex.value].url
-        cb({image:imageRef.value.src, index: currentIndex.value })
+        
+        const activeImage =  originImages.value[currentIndex.value]
+        
+        if (activeImage) {
+            updateImageSrc.value = imageRef.value.src = activeImage.url
+            cb({image:imageRef.value.src, index: currentIndex.value })
+        }
     }
 
     // 自动播放
-    var tiemer: NodeJS.Timeout;
-    const playState = ref(false)
     const autoPlay = () => {
         playState.value = true
         tiemer = setInterval(() => {
             nextImage()
-            setUpdateImage()
         }, AUTO_PLAY_TIME);
     }
 
@@ -341,7 +340,6 @@ export const useToolbar = (images: string[], currentUrl: string, cb:Function) =>
         zoomOut,
         clockwise,
         counterclockwise,
-        closeViewer,
         currentIndex,
         activeIndex
     }

@@ -1,12 +1,13 @@
 <template>
-<div :class="['hotkey-tip__wrap', {'is-active_key': isActiveKey }]">
-    <p class="item-key">{{ hotkey }}</p>
+<div :class="['hotkey-tip__wrap', {'is-active_key': isActive }]">
+    <p class="item-key">已经是最后一张图片了</p>
 </div>
 </template>
-<script setup>
+<script setup lang="ts">
+import { ref, watch } from 'vue';
 
 const props = defineProps({
-    isActiveKey: {
+    isActive: {
         type: Boolean, 
         default: () => {
             return false
@@ -14,8 +15,13 @@ const props = defineProps({
     }
 })
 
-const hotkey = defineModel('hotkey', { type: String, default: "Ctrl+S" })
-// console.log(hotkey.value, 8888);
+watch(() => props.isActive, (newValue, oldValue) => {
+    if (newValue) {
+        setTimeout(() => {
+
+        }, 2000)
+    }
+})
 
 </script>
 <style lang="scss" scoped>
@@ -23,9 +29,9 @@ const hotkey = defineModel('hotkey', { type: String, default: "Ctrl+S" })
     padding: 0.5rem;
     border-radius: .66rem;
     background: rgba(0, 0, 0, 0.8);
-    bottom: 10px;
-    right: 10px;
     position: fixed;
+    left: 50%;
+    top: 10px;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
     // box-shadow: inset 0 0 25px #e8e8e8, 0 1px 0 #c3c3c3, 0 2px 0 #c9c9c9, 0 2px 3px #333;
@@ -42,7 +48,7 @@ const hotkey = defineModel('hotkey', { type: String, default: "Ctrl+S" })
         margin-inline-end: 0.2em;
         margin-block-start: 0.2em;
         margin-block-end: 0.2em;
-        color: #eee;
+        color: tomato;
     }
 }
 </style>

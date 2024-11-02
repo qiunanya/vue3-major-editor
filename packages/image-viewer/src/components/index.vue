@@ -24,7 +24,7 @@
                         v-for="(item, index) in renderData" 
                         :key="index" 
                         :data-id="item.index">
-                        <span>{{ item.index }}</span>
+                        <!-- <span>{{ item.index }}</span> -->
                         <img class="list-group-item__image" :data-id="item.index" :src="item.url" alt="picture" @click.stop.prevent="clickImge($event,item, index)">
                     </li>
                 </ul>
@@ -133,16 +133,17 @@
     
 
     <HotKeys v-model:hotkey="hotkey" :is-active-key.camel="isActiveKey"></HotKeys>
-
+    <Message :is-active="isMessage"></Message>
 </div>
 
 </template>
 <script setup lang="ts">
-import { watch, ref, nextTick, onBeforeUnmount, onMounted } from 'vue';
+import { watch, ref, nextTick, onBeforeUnmount } from 'vue';
 import { useToolbar } from '../hooks/toolbar';
 import { debounce, getUserAgent } from '../utils';
 import { FlipAnimate } from '../utils/flip-animate';
 import HotKeys from './HotKeys.vue';
+import Message from './Message.vue';
 import LoadingUI from './Loading.vue';
 import { useCusShortKey } from '../utils/hotkeys';
 import { HotkeysEvent } from 'hotkeys-js';
@@ -247,7 +248,6 @@ const {
     inevrtX,
     clockwise,
     counterclockwise,
-    closeViewer,
     currentIndex,
     activeIndex 
 } = useToolbar(props.images as string[], props.current, props.handleChange);
@@ -319,6 +319,7 @@ function toggleHotkey (event:KeyboardEvent, handler:HotkeysEvent, isPrevent = fa
 }
 
 const isVisibleNav = ref(false)
+const isMessage = ref(false)
 const setNavState = () => {
     isVisibleNav.value = !isVisibleNav.value
 }
@@ -350,12 +351,23 @@ watch(() => props.current, (newValue, oldValue) => {
 watch(() => currentIndex.value, (n, o) => {
     if (n) {
         if (!imageRef.value) return
+
         const findIndex = renderData.value.findIndex(el => el.index === currentIndex.value)
         if (findIndex) {
             // updateImageSrc.value = imageRef.value.src = renderData.value[findIndex].url
         } 
+        updateIsActive()
     }
 })
+
+function updateIsActive () {
+    if (currentIndex.value===originImages.value.length-1) {
+        isMessage.value = true
+        setTimeout(() => {
+            isMessage.value = false
+        }, 2000)
+    }
+}
 
 function cusAutoPlay () {
     if (playState.value) {
@@ -389,7 +401,6 @@ function clickImge (evt:Event, item: ImageObjectTypes, index:number) {
 function close () {
     destroyedExe()
     props.handleClose()
-    closeViewer()
     updateImageSrc.value = ""
 }
 
