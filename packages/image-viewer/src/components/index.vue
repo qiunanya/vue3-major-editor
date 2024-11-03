@@ -5,8 +5,8 @@
         'images-viewer-vue3__wrapper', 
         {'is-active':visible}, 
         {'nav-scroll-style__wrap':!getUserAgent()}]">
-    <div class="images-viewer-vue3__content">
-        <div :class="['content-nav__wrapper', { 'nav-active': isVisibleNav }]" v-if="isMultipleImage">
+    <div :class="['images-viewer-vue3__content']">
+        <div :class="['content-nav__wrapper', { 'nav-active': isVisibleNav }, { 'is-hidden': getUserAgent() }]" v-if="isMultipleImage">
             <!-- @touchmove="onRectScroll"
                 @mousedown="onMouseDown"
                 @mousemove="onMouseMove"
@@ -31,9 +31,12 @@
             </div>
         </div>
         <div class="content-viewer-image__wrapper" @wheel="onWheelListener">
-            <svg v-show="isMultipleImage" @click.stop.prevent="setNavState" :class="['icon-is-hover cus-cursor image-collapse-nav__btn svg-icon__action', {'rotate-right__btn': !isVisibleNav }]" viewBox="0 0 1024 1024">
+            <svg v-show="isMultipleImage" @click.stop.prevent="setNavState" :class="['icon-is-hover cus-cursor image-collapse-nav__btn svg-icon__action', {'rotate-right__btn': !isVisibleNav },{ 'is-hidden': getUserAgent() }]" viewBox="0 0 1024 1024">
                 <path  d="M322.12 353.93L104.61 490.77c-18.45 11.61-18.44 38.51 0.02 50.1l217.51 136.64c19.71 12.38 45.33-1.78 45.33-25.06V378.98c0-23.29-25.64-37.45-45.35-25.05zM94.78 125.02h834.44c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5H94.78c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5zM929.22 342.34H444.11c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5h485.11c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5zM929.22 620.66H444.11c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5h485.11c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5zM929.22 898.98H94.78c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5h834.44c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5z"></path>
             </svg>
+            <div :class="['image-info', { 'is-show': getUserAgent() }]">
+                <span>{{images.length}}&nbsp;&nbsp;/&nbsp;{{currentIndex+1}}</span>
+            </div>
             <ul class="image-info" v-if="!getUserAgent()">
                 <li>{{$t('image.ruleText')}}：{{imageInfo.width}}{{$t('image.px')}} X {{imageInfo.height}}{{$t('image.px')}}</li>
             </ul>
@@ -41,20 +44,23 @@
                 <p style="color: orange;text-decoration: solid;">{{ $t('image.loadErrorText') }}</p>
                 <p>{{ updateImageSrc }}</p>
             </div>
+            <!-- 移动端 -->
+            <MobileViewer :viewer-images.camel="images" :current-image.camel="current" @on-cb="onCallBack" v-if="getUserAgent()"></MobileViewer>
+            <!-- pc端 -->
             <img 
+                v-if="!getUserAgent()"
                 ref="imageRef" 
-                class="image-viewer__inner cus-transition" 
+                :class="['image-viewer__inner cus-transition']" 
                 @load="loadImage" 
                 @error="errorImage" 
                 src="" 
                 alt="picture" 
                 style="width: 120px;height: 120px;"
-                @mouseenter="onMouseEnterImage"
-                >
+                @mouseenter="onMouseEnterImage">
             <LoadingUI v-if="loading"></LoadingUI>
 
             <div class="image-viewer__controls">
-                <div :class="['control-info', { 'position': !getUserAgent() }]" v-show="isMultipleImage">
+                <div :class="['control-info', { 'is-hidden': getUserAgent() }]" v-show="isMultipleImage">
                     <span>{{$t('image.total')}}&nbsp;{{images.length}}&nbsp;{{$t('image.pictures')}}&nbsp;</span>
                     <span>/&nbsp;{{$t('image.the')}}&nbsp;{{currentIndex+1}}&nbsp;{{$t('image.img')}}&nbsp;</span>
                 </div>
@@ -138,12 +144,13 @@
 
 </template>
 <script setup lang="ts">
-import { watch, ref, nextTick, onBeforeUnmount } from 'vue';
+import { watch, ref, nextTick, onBeforeUnmount, onMounted } from 'vue';
 import { useToolbar } from '../hooks/toolbar';
 import { debounce, getUserAgent } from '../utils';
 import { FlipAnimate } from '../utils/flip-animate';
 import HotKeys from './HotKeys.vue';
 import Message from './Message.vue';
+import MobileViewer from './MobileViewer.vue';
 import LoadingUI from './Loading.vue';
 import { useCusShortKey } from '../utils/hotkeys';
 import { HotkeysEvent } from 'hotkeys-js';
@@ -318,35 +325,48 @@ function toggleHotkey (event:KeyboardEvent, handler:HotkeysEvent, isPrevent = fa
     }, 2000)
 }
 
+// 移动端监听回调
+const onCallBack = ({ index, url}: ImageObjectTypes) => {
+    currentIndex.value = index
+    updateImageSrc.value = url
+    props.handleChange({image: url, index: currentIndex.value })
+    console.log(index, url)
+}
+
 const isVisibleNav = ref(false)
 const isMessage = ref(false)
 const setNavState = () => {
     isVisibleNav.value = !isVisibleNav.value
 }
-watch(() => props.current, (newValue, oldValue) => {
-    if (newValue) {
-        nextTick().then(res => {
-            if (!imageRef.value) return
 
-            if (props.image === void 0) {
-                imageRef.value.src = newValue
-            } else {
-                const firstRect = props.image.getBoundingClientRect()
-                updateImageSrc.value = imageRef.value.src = props.image.src
-                const lastRect = imageRef.value.getBoundingClientRect()
-                
-                const player = FlipAnimate(imageRef.value, firstRect, lastRect)
-                player.addEventListener('finish', (evt) => { 
-                    isVisibleNav.value = true
-                    // console.log('Animation execution completed.')
-                })
-            }
+// 页面渲染完成后
+nextTick(() => {
+    if (getUserAgent()) {
+        // @TODO
+        updateImageSrc.value = props.current
+        loading.value = false
+    } else loadPc()
+})
+
+function loadPc () {
+    if (!imageRef.value) return
+
+    if (props.image === void 0) {
+        imageRef.value.src = props.current
+    } else {
+        const firstRect = props.image.getBoundingClientRect()
+
+        updateImageSrc.value = imageRef.value.src = props.image.src
+
+        const lastRect = imageRef.value.getBoundingClientRect()
+        const player = FlipAnimate(imageRef.value, firstRect, lastRect)
+
+        player.addEventListener('finish', (evt) => { 
+            isVisibleNav.value = true
+            // console.log('Animation execution completed.')
         })
     }
-}, {
-    deep: true,  
-    immediate: true
-});
+}
 
 watch(() => currentIndex.value, (n, o) => {
     if (n) {

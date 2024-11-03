@@ -11,7 +11,7 @@
     <div>
         <h5>组件方式使用图片预览器</h5>
         <ImageViewerVue3>
-            <img class="img-item" src="https://picsum.photos/id/6/5000/3333"/>
+            <img class="img-item" v-lazy-image="'https://picsum.photos/id/6/5000/3333'"/>
             <img class="img-item" src="https://picsum.photos/id/10/2500/1667"/>
             <img class="img-item" src="https://picsum.photos/id/11/2500/1667"/>
         </ImageViewerVue3>
@@ -33,7 +33,7 @@ const dataList = ref([
         "https://picsum.photos/id/11/2500/1667",
         "https://picsum.photos/id/20/367/267",
         "https://picsum.photos/id/19/2500/1667",
-        // "https://picsum.photos/id/22/367/267",
+        "https://picsum.photos/id/22/367/267",
         // "https://picsum.photos/id/26/367/267",
         // "https://picsum.photos/id/27/367/267",
         // "https://picsum.photos/id/28/367/267",

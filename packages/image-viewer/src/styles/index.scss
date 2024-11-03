@@ -62,6 +62,12 @@
     &.is-active {
         opacity: 1;
     }
+    .is-hidden {
+        display: none !important;
+    }
+    .is-show {
+        display: block;
+    }
     .images-viewer-vue3__content {
         position: absolute;
         top: 0px;

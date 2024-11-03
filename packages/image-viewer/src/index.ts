@@ -2,6 +2,7 @@ import { createVNode, render, h, App } from 'vue'
 import ImageViewer from './components/viewer.vue'
 import ImageViewerUI from './components/index.vue'
 import VImageViewer from './directive/v-image-viewer'
+import LazyLoadDirective from './directive/v-lazy-image'
 import { ImageViewerOptions, ImageViewerType, ImageViewerInstallConfig } from './types/image-viewer'
 import ImageViewerCore from './utils/ViewerCore'
 import { versions } from './utils/index'
@@ -22,6 +23,7 @@ export default function install(app:App, config?:ImageViewerInstallConfig) {
     // console.log(app, config, 'install');
     console.log(`%cimages-viewer-vue3_V${versions}`, "color: #eee;background:#646cff;padding:2px 5px;border-radius:4px;")
     app.directive("image-viewer", VImageViewer)
+    app.directive("lazy-image", LazyLoadDirective)
     app.component('ImagesViewerVue3', ImageViewer)
     app.config.globalProperties.$imageViewerApi = imageViewerApi
 }

@@ -138,7 +138,7 @@ export const useToolbar = (images: string[], currentUrl: string, cb:Function) =>
 
     const errorImage = (evt:Event) => {
         loading.value = false
-        loadImageErrorText.value = "加载图片失败，请仔细检测图片地址！"
+        loadImageErrorText.value = "加载图片失败，请仔细检测图片访问路径！"
         // console.log('图片加载错误：',evt)
     }
 
