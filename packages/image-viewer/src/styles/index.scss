@@ -74,12 +74,12 @@
         bottom: 0px;
         left: 0px;
         right: 0px;
-        display: flex;
+        display: grid;
+        grid-template-columns: 90px 1fr;
         .content-nav__wrapper {
             // background-color: rgba(0, 0, 0, 0.6);
             width:0px;
             overflow: hidden;
-            // flex: 0 0 var(--nav-width);
             transition: width 0.3s ease-out;
             &.nav-active {
                 width: calc(var(--nav-width) - 5px);

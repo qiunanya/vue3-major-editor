@@ -12,7 +12,7 @@
                 @mousemove="onMouseMove"
                 @mouseup="onMouseUp"
                 @mouseleave="onMouseLeave" -->
-            <div 
+            <!-- <div 
                 ref="vnodeScrollRef" 
                 :class="['nav-vnode-scroll__wrapper']"
                 @scroll="onRectScroll">
@@ -22,11 +22,16 @@
                         v-for="(item, index) in renderData" 
                         :key="index" 
                         :data-id="item.index">
-                        <!-- <span>{{ item.index }}</span> -->
                         <img class="list-group-item__image" :data-id="item.index" v-lazy-image="item.url" src="" alt="picture" @click.stop.prevent="clickImge($event,item, index)">
                     </li>
                 </ul>
-            </div>
+            </div> -->
+            <!-- 使用Vueuse的虚拟滚动useVirtualList hook -->
+            <ScrollItemNav 
+                :viewer-images.camel="images" 
+                :current-image.camel="current"
+                @on-cb="onCallBack">
+            </ScrollItemNav>
         </div>
         <div class="content-viewer-image__wrapper" @wheel="onWheelListener">
             <svg v-show="isMultipleImage" @click.stop.prevent="setNavState" :class="['icon-is-hover cus-cursor image-collapse-nav__btn svg-icon__action', {'rotate-right__btn': !isVisibleNav },{ 'is-hidden': getUserAgent() }]" viewBox="0 0 1024 1024">
@@ -155,6 +160,7 @@ import HotKeys from './HotKeys.vue';
 import Message from './Message.vue';
 import MobileViewer from './MobileViewer.vue';
 import LoadingUI from './Loading.vue';
+import ScrollItemNav from './scroll-item-nav.vue'
 import { useCusShortKey } from '../utils/hotkeys';
 import { HotkeysEvent } from 'hotkeys-js';
 import { messages, lang } from '../langs/index';
