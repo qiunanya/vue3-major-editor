@@ -15,9 +15,7 @@
             <div 
                 ref="vnodeScrollRef" 
                 :class="['nav-vnode-scroll__wrapper']"
-                @scroll="onRectScroll"
-            
-                >
+                @scroll="onRectScroll">
                 <ul ref="vnodeUlRef" :class="['vnode-list-group']">
                     <li :class="['list-group-item', {'list-group-item__active': currentIndex === item.index }]" 
                         style="height: 50px;" 
@@ -25,7 +23,7 @@
                         :key="index" 
                         :data-id="item.index">
                         <!-- <span>{{ item.index }}</span> -->
-                        <img class="list-group-item__image" :data-id="item.index" :src="item.url" alt="picture" @click.stop.prevent="clickImge($event,item, index)">
+                        <img class="list-group-item__image" :data-id="item.index" v-lazy-image="item.url" src="" alt="picture" @click.stop.prevent="clickImge($event,item, index)">
                     </li>
                 </ul>
             </div>
@@ -34,7 +32,7 @@
             <svg v-show="isMultipleImage" @click.stop.prevent="setNavState" :class="['icon-is-hover cus-cursor image-collapse-nav__btn svg-icon__action', {'rotate-right__btn': !isVisibleNav },{ 'is-hidden': getUserAgent() }]" viewBox="0 0 1024 1024">
                 <path  d="M322.12 353.93L104.61 490.77c-18.45 11.61-18.44 38.51 0.02 50.1l217.51 136.64c19.71 12.38 45.33-1.78 45.33-25.06V378.98c0-23.29-25.64-37.45-45.35-25.05zM94.78 125.02h834.44c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5H94.78c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5zM929.22 342.34H444.11c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5h485.11c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5zM929.22 620.66H444.11c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5h485.11c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5zM929.22 898.98H94.78c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5h834.44c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5z"></path>
             </svg>
-            <div :class="['image-info', { 'is-show': getUserAgent() }]">
+            <div v-if="isMultipleImage" :class="['image-info', { 'is-hidden': !getUserAgent() }]">
                 <span>{{images.length}}&nbsp;&nbsp;/&nbsp;{{currentIndex+1}}</span>
             </div>
             <ul class="image-info" v-if="!getUserAgent()">
@@ -45,7 +43,13 @@
                 <p>{{ updateImageSrc }}</p>
             </div>
             <!-- 移动端 -->
-            <MobileViewer :viewer-images.camel="images" :current-image.camel="current" @on-cb="onCallBack" v-if="getUserAgent()"></MobileViewer>
+            <MobileViewer
+                v-if="getUserAgent()" 
+                :viewer-images.camel="images" 
+                :current-image.camel="current" 
+                :active-image.camel="image" 
+                @on-cb="onCallBack">
+            </MobileViewer>
             <!-- pc端 -->
             <img 
                 v-if="!getUserAgent()"
@@ -53,14 +57,12 @@
                 :class="['image-viewer__inner cus-transition']" 
                 @load="loadImage" 
                 @error="errorImage" 
-                src="" 
                 alt="picture" 
-                style="width: 120px;height: 120px;"
                 @mouseenter="onMouseEnterImage">
             <LoadingUI v-if="loading"></LoadingUI>
 
-            <div class="image-viewer__controls">
-                <div :class="['control-info', { 'is-hidden': getUserAgent() }]" v-show="isMultipleImage">
+            <div :class="['image-viewer__controls',{ 'is-hidden': getUserAgent() }]">
+                <div :class="['control-info',{ 'position': !getUserAgent() }]" v-show="isMultipleImage">
                     <span>{{$t('image.total')}}&nbsp;{{images.length}}&nbsp;{{$t('image.pictures')}}&nbsp;</span>
                     <span>/&nbsp;{{$t('image.the')}}&nbsp;{{currentIndex+1}}&nbsp;{{$t('image.img')}}&nbsp;</span>
                 </div>
@@ -120,7 +122,7 @@
         </div>
     </div>
     <div class="images-viewer-vue3__close close-btn" @click="close">
-        <svg class="close-icon icon-is-hover svg-icon__action" viewBox="0 0 1024 1024">
+        <svg class="close-icon icon-is-hover svg-icon__action" viewBox="0 0 1024 1024" width="15" height="15">
             <path d="M835.2 854.4c-12.8 0-22.4-3.2-32-12.8L211.2 256C192 240 192 211.2 208 195.2s44.8-16 60.8 0L864 780.8c16 16 16 44.8 0 60.8-6.4 9.6-16 12.8-28.8 12.8z"></path>
             <path d="M236.8 848c-12.8 0-22.4-3.2-32-12.8-16-16-16-44.8 0-60.8l604.8-576c16-16 44.8-16 60.8 0s16 44.8 0 60.8l-604.8 576c-9.6 9.6-19.2 12.8-28.8 12.8z"></path>
         </svg>
@@ -145,6 +147,7 @@
 </template>
 <script setup lang="ts">
 import { watch, ref, nextTick, onBeforeUnmount, onMounted } from 'vue';
+import type { PropType } from 'vue'
 import { useToolbar } from '../hooks/toolbar';
 import { debounce, getUserAgent } from '../utils';
 import { FlipAnimate } from '../utils/flip-animate';
@@ -157,6 +160,7 @@ import { HotkeysEvent } from 'hotkeys-js';
 import { messages, lang } from '../langs/index';
 import { useMouse } from '../hooks/mouse';
 import { ImageObjectTypes } from '../types/image-viewer';
+import vLazyImage from '../directive/v-lazy-image'
 
 const props = defineProps({
     visible: {
@@ -170,10 +174,8 @@ const props = defineProps({
         }
     },
     images: {
-        type: Array,
-        default: () => {
-            return []
-        }
+        type: Array as PropType<string[]>,
+        required: true
     },
     zIndex: {
         type: Number,
@@ -330,7 +332,6 @@ const onCallBack = ({ index, url}: ImageObjectTypes) => {
     currentIndex.value = index
     updateImageSrc.value = url
     props.handleChange({image: url, index: currentIndex.value })
-    console.log(index, url)
 }
 
 const isVisibleNav = ref(false)

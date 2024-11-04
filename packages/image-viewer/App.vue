@@ -34,6 +34,7 @@ const dataList = ref([
         "https://picsum.photos/id/20/367/267",
         "https://picsum.photos/id/19/2500/1667",
         "https://picsum.photos/id/22/367/267",
+        "https://oacsk.xmkj.cn/api/api-file/file/showImage?url=center-file-327894186047049728/67282a03e4b0ca64e74c6f4c.jpg&access_token=36b6a2ac-a046-4e48-bfc6-68e8b9c03619",
         // "https://picsum.photos/id/26/367/267",
         // "https://picsum.photos/id/27/367/267",
         // "https://picsum.photos/id/28/367/267",

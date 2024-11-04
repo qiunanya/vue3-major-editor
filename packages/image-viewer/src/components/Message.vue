@@ -1,6 +1,6 @@
 <template>
 <div :class="['hotkey-tip__wrap', {'is-active_key': isActive }]">
-    <p class="item-key">已经是最后一张图片了</p>
+    <p class="item-key">⚠&nbsp;已经是最后一张图片了</p>
 </div>
 </template>
 <script setup lang="ts">
@@ -48,7 +48,7 @@ watch(() => props.isActive, (newValue, oldValue) => {
         margin-inline-end: 0.2em;
         margin-block-start: 0.2em;
         margin-block-end: 0.2em;
-        color: tomato;
+        color: #fff;
     }
 }
 </style>

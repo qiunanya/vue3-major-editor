@@ -3,7 +3,14 @@
  * 
  * @author qiuny
  */
+import { CSSProperties } from 'vue';
 import { ImageViewerType } from '../types/image-viewer'
+
+// CSSProperties类型上不存在scaleY|scaleX，需要扩展
+interface CusCSSProperties extends CSSProperties {
+    scaleY: string,
+    scaleX: string,
+}
 
 class ImageViewerCore {
     // 配置全局变量供外部调用
@@ -21,6 +28,13 @@ class ImageViewerCore {
         isEnableWheel: true,
         zIndex: 2000,
         language: 'zh'
+    }
+
+    private transforms:CusCSSProperties = {
+        scale: 1,
+        rotate: '0deg',
+        scaleY: '',
+        scaleX: '',
     }
     private constructor () {
         // console.log('ImageViewerCore的构造器');
@@ -40,6 +54,25 @@ class ImageViewerCore {
         //     evt.preventDefault();
         //     evt.stopPropagation();
         // })
+    }
+
+    private setImageTransform () {
+        if (!this.currentImage) return
+
+        let newTransformStr = ""
+        Object.keys(this.transforms).forEach(key => {
+            const KEY = key as keyof CusCSSProperties
+            switch (KEY) {
+                case 'scaleX':
+                case 'scaleY':
+                case 'scale':
+                case 'rotate':
+                    this.transforms[KEY]&&(newTransformStr += `${key}(${this.transforms[KEY]}) `) 
+                    break;
+            }
+        })
+
+        this.currentImage.style.transform = newTransformStr
     }
 
     public onWheel (evt:WheelEvent) {
@@ -80,11 +113,20 @@ class ImageViewerCore {
             const newInvertValue = invertValue === 1 ? -1 : 1;
 
             // 替换新值
-            transformStr = transformStr.replace(invert_regex, `${type}(${newInvertValue})`)
-        } else transformStr += ` ${type}(-1)`
+            // transformStr = transformStr.replace(invert_regex, `${type}(${newInvertValue})`)
+            if (type === 'scaleX') this.transforms.scaleX = `${newInvertValue}`
+            if (type === 'scaleY') this.transforms.scaleY = `${newInvertValue}`
+        } else {
+            if (type === 'scaleX') this.transforms.scaleX = '-1'
+            if (type === 'scaleY') this.transforms.scaleY = '-1'
+            // transformStr += ` ${type}(-1)`
+        }
         
         // 重新渲染值
-        this.currentImage.style.transform = transformStr;
+        // this.currentImage.style.transform = transformStr;
+       
+        this.setImageTransform()
+
     }
 
     public zoomIn () {
@@ -98,57 +140,25 @@ class ImageViewerCore {
     public rotate (mark:string="+") {
         if (!this.currentImage) return
 
-        let transformStr = this.currentImage.style.transform;
-        const invert_regex = new RegExp('rotate\\(([^)]+)\\)', 'i');
+        if (mark === '+') {
+            this.totalRotate += this.config.rotateRatio;
+        } else this.totalRotate -= this.config.rotateRatio;
 
-        if (invert_regex.test(transformStr)) {
-            if (mark === '+') {
-                this.totalRotate += this.config.rotateRatio;
-            } else this.totalRotate -= this.config.rotateRatio;
-
-            // 替换现有的 rotate 值
-            transformStr = transformStr.replace(invert_regex, `rotate(${this.totalRotate}deg)`);
-        } else {
-            if (mark === '+') {
-                this.totalRotate = this.config.rotateRatio;
-            } else this.totalRotate = -(this.config.rotateRatio);
-
-            transformStr += ` rotate(${this.totalRotate}deg)`;
-        }
-
-        // 重新渲染值
-        this.currentImage.style.transform = transformStr;
+        this.transforms.rotate = `${this.totalRotate}deg`
+        this.setImageTransform()
     }
 
     private setZoom (flag:string="+") {
         if (!this.currentImage) return
 
-        // const imageRect = this.currentImage.getBoundingClientRect()
-
-        // 1.按比例像素缩放不受旋转方向影响
-        let transformStr = this.currentImage.style.transform;
-        const scale_regex = new RegExp('scale\\(([^)]+)\\)', 'i');
-        if (scale_regex.test(transformStr)) {
-            if (flag === '+') {
-                this.config.scaleRatio += 0.1
-            } else {
-                (this.config.scaleRatio >= 0.3)&&(this.config.scaleRatio -= 0.1)
-            };
-
-            // 替换现有的 scale 值
-            transformStr = transformStr.replace(scale_regex, `scale(${this.config.scaleRatio})`);
+        if (flag === '+') {
+            this.config.scaleRatio += 0.1
         } else {
-            if (flag === '+') {
-                this.config.scaleRatio += 0.1
-            } else {
-                (this.config.scaleRatio >= 0.3)&&(this.config.scaleRatio -= 0.1)
-            };
-
-            transformStr += ` scale(${this.config.scaleRatio})`;
+            (this.config.scaleRatio >= 0.3)&&(this.config.scaleRatio -= 0.1)
         }
-        
-        // 重新渲染值
-        this.currentImage.style.transform = transformStr;
+
+        this.transforms.scale = this.config.scaleRatio
+        this.setImageTransform()
     }
 
     public setImage (dom: HTMLImageElement | null) {
@@ -157,7 +167,7 @@ class ImageViewerCore {
         // dragging
         if (this.currentImage && this.config.isEnableDrag){
             this.currentImage.onmousedown = this.onMouseMove.bind(this)
-            this.currentImage.ontouchstart = this.onTouchstart.bind(this)
+            // this.currentImage.ontouchstart = this.onTouchstart.bind(this)
         }
     }
 

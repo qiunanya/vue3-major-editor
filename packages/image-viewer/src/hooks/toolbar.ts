@@ -114,20 +114,12 @@ export const useToolbar = (images: string[], currentUrl: string, cb:Function) =>
 
         // console.log('图片信息：', img.width, img.height)
         if (imageRef.value && imageVieverWidgetRef.value) {
-            // imageRef.value.style.transform = 'none'
-            const Rect = imageVieverWidgetRef.value.getBoundingClientRect()
-            // 设置图片真实大小，根据可视区域动态设置，图片过大，需要完整显示
-            if (getUserAgent()) {
-                imageRef.value.style.width = Rect.width + 'px'
-                imageRef.value.style.height = Rect.height / 2 + 'px'
-            } else if (img.width<Rect.width&&img.height<Rect.height) {
-                imageRef.value.style.width = img.width + 'px'
-                imageRef.value.style.height = img.height + 'px'
-            } else {
-                // 避免图片宽度被拉变形，所以大图片宽度 除以 2
-                imageRef.value.style.width = Rect.width / 1.3 + 'px'
-                imageRef.value.style.height = Rect.height / 1.3 + 'px'
-            }
+            // 重置上一张图片样式，避免样式污染
+            imageRef.value.style.transform = ''
+            imageRef.value.style.removeProperty('position')
+            // 设置图片最大宽高比，获取最好的预览效果
+            imageRef.value.style.maxHeight = '100%'
+            imageRef.value.style.maxWidth = '100%'
         }
         
         loadImageErrorText.value = ""
