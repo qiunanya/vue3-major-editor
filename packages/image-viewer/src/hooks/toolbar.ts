@@ -116,7 +116,7 @@ export const useToolbar = (images: string[], cb:Function) => {
     const nextImage = () => {
         // 判断是否是最后一张图片
         if (currentIndex.value === images.length - 1) {
-            console.log("已经是最后一张图片了:", currentIndex.value);
+            // console.log("已经是最后一张图片了:", currentIndex.value);
             return;
         }
         currentIndex.value++;
@@ -127,7 +127,7 @@ export const useToolbar = (images: string[], cb:Function) => {
     const previousImage = () => {
         // 判断是否是第一张图片
         if (currentIndex.value === 0) {
-            console.log("已经是第一张图片了:", currentIndex.value);
+            // console.log("已经是第一张图片了:", currentIndex.value);
             return;
         }
         currentIndex.value--;

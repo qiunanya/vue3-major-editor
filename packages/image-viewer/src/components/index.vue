@@ -56,11 +56,11 @@
                 </div>
                 <div class="control-svg__btns">
                     <!-- 上一张 -->
-                    <svg @click.stop.prevent="setPrevious" class="tool-item-icon__btn icon-is-hover" viewBox="0 0 1024 1024">
+                    <svg v-if="isMultipleImage" @click.stop.prevent="setPrevious" class="tool-item-icon__btn icon-is-hover" viewBox="0 0 1024 1024">
                         <path d="M758.656 937.344a32 32 0 1 1-45.31199999 45.312l-448.00000001-448.128a32 32 0 0 1 0-45.248l448.00000001-447.936a32 32 0 1 1 45.31199999 45.312l-425.408 425.28000001L758.656 937.344z" ></path>
                     </svg>
                     <!-- 下一张 -->
-                    <svg @click.stop.prevent="setNext" class="tool-item-icon__btn icon-is-hover" viewBox="0 0 1024 1024">
+                    <svg v-if="isMultipleImage" @click.stop.prevent="setNext" class="tool-item-icon__btn icon-is-hover" viewBox="0 0 1024 1024">
                         <path d="M265.344 86.656a32 32 0 1 1 45.312-45.312l448 448.128a32 32 0 0 1 0 45.248l-448 447.936a32 32 0 1 1-45.312-45.312l425.408-425.28L265.344 86.656z" ></path>
                     </svg>
                     <!-- 放大 -->
