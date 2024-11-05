@@ -36,6 +36,6 @@ export type ImageObjectTypes = {
     url: string;
 };
 
-export type AsyncSetImageReturnType = Promise<{ data: ImageObjectTypes[] } | { data: [] }>
+export type AsyncSetImageReturnType = Promise<{ data: string[] } | { data: [] }>
 
 export {}

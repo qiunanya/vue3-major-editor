@@ -9,6 +9,8 @@ export default {
         ruleText: '图片尺寸', 
         px: '像素',
         the: '第',
-        img: '张图片'
+        img: '张图片',
+        previousText: '上一张',
+        nextText: '下一张',
     }
 }

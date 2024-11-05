@@ -1,10 +1,11 @@
 <template>
-<div :class="['hotkey-tip__wrap', {'is-active_key': isActive }]">
+<div :class="['hotkey-tip__wrap', {'is-active_key': isActive }, { 'is-mobile': getUserAgent()}, { 'is-pc': !getUserAgent()}]">
     <p class="item-key">⚠&nbsp;已经是最后一张图片了</p>
 </div>
 </template>
 <script setup lang="ts">
 import { ref, watch } from 'vue';
+import { getUserAgent } from '../utils';
 
 const props = defineProps({
     isActive: {
@@ -30,11 +31,17 @@ watch(() => props.isActive, (newValue, oldValue) => {
     border-radius: .66rem;
     background: rgba(0, 0, 0, 0.8);
     position: fixed;
-    left: 50%;
-    top: 10px;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
     // box-shadow: inset 0 0 25px #e8e8e8, 0 1px 0 #c3c3c3, 0 2px 0 #c9c9c9, 0 2px 3px #333;
+    &.is-pc {
+        left: 50%;
+        top: 10px;
+    }
+    &.is-mobile {
+        bottom: 0px;
+        left: 30%;
+    }
     &.is-active_key {
         opacity: 0.8;
     }

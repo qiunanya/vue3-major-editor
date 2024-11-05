@@ -9,6 +9,8 @@ export default {
         ruleText: 'Image size',
         px: 'px',
         the: 'The',
-        img: 'Image'
+        img: 'Image',
+        previousText: 'Previous',
+        nextText: 'Next',
     }
 }

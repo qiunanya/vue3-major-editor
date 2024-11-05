@@ -5,41 +5,34 @@
         'images-viewer-vue3__wrapper', 
         {'is-active':visible}, 
         {'nav-scroll-style__wrap':!getUserAgent()}]">
-    <div :class="['images-viewer-vue3__content']">
+    <!-- 移动端 -->
+    <div v-if="getUserAgent()" class="images-viewer-vue3__mobile">
+        <div v-if="isMultipleImage" class="cus-head-info">
+            <span>{{images.length}}&nbsp;&nbsp;/&nbsp;{{currentIndex+1}}</span>
+        </div>
+        <MobileViewer
+            :viewer-images.camel="images" 
+            :current-image.camel="current" 
+            :active-image.camel="image" 
+            @on-cb="onCallBack">
+        </MobileViewer>
+    </div>
+    <!-- pc端 -->
+    <div v-else :class="['images-viewer-vue3__content', { 'active-grid': !isVisibleNav}, { 'close-grid': !isMultipleImage}]">
         <div :class="['content-nav__wrapper', { 'nav-active': isVisibleNav }, { 'is-hidden': getUserAgent() }]" v-if="isMultipleImage">
-            <!-- @touchmove="onRectScroll"
-                @mousedown="onMouseDown"
-                @mousemove="onMouseMove"
-                @mouseup="onMouseUp"
-                @mouseleave="onMouseLeave" -->
-            <!-- <div 
-                ref="vnodeScrollRef" 
-                :class="['nav-vnode-scroll__wrapper']"
-                @scroll="onRectScroll">
-                <ul ref="vnodeUlRef" :class="['vnode-list-group']">
-                    <li :class="['list-group-item', {'list-group-item__active': currentIndex === item.index }]" 
-                        style="height: 50px;" 
-                        v-for="(item, index) in renderData" 
-                        :key="index" 
-                        :data-id="item.index">
-                        <img class="list-group-item__image" :data-id="item.index" v-lazy-image="item.url" src="" alt="picture" @click.stop.prevent="clickImge($event,item, index)">
-                    </li>
-                </ul>
-            </div> -->
             <!-- 使用Vueuse的虚拟滚动useVirtualList hook -->
-            <ScrollItemNav 
+            <ScrollItemNav
+                ref="scrollItemNavRef" 
+                v-model="currentIndex"
                 :viewer-images.camel="images" 
                 :current-image.camel="current"
-                @on-cb="onCallBack">
+                @on-click="clickImge">
             </ScrollItemNav>
         </div>
         <div class="content-viewer-image__wrapper" @wheel="onWheelListener">
-            <svg v-show="isMultipleImage" @click.stop.prevent="setNavState" :class="['icon-is-hover cus-cursor image-collapse-nav__btn svg-icon__action', {'rotate-right__btn': !isVisibleNav },{ 'is-hidden': getUserAgent() }]" viewBox="0 0 1024 1024">
+            <svg v-show="isMultipleImage" @click.stop.prevent="setNavState" :class="['icon-is-hover cursor image-collapse-nav__btn svg-icon__action', {'rotate-right__btn': !isVisibleNav },{ 'is-hidden': getUserAgent() }]" viewBox="0 0 1024 1024">
                 <path  d="M322.12 353.93L104.61 490.77c-18.45 11.61-18.44 38.51 0.02 50.1l217.51 136.64c19.71 12.38 45.33-1.78 45.33-25.06V378.98c0-23.29-25.64-37.45-45.35-25.05zM94.78 125.02h834.44c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5H94.78c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5zM929.22 342.34H444.11c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5h485.11c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5zM929.22 620.66H444.11c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5h485.11c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5zM929.22 898.98H94.78c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5h834.44c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5z"></path>
             </svg>
-            <div v-if="isMultipleImage" :class="['image-info', { 'is-hidden': !getUserAgent() }]">
-                <span>{{images.length}}&nbsp;&nbsp;/&nbsp;{{currentIndex+1}}</span>
-            </div>
             <ul class="image-info" v-if="!getUserAgent()">
                 <li>{{$t('image.ruleText')}}：{{imageInfo.width}}{{$t('image.px')}} X {{imageInfo.height}}{{$t('image.px')}}</li>
             </ul>
@@ -47,17 +40,7 @@
                 <p style="color: orange;text-decoration: solid;">{{ $t('image.loadErrorText') }}</p>
                 <p>{{ updateImageSrc }}</p>
             </div>
-            <!-- 移动端 -->
-            <MobileViewer
-                v-if="getUserAgent()" 
-                :viewer-images.camel="images" 
-                :current-image.camel="current" 
-                :active-image.camel="image" 
-                @on-cb="onCallBack">
-            </MobileViewer>
-            <!-- pc端 -->
             <img 
-                v-if="!getUserAgent()"
                 ref="imageRef" 
                 :class="['image-viewer__inner cus-transition']" 
                 @load="loadImage" 
@@ -72,6 +55,14 @@
                     <span>/&nbsp;{{$t('image.the')}}&nbsp;{{currentIndex+1}}&nbsp;{{$t('image.img')}}&nbsp;</span>
                 </div>
                 <div class="control-svg__btns">
+                    <!-- 上一张 -->
+                    <svg @click.stop.prevent="setPrevious" class="tool-item-icon__btn icon-is-hover" viewBox="0 0 1024 1024">
+                        <path d="M758.656 937.344a32 32 0 1 1-45.31199999 45.312l-448.00000001-448.128a32 32 0 0 1 0-45.248l448.00000001-447.936a32 32 0 1 1 45.31199999 45.312l-425.408 425.28000001L758.656 937.344z" ></path>
+                    </svg>
+                    <!-- 下一张 -->
+                    <svg @click.stop.prevent="setNext" class="tool-item-icon__btn icon-is-hover" viewBox="0 0 1024 1024">
+                        <path d="M265.344 86.656a32 32 0 1 1 45.312-45.312l448 448.128a32 32 0 0 1 0 45.248l-448 447.936a32 32 0 1 1-45.312-45.312l425.408-425.28L265.344 86.656z" ></path>
+                    </svg>
                     <!-- 放大 -->
                     <svg @click.stop.prevent="zoomIn" class="tool-item-icon__btn icon-is-hover" viewBox="0 0 1024 1024">
                         <path d="M476.48 903.36C248.96 903.36 64 718.4 64 491.2S248.96 78.72 476.48 78.72s412.48 184.96 412.48 412.48-185.28 412.16-412.48 412.16z m0-741.12c-181.44 0-328.96 147.52-328.96 328.96s147.52 328.96 328.96 328.96 328.96-147.52 328.96-328.96S657.6 162.24 476.48 162.24z"></path>
@@ -132,18 +123,6 @@
             <path d="M236.8 848c-12.8 0-22.4-3.2-32-12.8-16-16-16-44.8 0-60.8l604.8-576c16-16 44.8-16 60.8 0s16 44.8 0 60.8l-604.8 576c-9.6 9.6-19.2 12.8-28.8 12.8z"></path>
         </svg>
     </div>
-    
-    <!-- <div class="viewer-previous-icon" @click.stop.prevent="previous" v-if="images.length>=2">
-        <svg class="icon-is-hover cus-cursor" viewBox="0 0 1024 1024"  >
-            <path d="M758.656 937.344a32 32 0 1 1-45.31199999 45.312l-448.00000001-448.128a32 32 0 0 1 0-45.248l448.00000001-447.936a32 32 0 1 1 45.31199999 45.312l-425.408 425.28000001L758.656 937.344z" ></path>
-        </svg>
-    </div> -->
-    <!-- <div class="viewer-next-icon" @click.stop.prevent="next" v-if="images.length>=2">
-        <svg class="icon-is-hover cus-cursor" viewBox="0 0 1024 1024"  >
-            <path d="M265.344 86.656a32 32 0 1 1 45.312-45.312l448 448.128a32 32 0 0 1 0 45.248l-448 447.936a32 32 0 1 1-45.312-45.312l425.408-425.28L265.344 86.656z" ></path>
-        </svg> 
-    </div> -->
-    
 
     <HotKeys v-model:hotkey="hotkey" :is-active-key.camel="isActiveKey"></HotKeys>
     <Message :is-active="isMessage"></Message>
@@ -151,8 +130,8 @@
 
 </template>
 <script setup lang="ts">
-import { watch, ref, nextTick, onBeforeUnmount, onMounted } from 'vue';
-import type { PropType } from 'vue'
+import { watch, ref, nextTick, onBeforeUnmount } from 'vue';
+import type { PropType, Ref } from 'vue'
 import { useToolbar } from '../hooks/toolbar';
 import { debounce, getUserAgent } from '../utils';
 import { FlipAnimate } from '../utils/flip-animate';
@@ -160,13 +139,13 @@ import HotKeys from './HotKeys.vue';
 import Message from './Message.vue';
 import MobileViewer from './MobileViewer.vue';
 import LoadingUI from './Loading.vue';
-import ScrollItemNav from './scroll-item-nav.vue'
+import ScrollItemNav from './ScrollItemNav.vue'
 import { useCusShortKey } from '../utils/hotkeys';
 import { HotkeysEvent } from 'hotkeys-js';
 import { messages, lang } from '../langs/index';
 import { useMouse } from '../hooks/mouse';
+import { usePlayer } from '../hooks/player';
 import { ImageObjectTypes } from '../types/image-viewer';
-import vLazyImage from '../directive/v-lazy-image'
 
 const props = defineProps({
     visible: {
@@ -233,21 +212,12 @@ const $t = (langkey = "") => {
 }
 
 const {
-    onMouseEnterImage,
     updateImageSrc,
-    playState,
-    stopPlay,
-    autoPlay,
     isMultipleImage,
     onWheelListener,
     imageInfo,
-    originImages,
     nextImage,
     previousImage,
-    onRectScroll,
-    renderData,
-    vnodeUlRef,
-    vnodeScrollRef,
     destroyedExe,
     resetStyle,
     downloads,
@@ -264,12 +234,27 @@ const {
     clockwise,
     counterclockwise,
     currentIndex,
-    activeIndex 
-} = useToolbar(props.images as string[], props.current, props.handleChange);
+} = useToolbar(props.images as string[], props.handleChange);
 
 const emits = defineEmits(['on-close', 'on-change', 'onUpdate:value']);
 
 const { onMouseDown,onMouseMove,onMouseUp, onMouseLeave } = useMouse()
+
+// 自动播放
+const { scrollItemNavRef, playState, autoPlay, stopPlay, hotKeyAutoPlay} = usePlayer(currentIndex, props.images, imageRef, props.handleChange)
+const onMouseEnterImage = (evt:MouseEvent) => {
+    stopPlay()
+}
+
+// 自动播放过程中，手动切换图片，停止播放
+const setPrevious = () => {
+    stopPlay()
+    previousImage()
+}
+const setNext = () => {
+    stopPlay()
+    nextImage()
+}
 
 // 快捷键提示
 const hotkey = ref('')
@@ -303,7 +288,7 @@ registerHotkey('ctrl+z', resetStyle)
 // close
 registerHotkey('esc', close)
 // autoPlay image
-registerHotkey('space', cusAutoPlay)
+registerHotkey('space', hotKeyAutoPlay)
 
 // scale
 useCusShortKey({'ctrl+*': (event:KeyboardEvent, handler:HotkeysEvent) => {
@@ -352,6 +337,10 @@ nextTick(() => {
         // @TODO
         updateImageSrc.value = props.current
         loading.value = false
+        const findIndex = props.images.findIndex(el => el === props.current)
+        if (findIndex !== -1) {
+            currentIndex.value = findIndex
+        }
     } else loadPc()
 })
 
@@ -361,6 +350,11 @@ function loadPc () {
     if (props.image === void 0) {
         imageRef.value.src = props.current
     } else {
+        const findIndex = props.images.findIndex(el => el === props.current)
+        if (findIndex !== -1) {
+            currentIndex.value = findIndex
+        }
+
         const firstRect = props.image.getBoundingClientRect()
 
         updateImageSrc.value = imageRef.value.src = props.image.src
@@ -377,18 +371,12 @@ function loadPc () {
 
 watch(() => currentIndex.value, (n, o) => {
     if (n) {
-        if (!imageRef.value) return
-
-        const findIndex = renderData.value.findIndex(el => el.index === currentIndex.value)
-        if (findIndex) {
-            // updateImageSrc.value = imageRef.value.src = renderData.value[findIndex].url
-        } 
         updateIsActive()
     }
 })
 
 function updateIsActive () {
-    if (currentIndex.value===originImages.value.length-1) {
+    if (currentIndex.value===props.images.length-1) {
         isMessage.value = true
         setTimeout(() => {
             isMessage.value = false
@@ -396,15 +384,14 @@ function updateIsActive () {
     }
 }
 
-function cusAutoPlay () {
-    if (playState.value) {
-        stopPlay()
-    } else autoPlay()
-}
-
 // const onClickNavImage = debounce(clickImge, 200)
+type ClickImageType = {
+    evt:Event, 
+    item: ImageObjectTypes, 
+    index: number
+}
+function clickImge ({ evt, item, index }:ClickImageType) {
 
-function clickImge (evt:Event, item: ImageObjectTypes, index:number) {
     loadImageErrorText.value = ""
     if (!imageRef.value) return
 
@@ -412,12 +399,11 @@ function clickImge (evt:Event, item: ImageObjectTypes, index:number) {
         const EL = evt.target as HTMLImageElement
         const firstRect = EL.getBoundingClientRect()
         const imageId = Number(EL.getAttribute('data-id')) 
-
         // 点击相同照片不更新视图
-        if (imageId === activeIndex.value) return
+        if (imageId === currentIndex.value) return
 
-        activeIndex.value = item.index
-        currentIndex.value = originImages.value.findIndex(el => el.index === activeIndex.value)
+        currentIndex.value = item.index
+        // currentIndex.value = originImages.value.findIndex(el => el.index === activeIndex.value)
         updateImageSrc.value = imageRef.value.src = EL.src
         const lastRect = imageRef.value.getBoundingClientRect()
         props.handleChange({image: updateImageSrc.value, index: currentIndex.value })

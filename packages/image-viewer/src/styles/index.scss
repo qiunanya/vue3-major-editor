@@ -68,6 +68,22 @@
     .is-show {
         display: block;
     }
+    .cursor {
+        cursor: pointer;
+    }
+    .images-viewer-vue3__mobile {
+        max-width: 100%;
+        max-height: 100%;
+        position: relative;
+        padding-top: 40px;
+        .cus-head-info {
+            position: absolute;
+            top: 15px;
+            left: 40%;
+            z-index: 10;
+            color: #eee;
+        }   
+    }
     .images-viewer-vue3__content {
         position: absolute;
         top: 0px;
@@ -76,13 +92,21 @@
         right: 0px;
         display: grid;
         grid-template-columns: 90px 1fr;
+        &.active-grid {
+            grid-template-columns: 0px 1fr;
+        }
+        &.close-grid {
+            grid-template-columns: 1fr;
+        }
         .content-nav__wrapper {
             // background-color: rgba(0, 0, 0, 0.6);
             width:0px;
             overflow: hidden;
             transition: width 0.3s ease-out;
+            opacity: 0;
             &.nav-active {
-                width: calc(var(--nav-width) - 5px);
+                width: var(--nav-width);
+                opacity: 1;
             }
             .nav-vnode-scroll__wrapper {
                 width: 100%;

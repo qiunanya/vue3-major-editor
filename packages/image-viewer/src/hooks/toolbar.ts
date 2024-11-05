@@ -1,13 +1,8 @@
 import ImageViewerCore from '../utils/ViewerCore';
-import { downloadExe, getUserAgent } from '../utils/index';
+import { downloadExe } from '../utils/index';
 import { ref, nextTick, reactive, toRefs } from 'vue';
-import { ImageObjectTypes, AsyncSetImageReturnType } from '../types/image-viewer';
 
-const DEVICE_TYPE = getUserAgent()
-const AUTO_PLAY_TIME = 3000
-var distance_value = 0
-
-export const useToolbar = (images: string[], currentUrl: string, cb:Function) => {
+export const useToolbar = (images: string[], cb:Function) => {
     // const bodyRect = document.body.getBoundingClientRect()
     const imageVieverWidgetRef = ref<HTMLElement | null>(null)
     const imageRef = ref<HTMLImageElement|null>(null)
@@ -17,33 +12,12 @@ export const useToolbar = (images: string[], currentUrl: string, cb:Function) =>
     const currentIndex = ref(-1)
     const activeIndex = ref(-1)
     const updateImageSrc = ref('')
-    const originImages = ref<ImageObjectTypes[]>([])
     const imageInfo = reactive({
         width: 0,
         height: 0
     })
-    // 开启左侧导航栏
-    const isMultipleImage = ref(true)
-
-    // 自动播放
-    var tiemer: NodeJS.Timeout;
-    const playState = ref(false)
-
-    // 虚拟滚动列表
-    const vnodeScrollRef = ref<HTMLElement | null>(null)
-    const vnodeUlRef = ref<HTMLElement | null>(null)
-    // +2 撑开listScroll容器使其具有滚动条[可视区域容纳最大item个数]
-    const maxCount = ref(0)
-    // item的宽度
-    const itemWidth = 50
-    // 开始位置索引
-    const startIndex = ref(0)
-    // 结束位置索引
-    const endIndex = ref(0)
-    // 记录到的位置索引
-    const pointerIndex = ref(0)
-    // 最终渲染数据
-    const renderData = ref<ImageObjectTypes[]>([])    
+    // 开启左侧导航栏,多图片生效
+    const isMultipleImage = ref(images.length > 0 ? true:false)
 
     function inevrtY(evt?:Event) {
         // evt.preventDefault();
@@ -94,9 +68,7 @@ export const useToolbar = (images: string[], currentUrl: string, cb:Function) =>
         loading.value = true
         currentIndex.value = -1
         activeIndex.value = -1
-        originImages.value = []
         imageCore.destroyed()
-        clearInterval(tiemer)
     }
 
     const resetStyle = () => {
@@ -134,118 +106,20 @@ export const useToolbar = (images: string[], currentUrl: string, cb:Function) =>
         // console.log('图片加载错误：',evt)
     }
 
-    const asyncSetImage = (): AsyncSetImageReturnType => {
-        return new Promise((resolve, reject) => {
-            if (Array.isArray(images) && images.length > 0) {
-                const filters = images.filter(el => el === null || el === undefined || el === '')
-                const arr = images.filter(el => el).map((el, index) => {
-                    return {
-                        index,
-                        url: el
-                    }
-                })
-                if (filters.length) {
-                    console.warn(`images-viewer-vue3:The image parameter 'images' contains illegal characters:[${JSON.stringify(filters)}]`)
-                }
-                resolve({ data: arr })
-                
-            } else resolve({ data: [] })
-        })
+    // onLoad
+    const onLoad = () => {
+        
     }
 
-    // 渲染
-    const setRender = () => {
-        // 更新isMultipleImage状态值
-        if (originImages.value.length > 1) {
-            isMultipleImage.value = true
-        } else {
-            isMultipleImage.value = false
-        }
-
-        // 计算开始和结束位置
-        const end = startIndex.value + maxCount.value
-        endIndex.value = originImages.value[end] !== void 0 ? end : originImages.value.length
-
-        // 获取数据
-        renderData.value = originImages.value.slice(startIndex.value, endIndex.value)
-    }
-    
-    const onRectScroll = (evt:Event) => {
-        if (!vnodeScrollRef.value || !vnodeUlRef.value) return
-        startIndex.value = Math.floor(vnodeScrollRef.value.scrollTop / (itemWidth))
-        if (pointerIndex.value === startIndex.value) return
-
-        pointerIndex.value = startIndex.value
-
-        setRender()
-
-       
-        if (originImages.value.length - startIndex.value >= maxCount.value) {
-            distance_value = startIndex.value * itemWidth;
-            vnodeUlRef.value.style.transform = `translateY(${distance_value}px)`
-        } else {
-            // console.log('设备类型：', DEVICE_TYPE)
-            // 兼容小屏幕，避免最后一个元素被遮挡
-            // vnodeUlRef.value.style.transform = `translateY(${distance_value-50}px)`
-            // 滑动到底部，可以加载更多数据
-            return
-        }
-    }
-
-    const initScroll = async (rect:DOMRect) => {
-        await asyncSetImage().then(res => {
-            originImages.value = res.data
-            currentIndex.value = originImages.value.findIndex(el => el.url === currentUrl)
-            // for (let i = 0; i < 100; i++) {
-            //     originImages.value.push({ index:i, url: `index_${i}`})
-            // }
-            // console.log(originImages.value)
-        }).catch(err => {
-            isMultipleImage.value = false
-            console.log('images-viewer-vue3:', JSON.stringify(err))
-        })
-
-        maxCount.value = Math.floor(rect.height/itemWidth) + 4
-
-        // console.log(maxCount.value, 'maxCount')
-        // console.log(maxCount.value*itemWidth, rect.width)
-        setRender()
-    }
-
-    // 切换图片的方法
-    const switchToImage = (targetIndex:number) => {
-        if (!vnodeScrollRef.value) return
-        // 假设图片宽度 + 间距
-        const imageWidth = itemWidth + 2; 
-        // 视口内可显示的图片数
-        const visibleCount = Math.floor(vnodeScrollRef.value.clientHeight / imageWidth); 
-
-        // 计算目标图片的起始与结束位置
-        const start = targetIndex * imageWidth;
-        const end = start + imageWidth;
-
-        // 如果目标图片不在当前视口范围，则调整 scrollTop
-        if (start < vnodeScrollRef.value.scrollTop || end > vnodeScrollRef.value.scrollTop + vnodeScrollRef.value.clientHeight) {
-            vnodeScrollRef.value.scrollTop = targetIndex * imageWidth;
-        }
-
-        // 设置当前索引并渲染
-        // startIndex.value = Math.max(0, targetIndex - Math.floor(visibleCount / 2));
-        startIndex.value = Math.max(0, targetIndex - Math.floor(visibleCount));
-        setRender();
-    };
 
     // 切换到下一张图片
     const nextImage = () => {
         // 判断是否是最后一张图片
-        if (currentIndex.value === originImages.value.length - 1) {
-            // console.log("已经是最后一张图片了:", currentIndex.value);
-            stopPlay()
+        if (currentIndex.value === images.length - 1) {
+            console.log("已经是最后一张图片了:", currentIndex.value);
             return;
         }
-        const targetIndex = Math.min(currentIndex.value + 1, originImages.value.length - 1);
-        currentIndex.value = targetIndex;
-        switchToImage(targetIndex);
+        currentIndex.value++;
         setUpdateImage()
     };
 
@@ -253,70 +127,36 @@ export const useToolbar = (images: string[], currentUrl: string, cb:Function) =>
     const previousImage = () => {
         // 判断是否是第一张图片
         if (currentIndex.value === 0) {
-            // console.log("已经是第一张图片了:", currentIndex.value);
+            console.log("已经是第一张图片了:", currentIndex.value);
             return;
         }
-        const targetIndex = Math.max(currentIndex.value - 1, 0);
-        currentIndex.value = targetIndex;
-        switchToImage(targetIndex);
+        currentIndex.value--;
         setUpdateImage()
     };
 
     const setUpdateImage = () => {
         if (!imageRef.value) return
         
-        const activeImage =  originImages.value[currentIndex.value]
+        const activeImage =  images[currentIndex.value]
         
         if (activeImage) {
-            updateImageSrc.value = imageRef.value.src = activeImage.url
+            updateImageSrc.value = imageRef.value.src = activeImage
             cb({image:imageRef.value.src, index: currentIndex.value })
         }
     }
 
-    // 自动播放
-    const autoPlay = () => {
-        playState.value = true
-        tiemer = setInterval(() => {
-            nextImage()
-        }, AUTO_PLAY_TIME);
-    }
-
-    // 停止播放
-    const stopPlay = () => {
-        playState.value = false
-        clearInterval(tiemer)
-    }
-
-    // 鼠标移入时停止播放
-    const onMouseEnterImage = () => {
-        if (playState.value) {
-            stopPlay();
-        }
-    }
 
     nextTick(() => {
-        if (vnodeScrollRef.value) {
-            const rect = vnodeScrollRef.value?.getBoundingClientRect()
-            initScroll(rect)
-        }
+        onLoad()
     })
 
     return {
-        onMouseEnterImage,
         updateImageSrc,
-        playState,
-        stopPlay,
-        autoPlay,
         isMultipleImage,
         onWheelListener,
         imageInfo,
-        originImages,
         nextImage,
         previousImage,
-        onRectScroll,
-        renderData,
-        vnodeUlRef,
-        vnodeScrollRef,
         destroyedExe,
         resetStyle,
         downloads,
@@ -332,7 +172,6 @@ export const useToolbar = (images: string[], currentUrl: string, cb:Function) =>
         zoomOut,
         clockwise,
         counterclockwise,
-        currentIndex,
-        activeIndex
+        currentIndex
     }
 }
