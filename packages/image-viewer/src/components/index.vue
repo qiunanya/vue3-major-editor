@@ -149,6 +149,12 @@ const props = defineProps({
         default: () => {
             return 'zh'
         }
+    },
+    playSpeed: {
+        type: Number,
+        default: () => {
+            return 2000
+        }
     }
 })
 
@@ -195,7 +201,7 @@ const emits = defineEmits(['on-close', 'on-change', 'onUpdate:value']);
 const { onMouseDown,onMouseMove,onMouseUp, onMouseLeave } = useMouse()
 
 // 自动播放
-const { scrollItemNavRef, playState, autoPlay, stopPlay, hotKeyAutoPlay} = usePlayer(currentIndex, props.images, imageRef, props.handleChange)
+const { scrollItemNavRef, playState, autoPlay, stopPlay, hotKeyAutoPlay} = usePlayer(currentIndex, props.images, imageRef, props.handleChange, props.playSpeed)
 const onMouseEnterImage = (evt:MouseEvent) => {
     stopPlay()
 }

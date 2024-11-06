@@ -18,7 +18,8 @@ export interface ImageViewerType {
     isEnableDrag: boolean,
     isEnableWheel: boolean,
     zIndex: number,
-    language: langType
+    language: langType,
+    playSpeed: number
 }
 
 // app.use安装配置类型(初始化配置)
@@ -28,7 +29,8 @@ export interface ImageViewerInstallConfig {
     isEnableDrag?: boolean,
     isEnableWheel?: boolean,
     zIndex?: number,
-    language?:langType 
+    language?:langType,
+    playSpeed?: number 
 }
 
 export type ImageObjectTypes = {

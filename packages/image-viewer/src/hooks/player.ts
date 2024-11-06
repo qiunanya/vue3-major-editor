@@ -7,7 +7,7 @@ import type { Ref } from 'vue'
  */
 const AUTO_PLAY_TIME = 2000
 
-export function usePlayer (activeIndex: Ref<number>, images: any, imageRef: Ref<HTMLImageElement|null>, callBack:Function=()=>{}) {
+export function usePlayer (activeIndex: Ref<number>, images: any, imageRef: Ref<HTMLImageElement|null>, callBack:Function=()=>{}, playSpeed:number) {
     // 自动播放
     const timer:Ref = ref<NodeJS.Timeout | null>(null);
     const playState:Ref = ref(false)
@@ -20,7 +20,7 @@ export function usePlayer (activeIndex: Ref<number>, images: any, imageRef: Ref<
         
         timer.value = setInterval(() => {
             updateRender()
-        }, AUTO_PLAY_TIME);
+        }, playSpeed || AUTO_PLAY_TIME);
     }
 
     // 更新视图

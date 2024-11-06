@@ -15,5 +15,6 @@ app.use(ImageViewerVue3, {
     rotateRatio: 90, // Default 90 degrees
     isEnableDrag: true, // Enabled by default
     isEnableWheel: true, // Enabled by default
+    playSpeed: 2000, // Default 2000 ms
 })
 app.mount("#app")

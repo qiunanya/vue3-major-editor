@@ -41,7 +41,7 @@ import App from "./App.vue";
 import ImagesViewerVue3 from 'images-viewer-vue3';
 
 const app = createApp(App)
-// Image preview directive will be automatically injected here
+// Image preview directive will be automatically injected here.
 app.use(ImagesViewerVue3, {
     zIndex: 999, // Default 999
     language: 'zh', // Default language 'zh'
@@ -49,6 +49,7 @@ app.use(ImagesViewerVue3, {
     rotateRatio: 90, // Default 90 degrees
     isEnableDrag: true, // Enabled by default
     isEnableWheel: true, // Enabled by default
+    playSpeed: 2000, // playSpeed Default 2000 ms
 })
 app.mount("#app")
 
@@ -70,6 +71,7 @@ Initialize the configuration in `app.use(ImagesViewerVue3,options)` of the `main
 | isEnableDrag | boolean | true | Defines whether to enable the drag and drop function. |
 | isEnableWheel | boolean | true | Defines whether to enable mouse scrolling to zoom the image. |
 | language | 'zh' or 'en' | 'zh' | Define the prompt text display language.|
+| playSpeed | number | 2000 | play speed, Default 2000 ms.|
 
 ## Command preview image
 Add v-image-viewer to the image tag that needs to be previewed. All imgs with added instructions will be automatically added to the preview list.

@@ -54,6 +54,7 @@ async function imageViewerApi (opt:ImageViewerOptions) {
             image: opt.imageDom,
             from: opt.from || 'api',
             language: config.language || 'zh',
+            playSpeed: config.playSpeed,
             handleChange: ({ image, index }: { image:string, index: number}) => {
                 callBack&&callBack(image, index)
             },
