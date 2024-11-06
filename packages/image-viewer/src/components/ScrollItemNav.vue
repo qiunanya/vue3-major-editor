@@ -23,15 +23,17 @@
 <script lang="ts" setup>
 import type { Ref, PropType } from 'vue'
 import { useVirtualList } from '@vueuse/core'
-import { computed, ref, nextTick } from 'vue'
+import { computed, ref, nextTick, inject } from 'vue'
 import vLazyImage from '../directive/v-lazy-image'
 
-const { viewerImages } = defineProps({
-    viewerImages: {
-        type: Array as PropType<string[]>,
-        required: true    
-    }
-})
+// const { viewerImages } = defineProps({
+//     viewerImages: {
+//         type: Array as PropType<string[]>,
+//         required: true    
+//     }
+// })
+// 引入图片列表
+const viewerImages = inject('images') as string[]
 
 const emit = defineEmits(['on-click'])
 
@@ -107,6 +109,7 @@ defineExpose({
             width: 100%;
             outline: none;
             border: none;
+            text-align: center;
         }
         .query-btn {
             width: 100%;

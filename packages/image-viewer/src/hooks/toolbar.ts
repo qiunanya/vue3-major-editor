@@ -135,6 +135,7 @@ export const useToolbar = (images: string[], cb:Function) => {
     };
 
     const setUpdateImage = () => {
+        console.log(currentIndex.value, imageRef.value)
         if (!imageRef.value) return
         
         const activeImage =  images[currentIndex.value]

@@ -13,17 +13,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick, computed } from 'vue'
+import { ref, nextTick, computed, inject } from 'vue'
 import type { CSSProperties, PropType } from 'vue'
 import vLazyImage from '../directive/v-lazy-image'
 
 // type ImagesType = ImageObjectTypes[]
 
-const { viewerImages, currentImage, activeImage } = defineProps({
-    viewerImages: {
-        type: Array as PropType<string[]>,
-        required: true    
-    },
+const { currentImage, activeImage } = defineProps({
     currentImage: {
         type: String,
         default: () => {
@@ -38,6 +34,7 @@ const { viewerImages, currentImage, activeImage } = defineProps({
 
 const emit = defineEmits(['on-cb'])
 
+const viewerImages = inject('images') as string[]
 
 const ulStyleProperties = ref<CSSProperties>({
     transform: "none",
