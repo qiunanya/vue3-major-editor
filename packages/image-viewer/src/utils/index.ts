@@ -1,7 +1,7 @@
 import { AsyncSetImageReturnType } from '../types/image-viewer';
 
 // version
-export const versions = "1.0.16";
+export const versions = "1.0.17";
 
 /**
  * Verify illegal image paths, such as null, undefined, ''

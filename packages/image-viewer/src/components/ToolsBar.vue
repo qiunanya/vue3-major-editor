@@ -106,3 +106,22 @@ const stopPlay = () => { emit('on-stopPlay') }
 const autoPlay = () => { emit('on-autoPlay') }
 
 </script>
+
+<style lang="scss" scoped>
+.control-svg__btns {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    padding: 8px 10px !important;
+    .tool-item-icon__btn {
+        margin: 0 4px;
+        width: 25px;
+        height: 25px;
+        path {
+            fill: #eee;
+        }
+    }
+}
+.icon-is-hover:hover path {
+    fill: var(--active-icon-color) !important;
+}
+</style>

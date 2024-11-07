@@ -87,7 +87,7 @@ nextTick().then(res => {
         const siderBar = scrollRef.value as HTMLElement
         // siderBar.getBoundingClientRect()
         const { innerHeight } = window
-        siderBar.style.setProperty('--sider-height', `${innerHeight - 65}`)
+        siderBar.style.setProperty('--sider-height', `${innerHeight - 50}`)
     }
 })
 

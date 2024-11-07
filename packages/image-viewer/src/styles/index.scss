@@ -23,6 +23,11 @@
         background-color: rgba(69,147,251, 0.37);
     }
 }
+.images-viewer-vue3__wrapper * {
+    box-sizing: border-box; 
+    padding: 0;
+    margin: 0;
+}
 .images-viewer-vue3__wrapper {
     --active-icon-color: #3A8DF5;
     --active-text-color: var(--text-color, #eee);
@@ -105,11 +110,11 @@
             // background-color: rgba(0, 0, 0, 0.6);
             width:0px;
             overflow: hidden;
-            transition: width 0.3s ease-out;
-            opacity: 0;
+            transition: width 0.6s ease;
+            // opacity: 0;
             &.nav-active {
                 width: var(--nav-width);
-                opacity: 1;
+                // opacity: 1;
             }
             .nav-vnode-scroll__wrapper {
                 width: 100%;
@@ -200,6 +205,8 @@
                 width: auto;
                 height: auto; 
                 object-fit: cover;
+                padding: 30px;
+                display: inline-block;
             }
             .image-viewer__controls {
                 position: fixed;
@@ -212,19 +219,19 @@
                 flex-wrap: wrap;
                 padding: 10px 0;
                 z-index: 10;
-                .control-svg__btns {
-                    background-color: rgba(0, 0, 0, 0.5);
-                    border-radius: 8px;
-                    padding: 8px 10px;
-                }
-                .tool-item-icon__btn {
-                    margin: 0 4px;
-                    width: 25px;
-                    height: 25px;
-                    path {
-                        fill: #eee;
-                    }
-                }
+                // .control-svg__btns {
+                //     background-color: rgba(0, 0, 0, 0.5);
+                //     border-radius: 8px;
+                //     padding: 8px 10px;
+                // }
+                // .tool-item-icon__btn {
+                //     margin: 0 4px;
+                //     width: 25px;
+                //     height: 25px;
+                //     path {
+                //         fill: #eee;
+                //     }
+                // }
                 .control-info {
                     display: flex;
                     align-items: center;
@@ -251,9 +258,9 @@
         z-index: 10;
         cursor: pointer;
     }
-    .icon-is-hover:hover path {
-        fill: var(--active-icon-color) !important;
-    }
+    // .icon-is-hover:hover path {
+    //     fill: var(--active-icon-color) !important;
+    // }
 
     .close-icon {
         transition: fill .3s ease;
