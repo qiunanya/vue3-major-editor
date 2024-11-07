@@ -2,10 +2,15 @@
     <div>
         <h3 style="color: #646cff;">image-viewer-vue3 图片预览器</h3>
         <button @click="handleClose">手动关闭弹窗</button>
+        <button @click="changeSrc">更换src</button>
+        {{  currentSrc  }}
     </div>
     <div>
         <h5>指令使用图片预览器</h5>
-        <img class="img-item" v-for="(item, index) in dataList" :key="index" :src="item" v-image-viewer/>  
+        <!-- <img class="img-item" v-for="(item, index) in dataList" :key="index" :src="item" v-image-viewer/>-->
+        <img class="img-item" src="https://picsum.photos/id/10/2500/1667" v-image-viewer/>
+        <img class="img-item" v-image-viewer v-lazy-image="'https://picsum.photos/id/11/2500/1667'"/>
+        <img class="img-item" v-image-viewer v-lazy-image="currentSrc"/>
     </div>
 
     <div>
@@ -65,10 +70,15 @@ const dataList = ref([
         // "https://picsum.photos/id/11/2500/1667",
 ])
 
+const currentSrc = ref('https://picsum.photos/id/13/367/267')
+
 onUpdate((image:string, index: number) => {
     console.log(image, index)
 })
 
+const changeSrc = () => {
+    currentSrc.value = 'https://picsum.photos/id/15/367/267'
+}
 const handleClose = () => {
     onClose()
 }

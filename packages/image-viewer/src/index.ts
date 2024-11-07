@@ -35,14 +35,13 @@ async function imageViewerApi (opt:ImageViewerOptions) {
 
     await asyncVerifyIllegalImage(opt.images || []).then(res => {
         imageItems = res.data
-        // console.log(res.data, 5555)
     }).catch(err => {
         console.error('images-viewer-vue3:', JSON.stringify(err))
     })
 
     const config = viewerCore.getConfigOptions()
-    // console.log(config, 6666)
     var previewBox:HTMLElement | null = null;
+    
     if (previewBox) {
         previewBox&&document.body.removeChild(previewBox);
     } else {
@@ -71,6 +70,9 @@ async function imageViewerApi (opt:ImageViewerOptions) {
         document.body.style.margin = '0px'
         document.body.style.padding = '0px'
         document.body.appendChild(previewBox)
+
+        // 更新外部组件，图片已加载
+        callBack&&callBack(opt.current, opt.imageDom&&opt.imageDom.getAttribute('data-index'))
     }
 }
 

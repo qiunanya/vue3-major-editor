@@ -31,7 +31,7 @@
                 <path  d="M322.12 353.93L104.61 490.77c-18.45 11.61-18.44 38.51 0.02 50.1l217.51 136.64c19.71 12.38 45.33-1.78 45.33-25.06V378.98c0-23.29-25.64-37.45-45.35-25.05zM94.78 125.02h834.44c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5H94.78c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5zM929.22 342.34H444.11c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5h485.11c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5zM929.22 620.66H444.11c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5h485.11c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5zM929.22 898.98H94.78c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5h834.44c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5z"></path>
             </svg>
             <ul class="image-info">
-                <li>{{$t('image.ruleText')}}：{{imageInfo.width}}{{$t('image.px')}} X {{imageInfo.height}}{{$t('image.px')}}</li>
+                <li>{{imageInfo.width}}{{$t('image.px')}} X {{imageInfo.height}}{{$t('image.px')}}</li>
             </ul>
             <div v-if="loadImageErrorText" style="user-select: text;">
                 <p style="color: orange;text-decoration: solid;">{{ $t('image.loadErrorText') }}</p>
@@ -47,7 +47,7 @@
             <LoadingUI v-if="loading"></LoadingUI>
 
             <div :class="['image-viewer__controls']">
-                <div class="control-info position" v-show="isMultipleImage">
+                <div class="control-info" v-show="isMultipleImage">
                     <span>{{$t('image.total')}}&nbsp;{{images.length}}&nbsp;{{$t('image.pictures')}}&nbsp;</span>
                     <span>/&nbsp;{{$t('image.the')}}&nbsp;{{currentIndex+1}}&nbsp;{{$t('image.img')}}&nbsp;</span>
                 </div>
