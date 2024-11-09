@@ -38,6 +38,7 @@ export function usePlayer (activeIndex: Ref<number>, images: any, imageRef: Ref<
                 imageRef.value&&(imageRef.value.src = CURRENT_SRC)
                 // 通知外部引用组件，当前图片信息
                 callBack&&callBack({ image: CURRENT_SRC, index: activeIndex.value })
+                // console.log('启用定时器：',  timer.value)
             }
         })
     }
@@ -45,7 +46,12 @@ export function usePlayer (activeIndex: Ref<number>, images: any, imageRef: Ref<
     // 停止播放
     function stopPlay () {
         playState.value = false
-        clearInterval(timer.value)
+        if (timer.value !== null) {
+            clearInterval(timer.value)
+            // 重置定时器为null，防止重复执行无效清除代码 clearInterval(timer.value)
+            timer.value = null
+            // console.log('删除定时器:', timer.value)
+        }
     }
 
     // 快捷键控制播放

@@ -23,7 +23,9 @@
             <ScrollItemNav
                 ref="scrollItemNavRef" 
                 v-model="currentIndex"
-                @on-click="clickImge">
+                :max-value.camel="images.length"
+                @on-click="clickImge"
+                @on-input="onInput">
             </ScrollItemNav>
         </div>
         <div class="content-viewer-image__wrapper" @wheel="onWheelListener">
@@ -342,6 +344,13 @@ function updateIsActive () {
             isMessage.value = false
         }, 2000)
     }
+}
+
+function onInput (val:number) {
+    if (!imageRef.value) return
+
+    const findItem = props.images[val]
+    updateImageSrc.value = imageRef.value.src = findItem
 }
 
 // const onClickNavImage = debounce(clickImge, 200)
