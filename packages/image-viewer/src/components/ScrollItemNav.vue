@@ -1,6 +1,5 @@
 <template>
     <div class="scroll-item-nav__wrapper" ref="scrollRef">
-        <!-- <NavLoading></NavLoading> -->
         <div class="nav-header__wrap">
             <input class="image-index" :min="0" :max="maxValue" v-model="counter" placeholder="请输入张数" type="number"
                 @change="onChangeInput">
@@ -16,7 +15,17 @@
                         alignItems: 'center',
                     }">
                     <!-- <span class="index">{{ index }}</span> -->
-                    <img class="list-group-image" :data-id="data.index" v-lazy-image="data.url" src="" alt="picture"
+                    <!-- 加载动画 -->
+                    <NavLoading v-if="data.isLoad"></NavLoading>
+                    <!-- 加载错误文本 -->
+                    <span class="error-text" v-if="data.isError">加载失败</span>
+                    <img
+                        class="list-group-image" 
+                        :data-id="data.index" 
+                        v-lazy-image="data.url" 
+                        alt="picture"
+                        @load="onLoad(data, index)"
+                        @error="onError(data, index)"
                         @click.stop.prevent="clickImge($event, data, index)">
                 </div>
             </div>
@@ -57,13 +66,17 @@ type ItemType = {
     height: number,
     size: string,
     url: string,
-    index: number
+    index: number,
+    isLoad: boolean,
+    isError: boolean
 }
 const allItems = viewerImages.map((mp, i) => ({
     height: i % 2 === 0 ? 60 : 60,
     size: i % 2 === 0 ? 'small' : 'large',
     url: mp,
     index: i,
+    isLoad: true,
+    isError: false
 }))
 
 const filteredItems = computed(() => {
@@ -77,6 +90,16 @@ const onChangeInput = (evt: Event) => {
         activeIndex.value = +inputItem.value
         emit('on-input', +inputItem.value)
     }
+}
+
+const onLoad = (item:ItemType, index:number) => {
+    item.isLoad = false
+    item.isError = false
+}
+
+const onError = (item:ItemType, index:number) => {
+    item.isLoad = false
+    item.isError = true
 }
 
 const clickImge = (evt: Event, item: ItemType, index: number) => {
@@ -161,6 +184,10 @@ defineExpose({
             position: relative;
             opacity: 0.5;
 
+            &:hover {
+                opacity: 1; 
+            }
+
             &.active-item {
                 opacity: 1;
                 border: 1px solid var(--active-icon-color);
@@ -171,6 +198,13 @@ defineExpose({
                 top: 10px;
                 left: 20px;
                 color: red;
+            }
+            .error-text {
+                position: absolute;
+                top: 30px;
+                left: 15px;
+                color: tomato;
+                font-size: 12px;
             }
 
             .list-group-image {

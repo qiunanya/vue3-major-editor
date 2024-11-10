@@ -19,7 +19,8 @@ export interface ImageViewerType {
     isEnableWheel: boolean,
     zIndex: number,
     language: langType,
-    playSpeed: number
+    playSpeed: number,
+    isDownLoad: boolean
 }
 
 // app.use安装配置类型(初始化配置)
@@ -30,7 +31,8 @@ export interface ImageViewerInstallConfig {
     isEnableWheel?: boolean,
     zIndex?: number,
     language?:langType,
-    playSpeed?: number 
+    playSpeed?: number,
+    isDownLoad?: boolean 
 }
 
 export type ImageObjectTypes = {

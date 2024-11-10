@@ -28,7 +28,8 @@ class ImageViewerCore {
         isEnableWheel: true,
         zIndex: 2000,
         language: 'zh',
-        playSpeed: 2000
+        playSpeed: 2000,
+        isDownLoad: true,
     }
 
     private transforms:CusCSSProperties = {

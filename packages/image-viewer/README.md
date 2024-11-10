@@ -42,6 +42,7 @@ import ImagesViewerVue3 from 'images-viewer-vue3';
 
 const app = createApp(App)
 // Image preview directive will be automatically injected here.
+// Includes preview directive and lazy loading directive
 app.use(ImagesViewerVue3, {
     zIndex: 999, // Default 999
     language: 'zh', // Default language 'zh'
@@ -50,6 +51,7 @@ app.use(ImagesViewerVue3, {
     isEnableDrag: true, // Enabled by default
     isEnableWheel: true, // Enabled by default
     playSpeed: 2000, // playSpeed Default 2000 ms
+    isDownLoad: true, // Enabled by default
 })
 app.mount("#app")
 
@@ -72,6 +74,7 @@ Initialize the configuration in `app.use(ImagesViewerVue3,options)` of the `main
 | isEnableWheel | boolean | true | Defines whether to enable mouse scrolling to zoom the image. |
 | language | 'zh' or 'en' | 'zh' | Define the prompt text display language.|
 | playSpeed | number | 2000 | play speed, Default 2000 ms.|
+| isDownLoad | boolean | true | Download enabled by default |
 
 ## Command preview image
 Add v-image-viewer to the image tag that needs to be previewed. All imgs with added instructions will be automatically added to the preview list.
@@ -79,6 +82,19 @@ Add v-image-viewer to the image tag that needs to be previewed. All imgs with ad
 <img v-image-viewer src="https://picsum.photos/id/19/2500/1667"/>
 <img v-image-viewer src="https://picsum.photos/id/63/2500/1667"/>
 ```
+### Support lazy loading instructions
+```js
+<img v-for="(item, index) in dataList" :key="index" :src="item" v-image-viewer/>
+<img src="https://picsum.photos/id/10/2500/1667" v-image-viewer/>
+<img v-image-viewer v-lazy-image="'https://picsum.photos/id/11/2500/1667'"/>
+<img v-image-viewer v-lazy-image="currentSrc"/>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+const currentSrc = ref('https://picsum.photos/id/13/367/267')
+</script>
+```
+
 
 ## API preview image
 ```js

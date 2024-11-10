@@ -56,6 +56,7 @@
                 <!-- 图片工具栏 -->
                 <ToolsBar
                     :play-state.camel="playState"
+                    :is-downLoad.camel="isDownLoad"
                     @on-previous="setPrevious"
                     @on-next="setNext"
                     @on-resetStyle="resetStyle" 
@@ -156,6 +157,12 @@ const props = defineProps({
         type: Number,
         default: () => {
             return 2000
+        }
+    },
+    isDownLoad: {
+        type: Boolean,
+        default: () => {
+            return true
         }
     }
 })
