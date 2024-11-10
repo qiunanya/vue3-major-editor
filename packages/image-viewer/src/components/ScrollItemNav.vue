@@ -201,7 +201,7 @@ defineExpose({
             }
             .error-text {
                 position: absolute;
-                top: 30px;
+                top: 20px;
                 left: 15px;
                 color: tomato;
                 font-size: 12px;
