@@ -3,6 +3,7 @@ type fromType = 'api' | 'directive' | 'component'
 type langType = 'zh' | 'en'
 
 export interface ImageViewerOptions {
+    specifyIndex?: number | string,
     current: string,
     images?: string[],
     imageDom?:HTMLImageElement,

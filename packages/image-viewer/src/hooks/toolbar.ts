@@ -13,9 +13,12 @@ export const useToolbar = (images: string[], cb:Function) => {
     const currentIndex = ref(-1)
     const activeIndex = ref(-1)
     const updateImageSrc = ref('')
-    const imageInfo = reactive({
+    const imageInfo = ref({
+        naturalWidth: 0,
+        naturalHeight: 0,
+        height: 0,
         width: 0,
-        height: 0
+        size: ''
     })
     // 开启左侧导航栏,多图片生效
     const isMultipleImage = ref(images.length > 0 ? true:false)
@@ -78,12 +81,15 @@ export const useToolbar = (images: string[], cb:Function) => {
 
     const loadImage = (evt:Event) => {
         imageCore.setImage(imageRef.value)
-        const img = new Image()
-        img.src = (imageRef.value&&imageRef.value.src) as string
+        const createImage = new Image()
+        createImage.src = (imageRef.value&&imageRef.value.src) as string
 
-        const { width, height } = toRefs(imageInfo)
-        width.value = img.width
-        height.value = img.height
+        imageInfo.value = {
+            naturalWidth: createImage.naturalWidth,
+            naturalHeight: createImage.naturalHeight,
+            width: createImage.width,
+            height: createImage.height,
+        }
 
         // console.log('图片信息：', img.width, img.height)
         if (imageRef.value && imageVieverWidgetRef.value) {
@@ -97,8 +103,16 @@ export const useToolbar = (images: string[], cb:Function) => {
         
         loadImageErrorText.value = ""
         loading.value = false
-        // console.log('图片加载成功：',evt)
-        // console.log('图片信息：', im.height, im.width)
+        fetch(createImage.src)
+        .then(response => response.blob())
+        .then(blob => {
+            // 文件大小，单位为字节
+            const fileSize = blob.size; 
+            // 转换为KB并保留两位小数
+            const fileSizeInKB = (fileSize / 1024).toFixed(2); 
+            console.log(`${fileSizeInKB} KB`)
+        });
+        console.log('图片加载成功：',createImage.naturalWidth, createImage.naturalHeight, createImage.sizes)
     }
 
     const errorImage = (evt:Event) => {

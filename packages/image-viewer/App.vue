@@ -24,7 +24,7 @@
 
     <div>
         <h5>API 调用图片预览器</h5>
-        <img class="img-item" @click="toggleApi" src="https://picsum.photos/id/64/2500/1667" alt="" />
+        <img class="img-item" v-for="(item, index) in dataList.slice(0, 3)" :key="index" @click="toggleApi($event, index)" :src="item" alt="" />
     </div>
 </template>
 
@@ -35,10 +35,9 @@ import ImageViewerVue3 from "./src/components/viewer.vue"
 
 const dataList = ref([
         "https://picsum.photos/id/10/2500/1667",
+        "https://picsum.photos/id/64/2500/1667",
         "https://picsum.photos/id/11/2500/1667",
         "https://picsum.photos/id/20/367/267",
-        "https://example.com/protected-image.jpg",
-        "https://example.com/protected-image.jpg",
         "https://example.com/protected-image.jpg",
         "https://example.com/protected-image.jpg",
         "https://picsum.photos/id/19/2500/1667",
@@ -86,13 +85,14 @@ const changeSrc = () => {
 const handleClose = () => {
     onClose()
 }
-const toggleApi = (evt:Event) => {
+const toggleApi = (evt:Event, index: number) => {
     if (!evt.target) return
     const iDom = evt.target as HTMLImageElement
     imageViewerApi({
+        specifyIndex: index,
         current: iDom.src,
         imageDom: iDom,
-        images: []
+        images: dataList.value.slice(0, 3)
     })
 }
 </script>

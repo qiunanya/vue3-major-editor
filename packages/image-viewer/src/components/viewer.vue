@@ -51,6 +51,7 @@ const getSlotDom = () => {
                     })
 
                     imageViewerApi({
+                        specifyIndex: index,
                         current: src,
                         imageDom: el,
                         from: 'component',

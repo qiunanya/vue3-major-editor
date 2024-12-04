@@ -173,21 +173,61 @@
             overflow: hidden;
             color: var(--active-text-color);
             .image-collapse-nav__btn {
-                position: absolute;
-                top: 15px;
-                left: 8px;
-                z-index: 10;
                 transition: transform 0.3s ease;
                 &.rotate-right__btn {
                     transform: scale(-1,-1);
                 }
+            }
+            .image-header__inner {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                right: 0px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                // background: #3A8DF5;
+                z-index: 10;
+                padding: 8px 10px;
             } 
             .image-info {
-                position: absolute;
-                top: 15px;
-                left: 40%;
-                z-index: 10;
-                color: #eee;
+                display: flex;
+                align-items: center;
+                .info-icon__item {
+                    margin: 0 12px;
+                }
+                .info-icon__item:first-child {
+                    position: relative;
+                    .info-details {
+                        position: absolute;
+                        left: -100px;
+                        opacity: 0;
+                        transition: opacity 0.3s ease;
+                        min-width: 190px;
+                        font-size: 12px;
+                        border: 1px solid #eee;
+                        padding: 5px;
+                        border-radius: 6px;
+                        li {
+                            margin-bottom: 5px;
+                        }
+                    }
+                    &:hover {
+                        .info-details {
+                            opacity: 1;
+                        }
+                    }
+                }
+                .images-viewer-vue3__close {
+                    background: hsla(0, 0%, 0%, 0.3);
+                    border-radius: 50%;
+                    width: 26px;
+                    aspect-ratio: 1 / 1;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                }
             }
             .image-viewer__inner {
                 flex: 0 1 auto;
@@ -229,20 +269,6 @@
                 }
             }
         }
-    }
-    .images-viewer-vue3__close {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        background: rgba(0, 0, 0, .3);
-        border-radius: 50%;
-        width: 30px;
-        aspect-ratio: 1 / 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 10;
-        cursor: pointer;
     }
     .icon-is-hover:hover {
         cursor: pointer;

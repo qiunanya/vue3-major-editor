@@ -68,6 +68,7 @@ const VImageViewer = {
 
         el.addEventListener('click', function(evt) {
             imageViewerApi({
+                specifyIndex: Number(el.getAttribute('data-index')),
                 current: el.src,
                 // images: imageList,
                 images: setImageList(),

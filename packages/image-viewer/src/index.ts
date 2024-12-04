@@ -47,6 +47,7 @@ async function imageViewerApi (opt:ImageViewerOptions) {
     } else {
         vnode = createVNode(ImageViewerUI, {
             visible: true,
+            specifyIndex: opt.specifyIndex,
             current: opt.current,
             images: imageItems,
             zIndex: config.zIndex,
