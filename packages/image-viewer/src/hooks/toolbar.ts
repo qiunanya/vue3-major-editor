@@ -1,6 +1,7 @@
 import ImageViewerCore from '../utils/ViewerCore';
 import { downloadExe } from '../utils/index';
 import { ref, nextTick, reactive, toRefs } from 'vue';
+import { useFullscreen } from '@vueuse/core'
 
 export const useToolbar = (images: string[], cb:Function) => {
     // const bodyRect = document.body.getBoundingClientRect()
@@ -146,6 +147,12 @@ export const useToolbar = (images: string[], cb:Function) => {
         }
     }
 
+    const fullScreen = () => {
+        const imageViewerVue3Root = document.querySelector('.image-viewer-vue3__root') as HTMLElement;
+        const { enter, exit, toggle } = useFullscreen(imageViewerVue3Root)
+        toggle()
+    }
+
 
     nextTick(() => {
         onLoad()
@@ -173,6 +180,7 @@ export const useToolbar = (images: string[], cb:Function) => {
         zoomOut,
         clockwise,
         counterclockwise,
-        currentIndex
+        currentIndex,
+        fullScreen
     }
 }

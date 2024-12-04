@@ -68,7 +68,8 @@
                     @on-clockwise="clockwise"
                     @on-counterclockwise="counterclockwise" 
                     @on-stopPlay="stopPlay"
-                    @on-autoPlay="autoPlay">
+                    @on-autoPlay="autoPlay"
+                    @on-fullScreen="fullScreen">
                 </ToolsBar>
             </div>
         </div>
@@ -203,6 +204,7 @@ const {
     clockwise,
     counterclockwise,
     currentIndex,
+    fullScreen
 } = useToolbar(props.images as string[], props.handleChange);
 
 const emits = defineEmits(['on-close', 'on-change', 'onUpdate:value']);
@@ -258,6 +260,8 @@ registerHotkey('ctrl+z', resetStyle)
 registerHotkey('esc', close)
 // autoPlay image
 registerHotkey('space', hotKeyAutoPlay)
+// fullScreen
+registerHotkey('f11',fullScreen)
 
 // scale
 useCusShortKey({'ctrl+*': (event:KeyboardEvent, handler:HotkeysEvent) => {
@@ -320,6 +324,7 @@ function loadPc () {
         imageRef.value.src = props.current
     } else {
         const findIndex = props.images.findIndex(el => el === props.current)
+        console.log(props.images, props.current)
         if (findIndex !== -1) {
             currentIndex.value = findIndex
         }

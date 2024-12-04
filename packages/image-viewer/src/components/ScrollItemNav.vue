@@ -1,9 +1,9 @@
 <template>
     <div class="scroll-item-nav__wrapper" ref="scrollRef">
         <div class="nav-header__wrap">
-            <input class="image-index" :min="0" :max="maxValue" v-model="counter" placeholder="请输入张数" type="number"
-                @change="onChangeInput">
-            <button class="query-btn" type="button" @click="handleScrollTo">GO</button>
+            <input class="image-index" :min="1" :max="maxValue" v-model="counter" placeholder="请输入张数" type="number"
+                @keydown="onKeyDown">
+            <button :class="['query-btn', {'is-disabled': isDisabled }]" type="button" @click="scrollToImage" :disabled="isDisabled">GO</button>
         </div>
         <div class="nav-scroll__wrap" v-bind="containerProps">
             <div v-bind="wrapperProps">
@@ -83,14 +83,9 @@ const filteredItems = computed(() => {
     return allItems.filter(i => i.size.startsWith(search.value.toLowerCase()))
 })
 
-const onChangeInput = (evt: Event) => {
-    if (evt.target) {
-        const inputItem = evt.target as HTMLInputElement
-        scrollTo(activeIndex.value)
-        activeIndex.value = +inputItem.value
-        emit('on-input', +inputItem.value)
-    }
-}
+const isDisabled = computed(() => {
+    return counter.value>viewerImages.length;
+})
 
 const onLoad = (item:ItemType, index:number) => {
     item.isLoad = false
@@ -113,29 +108,34 @@ const { list, containerProps, wrapperProps, scrollTo } = useVirtualList(
         overscan: 10,
     },
 )
-function handleScrollTo() {
-    scrollTo(activeIndex.value)
+
+const onKeyDown = (evt: Event) => {
+    const et = evt as KeyboardEvent || window.event
+    if (['Enter', 'NumpadEnter'].includes(et.code)) {
+        !isDisabled.value&&scrollToImage()
+    }
 }
 
-// 监听 activeIndex 的变化，这样监听后会导致导航栏每次切换指定张数都会跳转
-// watch(
-//     () => activeIndex,
-//     (newValue) => {
-//         // 外部索引发生变化后，跳转指定图片
-//         // scrollTo(activeIndex.value)
-//     },
-//     {
-//         deep: true,
-//         immediate: true
-//     }
-// );
+function scrollToImage () {
+    let newValue = +counter.value
+    if (newValue >= 1) {
+        const sortIndex = newValue - 1
+        scrollTo(sortIndex)
+        emit('on-input', sortIndex)
+        activeIndex.value = sortIndex
+    }
+}
 
 nextTick().then(res => {
     if (scrollRef.value) {
         const siderBar = scrollRef.value as HTMLElement
         // siderBar.getBoundingClientRect()
-        const { innerHeight } = window
-        siderBar.style.setProperty('--sider-height', `${innerHeight - 50}`)
+        let currentWin = window as Window
+        siderBar.style.setProperty('--sider-height', `${currentWin.innerHeight - 50}`)
+        window.addEventListener('resize', (evt) => {
+            currentWin = evt.target as Window
+            siderBar.style.setProperty('--sider-height', `${currentWin.innerHeight - 50}`)
+        })
     }
 })
 
@@ -151,23 +151,27 @@ defineExpose({
     overflow: hidden;
 
     .nav-header__wrap {
-        // margin: 0 .3rem;
         height: 50px;
         overflow: hidden;
-
+        display: flex;
+        flex-direction: column;
         .image-index {
-            width: 100%;
             outline: none;
             border: none;
             text-align: center;
+            flex: 1;
         }
 
         .query-btn {
-            width: 100%;
+            flex: 1;
             background: #3a8df5;
             color: #eee;
             border: none;
             border-radius: 4px;
+            &.is-disabled {
+                cursor: not-allowed;
+                opacity: 0.7;
+            }
         }
     }
 
