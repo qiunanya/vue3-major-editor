@@ -7,6 +7,8 @@ A lightweight image viewer for Vue3, it is based on `flip animation` technology,
 
 [images-viewer-vue3 demo](https://github.com/qiunanya/vue3-major-editor/tree/main/packages/image-viewer)(https://github.com/qiunanya/vue3-major-editor/tree/main/packages/image-viewer)
 
+[Case screenshot: https://blog.csdn.net/qq_41444226/article/details/144258656](https://blog.csdn.net/qq_41444226/article/details/144258656)
+
 # Features
 * Component preview image
 * Command preview image
@@ -31,11 +33,7 @@ pnpm add images-viewer-vue3
 --or
 yarn add images-viewer-vue3
 ```
-
-# Usage
-
-## Component preview image
-The component wraps the image element, click directly to preview.
+# Config
 ```js
 // main.ts
 import { createApp } from "vue";
@@ -56,8 +54,12 @@ app.use(ImagesViewerVue3, {
     isDownLoad: true, // Enabled by default
 })
 app.mount("#app")
+```
+# Usage
 
-// demo.vue
+## Component preview image
+The component wraps the image element, click directly to preview.
+```js
 <ImagesViewerVue3>
     <img src="https://picsum.photos/id/6/5000/3333"/>
     <img src="https://picsum.photos/id/10/2500/1667"/>

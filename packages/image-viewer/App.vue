@@ -24,8 +24,8 @@
 
     <div>
         <h5>API 调用图片预览器</h5>
-        <!-- <img class="img-item" v-for="(item, index) in dataList.slice(0, 3)" :key="index" @click="toggleApi($event, index)" :src="item" alt="" /> -->
-        <img class="img-item" @click="toggleApi" src="https://picsum.photos/id/11/2500/1667"/>
+        <img class="img-item" v-for="(item, index) in dataList.slice(0, 3)" :key="index" @click="toggleApi($event, index)" :src="item" alt="" />
+        <!-- <img class="img-item" @click="toggleApi" src="https://picsum.photos/id/11/2500/1667"/> -->
     </div>
 </template>
 
@@ -93,7 +93,7 @@ const toggleApi = (evt:Event, index: number) => {
         specifyIndex: 0,
         current: iDom.src,
         imageDom: iDom,
-        images: []
+        images: dataList.value.slice(0, 3)
     })
 }
 </script>
