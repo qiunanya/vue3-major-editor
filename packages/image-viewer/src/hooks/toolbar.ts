@@ -14,11 +14,10 @@ export const useToolbar = (images: string[], cb:Function) => {
     const activeIndex = ref(-1)
     const updateImageSrc = ref('')
     const imageInfo = ref({
-        naturalWidth: 0,
-        naturalHeight: 0,
-        height: 0,
-        width: 0,
-        size: ''
+        naturalRatio:'',
+        renderRatio: '',
+        size: '',
+        fixedAspectRatio:''
     })
     // 开启左侧导航栏,多图片生效
     const isMultipleImage = ref(images.length > 0 ? true:false)
@@ -83,15 +82,8 @@ export const useToolbar = (images: string[], cb:Function) => {
         imageCore.setImage(imageRef.value)
         const createImage = new Image()
         createImage.src = (imageRef.value&&imageRef.value.src) as string
-
-        imageInfo.value = {
-            naturalWidth: createImage.naturalWidth,
-            naturalHeight: createImage.naturalHeight,
-            width: createImage.width,
-            height: createImage.height,
-        }
-
-        // console.log('图片信息：', img.width, img.height)
+        const { width, height, naturalWidth, naturalHeight } = createImage
+        
         if (imageRef.value && imageVieverWidgetRef.value) {
             // 重置上一张图片样式，避免样式污染
             imageRef.value.style.transform = ''
@@ -103,16 +95,31 @@ export const useToolbar = (images: string[], cb:Function) => {
         
         loadImageErrorText.value = ""
         loading.value = false
-        fetch(createImage.src)
-        .then(response => response.blob())
-        .then(blob => {
-            // 文件大小，单位为字节
-            const fileSize = blob.size; 
-            // 转换为KB并保留两位小数
-            const fileSizeInKB = (fileSize / 1024).toFixed(2); 
-            console.log(`${fileSizeInKB} KB`)
-        });
-        console.log('图片加载成功：',createImage.naturalWidth, createImage.naturalHeight, createImage.sizes)
+       
+        // 计算图片大小
+        // 将像素大小转换为KB
+        const fileSizeInKB = Number(naturalWidth * naturalHeight / 1024).toFixed(2)
+        imageInfo.value = {
+            naturalRatio: `${naturalWidth} x ${naturalHeight} px`,
+            renderRatio: `${width} x ${height} px`,
+            size: `${fileSizeInKB} KB`,
+            fixedAspectRatio: `${naturalWidth}:${naturalHeight}`
+        }
+        // fetch(createImage.src)
+        // .then(response => response.blob())
+        // .then(blob => {
+        //     // 文件大小，单位为字节
+        //     const fileSize = blob.size; 
+        //     // 转换为KB并保留两位小数
+        //     const fileSizeInKB = (fileSize / 1024).toFixed(2); 
+        //     imageInfo.value = {
+        //         naturalWidth: createImage.naturalWidth,
+        //         naturalHeight: createImage.naturalHeight,
+        //         width: createImage.width,
+        //         height: createImage.height,
+        //         size: `${fileSizeInKB} KB`
+        //     }
+        // });
     }
 
     const errorImage = (evt:Event) => {

@@ -189,6 +189,9 @@
                 // background: #3A8DF5;
                 z-index: 10;
                 padding: 8px 10px;
+                &.flex-end {
+                    justify-content: flex-end;
+                }
             } 
             .image-info {
                 display: flex;
@@ -200,16 +203,23 @@
                     position: relative;
                     .info-details {
                         position: absolute;
-                        left: -100px;
+                        left: -150px;
                         opacity: 0;
                         transition: opacity 0.3s ease;
-                        min-width: 190px;
+                        min-width: 230px;
                         font-size: 12px;
-                        border: 1px solid #eee;
-                        padding: 5px;
+                        padding: 0.8rem;
                         border-radius: 6px;
+                        background: rgba(0, 0, 0, 0.5);
                         li {
                             margin-bottom: 5px;
+                            .link-a {
+                                max-width: 190px;
+                                white-space: wrap;
+                                word-break: break-all;
+                                word-wrap: break-word;
+                                color: #3A8DF5;
+                            }
                         }
                     }
                     &:hover {

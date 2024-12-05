@@ -19,6 +19,8 @@ A lightweight image viewer for Vue3, it is based on `flip animation` technology,
 * Drag image
 * Download image
 * AutoPlay image
+* Full screen preview image
+* Image information
 
 # Install 
 
@@ -112,11 +114,14 @@ const previewImage = (evt) => {
     if (!evt.target) return
     const iDom = evt.target as HTMLImageElement
     imageViewerApi({
+        // Custom Navigation Image Highlighting Index
+        specifyIndex: 0,
+        // Current image src
         current: iDom.src,
         // Enable flip animation
         imageDom: iDom,
         // Preview more pictures
-        // images: ['src', ...],
+        // images: ['src','src1', 'src2', ...],
     })
 }
 </script>

@@ -12,5 +12,10 @@ export default {
         img: '张图片',
         previousText: '上一张',
         nextText: '下一张',
+        renderRatio: '渲染大小',
+        naturalRatio: '固定尺寸',
+        fixedAspectRatio: '固定宽高比',
+        fileZise: '文件大小',
+        origin: '来源'
     }
 }

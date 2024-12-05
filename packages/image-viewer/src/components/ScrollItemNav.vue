@@ -140,7 +140,8 @@ nextTick().then(res => {
 })
 
 defineExpose({
-    scrollTo
+    scrollTo,
+    scrollToImage
 })
 </script>
 

@@ -27,13 +27,12 @@ watch(() => props.isActive, (newValue, oldValue) => {
 </script>
 <style lang="scss" scoped>
 .hotkey-tip__wrap {
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
     border-radius: .66rem;
-    background: rgba(0, 0, 0, 0.8);
+    background: tomato;
     position: fixed;
-    opacity: 0;
     transition: opacity 0.3s ease-in-out;
-    // box-shadow: inset 0 0 25px #e8e8e8, 0 1px 0 #c3c3c3, 0 2px 0 #c9c9c9, 0 2px 3px #333;
+    opacity: 0;
     &.is-pc {
         left: 50%;
         top: 10px;
@@ -43,7 +42,7 @@ watch(() => props.isActive, (newValue, oldValue) => {
         left: 30%;
     }
     &.is-active_key {
-        opacity: 0.8;
+        opacity: 1;
     }
     .item-key {
         border-radius: 0.2rem;

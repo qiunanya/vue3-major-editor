@@ -12,5 +12,10 @@ export default {
         img: 'Image',
         previousText: 'Previous',
         nextText: 'Next',
+        renderRatio: 'Rendering size',
+        naturalRatio: 'Fixed size',
+        fixedAspectRatio: 'Fixed aspect ratio',
+        fileZise: 'File size',
+        origin: 'Origin'
     }
 }

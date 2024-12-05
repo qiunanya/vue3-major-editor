@@ -24,7 +24,8 @@
 
     <div>
         <h5>API 调用图片预览器</h5>
-        <img class="img-item" v-for="(item, index) in dataList.slice(0, 3)" :key="index" @click="toggleApi($event, index)" :src="item" alt="" />
+        <!-- <img class="img-item" v-for="(item, index) in dataList.slice(0, 3)" :key="index" @click="toggleApi($event, index)" :src="item" alt="" /> -->
+        <img class="img-item" @click="toggleApi" src="https://picsum.photos/id/11/2500/1667"/>
     </div>
 </template>
 
@@ -43,23 +44,23 @@ const dataList = ref([
         "https://picsum.photos/id/19/2500/1667",
         "https://picsum.photos/id/22/367/267",
         "https://picsum.photos/id/26/367/267",
-        // "https://picsum.photos/id/27/367/267",
-        // "https://picsum.photos/id/28/367/267",
-        // "https://picsum.photos/id/24/367/267",
-        // "https://picsum.photos/id/29/4000/2670",
-        // "https://picsum.photos/id/23/367/267",
-        // "https://picsum.photos/id/24/367/267",
-        // "https://picsum.photos/id/25/367/267",
-        // "https://picsum.photos/id/26/367/267",
-        // "https://picsum.photos/id/27/367/267",
-        // "https://picsum.photos/id/28/367/267",
-        // "https://picsum.photos/id/29/367/267",
-        // "https://picsum.photos/id/30/367/267",
-        // "https://picsum.photos/id/31/367/267",
-        // "https://picsum.photos/id/32/367/267",
-        // "https://picsum.photos/id/33/367/267",
-        // "https://picsum.photos/id/34/367/267",
-        // "https://picsum.photos/id/35/367/267",
+        "https://picsum.photos/id/27/367/267",
+        "https://picsum.photos/id/28/367/267",
+        "https://picsum.photos/id/24/367/267",
+        "https://picsum.photos/id/29/4000/2670",
+        "https://picsum.photos/id/23/367/267",
+        "https://picsum.photos/id/24/367/267",
+        "https://picsum.photos/id/25/367/267",
+        "https://picsum.photos/id/26/367/267",
+        "https://picsum.photos/id/27/367/267",
+        "https://picsum.photos/id/28/367/267",
+        "https://picsum.photos/id/29/367/267",
+        "https://picsum.photos/id/30/367/267",
+        "https://picsum.photos/id/31/367/267",
+        "https://picsum.photos/id/32/367/267",
+        "https://picsum.photos/id/33/367/267",
+        "https://picsum.photos/id/34/367/267",
+        "https://picsum.photos/id/35/367/267",
         // "https://picsum.photos/id/36/367/267",
         // "https://picsum.photos/id/37/367/267",
         // "https://picsum.photos/id/38/367/267",
@@ -89,10 +90,10 @@ const toggleApi = (evt:Event, index: number) => {
     if (!evt.target) return
     const iDom = evt.target as HTMLImageElement
     imageViewerApi({
-        specifyIndex: index,
+        specifyIndex: 0,
         current: iDom.src,
         imageDom: iDom,
-        images: dataList.value.slice(0, 3)
+        images: []
     })
 }
 </script>

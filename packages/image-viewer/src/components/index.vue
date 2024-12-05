@@ -8,7 +8,7 @@
     <!-- 移动端 -->
     <div v-if="getUserAgent()" class="images-viewer-vue3__mobile">
         <div v-if="isMultipleImage" class="cus-head-info">
-            <span>{{images.length}}&nbsp;&nbsp;/&nbsp;{{currentIndex+1}}</span>
+            <span>{{images.length}}&nbsp;&nbsp;/&nbsp;</span>
         </div>
         <MobileViewer
             :current-image.camel="current" 
@@ -29,20 +29,23 @@
             </ScrollItemNav>
         </div>
         <div class="content-viewer-image__wrapper" @wheel="onWheelListener">
-            <div class="image-header__inner">
+            <div :class="['image-header__inner', {'flex-end': !isMultipleImage}]">
                 <svg v-show="isMultipleImage" @click.stop.prevent="setNavState" :class="['icon-is-hover cursor image-collapse-nav__btn svg-icon__action', {'rotate-right__btn': !isVisibleNav },{ 'is-hidden': getUserAgent() }]" viewBox="0 0 1024 1024">
                     <path  d="M322.12 353.93L104.61 490.77c-18.45 11.61-18.44 38.51 0.02 50.1l217.51 136.64c19.71 12.38 45.33-1.78 45.33-25.06V378.98c0-23.29-25.64-37.45-45.35-25.05zM94.78 125.02h834.44c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5H94.78c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5zM929.22 342.34H444.11c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5h485.11c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5zM929.22 620.66H444.11c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5h485.11c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5zM929.22 898.98H94.78c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5h834.44c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5z"></path>
                 </svg>
                 <div class="image-info">
-                    <!-- <p>{{imageInfo.width}}{{$t('image.px')}} X {{imageInfo.height}}{{$t('image.px')}}</p> -->
                     <section class="info-icon__item">
                         <svg class="close-icon icon-is-hover svg-icon__action" viewBox="0 0 1024 1024" width="30" height="30">
                             <path d="M560 800l-10.464-416h-75.072L464 800h96z m-14.144-493.984c9.44-9.312 14.144-20.672 14.144-34.016 0-13.6-4.704-24.992-14.144-34.208A46.784 46.784 0 0 0 512 224c-13.12 0-24.448 4.608-33.856 13.792A45.856 45.856 0 0 0 464 272c0 13.344 4.704 24.704 14.144 34.016 9.408 9.312 20.704 13.984 33.856 13.984 13.12 0 24.448-4.672 33.856-13.984zM512 32C246.912 32 32 246.912 32 512c0 265.088 214.912 480 480 480 265.088 0 480-214.912 480-480 0-265.088-214.912-480-480-480z m0 64c229.76 0 416 186.24 416 416s-186.24 416-416 416S96 741.76 96 512 282.24 96 512 96z" fill="#000000"></path>
                         </svg>
                         <ul class="info-details">
-                            <li>渲染大小：{{imageInfo.width}} X {{imageInfo.height}} px</li>
-                            <li>固定尺寸：{{imageInfo.naturalWidth}} X {{imageInfo.naturalHeight}} px</li>
-                            <li :title="updateImageSrc">来源：{{updateImageSrc.slice(0, 15)}}...</li>
+                            <li>{{$t('image.renderRatio')}}：{{imageInfo.renderRatio}}</li>
+                            <li>{{$t('image.naturalRatio')}}：{{imageInfo.naturalRatio}}</li>
+                            <li>{{$t('image.fixedAspectRatio')}}：{{imageInfo.fixedAspectRatio}}</li>
+                            <li>{{$t('image.fileZise')}}：{{imageInfo.size}}</li>
+                            <li :title="updateImageSrc">
+                                {{$t('image.origin')}}：<a class="link-a" :href="updateImageSrc" target="_blank">{{updateImageSrc}}</a>
+                            </li>
                         </ul>
                     </section>
                     <section class="info-icon__item">
@@ -53,16 +56,11 @@
                     </section>
                 </div>
             </div>
-            <!-- <svg v-show="isMultipleImage" @click.stop.prevent="setNavState" :class="['icon-is-hover cursor image-collapse-nav__btn svg-icon__action', {'rotate-right__btn': !isVisibleNav },{ 'is-hidden': getUserAgent() }]" viewBox="0 0 1024 1024">
-                <path  d="M322.12 353.93L104.61 490.77c-18.45 11.61-18.44 38.51 0.02 50.1l217.51 136.64c19.71 12.38 45.33-1.78 45.33-25.06V378.98c0-23.29-25.64-37.45-45.35-25.05zM94.78 125.02h834.44c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5H94.78c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5zM929.22 342.34H444.11c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5h485.11c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5zM929.22 620.66H444.11c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5h485.11c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5zM929.22 898.98H94.78c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5h834.44c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5z"></path>
-            </svg>
-            <ul class="image-info">
-                <li>{{imageInfo.width}}{{$t('image.px')}} X {{imageInfo.height}}{{$t('image.px')}}</li>
-            </ul>
+            
             <div v-if="loadImageErrorText" style="user-select: text;">
                 <p style="color: orange;text-decoration: solid;">{{ $t('image.loadErrorText') }}</p>
                 <p>{{ updateImageSrc }}</p>
-            </div> -->
+            </div>
             <img 
                 ref="imageRef" 
                 :class="['image-viewer__inner cus-transition']" 
@@ -76,7 +74,6 @@
                 <div class="control-info" v-show="isMultipleImage">
                     <span>{{$t('image.total')}}&nbsp;{{images.length}}&nbsp;{{$t('image.pictures')}}&nbsp;</span>
                     <span>/&nbsp;{{$t('image.the')}}&nbsp;{{currentIndex+1}}&nbsp;{{$t('image.img')}}&nbsp;</span>
-                    {{  specifyIndex }}
                 </div>
                 <!-- 图片工具栏 -->
                 <ToolsBar
@@ -99,13 +96,7 @@
             </div>
         </div>
     </div>
-    <!-- <div class="images-viewer-vue3__close close-btn" @click="close">
-        <svg class="close-icon icon-is-hover svg-icon__action" viewBox="0 0 1024 1024" width="15" height="15">
-            <path d="M835.2 854.4c-12.8 0-22.4-3.2-32-12.8L211.2 256C192 240 192 211.2 208 195.2s44.8-16 60.8 0L864 780.8c16 16 16 44.8 0 60.8-6.4 9.6-16 12.8-28.8 12.8z"></path>
-            <path d="M236.8 848c-12.8 0-22.4-3.2-32-12.8-16-16-16-44.8 0-60.8l604.8-576c16-16 44.8-16 60.8 0s16 44.8 0 60.8l-604.8 576c-9.6 9.6-19.2 12.8-28.8 12.8z"></path>
-        </svg>
-    </div> -->
-
+   
     <HotKeys v-model:hotkey="hotkey" :is-active-key.camel="isActiveKey"></HotKeys>
     <Message :is-active="isMessage"></Message>
 </div>
@@ -358,6 +349,7 @@ function loadPc () {
         const findIndex = props.images.findIndex(el => el === props.current)
         if (findIndex !== -1) {
             currentIndex.value = props.specifyIndex || findIndex
+            scrollItemNavRef.value.scrollTo(currentIndex.value)
         }
 
         const firstRect = props.image.getBoundingClientRect()
