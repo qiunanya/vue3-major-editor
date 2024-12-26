@@ -1,17 +1,13 @@
 import { DirectiveBinding, VNode } from 'vue';
 import ImageViewerCore from '../utils/ViewerCore';
 import { imageViewerApi } from '../index';
+import { ViewImageType } from '../types/image-viewer';
 import { v4 as uuidV4 } from 'uuid';
 
 const viewerCore = ImageViewerCore.getInStance()
 const config = viewerCore.getConfigOptions()
-var imageList: string [] = []
-type ImageType = {
-    key: string,
-    url: string,
-    index: number
-}
-var originImage:ImageType[] = []
+
+var originImage:ViewImageType[] = []
 
 let counter=0
 

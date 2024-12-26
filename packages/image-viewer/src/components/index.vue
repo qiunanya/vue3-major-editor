@@ -72,8 +72,8 @@
 
             <div :class="['image-viewer__controls']">
                 <div class="control-info" v-show="isMultipleImage">
-                    <span>{{$t('image.total')}}&nbsp;{{images.length}}&nbsp;{{$t('image.pictures')}}&nbsp;</span>
-                    <span>/&nbsp;{{$t('image.the')}}&nbsp;{{currentIndex+1}}&nbsp;{{$t('image.img')}}&nbsp;</span>
+                    <span>&nbsp;{{images.length}}&nbsp;</span>
+                    <span>/&nbsp;{{currentIndex+1}}</span>
                 </div>
                 <!-- 图片工具栏 -->
                 <ToolsBar
