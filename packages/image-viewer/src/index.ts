@@ -1,9 +1,9 @@
-import { createVNode, render, h, App } from 'vue'
+import { createVNode, render, App } from 'vue'
 import ImageViewer from './components/viewer.vue'
 import ImageViewerUI from './components/index.vue'
 import VImageViewer from './directive/v-image-viewer'
 import LazyLoadDirective from './directive/v-lazy-image'
-import { ImageViewerOptions, ImageViewerType, ImageViewerInstallConfig, ImageObjectTypes } from './types/image-viewer'
+import { ImageViewerOptions, ImageViewerType, ImageViewerInstallConfig } from './types/image-viewer'
 import ImageViewerCore from './utils/ViewerCore'
 import { versions, asyncVerifyIllegalImage } from './utils/index'
 // 这样导入package.json文件并使用内容，会导致vite-plugin-dts打包生成的声明文件错乱

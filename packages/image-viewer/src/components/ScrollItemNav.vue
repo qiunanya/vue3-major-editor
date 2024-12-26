@@ -39,6 +39,7 @@ import { useVirtualList } from '@vueuse/core'
 import { computed, ref, nextTick, inject, watch } from 'vue'
 import vLazyImage from '../directive/v-lazy-image'
 import NavLoading from './NavLoading.vue'
+import { NavImageItemType } from '../types/image-viewer'
 
 // 引入图片列表
 const viewerImages = inject('images') as string[]
@@ -62,14 +63,7 @@ const counter: Ref = ref<number>(1)
 //         height: i % 2 === 0 ? 84 : 84,
 //         size: i % 2 === 0 ? 'small' : 'large',
 //     }))
-type ItemType = {
-    height: number,
-    size: string,
-    url: string,
-    index: number,
-    isLoad: boolean,
-    isError: boolean
-}
+
 const allItems = viewerImages.map((mp, i) => ({
     height: i % 2 === 0 ? 60 : 60,
     size: i % 2 === 0 ? 'small' : 'large',
@@ -87,17 +81,17 @@ const isDisabled = computed(() => {
     return counter.value>viewerImages.length;
 })
 
-const onLoad = (item:ItemType, index:number) => {
+const onLoad = (item:NavImageItemType, index:number) => {
     item.isLoad = false
     item.isError = false
 }
 
-const onError = (item:ItemType, index:number) => {
+const onError = (item:NavImageItemType, index:number) => {
     item.isLoad = false
     item.isError = true
 }
 
-const clickImge = (evt: Event, item: ItemType, index: number) => {
+const clickImge = (evt: Event, item: NavImageItemType, index: number) => {
     emit('on-click', { evt, item, index })
 }
 

@@ -119,7 +119,7 @@ import { HotkeysEvent } from 'hotkeys-js';
 import { messages, lang } from '../langs/index';
 import { useMouse } from '../hooks/mouse';
 import { usePlayer } from '../hooks/player';
-import { ImageObjectTypes } from '../types/image-viewer';
+import { ImageObjectTypes, ClickNavImageType } from '../types/image-viewer';
 
 const props = defineProps({
     visible: {
@@ -389,12 +389,7 @@ function onInput (val:number) {
 }
 
 // const onClickNavImage = debounce(clickImge, 200)
-type ClickImageType = {
-    evt:Event, 
-    item: ImageObjectTypes, 
-    index: number
-}
-function clickImge ({ evt, item, index }:ClickImageType) {
+function clickImge ({ evt, item, index }:ClickNavImageType) {
 
     loadImageErrorText.value = ""
     if (!imageRef.value) return

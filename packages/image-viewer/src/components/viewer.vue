@@ -5,17 +5,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, useSlots, getCurrentInstance, nextTick } from 'vue';
+import { ref, onMounted, getCurrentInstance, nextTick } from 'vue';
 import type { ComponentInternalInstance } from 'vue';
 import { imageViewerApi } from '../index';
+import { ViewImageType } from '../types/image-viewer';
 
 const emits = defineEmits(['on-click'])
 
-type ImageType = {
-    key: number,
-    url: string
-}
-const imageTempData = ref<ImageType[]>([])
+const imageTempData = ref<ViewImageType[]>([])
 
 const getSlotDom = () => {
     const instance = getCurrentInstance() as ComponentInternalInstance
@@ -29,14 +26,14 @@ const getSlotDom = () => {
                 // 建立唯一标识符data-index
                 el.setAttribute('data-index', `${index}`)
                 if (el.src) {
-                    imageTempData.value.push({key:index, url:  el.src })
+                    imageTempData.value.push({key:`${index}`, index, url:  el.src })
                 }
 
                 // 解决：动态监听src变化，当手动更新img的src时，也会触发
                 const observer = new MutationObserver(() => {
                     if (el.src) {
                         // 只在src有值时添加
-                        imageTempData.value.push({key:index, url:  el.src })
+                        imageTempData.value.push({key:`${index}`, index, url:  el.src })
                         // 停止观察
                         observer.disconnect(); 
                     }
@@ -47,7 +44,7 @@ const getSlotDom = () => {
                 el.onclick = function (evt:Event) {
                     const { src } = evt.target as HTMLImageElement
                     const imageItems = imageTempData.value.sort((a, b) => {
-                        return a.key - b.key
+                        return Number(a.key) - Number(b.key)
                     })
 
                     imageViewerApi({

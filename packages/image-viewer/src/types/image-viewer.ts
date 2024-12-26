@@ -41,4 +41,19 @@ export type ViewImageType = ImageObjectTypes & {
 
 export type AsyncSetImageReturnType = Promise<{ data: string[] } | { data: [] }>
 
+// 左侧图片列表项类型
+export type NavImageItemType = ImageObjectTypes & {
+    height: number,
+    size: string,
+    isLoad: boolean,
+    isError: boolean
+}
+
+// 左侧图片列表项点击参数类型
+export type ClickNavImageType = {
+    evt:Event, 
+    item: ImageObjectTypes, 
+    index: number
+}
+
 export {}

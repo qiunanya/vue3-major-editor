@@ -4,7 +4,7 @@
 </div>
 </template>
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { watch } from 'vue';
 import { getUserAgent } from '../utils';
 
 const props = defineProps({

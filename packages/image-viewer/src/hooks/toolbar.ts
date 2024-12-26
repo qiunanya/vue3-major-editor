@@ -1,6 +1,6 @@
 import ImageViewerCore from '../utils/ViewerCore';
 import { downloadExe } from '../utils/index';
-import { ref, nextTick, reactive, toRefs } from 'vue';
+import { ref, nextTick } from 'vue';
 import { useFullscreen } from '@vueuse/core'
 
 export const useToolbar = (images: string[], cb:Function) => {

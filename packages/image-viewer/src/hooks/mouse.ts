@@ -1,4 +1,4 @@
-import { nextTick, onMounted, ref } from 'vue'
+import { ref } from 'vue'
 
 export function useMouse () {
     const isMouseDown = ref(false)

@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import { ref, nextTick, computed, inject } from 'vue'
-import type { CSSProperties, PropType } from 'vue'
+import type { CSSProperties } from 'vue'
 import vLazyImage from '../directive/v-lazy-image'
 
 // type ImagesType = ImageObjectTypes[]
