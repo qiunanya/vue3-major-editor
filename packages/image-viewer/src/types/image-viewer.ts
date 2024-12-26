@@ -18,14 +18,14 @@ export type ImageViewerType = {
 type ZIndex = Partial<Pick<ImageViewerType, 'zIndex'>>
 
 // 预览图片API参数类型约束
-export type ImageViewerOptions = {
+export interface ImageViewerOptions extends ZIndex {
     specifyIndex?: number | string,
     current: string,
     images?: string[],
     imageDom?:HTMLImageElement,
     from?: fromType,
     language?:langType
-} & ZIndex
+}
 
 // app.use安装配置类型(初始化配置)
 export type ImageViewerInstallConfig = Partial<ImageViewerType>
@@ -35,14 +35,14 @@ export type ImageObjectTypes = {
     url: string;
 };
 
-export type ViewImageType = ImageObjectTypes & {
+export interface ViewImageType extends ImageObjectTypes {
     key: string,
 }
 
 export type AsyncSetImageReturnType = Promise<{ data: string[] } | { data: [] }>
 
 // 左侧图片列表项类型
-export type NavImageItemType = ImageObjectTypes & {
+export interface NavImageItemType extends ImageObjectTypes {
     height: number,
     size: string,
     isLoad: boolean,
