@@ -98,7 +98,6 @@
     </div>
    
     <HotKeys v-model:hotkey="hotkey" :is-active-key.camel="isActiveKey"></HotKeys>
-    <Message :is-active="isMessage"></Message>
 </div>
 
 </template>
@@ -106,10 +105,10 @@
 import { watch, ref, nextTick, onBeforeUnmount, provide } from 'vue';
 import type { PropType, Ref } from 'vue'
 import { useToolbar } from '../hooks/toolbar';
+import { useMessage } from '../hooks/message';
 import { debounce, getUserAgent } from '../utils';
 import { FlipAnimate } from '../utils/flip-animate';
 import HotKeys from './HotKeys.vue';
-import Message from './Message.vue';
 import MobileViewer from './MobileViewer.vue';
 import LoadingUI from './Loading.vue';
 import ScrollItemNav from './ScrollItemNav.vue'
@@ -203,6 +202,8 @@ const $t = (langkey = "") => {
         return props.language
     }
 }
+
+const MSG = useMessage()
 
 const {
     updateImageSrc,
@@ -322,7 +323,6 @@ const onCallBack = ({ index, url}: ImageObjectTypes) => {
 }
 
 const isVisibleNav = ref(false)
-const isMessage = ref(false)
 const setNavState = () => {
     isVisibleNav.value = !isVisibleNav.value
 }
@@ -374,10 +374,11 @@ watch(() => currentIndex.value, (n, o) => {
 
 function updateIsActive () {
     if (currentIndex.value===props.images.length-1) {
-        isMessage.value = true
-        setTimeout(() => {
-            isMessage.value = false
-        }, 2000)
+        MSG.warning({
+            type: 'warning',
+            title: '温馨提示',
+            message: '已经是最后一张图片了'
+        })
     }
 }
 

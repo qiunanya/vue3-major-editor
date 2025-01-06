@@ -1,0 +1,89 @@
+#ivv-message-wrapper {
+    position: fixed;
+    top: 32px;
+    right: 15px;
+    z-index: 999999;
+}
+
+.message-item {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 2px;
+    padding: 0px 15px;
+    min-width: 230px;
+    max-width: 450px;
+    border-left: 4px solid;
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.08);
+    transition: all linear 0.3s;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(calc(100% + 15px));
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+    }
+}
+
+.ivv-message-item--success {
+    border-color: #47d864;
+}
+
+.ivv-message-item--success .message__icon {
+    color: #47d864;
+}
+
+.ivv-message-item--info {
+    border-color: #2f86eb;
+}
+
+.ivv-message-item--warning {
+    border-color: #ffc021;
+}
+
+.ivv-message-item--error {
+    border-color: #ff623d;
+}
+
+
+.message-item + .message-item {
+    margin-top: 24px;
+}
+
+.ivv-message-item__icon,
+.ivv-message-item__close {
+    padding: 0 16px;
+}
+
+.ivv-message-item__body {
+    flex-grow: 1;
+}
+
+.ivv-message-item__title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.ivv-message-item__msg {
+    font-size: 14px;
+    color: #888;
+    margin-top: 6px;
+    line-height: 1.5;
+}
+
+.ivv-message-item__close {
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}

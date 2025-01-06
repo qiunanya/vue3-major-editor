@@ -3,7 +3,7 @@
         <h3 style="color: #646cff;">image-viewer-vue3 图片预览器</h3>
         <button @click="handleClose">手动关闭弹窗</button>
         <button @click="changeSrc">更换src</button>
-        {{  currentSrc  }}
+        <button @click="onSuccess">成功提示</button>
     </div>
     <div>
         <h5>指令使用图片预览器</h5>
@@ -33,27 +33,38 @@
 import { ref } from 'vue'
 import { onClose, imageViewerApi, onUpdate } from './src/index'
 import ImageViewerVue3 from "./src/components/viewer.vue"
+import { useMessage } from './src/hooks/message';
+
+
+const MessageApi = useMessage()
+
+const onSuccess = () => {
+    MessageApi.warning({
+        title: '自定义头部消息',
+        message: '我是自定义消息'
+    })
+}
 
 const dataList = ref([
-        "https://picsum.photos/id/10/2500/1667",
-        "https://picsum.photos/id/64/2500/1667",
-        "https://picsum.photos/id/11/2500/1667",
-        "https://picsum.photos/id/20/367/267",
-        "https://example.com/protected-image.jpg",
-        "https://example.com/protected-image.jpg",
-        "https://picsum.photos/id/19/2500/1667",
-        "https://picsum.photos/id/22/367/267",
-        "https://picsum.photos/id/26/367/267",
-        "https://picsum.photos/id/27/367/267",
-        "https://picsum.photos/id/28/367/267",
-        "https://picsum.photos/id/24/367/267",
-        "https://picsum.photos/id/29/4000/2670",
-        "https://picsum.photos/id/23/367/267",
-        "https://picsum.photos/id/24/367/267",
-        "https://picsum.photos/id/25/367/267",
-        "https://picsum.photos/id/26/367/267",
-        "https://picsum.photos/id/27/367/267",
-        "https://picsum.photos/id/28/367/267",
+        // "https://picsum.photos/id/10/2500/1667",
+        // "https://picsum.photos/id/64/2500/1667",
+        // "https://picsum.photos/id/11/2500/1667",
+        // "https://picsum.photos/id/20/367/267",
+        // "https://example.com/protected-image.jpg",
+        // "https://example.com/protected-image.jpg",
+        // "https://picsum.photos/id/19/2500/1667",
+        // "https://picsum.photos/id/22/367/267",
+        // "https://picsum.photos/id/26/367/267",
+        // "https://picsum.photos/id/27/367/267",
+        // "https://picsum.photos/id/28/367/267",
+        // "https://picsum.photos/id/24/367/267",
+        // "https://picsum.photos/id/29/4000/2670",
+        // "https://picsum.photos/id/23/367/267",
+        // "https://picsum.photos/id/24/367/267",
+        // "https://picsum.photos/id/25/367/267",
+        // "https://picsum.photos/id/26/367/267",
+        // "https://picsum.photos/id/27/367/267",
+        // "https://picsum.photos/id/28/367/267",
         "https://picsum.photos/id/29/367/267",
         "https://picsum.photos/id/30/367/267",
         "https://picsum.photos/id/31/367/267",
