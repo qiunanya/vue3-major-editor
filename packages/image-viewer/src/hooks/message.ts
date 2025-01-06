@@ -7,11 +7,18 @@ interface MsgOptions {
     duration: number
 }
 
-const Optoins:MsgOptions = {
+const Options:MsgOptions = {
     title: '提示',
-    duration: 3000,
+    duration: 2000,
     type: 'success',
     message: '提示内容'
+}
+
+const MessageInfo:Record<MsgState, MsgOptions> = {
+    'success':{ type: 'success', title: '提示', message: '这是一条消息', duration: 2000 },
+    'error': { type: 'error', title: '提示', message: '这是一条消息', duration: 2000 },
+    'warning': { type: 'warning', title: '提示', message: '这是一条消息', duration: 2000 },
+    'info': { type: 'info', title: '提示', message: '这是一条消息', duration: 2000 },
 }
 
 export const useMessage = () => {
@@ -24,27 +31,23 @@ export const useMessage = () => {
     init()
 
     const success = (opt?:Partial<MsgOptions>) => {
-        const defaults = { type: 'success', title: '成功提示', message: '这是一条成功消息' }
-        messageUI({...defaults, ...opt, })
+        messageUI({...MessageInfo['success'], ...opt })
     }
 
     const error = (opt?:Partial<MsgOptions>) => {
-        const defaults = { type: 'error', title: '错误提示', message: '这是一条错误消息' }
-        messageUI({...defaults, ...opt, })
+        messageUI({...MessageInfo['error'], ...opt })
     }
 
     const warning = (opt?:Partial<MsgOptions>) => {
-        const defaults = { type: 'warning', title: '警告提示', message: '这是一条警告消息' }
-        messageUI({...defaults, ...opt, })
+        messageUI({...MessageInfo['warning'], ...opt, })
     }
 
     const info = (opt?:Partial<MsgOptions>) => {
-        const defaults = { type: 'info', title: '基础提示', message: '这是一条基础消息' }
-        messageUI({...defaults, ...opt, })
+        messageUI({...MessageInfo['info'], ...opt })
     }
 
     function messageUI({ title = "", message = "", type = "info", duration = 3000 }) {
-        const newOpt = Object.assign(Optoins, { title, message, type, duration })
+        const newOpt = Object.assign(Options, { title, message, type, duration })
 
         const main = document.getElementById("ivv-message-wrapper")
         if (main) {
