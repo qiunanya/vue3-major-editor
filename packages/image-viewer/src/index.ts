@@ -6,6 +6,8 @@ import LazyLoadDirective from './directive/v-lazy-image'
 import { ImageViewerOptions, ImageViewerType, ImageViewerInstallConfig } from './types/image-viewer'
 import ImageViewerCore from './utils/ViewerCore'
 import { versions, asyncVerifyIllegalImage } from './utils/index'
+// Message CSS
+import './styles/message.scss'
 // 这样导入package.json文件并使用内容，会导致vite-plugin-dts打包生成的声明文件错乱
 // import pkg from '../package.json';
 
