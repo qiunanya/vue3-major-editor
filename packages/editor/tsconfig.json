@@ -1,25 +1,20 @@
 {
     "compilerOptions": {
-        "baseUrl": ".",
-        "jsx": "preserve", // jsx 不转
+        "target": "ESNext",
+        "useDefineForClassFields": true,
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "declarationDir": "./lib",
+        "declaration": true,
         "strict": true,
-        "target": "ES2015", // 遵循es5版本
-        "module": "ESNext", // 打包模块类型ESNext
-        "skipLibCheck": true, // 跳过类库检测
-        "esModuleInterop": true, // 支持es6,commonjs模块
-        "moduleResolution": "Node", // 按照node模块来解析
-        "noImplicitAny": true, // 禁止使用any类型
-        "strictNullChecks": true, // 检查null和undefined类型
-        "lib": ["esnext", "dom"], // 编译时用的库
+        "jsx": "preserve",
+        "sourceMap": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "esModuleInterop": true,
+        "lib": ["ESNext", "DOM"],
+        "skipLibCheck": true
     },
-    "include": [
-        "./**/*.ts",
-        "./**/*.d.ts",
-        // 添加vue文件，保证ts类型校验通过
-        "./**/*.vue",
-    ],
-    "exclude": ["./node_modules", "./**/vite.config.ts", "./package.json"],
-    "vueCompilerOptions": {
-        "target": 3
-    }
+    "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "main.ts"],
+    "exclude": ["node_modules","App.vue","main.ts"]
 }

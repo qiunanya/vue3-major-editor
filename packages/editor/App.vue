@@ -34,7 +34,7 @@
     // import { Button } from '@majoreditor/ui'
 
     // 引入组件
-    import Vue3TiptapEditor from "./editor.vue";
+    import Vue3TiptapEditor from "./src/editor.vue";
 
     interface Vue3TiptapEditorOptions {
         getHTML: () => string
