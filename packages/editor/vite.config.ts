@@ -78,7 +78,7 @@ export default defineConfig({
     },
     plugins: [
         vue(),
-        // svgLoader(),
+        svgLoader(),
         terser(), // 开启压缩
         VueSetuoExtend(),
         // viteCompression(), // 启用gzip压缩

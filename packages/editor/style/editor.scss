@@ -229,3 +229,38 @@
         cursor: col-resize;
     }
 }
+
+/* SVG Icon */
+.editor-svg-action__icon {
+    width: 1.3em;
+    flex: 0 0 1.3em;
+    height: 1.2em;
+    // fill: rgb(51, 54, 57);
+}
+
+/* Bubble menu */
+.bubble-menu {
+    background-color: var(--white);
+    border: 1px solid var(--gray-1);
+    border-radius: 0.7rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    padding: 0.5rem;
+
+    button {
+        background-color: unset;
+        border: none;
+        font-weight: bold;
+        &:hover {
+            background-color: var(--gray-3);
+        }
+        &.is-active {
+            // background-color: var(--theme-color);
+            color: var(--theme-color);
+            &:hover {
+                background-color: var(--theme-color);
+                color: var(--white);
+            }
+        }
+    }
+}
