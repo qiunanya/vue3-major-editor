@@ -1,7 +1,5 @@
 <template>
     <div class="vue3-major-editor__root major-editor">
-        <ErrorImage></ErrorImage>
-        <!-- <button class="btn" ref="btnRef">Major-Editor777</button> -->
         <Toolkit v-if="isShowToolbar" @onUploadImage="onUploadImageCall"></Toolkit>
         <div class="rich-content-editor__wrap">
             <bubble-menu
@@ -49,7 +47,6 @@ import TableRow from '@tiptap/extension-table-row';
 import Link from '@tiptap/extension-link';
 import Subscript from '@tiptap/extension-subscript';
 import Superscript from '@tiptap/extension-superscript';
-import ErrorImage from "./icons/error-image.svg";
 import BoldIcon from "./icons/bold-icon.svg";
 import ItalicIcon from "./icons/italic-icon.svg";
 import StrikeIcon from "./icons/strike-icon.svg";

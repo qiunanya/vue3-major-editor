@@ -1,27 +1,50 @@
 {
     "name": "magic-editor-vue3",
-    "private": "false",
+    "scope": "MagicEditorVue3",
     "version": "1.0.0",
-    "description": "",
+    "description": "A vue3 high quality rich text editor",
     "type": "module",
-    "main": "./index.ts",
+    "main": "./dist/lib/index.cjs",
+    "module": "./dist/es/index.js",
+    "types": "./dist/es/index.d.ts",
+    "style": "./dist/es/style.css",
     "scripts": {
         "dev": "vite",
         "build": "pnpm run clean && vite build",
+        "build:umd": "pnpm run clean && vite build",
         "clean": "rimraf dist",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "build:pro": "pnpm run clean && pnpm build:umd && pnpm build",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "check-exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm"
+    },
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org",
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/qiunanya/vue3-major-editor/tree/main/packages/image-viewer"
+    },
+    "exports": {
+        ".": {
+            "types": "./dist/es/index.d.ts",
+            "import": "./dist/es/index.js",
+            "require": "./dist/lib/index.cjs"
+        }
     },
     "files": [
         "dist",
+        "umds",
         "LICENSE",
         "README.md",
         "package.json"
     ],
     "keywords": [
-        "vue3",
-        "rich-text",
-        "editor"
+        "Vue3-editor",
+        "Rich Text",
+        "Editor"
     ],
     "author": "qiuny",
     "license": "MIT"
 }
+

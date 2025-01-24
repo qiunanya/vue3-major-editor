@@ -12,14 +12,14 @@
             <button style="margin-right:10px;" @click="getText">获取Text</button>
         </section>
         <!-- v-model:content="htmlContent" -->
-        <Vue3TiptapEditor
+        <MagicEditorVue3
             ref="vue3TiptapEditorRef" 
             v-model:content="htmlContent" 
             :imageInner="imageInner"
             :isEnable="true"
             :isShowToolbar="true"
             @onUploadImage="onUploadImage">
-        </Vue3TiptapEditor>
+        </MagicEditorVue3>
     </div>
 </template>
 
@@ -34,7 +34,7 @@
     // import { Button } from '@majoreditor/ui'
 
     // 引入组件
-    import { Vue3TiptapEditor } from "vue3-tiptap-editor";
+    import { MagicEditorVue3 } from 'magic-editor-vue3';
 
     interface Vue3TiptapEditorOptions {
         getHTML: () => string

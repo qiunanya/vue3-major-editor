@@ -1,5 +1,6 @@
 <template>
     <div class="vue3-major-editor__toolbar" data-major-editor="true">
+        <ErrorImage></ErrorImage>
         <UndoUI></UndoUI>
         <RedoUI></RedoUI>
         <ClearUI></ClearUI>
@@ -268,6 +269,8 @@ import ParagraphUI from './paragraph/index.vue';
 import SuperscriptUI from './superscript/index.vue';
 // 下标
 import SubscriptUI from './subscript/index.vue';
+
+import ErrorImage from "../icons/error-image.svg"; 
 
 const { majorEditor, editor } = useSelectCore();
 const { message, dialog, modal } = useNaiveDiscrete();

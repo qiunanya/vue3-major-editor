@@ -164,14 +164,16 @@ importers:
 
   packages/image-viewer: {}
 
+  packages/magic-editor: {}
+
   playground:
     dependencies:
       images-viewer-vue3:
         specifier: workspace:^
         version: link:../packages/image-viewer
-      vue3-tiptap-editor:
+      magic-editor-vue3:
         specifier: workspace:^
-        version: link:../packages/editor
+        version: link:../packages/magic-editor
 
 packages:
 
