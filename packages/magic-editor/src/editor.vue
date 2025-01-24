@@ -9,15 +9,15 @@
                 :tippy-options="{ duration: 100 }"
                 v-if="editor"
                 >
-                <div class="bubble-menu">
+                <div class="magic-bubble-menu">
                     <button @click="editor.chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
-                        Bold
+                        <BoldIcon class="menu-icon"></BoldIcon>
                     </button>
                     <button @click="editor.chain().focus().toggleItalic().run()" :class="{ 'is-active': editor.isActive('italic') }">
-                    Italic
+                        <ItalicIcon class="menu-icon"></ItalicIcon>
                     </button>
                     <button @click="editor.chain().focus().toggleStrike().run()" :class="{ 'is-active': editor.isActive('strike') }">
-                    Strike
+                        <StrikeIcon class="menu-icon"></StrikeIcon>
                     </button>
                 </div>
                 </bubble-menu>
@@ -50,6 +50,9 @@ import Link from '@tiptap/extension-link';
 import Subscript from '@tiptap/extension-subscript';
 import Superscript from '@tiptap/extension-superscript';
 import ErrorImage from "./icons/error-image.svg";
+import BoldIcon from "./icons/bold-icon.svg";
+import ItalicIcon from "./icons/italic-icon.svg";
+import StrikeIcon from "./icons/strike-icon.svg";
 
 // 顶部工具
 import Toolkit from "./components/Toolkit.vue";

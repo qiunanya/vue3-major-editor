@@ -14,6 +14,6 @@
     "license": "MIT",
     "dependencies": {
         "images-viewer-vue3": "workspace:^",
-        "vue3-tiptap-editor": "workspace:^"
+        "magic-editor-vue3": "workspace:^"
     }
 }

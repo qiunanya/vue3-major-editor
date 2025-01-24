@@ -239,7 +239,7 @@
 }
 
 /* Bubble menu */
-.bubble-menu {
+.magic-bubble-menu {
     background-color: var(--white);
     border: 1px solid var(--gray-1);
     border-radius: 0.7rem;
@@ -253,13 +253,22 @@
         font-weight: bold;
         &:hover {
             background-color: var(--gray-3);
+            .menu-icon {
+                fill: var(--theme-color);
+            }
         }
         &.is-active {
             // background-color: var(--theme-color);
             color: var(--theme-color);
+            .menu-icon {
+                fill: var(--theme-color);
+            }
             &:hover {
                 background-color: var(--theme-color);
                 color: var(--white);
+                .menu-icon {
+                    fill: var(--white);
+                }
             }
         }
     }
