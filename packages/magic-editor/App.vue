@@ -10,16 +10,20 @@
             <button style="margin: 0 10px;" @click="getHtml">获取HTML</button>
             <button style="margin-right:10px;" @click="getJson">获取Json</button>
             <button style="margin-right:10px;" @click="getText">获取Text</button>
+            <button style="margin-right:10px;" @click="previews">预览</button>
         </section>
         <!-- v-model:content="htmlContent" -->
-        <Vue3TiptapEditor
-            ref="vue3TiptapEditorRef" 
-            v-model:content="htmlContent" 
-            :imageInner="imageInner"
-            :isEnable="true"
-            :isShowToolbar="true"
-            @onUploadImage="onUploadImage">
-        </Vue3TiptapEditor>
+        <div style="display: flex;">
+            <Vue3TiptapEditor
+                ref="vue3TiptapEditorRef" 
+                v-model:content="htmlContent" 
+                :imageInner="imageInner"
+                :isEnable="true"
+                :isShowToolbar="true"
+                @onUploadImage="onUploadImage">
+            </Vue3TiptapEditor>
+            <div v-html="previewContent" style="padding: 12px;flex: 0 0 350px;border: 1px solid rgba(24, 160, 88, 0.1);"></div>
+        </div>
     </div>
 </template>
 
@@ -29,6 +33,7 @@
 
     // true:图片内部处理，默认转化为base64, false: 不自动转化数据，需要外部处理后添加到编辑器
     const imageInner = ref(false)
+    const previewContent = ref('')
 
     // 按需引入Button组件
     // import { Button } from '@majoreditor/ui'
@@ -79,6 +84,10 @@
         if (vue3TiptapEditorRef.value) {
             console.log(vue3TiptapEditorRef.value.getTEXT(), 'TEXT');
         }
+    }
+    function previews() {
+        if (!vue3TiptapEditorRef.value) return
+        previewContent.value = vue3TiptapEditorRef.value.getHTML()
     }
 </script>
 

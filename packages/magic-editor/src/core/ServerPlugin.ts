@@ -50,8 +50,8 @@ class ServerPlugin {
             // NAMESPACE: 'http://www.w3.org/2000/svg',
             ALLOW_DATA_ATTR: true,
             ALLOW_ARIA_ATTR: true,
-            FORBID_TAGS: ['style'],
             RETURN_DOM: false,
+            ALLOWED_ATTR: ['style']
         })
     }
 
