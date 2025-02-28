@@ -8,12 +8,7 @@
                 },
                 { 'is-disable': !editor.isEditable }
             ]" data-toolbar-type="toolbar-btn" @click="handleTextStyle('HorizontalRule')">
-                <svg viewBox="0 0 1024 1024" width="200" height="200">
-                    <path
-                        d="M175.573333 688v-221.738667h253.44v221.738667h74.154667V192.64h-74.154667V405.76h-253.44V192.64H101.418667v495.36h74.154666z m485.12 0V497.92h74.154667l114.474667 190.08h81.365333l-122.410667-200.149333c66.986667-20.181333 107.264-73.429333 107.264-142.549334 0-90.026667-69.12-152.661333-167.04-152.661333H587.946667v495.36h72.746666z m77.013334-249.130667h-77.013334V251.733333h77.013334c60.501333 0 102.272 38.869333 102.272 93.568 0 54.741333-41.813333 93.610667-102.272 93.610667z"
-                        fill="#191919" p-id="8929"></path>
-                    <path d="M91.989333 768.981333h840.021334v64H91.989333z"></path>
-                </svg>
+                <HorizontalRuleIcon/>
             </button>
         </template>
         <span>水平分隔符</span>
@@ -21,8 +16,10 @@
 </template>
 
 <script setup lang="ts">
-import { NTooltip } from "naive-ui";
-import { useSelectCore } from "../../hooks/useSelect";
+import { NTooltip } from "naive-ui"
+import { useSelectCore } from "../../hooks/useSelect"
+import HorizontalRuleIcon from '../../icons/horizontal-rule-icon.svg'
+
 
 const { majorEditor, editor } = useSelectCore();
 
