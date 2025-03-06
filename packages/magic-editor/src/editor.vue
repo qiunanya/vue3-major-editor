@@ -5,9 +5,9 @@
             <bubble-menu
                 :editor="editor"
                 :tippy-options="{ duration: 100 }"
-                v-if="editor"
                 >
-                <div class="magic-bubble-menu">
+                <div class="magic-bubble-menu" v-if="!editor.isActive('image')">
+                    {{ editor.isActive('paragraph') }}
                     <button @click="editor.chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
                         <BoldIcon class="menu-icon"></BoldIcon>
                     </button>
@@ -18,14 +18,14 @@
                         <StrikeIcon class="menu-icon"></StrikeIcon>
                     </button>
                 </div>
-                </bubble-menu>
+            </bubble-menu>
             <EditorContent :editor="editor"></EditorContent>
         </div>
     </div>
 </template>
 
 <script setup lang="ts" name="Vue3MajorEditor">
-import { ref, onBeforeUnmount, provide, nextTick } from "vue";
+import { ref, nextTick, onBeforeUnmount, provide, watch } from "vue";
 import type { PropType } from 'vue';
 import { Color } from "@tiptap/extension-color";
 import Document from '@tiptap/extension-document';
@@ -37,7 +37,7 @@ import TaskItem from '@tiptap/extension-task-item';
 import TaskList from '@tiptap/extension-task-list';
 import Images from '@tiptap/extension-image';
 import TextAlign from '@tiptap/extension-text-align';
-import { Editor, EditorEvents, EditorContent, BubbleMenu } from "@tiptap/vue-3";
+import { Editor, useEditor, EditorEvents, EditorContent, BubbleMenu } from "@tiptap/vue-3";
 import Placeholder from '@tiptap/extension-placeholder';
 import { EditorState, Transaction } from '@tiptap/pm/state';
 import Table from '@tiptap/extension-table';
@@ -85,6 +85,9 @@ const props = withDefaults(defineProps<EditorProps>(), {
     isShowToolbar: true
 })
 
+const magicBubbleMenuRef = ref<HTMLElement|null>(null)
+
+
 // emit
 const emits = defineEmits([
     "onCreated",
@@ -108,7 +111,8 @@ const CustomTaskItem = TaskItem.extend({
 const majorEditor = new MajorEditor();
 
 editor = new Editor({
-    content: DOMPurify.sanitize(contents.value),
+    // content: DOMPurify.sanitize(contents.value),
+    content: contents.value,
     extensions: [
         TextStyle,
         Color,
@@ -136,8 +140,9 @@ editor = new Editor({
         TableHeader,
         TableCell,
         Link.configure({
-            openOnClick: false,
-            protocols: ['https']
+            openOnClick: true,
+            // protocols: ['http', 'https', 'ftp'],
+            validate: (text) => true,
         }),
         Placeholder.configure({
             placeholder: '请输入内容...',
@@ -156,9 +161,19 @@ editor = new Editor({
     onCreate({editor}) {
         const currentContent = editor.getHTML();
         const newContent = currentContent + '<p><br></p>';
-        editor.commands.setContent(newContent);
+        editor.commands.setContent(newContent, false);
+    },
+    onUpdate ({editor}) {
+        emits('onUpdate', editor.getHTML())
     }
 });
+
+// 实时更新内容
+watch(contents,(n,o) => {
+    const isSame = editor.getHTML() === contents.value
+    if (isSame) return
+    editor.commands.setContent(n, false)
+}, { deep: true }) 
 
 // init majorEditor
 majorEditor.init(editor, props);
@@ -167,7 +182,8 @@ majorEditor.init(editor, props);
 majorEditor.use(TextPlugin);
 majorEditor.use(TablePlugin);
 majorEditor.use(ContextMenu);
-console.log(majorEditor);
+
+// console.log(editor, 'editor')
 
 const onUploadImageCall = ({ file, formData }:{ file:FileList, formData:FormData }) => {
     emits('onUploadImage', { file, formData, editor: editor })
@@ -178,7 +194,7 @@ provide("editor", editor);
 provide("content", contents.value);
 provide('props', props)
 
-const getHTML = () => {
+function getHTML() {
     return majorEditor.getHtml()
 }
 const getJSON = () => {
@@ -192,6 +208,22 @@ defineExpose({
     getHTML,
     getJSON,
     getTEXT
+})
+
+nextTick(() => {
+    // editor.extensionManager.extensions.push(
+    //     BubbleMenu.configure({
+    //         pluginKey: new PluginKey("bubbleMenuOne"),
+    //         element: magicBubbleMenuRef.value,
+    //         // 定义菜单1的显示条件（例如：选中普通文本时显示）
+    //         shouldShow: ({ editor, state }) => {
+    //             const { from, to } = state.selection;
+    //             // only show the bubble menu for paragraph
+    //             return editor.isActive('paragraph');
+    //         },
+    //     })
+    // )
+    console.log(editor, 'editor')
 })
 
 onBeforeUnmount(() => {

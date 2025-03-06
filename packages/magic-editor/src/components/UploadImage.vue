@@ -73,7 +73,7 @@ const onChangeFile = (evt: Event) => {
             const reader = new FileReader();
             reader.onload = (event) => {
                 const base64 = event.target?.result as string;
-                editor.commands.setImage({ src: base64 });
+                editor.commands.setImage({ src: base64, alt: '占位图片', title: '图片' });
             };
             reader.readAsDataURL(file[i]);
         }

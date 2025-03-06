@@ -46,13 +46,13 @@ class ServerPlugin {
             }
 
         })
-        return DOMPurify.sanitize(dirty, {
-            // NAMESPACE: 'http://www.w3.org/2000/svg',
-            ALLOW_DATA_ATTR: true,
-            ALLOW_ARIA_ATTR: true,
-            RETURN_DOM: false,
-            ALLOWED_ATTR: ['style']
-        })
+        // return DOMPurify.sanitize(dirty, {
+        //     // NAMESPACE: 'http://www.w3.org/2000/svg',
+        //     ALLOW_DATA_ATTR: true,
+        //     ALLOW_ARIA_ATTR: true,
+        //     RETURN_DOM: false
+        // })
+        return dirty
     }
 
     destroy () {

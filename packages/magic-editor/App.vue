@@ -20,9 +20,16 @@
                 :imageInner="imageInner"
                 :isEnable="true"
                 :isShowToolbar="true"
+                @onUpdate="onUpdate"
                 @onUploadImage="onUploadImage">
             </Vue3TiptapEditor>
-            <div v-html="previewContent" style="padding: 12px;flex: 0 0 350px;border: 1px solid rgba(24, 160, 88, 0.1);"></div>
+            <Vue3TiptapEditor
+                v-model:content="previewContent" 
+                :imageInner="imageInner"
+                :isEnable="false"
+                :isShowToolbar="false"
+                @onUploadImage="onUploadImage">
+            </Vue3TiptapEditor>
         </div>
     </div>
 </template>
@@ -33,7 +40,7 @@
 
     // true:图片内部处理，默认转化为base64, false: 不自动转化数据，需要外部处理后添加到编辑器
     const imageInner = ref(false)
-    const previewContent = ref('')
+    const previewContent = ref('<h3>欢迎使用Vue3-Tiptap-Editor富文本编辑器</h3>')
 
     // 按需引入Button组件
     // import { Button } from '@majoreditor/ui'
@@ -50,9 +57,8 @@
     const vue3TiptapEditorRef = ref<Vue3TiptapEditorOptions | null>(null)
     // const htmlContent = ref(`<p>欢迎使用vue3-tiptap-editor编辑器 🎉</p>欢迎订阅交流,<img src='https://placehold.co/800x400'/>`)
     const htmlContent = ref(`
-        <p>欢迎使用vue3-tiptap-editor编辑器 🎉</p>欢迎订阅交流,
-        <a href="https://en.wikipedia.org/wiki/World_Wide_Web">world wide web</a>
-        <a href="https://www.baidu.con">66666</a>`)
+        <p>欢迎使用vue3-tiptap-editor编辑器 🎉</p>欢迎订阅交流
+        <p>hello tiptap</p>`)
 
     // 仅支持base64和URL两种模式
     const onUploadImage = ({ file, formData, editor }:{ file:FileList, formData:FormData, editor: Editor }) => {
@@ -89,18 +95,22 @@
         if (!vue3TiptapEditorRef.value) return
         previewContent.value = vue3TiptapEditorRef.value.getHTML()
     }
+
+    const onUpdate = (val:string) => {
+        console.log(val, 'onUpdate')
+    }
 </script>
 
 <style lang="scss">
-    .app_wrapper {
-        padding:15px;
-        .h2 {
-            margin: 5px 0;
-            color: #646cff;
-        }
-        .cus-header {
-            display: flex;
-            align-items: center;
-        }
+.app_wrapper {
+    padding:15px;
+    .h2 {
+        margin: 5px 0;
+        color: #646cff;
     }
+    .cus-header {
+        display: flex;
+        align-items: center;
+    }
+}
 </style>
