@@ -5,9 +5,9 @@
             <bubble-menu
                 :editor="editor"
                 :tippy-options="{ duration: 100 }"
+                :shouldShow="shouldShowBubbleMenu"
                 >
                 <div class="magic-bubble-menu" v-if="!editor.isActive('image')">
-                    {{ editor.isActive('paragraph') }}
                     <button @click="editor.chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
                         <BoldIcon class="menu-icon"></BoldIcon>
                     </button>
@@ -38,6 +38,7 @@ import TaskList from '@tiptap/extension-task-list';
 import Images from '@tiptap/extension-image';
 import TextAlign from '@tiptap/extension-text-align';
 import { Editor, useEditor, EditorEvents, EditorContent, BubbleMenu } from "@tiptap/vue-3";
+import { EditorView } from "@tiptap/pm/view";
 import Placeholder from '@tiptap/extension-placeholder';
 import { EditorState, Transaction } from '@tiptap/pm/state';
 import Table from '@tiptap/extension-table';
@@ -184,6 +185,14 @@ majorEditor.use(TablePlugin);
 majorEditor.use(ContextMenu);
 
 // console.log(editor, 'editor')
+// 隐藏菜单
+const shouldShowBubbleMenu = (val:any) => {
+    if (val.state) {
+        const { from, to } = val.state.selection;
+        return from !== to && !editor.isActive("image")||false
+    }
+    return false
+};
 
 const onUploadImageCall = ({ file, formData }:{ file:FileList, formData:FormData }) => {
     emits('onUploadImage', { file, formData, editor: editor })
