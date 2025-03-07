@@ -66,6 +66,7 @@ import ContextMenu from "./plugins/ContextMenu";
 // 自定义扩展
 import CusLineHeightExt from "./extends/extension-lineHeight"; 
 import BackgroundColorExt from "./extends/extension-bg-color";
+import CusExtensionImage from "./extends/extension-image";
 
 // 导入props参数类型
 import { EditorProps } from './typings/interfaces';
@@ -127,13 +128,14 @@ editor = new Editor({
         TextAlign.configure({
             types: ['heading','paragraph'],
         }),
-        Images.configure({
-            inline: true,
-            allowBase64: true,
-            HTMLAttributes: {
-                class: 'my-custom-img-class',
-            },
-        }),
+        // Images.configure({
+        //     inline: true,
+        //     allowBase64: true,
+        //     HTMLAttributes: {
+        //         class: 'my-custom-img-class',
+        //     },
+        // }),
+        CusExtensionImage,
         Table.configure({
           resizable: true,
         }),
@@ -189,7 +191,7 @@ majorEditor.use(ContextMenu);
 const shouldShowBubbleMenu = (val:any) => {
     if (val.state) {
         const { from, to } = val.state.selection;
-        return from !== to && !editor.isActive("image")||false
+        return from !== to && !editor.isActive("customize-image")||false
     }
     return false
 };
