@@ -30,7 +30,8 @@
             "types": "./dist/es/index.d.ts",
             "import": "./dist/es/index.js",
             "require": "./dist/lib/index.cjs"
-        }
+        },
+        "./dist/es/css/style.css": "./dist/es/css/style.css"
     },
     "files": [
         "dist",

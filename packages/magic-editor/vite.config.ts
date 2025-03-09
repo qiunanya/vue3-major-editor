@@ -22,6 +22,9 @@ export default defineConfig({
         }),
         // VitePluginStyleInject()
     ],
+    optimizeDeps: {
+        include: ['./dist/es/css/style.css']
+    },
     server: {
         port: 3001,
         // 使用手机能够访问,使用默认路由
