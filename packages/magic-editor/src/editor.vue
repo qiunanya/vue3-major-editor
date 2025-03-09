@@ -1,6 +1,6 @@
 <template>
     <div class="vue3-major-editor__root major-editor">
-        <Toolkit @onUploadImage="onUploadImageCall"></Toolkit>
+        <Toolkit v-if="isShowToolbar" @onUploadImage="onUploadImageCall"></Toolkit>
         <div class="rich-content-editor__wrap">
             <bubble-menu
                 :editor="editor"
@@ -234,7 +234,7 @@ nextTick(() => {
     //         },
     //     })
     // )
-    console.log(editor, 'editor')
+    // console.log(editor, 'editor')
 })
 
 onBeforeUnmount(() => {

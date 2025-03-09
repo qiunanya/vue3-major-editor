@@ -1,7 +1,7 @@
 export interface EditorProps {
     imageInner?: boolean;
-    isEnable: boolean;
-    isShowToolba: boolean;
+    isEnable?: boolean;
+    isShowToolbar?: boolean;
 }
 
 export interface ContextMenuItem {

@@ -19,7 +19,6 @@
                 v-model:content="htmlContent" 
                 :imageInner="imageInner"
                 :isEnable="true"
-                :isShowToolbar="true"
                 @onUpdate="onUpdate"
                 @onUploadImage="onUploadImage">
             </EditorTiptapVue3>
@@ -67,7 +66,7 @@
                 const reader = new FileReader();
                 reader.onload = (event) => {
                     const base64 = event.target?.result as string;
-                    editor.commands.insertCustomImage({ src: base64 });
+                    // editor.commands.insertCustomImage({ src: base64 });
                 };
                 reader.readAsDataURL(file[i]);
             }
@@ -99,6 +98,7 @@
     const onUpdate = (val:string) => {
         console.log(val, 'onUpdate')
     }
+    console.log(Editor, 777)
 </script>
 
 <style lang="scss">
