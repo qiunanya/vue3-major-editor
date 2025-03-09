@@ -14,7 +14,7 @@
         </section>
         <!-- v-model:content="htmlContent" -->
         <div style="display: flex;">
-            <Vue3TiptapEditor
+            <EditorTiptapVue3
                 ref="vue3TiptapEditorRef" 
                 v-model:content="htmlContent" 
                 :imageInner="imageInner"
@@ -22,14 +22,14 @@
                 :isShowToolbar="true"
                 @onUpdate="onUpdate"
                 @onUploadImage="onUploadImage">
-            </Vue3TiptapEditor>
-            <Vue3TiptapEditor
+            </EditorTiptapVue3>
+            <EditorTiptapVue3
                 v-model:content="previewContent" 
                 :imageInner="imageInner"
                 :isEnable="false"
                 :isShowToolbar="false"
                 @onUploadImage="onUploadImage">
-            </Vue3TiptapEditor>
+            </EditorTiptapVue3>
         </div>
     </div>
 </template>
@@ -46,7 +46,7 @@
     // import { Button } from '@majoreditor/ui'
 
     // 引入组件
-    import Vue3TiptapEditor from "./src/editor.vue";
+    // import Vue3TiptapEditor from "./src/editor.vue";
 
     interface Vue3TiptapEditorOptions {
         getHTML: () => string

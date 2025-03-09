@@ -1,6 +1,6 @@
 <template>
     <div class="vue3-major-editor__root major-editor">
-        <Toolkit v-if="isShowToolbar" @onUploadImage="onUploadImageCall"></Toolkit>
+        <Toolkit @onUploadImage="onUploadImageCall"></Toolkit>
         <div class="rich-content-editor__wrap">
             <bubble-menu
                 :editor="editor"
@@ -24,7 +24,7 @@
     </div>
 </template>
 
-<script setup lang="ts" name="Vue3MajorEditor">
+<script setup lang="ts" name="EditorTiptapVue3">
 import { ref, nextTick, onBeforeUnmount, provide, watch } from "vue";
 import type { PropType } from 'vue';
 import { Color } from "@tiptap/extension-color";

@@ -4,7 +4,12 @@ import dts from "vite-plugin-dts";
 import VitePluginStyleInject from 'vite-plugin-style-inject';
 import path from "path";
 import svgLoader from 'vite-svg-loader'
+import { PreRenderedAsset} from 'rollup' 
 
+// 统一处理所有输出格式的资源配置
+const assetFileNames = (chunkInfo:PreRenderedAsset) => {
+    return chunkInfo.names.some(e => e.endsWith('.css')) ? 'css/style.css' : 'assets/[name]-[hash][extname]';
+};
 export default defineConfig({
     plugins: [
         vue(),
@@ -15,7 +20,7 @@ export default defineConfig({
             rollupTypes: false,
             exclude: ['main.ts']
         }),
-        VitePluginStyleInject()
+        // VitePluginStyleInject()
     ],
     server: {
         port: 3001,
@@ -31,7 +36,8 @@ export default defineConfig({
                     dir: 'dist/es',
                     entryFileNames: '[name].js',
                     preserveModules: true,
-                    preserveModulesRoot: 'src'
+                    preserveModulesRoot: 'src',
+                    assetFileNames
                 },
                 {
                     format: 'cjs',
@@ -39,13 +45,14 @@ export default defineConfig({
                     entryFileNames: '[name].js',
                     preserveModules: true,
                     preserveModulesRoot: 'src',
-                    exports: 'named'
+                    exports: 'named',
+                    assetFileNames
                 }
             ]
         },
         lib: {
             entry: "src/index.ts",
-            name: "vue3-tiptap-editor",
+            name: "editor-tiptap-vue3",
             // fileName: 'index',
             // formats:['es','cjs']
         }

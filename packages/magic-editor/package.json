@@ -1,13 +1,13 @@
 {
-    "name": "magic-editor-vue3",
-    "scope": "MagicEditorVue3",
+    "name": "editor-tiptap-vue3",
+    "scope": "EditorTiptapVue3",
     "version": "1.0.0",
     "description": "A vue3 high quality rich text editor",
     "type": "module",
     "main": "./dist/lib/index.cjs",
     "module": "./dist/es/index.js",
     "types": "./dist/es/index.d.ts",
-    "style": "./dist/es/style.css",
+    "style": "./dist/es/css/style.css",
     "scripts": {
         "dev": "vite",
         "build": "pnpm run clean && vite build",

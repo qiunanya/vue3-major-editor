@@ -4,6 +4,7 @@ import type { SFCInstallWithContext, SFCWithInstall } from "../sfcs/typescripts"
 export const withInstall = <T, E extends Record<string, any>>(main: T, extra?: E) => {
     (main as SFCWithInstall<T>).install = (app:App): void => {
         for (const comp of [main, ...Object.values(extra ?? {})]) {
+            console.log(comp.name, 66666)
             app.component(comp.name, comp);
         }
     };

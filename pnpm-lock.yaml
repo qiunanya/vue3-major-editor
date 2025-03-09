@@ -126,6 +126,9 @@ importers:
       '@rollup/plugin-terser':
         specifier: ^0.4.4
         version: 0.4.4(rollup@4.29.1)
+      '@types/rollup':
+        specifier: ^0.54.0
+        version: 0.54.0
       '@vitejs/plugin-vue':
         specifier: ^5.2.1
         version: 5.2.1(vite@6.0.5(@types/node@20.14.5)(sass@1.77.5)(terser@5.31.1)(yaml@2.6.0))(vue@3.4.29(typescript@5.7.2))
@@ -168,12 +171,12 @@ importers:
 
   playground:
     dependencies:
+      editor-tiptap-vue3:
+        specifier: workspace:^
+        version: link:../packages/magic-editor
       images-viewer-vue3:
         specifier: workspace:^
         version: link:../packages/image-viewer
-      magic-editor-vue3:
-        specifier: workspace:^
-        version: link:../packages/magic-editor
 
 packages:
 
@@ -830,6 +833,10 @@ packages:
 
   '@types/node@20.14.5':
     resolution: {integrity: sha512-aoRR+fJkZT2l0aGOJhuA8frnCSoNX6W7U2mpNq63+BxBIj5BQFt8rHy627kijCmm63ijdSdwvGgpUsU6MBsZZA==}
+
+  '@types/rollup@0.54.0':
+    resolution: {integrity: sha512-oeYztLHhQ98jnr+u2cs1c3tHOGtpzrm9DJlIdEjznwoXWidUbrI+X6ib7zCkPIbB7eJ7VbbKNQ5n/bPnSg6Naw==}
+    deprecated: This is a stub types definition for rollup (https://github.com/rollup/rollup). rollup provides its own type definitions, so you don't need @types/rollup installed!
 
   '@types/trusted-types@2.0.7':
     resolution: {integrity: sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==}
@@ -2575,6 +2582,10 @@ snapshots:
   '@types/node@20.14.5':
     dependencies:
       undici-types: 5.26.5
+
+  '@types/rollup@0.54.0':
+    dependencies:
+      rollup: 4.29.1
 
   '@types/trusted-types@2.0.7': {}
 
