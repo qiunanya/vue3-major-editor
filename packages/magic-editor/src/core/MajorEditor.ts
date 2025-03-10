@@ -16,7 +16,7 @@ class MajorEditor extends EventEmitter {
 
     init (editor:Editor, _opt:EditorProps) {
         this.editor = editor
-        this.editor.setEditable(_opt.isEnable)
+        this.editor.setEditable(_opt.isEnable||false)
         this.use(ServerPlugin)
     }
 
