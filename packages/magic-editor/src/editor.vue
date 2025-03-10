@@ -201,8 +201,7 @@ const onUploadImageCall = ({ file, formData }:{ file:FileList, formData:FormData
 }
 
 provide("majorEditor", majorEditor);
-provide("editor", editor);
-provide("content", contents.value);
+provide("editor", editor)
 provide('props', props)
 
 function getHTML() {
@@ -222,19 +221,7 @@ defineExpose({
 })
 
 nextTick(() => {
-    // editor.extensionManager.extensions.push(
-    //     BubbleMenu.configure({
-    //         pluginKey: new PluginKey("bubbleMenuOne"),
-    //         element: magicBubbleMenuRef.value,
-    //         // 定义菜单1的显示条件（例如：选中普通文本时显示）
-    //         shouldShow: ({ editor, state }) => {
-    //             const { from, to } = state.selection;
-    //             // only show the bubble menu for paragraph
-    //             return editor.isActive('paragraph');
-    //         },
-    //     })
-    // )
-    // console.log(editor, 'editor')
+   console.log(majorEditor, 'majorEditor')
 })
 
 onBeforeUnmount(() => {
