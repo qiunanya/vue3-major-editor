@@ -98,7 +98,6 @@
     const onUpdate = (val:string) => {
         console.log(val, 'onUpdate')
     }
-    console.log(Editor, 777)
 </script>
 
 <style lang="scss">
