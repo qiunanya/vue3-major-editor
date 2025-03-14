@@ -12,7 +12,6 @@
             <button style="margin-right:10px;" @click="getText">获取Text</button>
             <button style="margin-right:10px;" @click="previews">预览</button>
         </section>
-        <!-- v-model:content="htmlContent" -->
         <div style="display: flex;">
             <EditorTiptapVue3
                 ref="vue3TiptapEditorRef" 
@@ -34,8 +33,8 @@
 </template>
 
 <script setup lang="ts">
-    import { ref } from "vue";
-    import { Editor, EditorEvents } from "@tiptap/vue-3";
+    import { onBeforeUnmount, ref } from "vue";
+    import { Editor, HTMLVue3TiptapEditorElement } from "./src";
 
     // true:图片内部处理，默认转化为base64, false: 不自动转化数据，需要外部处理后添加到编辑器
     const imageInner = ref(false)
@@ -47,13 +46,7 @@
     // 引入组件
     // import Vue3TiptapEditor from "./src/editor.vue";
 
-    interface Vue3TiptapEditorOptions {
-        getHTML: () => string
-        getJSON: () => object
-        getTEXT: () => string
-    }
-
-    const vue3TiptapEditorRef = ref<Vue3TiptapEditorOptions | null>(null)
+    const vue3TiptapEditorRef = ref<HTMLVue3TiptapEditorElement | null>(null)
     // const htmlContent = ref(`<p>欢迎使用vue3-tiptap-editor编辑器 🎉</p>欢迎订阅交流,<img src='https://placehold.co/800x400'/>`)
     const htmlContent = ref(`
         <p>欢迎使用vue3-tiptap-editor编辑器 🎉</p>欢迎订阅交流
@@ -95,9 +88,13 @@
         previewContent.value = vue3TiptapEditorRef.value.getHTML()
     }
 
-    const onUpdate = (val:string) => {
-        console.log(val, 'onUpdate')
+    const onUpdate = (val:Editor) => {
+        console.log("update:",val.getHTML())
     }
+
+    onBeforeUnmount(() => {
+        vue3TiptapEditorRef.value&&vue3TiptapEditorRef.value.destroy()
+    })
 </script>
 
 <style lang="scss">

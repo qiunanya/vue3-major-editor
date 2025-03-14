@@ -69,7 +69,7 @@ import BackgroundColorExt from "./extends/extension-bg-color";
 import CusExtensionImage from "./extends/extension-image";
 
 // 导入props参数类型
-import { EditorProps } from './typings/interfaces';
+import { EditorProps } from './typings';
 
 // 过滤编辑器类容，防止xss攻击, 生产环境
 import DOMPurify from 'dompurify';
@@ -167,7 +167,7 @@ editor = new Editor({
         editor.commands.setContent(newContent, false);
     },
     onUpdate ({editor}) {
-        emits('onUpdate', editor.getHTML())
+        emits('onUpdate', editor)
     }
 });
 
@@ -204,29 +204,14 @@ provide("majorEditor", majorEditor);
 provide("editor", editor)
 provide('props', props)
 
-function getHTML() {
-    return majorEditor.getHtml()
-}
-const getJSON = () => {
-    return majorEditor.getJson()
-}
-const getTEXT = () => {
-    return majorEditor.getText()
-}
 // expose
 defineExpose({
-    getHTML,
-    getJSON,
-    getTEXT
+    getHTML: () => editor.getHTML(),
+    getJSON:() => editor.getJSON(),
+    getTEXT: () => editor.getText(),
+    destroy: () => editor && editor.destroy()
 })
 
-nextTick(() => {
-   console.log(majorEditor, 'majorEditor')
-})
-
-onBeforeUnmount(() => {
-    editor && editor.destroy();
-});
 </script>
 
 <style lang="scss" src="./style/index.scss"></style>

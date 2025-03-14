@@ -1,8 +1,8 @@
-import { withInstall } from './tools/install';
 import EditorTiptapVue3 from "./editor.vue";
 import { App } from 'vue';
+import { Editor, JSONContent } from "@tiptap/vue-3";
+import { HTMLVue3TiptapEditorElement } from './typings'
 
-// export const EditorTiptapVue3 = withInstall(editor)
 export default function install(app:App) {
     // 这里可以注册指令，因为App对象
     // if (config) {
@@ -18,6 +18,10 @@ export default function install(app:App) {
 }
 
 export { 
-    EditorTiptapVue3
+    EditorTiptapVue3,
+    Editor,
 }
-
+export type {
+    HTMLVue3TiptapEditorElement,
+    JSONContent
+}

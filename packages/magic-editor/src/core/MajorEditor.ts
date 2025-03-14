@@ -1,6 +1,6 @@
 import EventEmitter from 'events';
 import { Editor } from '@tiptap/vue-3'
-import { EditorProps } from '../typings/interfaces';
+import { EditorProps } from '../typings';
 import ServerPlugin from './ServerPlugin';
 
 class MajorEditor extends EventEmitter {

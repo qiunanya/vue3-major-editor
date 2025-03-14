@@ -4,7 +4,7 @@
 
 import { Editor } from '@tiptap/vue-3';
 import MajorEditor from '../core/MajorEditor';
-import { ContextMenuItem } from '../typings/interfaces';
+import { ContextMenuItem } from '../typings';
 
 type MajorEditors = MajorEditor
 import '../style/ctxmenu.scss'

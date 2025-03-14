@@ -237,7 +237,7 @@ import { useNaiveDiscrete } from "../hooks/navie-ui";
 import { v4 as uuidV4 } from 'uuid';
 import UploadImage from "./UploadImage.vue";
 import Links from "./Links.vue";
-import { colorList, alignList, lineHeighList } from '../tools/config';
+import { colorList, alignList, lineHeighList } from '../utils/config';
 
 // 导入工具组件
 import UndoUI from "./undo/index.vue";
