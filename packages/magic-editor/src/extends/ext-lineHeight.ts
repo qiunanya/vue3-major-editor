@@ -41,7 +41,7 @@ export interface LineHeightOptions {
     defaultValue: string,
 }
 
-const ExtensionLineHeight = Extension.create<LineHeightOptions>({
+export const ExtLineHeight = Extension.create<LineHeightOptions>({
     name: "lineHeight",
     addOptions() {
         return {
@@ -96,5 +96,3 @@ const ExtensionLineHeight = Extension.create<LineHeightOptions>({
         }
     }
 });
-
-export default ExtensionLineHeight;

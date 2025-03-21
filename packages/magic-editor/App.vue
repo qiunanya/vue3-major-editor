@@ -21,13 +21,14 @@
                 @onUpdate="onUpdate"
                 @onUploadImage="onUploadImage">
             </EditorTiptapVue3>
-            <EditorTiptapVue3
+            <!-- <EditorTiptapVue3
                 v-model:content="previewContent" 
                 :imageInner="imageInner"
                 :isEnable="false"
                 :isShowToolbar="false"
                 @onUploadImage="onUploadImage">
-            </EditorTiptapVue3>
+            </EditorTiptapVue3> -->
+            <div v-html="previewContent"></div>
         </div>
     </div>
 </template>

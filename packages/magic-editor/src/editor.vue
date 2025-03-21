@@ -38,9 +38,7 @@ import TaskList from '@tiptap/extension-task-list';
 import Images from '@tiptap/extension-image';
 import TextAlign from '@tiptap/extension-text-align';
 import { Editor, useEditor, EditorEvents, EditorContent, BubbleMenu } from "@tiptap/vue-3";
-import { EditorView } from "@tiptap/pm/view";
 import Placeholder from '@tiptap/extension-placeholder';
-import { EditorState, Transaction } from '@tiptap/pm/state';
 import Table from '@tiptap/extension-table';
 import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
@@ -64,9 +62,7 @@ import TablePlugin from "./plugins/TablePlugin";
 import ContextMenu from "./plugins/ContextMenu";
 
 // 自定义扩展
-import CusLineHeightExt from "./extends/extension-lineHeight"; 
-import BackgroundColorExt from "./extends/extension-bg-color";
-import CusExtensionImage from "./extends/extension-image";
+import { ExtBackgroundColor, ExtImage, ExtLineHeight } from './extends'
 
 // 导入props参数类型
 import { EditorProps } from './typings';
@@ -86,9 +82,6 @@ const props = withDefaults(defineProps<EditorProps>(), {
     isEnable: true,
     isShowToolbar: true
 })
-
-const magicBubbleMenuRef = ref<HTMLElement|null>(null)
-
 
 // emit
 const emits = defineEmits([
@@ -120,8 +113,8 @@ editor = new Editor({
         Color,
         StarterKit,
         Underline,
-        CusLineHeightExt, // 自定义行高组件会影响setParagraph方法
-        BackgroundColorExt,
+        ExtLineHeight, // 自定义行高组件会影响setParagraph方法
+        ExtBackgroundColor,
         // CustomDocument,
         CustomTaskItem,
         TaskList,
@@ -135,7 +128,7 @@ editor = new Editor({
         //         class: 'my-custom-img-class',
         //     },
         // }),
-        CusExtensionImage,
+        ExtImage,
         Table.configure({
           resizable: true,
         }),
@@ -186,7 +179,7 @@ majorEditor.use(TextPlugin);
 majorEditor.use(TablePlugin);
 majorEditor.use(ContextMenu);
 
-// console.log(editor, 'editor')
+console.log(editor, majorEditor)
 // 隐藏菜单
 const shouldShowBubbleMenu = (val:any) => {
     if (val.state) {

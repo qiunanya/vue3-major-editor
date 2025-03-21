@@ -1,23 +1,7 @@
 // 自定义图片插件
 // 创建一个新节点image
 import { mergeAttributes, Node, VueNodeViewRenderer, Command, RawCommands } from '@tiptap/vue-3'
-import ExtensionImage from '../components/extension-image/index.vue'
-
-// declare module '@tiptap/core' {
-//     interface Commands {
-//       insertCustomImage: {
-//         insertCustomImage: (options: {
-//           src: string
-//           file?: File
-//           width?: number
-//           height?: number
-//         }) => Command
-//       }
-//       updateImageAttributes: {
-//         updateImageAttributes: (attrs: Record<string, any>) => Command
-//       }
-//     }
-// }
+import ExtensionImageUI from '../components/extension-image/index.vue'
 
 declare module '@tiptap/core' {
     interface Commands<ReturnType> {
@@ -34,7 +18,7 @@ declare module '@tiptap/core' {
     }
   }
 
-type CustomImageAttrs = {
+export type CustomImageAttrs = {
     src: string
     file?: File
     width?: number
@@ -42,7 +26,7 @@ type CustomImageAttrs = {
     alt?: string
 }
 
-export default Node.create({
+export const ExtImage = Node.create({
     name: 'customize-image',
     group: 'block',
     atom:true,
@@ -64,7 +48,7 @@ export default Node.create({
     },
     
     addNodeView() {
-        return VueNodeViewRenderer(ExtensionImage)
+        return VueNodeViewRenderer(ExtensionImageUI)
     },
     // addCommands() {
     //     return {
