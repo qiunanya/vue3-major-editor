@@ -1,10 +1,11 @@
-import Heading from '@tiptap/extension-heading'
+import Heading, { Level } from '@tiptap/extension-heading'
 
-const CustomHeading = Heading.extend({
-  addOptions() {
-    return {
-      ...this.parent?.(),
-      levels: "",
-    }
-  },
+export const ExtHeading = Heading.extend({
+    name: 'customHeading',
+    addOptions() {
+        return {
+            ...this.parent?.(),
+            levels: [1, 2, 3, 4] as Level[]
+        }
+    },
 })

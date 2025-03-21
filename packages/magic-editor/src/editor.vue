@@ -62,7 +62,7 @@ import TablePlugin from "./plugins/TablePlugin";
 import ContextMenu from "./plugins/ContextMenu";
 
 // 自定义扩展
-import { ExtBackgroundColor, ExtImage, ExtLineHeight } from './extends'
+import { ExtBackgroundColor, ExtImage, ExtLineHeight, ExtHeading } from './extends'
 
 // 导入props参数类型
 import { EditorProps } from './typings';
@@ -109,6 +109,7 @@ editor = new Editor({
     // content: DOMPurify.sanitize(contents.value),
     content: contents.value,
     extensions: [
+        ExtHeading,
         TextStyle,
         Color,
         StarterKit,
