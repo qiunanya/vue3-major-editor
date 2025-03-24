@@ -62,7 +62,7 @@ import TablePlugin from "./plugins/TablePlugin";
 import ContextMenu from "./plugins/ContextMenu";
 
 // 自定义扩展
-import { ExtBackgroundColor, ExtImage, ExtLineHeight, ExtHeading } from './extends'
+import { ExtBackgroundColor, ExtImage, ExtLineHeight, ExtHeading, CustomBold } from './extends'
 
 // 导入props参数类型
 import { EditorProps } from './typings';
@@ -108,11 +108,15 @@ const majorEditor = new MajorEditor();
 editor = new Editor({
     // content: DOMPurify.sanitize(contents.value),
     content: contents.value,
+    editable: props.isEnable,
     extensions: [
+        CustomBold,
         ExtHeading,
         TextStyle,
         Color,
-        StarterKit,
+        StarterKit.configure({
+            bold: false
+        }),
         Underline,
         ExtLineHeight, // 自定义行高组件会影响setParagraph方法
         ExtBackgroundColor,

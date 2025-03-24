@@ -22,10 +22,21 @@ import BoldIcon from "../../icons/bold-icon.svg";
 
 
 const { majorEditor, editor } = useSelectCore();
+const { isActive, command } = defineProps({
+    isActive: Boolean,
+    command: {
+        type:Function,
+        default: () => {
+            return ''
+        }
+    }
+})
 
 // 设置文本样式
 function handleTextStyle(key: string) {
-    if (!editor.isEditable) return
-    majorEditor.setTextStyle(key);
+    command()
+    console.log(isActive)
+    // if (!editor.isEditable) return
+    // majorEditor.setTextStyle(key);
 }
 </script>

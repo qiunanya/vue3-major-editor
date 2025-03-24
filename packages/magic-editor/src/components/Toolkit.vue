@@ -1,5 +1,7 @@
 <template>
     <div class="vue3-major-editor__toolbar" data-major-editor="true">
+        <!-- 测试组件 -->
+        <component v-for="(item, index) in cusComponentIcon" v-bind="item.componentProps" :is="item.component" :key="index"></component>
         <!-- 测试图标 -->
         <!-- <ErrorImage></ErrorImage> -->
         <UndoUI></UndoUI>
@@ -229,7 +231,9 @@
 </template>
 
 <script lang="ts" setup name="Toolkit">
-import { ref, h, computed, reactive } from "vue";
+import { ref, h, computed, reactive, inject } from "vue";
+import { Editor } from '@tiptap/vue-3'
+import { Mark, Node } from '@tiptap/core';
 import { NPopselect, NTooltip, NPopover, NModal } from "naive-ui";
 import type { SelectOption } from "naive-ui";
 import { useSelectCore } from "../hooks/useSelect";
@@ -273,6 +277,10 @@ import SubscriptUI from './subscript/index.vue';
 
 import ErrorImage from "../icons/error-image.svg"; 
 
+// type IconType = Array<Mark|Node>
+// const cusComponentIcon = ref<IconType>([])
+
+const editors = inject('editor') as Editor
 const { majorEditor, editor } = useSelectCore();
 const { message, dialog, modal } = useNaiveDiscrete();
 // const dialog = useDialog()
@@ -544,7 +552,25 @@ const handlebColorPicker = (color: string) => {
     majorEditor.setTextStyle("backgroundColor", { color })
 }
 
+const cusComponentIcon = computed(() => {
+    let cIcon:any = []
+    editors.extensionManager.extensions.forEach(el => {
+        const { onClick } = el.options
+        // if (el.options) {
+        //     cIcon.push(el.options)
+        // }
+        if (!onClick && typeof onClick !== 'function') return
+
+        const Options = onClick({
+            editor:editors
+        })
+        cIcon.push(Options)
+    })
+    return cIcon
+})
+
 function initialize() {
+    console.log(cusComponentIcon.value, 888)
     getHList();
 }
 
