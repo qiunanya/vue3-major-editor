@@ -27,6 +27,14 @@ export default defineConfig({
         // 使用手机能够访问,使用默认路由
         host: '0.0.0.0'
     },
+    resolve: {
+        alias: [
+            {
+                find: '@',
+                replacement: path.resolve(__dirname, 'src'),
+            },
+        ]
+    },
     build: {
         rollupOptions: {
             external: ['vue'],

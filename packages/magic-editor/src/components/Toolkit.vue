@@ -1,5 +1,5 @@
 <template>
-    <div class="vue3-major-editor__toolbar" data-major-editor="true">
+    <div class="carrot-tiptap-editor__toolbar" data-major-editor="true">
         <!-- 测试组件 -->
         <component v-for="(item, index) in cusComponentIcon" v-bind="item.componentProps" :is="item.component" :key="index"></component>
         <!-- 测试图标 -->
@@ -206,7 +206,7 @@
                     <span>表格</span>
                 </NTooltip>
             </template>
-            <div class="major-table-picker__wrap">
+            <div class="toolbar__table-picker">
                 <p style="margin: 5px 0; display: flex; align-items: center;">
                     <strong>{{tbOptions.row}}</strong>行x<strong>{{tbOptions.column}}</strong>列, 
                     表头: <input type="checkbox" v-model="tbOptions.isWithHeaderRow">
@@ -556,9 +556,6 @@ const cusComponentIcon = computed(() => {
     let cIcon:any = []
     editors.extensionManager.extensions.forEach(el => {
         const { onClick } = el.options
-        // if (el.options) {
-        //     cIcon.push(el.options)
-        // }
         if (!onClick && typeof onClick !== 'function') return
 
         const Options = onClick({
@@ -576,90 +573,3 @@ function initialize() {
 
 initialize();
 </script>
-
-<style lang="scss" scoped>
-.major-table-picker__wrap {
-    display: flex;
-    flex-wrap: wrap;
-    .confirm__btn {
-        padding: 0;
-        padding-inline: 0;
-        margin-left: 0.5rem;
-    }
-    .table-filter__wrap {
-        display: grid;
-        grid-template-columns: repeat(10, 1fr);
-        column-gap: 0.15rem;
-        row-gap: 0.15rem;
-        position: relative;
-
-        .table-column-item {
-            text-align: center;
-            width: 1.8rem;
-            height: 1.5rem;
-            // margin: 0.2rem;
-            border-radius: 0.1rem;
-            background: #f0f0f0;
-            // border: 1px solid #18a058;
-            user-select: none;
-        }
-
-        .table-mask__wrap {
-            position: absolute;
-            width: 0px;
-            height: 0px;
-            // background-color: #000;
-            // border: 1px solid #18a058;
-            // opacity: 0.4;
-        }
-    }
-}
-
-.vue3-major-editor__toolbar {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    // background: rgba(24, 160, 88, 0.1);
-    background: #f0f0f0;
-
-    .is-cell_active {
-
-        // background:rgba(24, 160, 88, 0.1);
-        svg {
-            fill: #18a058;
-        }
-    }
-
-    svg:focus,
-    svg:active {
-        border: 0;
-        outline: none;
-    }
-
-    svg {
-        width: 1.3em;
-        flex: 0 0 1.3em;
-        height: 1.2em;
-        // fill: rgb(51, 54, 57);
-    }
-
-    button[data-toolbar-type="toolbar-btn"] {
-        display: flex;
-        align-items: center;
-        padding: 0.5em 0.5em;
-        outline: none;
-        border: none;
-        border-radius: 0.2em;
-        // background: transparent;
-        cursor: pointer;
-        height: 3em;
-        &.is-disable {
-            cursor: not-allowed;
-            svg {
-                fill: #666;
-            }
-        }
-    }
-    
-}
-</style>

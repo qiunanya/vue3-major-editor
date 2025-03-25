@@ -1,7 +1,7 @@
 <template>
-    <div class="vue3-major-editor__root major-editor">
+    <div class="carrot-tiptap-editor major-editor">
         <Toolkit v-if="isShowToolbar" @onUploadImage="onUploadImageCall"></Toolkit>
-        <div class="rich-content-editor__wrap">
+        <div class="carrot-tiptap-editor__content">
             <bubble-menu
                 :editor="editor"
                 :tippy-options="{ duration: 100 }"
