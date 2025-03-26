@@ -44,8 +44,6 @@ import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
 import TableRow from '@tiptap/extension-table-row';
 import Link from '@tiptap/extension-link';
-import Subscript from '@tiptap/extension-subscript';
-import Superscript from '@tiptap/extension-superscript';
 import BoldIcon from "./icons/bold-icon.svg";
 import ItalicIcon from "./icons/italic-icon.svg";
 import StrikeIcon from "./icons/strike-icon.svg";
@@ -62,7 +60,7 @@ import TablePlugin from "./plugins/TablePlugin";
 import ContextMenu from "./plugins/ContextMenu";
 
 // 自定义扩展
-import { ExtBackgroundColor, ExtImage, ExtLineHeight, ExtHeading, ExtBold, ExtItalic, ExtStrike, ExtUnderline, ExtCode, ExtCodeBlock, ExtHistory,ExtSubscript,ExtSuperscript } from './extensions'
+import TiptapExtensions from './extensions'
 
 // 导入props参数类型
 import { EditorProps } from './typings';
@@ -109,16 +107,7 @@ const editor:Editor = new Editor({
     content: contents.value,
     editable: props.isEnable,
     extensions: [
-        ExtHistory,
-        ExtBold,
-        ExtItalic,
-        ExtStrike,
-        ExtUnderline,
-        ExtCode,
-        ExtCodeBlock,
-        ExtSubscript,
-        ExtSuperscript,
-        ExtHeading,
+        ...TiptapExtensions,
         TextStyle,
         Color,
         StarterKit.configure({
@@ -127,10 +116,12 @@ const editor:Editor = new Editor({
             strike: false,
             code: false,
             codeBlock: false,
-            history: false
+            history: false,
+            orderedList: false,
+            bulletList: false,
+            horizontalRule: false,
+            blockquote: false
         }),
-        ExtLineHeight, // 自定义行高组件会影响setParagraph方法
-        ExtBackgroundColor,
         // CustomDocument,
         CustomTaskItem,
         TaskList,
@@ -144,7 +135,6 @@ const editor:Editor = new Editor({
         //         class: 'my-custom-img-class',
         //     },
         // }),
-        ExtImage,
         Table.configure({
           resizable: true,
         }),
@@ -158,16 +148,6 @@ const editor:Editor = new Editor({
         }),
         Placeholder.configure({
             placeholder: '请输入内容...',
-        }),
-        Subscript.configure({
-            HTMLAttributes: {
-                class: 'custom-subscript-class',
-            },
-        }),
-        Superscript.configure({
-            HTMLAttributes: {
-                class: 'custom-superscript-class',
-            },
         })
     ],
     onCreate({editor}) {

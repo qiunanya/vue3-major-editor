@@ -1,9 +1,8 @@
 import type { Editor } from '@tiptap/vue-3'
-import ExtensionSubscript from '@tiptap/extension-subscript'
+import HorizontalRule from '@tiptap/extension-horizontal-rule'
 import ButtonIcon from '../components/ButtonIcon.vue'
 
-const ExtSubscript = ExtensionSubscript.extend({
-    name: 'Subscript',
+const ExtHorizontalRule = HorizontalRule.extend({
     addOptions() {
         return {
             ...this.parent?.(),
@@ -11,26 +10,20 @@ const ExtSubscript = ExtensionSubscript.extend({
                 return {
                     component: ButtonIcon,
                     componentProps: {
-                        isActive: editor.isActive('Subscript'),
+                        isActive: editor.isActive('horizontalRule'),
                         isReadonly: !editor.isEditable,
-                        icons: 'subscript-icon',
-                        tipText: '下标',
+                        icons: 'horizontal-rule-icon',
+                        tipText: '水平分隔符',
                         command: () => {
-                            editor.commands.toggleSubscript()
+                            editor.commands.setHorizontalRule()
                         }
                     }
                 }
             }
         }
     },
-    addAttributes(){
-        return {
-            class:{
-                default: 'custom-subscript-class'
-            }
-        }
-    }
 })
 
 
-export { ExtSubscript }
+export { ExtHorizontalRule }
+export default ExtHorizontalRule

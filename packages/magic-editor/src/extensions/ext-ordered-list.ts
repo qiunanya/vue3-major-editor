@@ -1,9 +1,8 @@
 import type { Editor } from '@tiptap/vue-3'
-import ExtensionSubscript from '@tiptap/extension-subscript'
+import OrderedList from '@tiptap/extension-ordered-list'
 import ButtonIcon from '../components/ButtonIcon.vue'
 
-const ExtSubscript = ExtensionSubscript.extend({
-    name: 'Subscript',
+const ExtOrderedList = OrderedList.extend({
     addOptions() {
         return {
             ...this.parent?.(),
@@ -11,26 +10,19 @@ const ExtSubscript = ExtensionSubscript.extend({
                 return {
                     component: ButtonIcon,
                     componentProps: {
-                        isActive: editor.isActive('Subscript'),
+                        isActive: editor.isActive('orderedList'),
                         isReadonly: !editor.isEditable,
-                        icons: 'subscript-icon',
-                        tipText: '下标',
+                        icons: 'ordered-list-icon',
+                        tipText: '有序列表',
                         command: () => {
-                            editor.commands.toggleSubscript()
+                            editor.commands.toggleOrderedList()
                         }
                     }
                 }
             }
         }
     },
-    addAttributes(){
-        return {
-            class:{
-                default: 'custom-subscript-class'
-            }
-        }
-    }
 })
 
 
-export { ExtSubscript }
+export { ExtOrderedList }

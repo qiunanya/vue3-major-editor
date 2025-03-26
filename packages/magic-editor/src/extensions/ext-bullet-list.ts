@@ -1,9 +1,8 @@
 import type { Editor } from '@tiptap/vue-3'
-import ExtensionSubscript from '@tiptap/extension-subscript'
+import BulletList from '@tiptap/extension-bullet-list'
 import ButtonIcon from '../components/ButtonIcon.vue'
 
-const ExtSubscript = ExtensionSubscript.extend({
-    name: 'Subscript',
+const ExtBulletList = BulletList.extend({
     addOptions() {
         return {
             ...this.parent?.(),
@@ -11,26 +10,19 @@ const ExtSubscript = ExtensionSubscript.extend({
                 return {
                     component: ButtonIcon,
                     componentProps: {
-                        isActive: editor.isActive('Subscript'),
+                        isActive: editor.isActive('bulletList'),
                         isReadonly: !editor.isEditable,
-                        icons: 'subscript-icon',
-                        tipText: '下标',
+                        icons: 'bullet-list-icon',
+                        tipText: '无序列表',
                         command: () => {
-                            editor.commands.toggleSubscript()
+                            editor.commands.toggleBulletList()
                         }
                     }
                 }
             }
         }
     },
-    addAttributes(){
-        return {
-            class:{
-                default: 'custom-subscript-class'
-            }
-        }
-    }
 })
 
 
-export { ExtSubscript }
+export { ExtBulletList }

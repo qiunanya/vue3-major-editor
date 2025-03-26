@@ -1,9 +1,8 @@
 import type { Editor } from '@tiptap/vue-3'
-import ExtensionSubscript from '@tiptap/extension-subscript'
+import Blockquote from '@tiptap/extension-blockquote'
 import ButtonIcon from '../components/ButtonIcon.vue'
 
-const ExtSubscript = ExtensionSubscript.extend({
-    name: 'Subscript',
+const ExtBlockquote = Blockquote.extend({
     addOptions() {
         return {
             ...this.parent?.(),
@@ -11,26 +10,19 @@ const ExtSubscript = ExtensionSubscript.extend({
                 return {
                     component: ButtonIcon,
                     componentProps: {
-                        isActive: editor.isActive('Subscript'),
+                        isActive: editor.isActive('blockquote'),
                         isReadonly: !editor.isEditable,
-                        icons: 'subscript-icon',
-                        tipText: '下标',
+                        icons: 'blockquote-icon',
+                        tipText: '引用',
                         command: () => {
-                            editor.commands.toggleSubscript()
+                            editor.commands.toggleBlockquote()
                         }
                     }
                 }
             }
         }
     },
-    addAttributes(){
-        return {
-            class:{
-                default: 'custom-subscript-class'
-            }
-        }
-    }
 })
 
 
-export { ExtSubscript }
+export { ExtBlockquote }

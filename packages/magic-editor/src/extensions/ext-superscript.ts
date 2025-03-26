@@ -11,7 +11,7 @@ const ExtSuperscript = ExtensionSuperscript.extend({
                 return {
                     component: ButtonIcon,
                     componentProps: {
-                        isActive: editor.isActive('superscript'),
+                        isActive: editor.isActive('Superscript'),
                         isReadonly: !editor.isEditable,
                         icons: 'superscript-icon',
                         tipText: '上标',
@@ -23,6 +23,13 @@ const ExtSuperscript = ExtensionSuperscript.extend({
             }
         }
     },
+    addAttributes(){
+        return {
+            // class:{
+            //     default: 'custom-superscript-class'
+            // }
+        }
+    }
 })
 
 

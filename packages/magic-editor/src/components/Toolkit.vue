@@ -2,8 +2,6 @@
     <div class="carrot-tiptap-editor__toolbar" data-major-editor="true">
         <!-- 测试图标 -->
         <!-- <ErrorImage></ErrorImage> -->
-        <!-- <UndoUI></UndoUI> -->
-        <!-- <RedoUI></RedoUI> -->
         <ClearUI></ClearUI>
         <!-- 测试组件 -->
         <component v-for="(item, index) in cusComponentIcon" v-bind="item.componentProps" :is="item.component" :key="index"></component>
@@ -99,9 +97,6 @@
                 <button style="color: blue;margin-left: 12px;" @click.stop="handlebColorPicker('')">取消背景色</button>
             </div>
         </NPopover>
-
-        <BlockquoteUI></BlockquoteUI>
-        
         <NTooltip placement="bottom" trigger="hover">
             <template #trigger>
                 <button :class="[
@@ -115,9 +110,6 @@
             <span>超链接</span>
         </NTooltip>
 
-        <OrderedListUI></OrderedListUI>
-        <BulletListUI></BulletListUI>
-        <HorizontalRuleUI></HorizontalRuleUI>
         <!-- 自定义行高会段落冲突，暂时注释 -->
         <!-- <ParagraphUI></ParagraphUI> -->
         
@@ -237,14 +229,6 @@ import { colorList, alignList, lineHeighList } from '../utils/config';
 
 // 清除工具
 import ClearUI from './clear/index.vue';
-//  引用
-import BlockquoteUI from './blockquote/index.vue';
-// 有序列表
-import OrderedListUI from './ordered-list/index.vue';
-// 无序列表
-import BulletListUI from './bullet-list/index.vue';
-// 水平分隔符
-import HorizontalRuleUI from './horizontal-rule/index.vue';
 // 段落
 import ParagraphUI from './paragraph/index.vue';
 
