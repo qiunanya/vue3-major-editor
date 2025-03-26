@@ -8,15 +8,21 @@
         align-items: center;
         // background: rgba(24, 160, 88, 0.1);
         background: #f0f0f0;
-    
-        .is-cell_active {
-    
+        .history-icon {
+            fill: #666;
+        }
+        .toolbar-icon__active {
             // background:rgba(24, 160, 88, 0.1);
-            svg {
+            svg, path{
                 fill: #18a058;
             }
         }
-    
+        .toolbar-icon__readonly {
+            cursor: not-allowed;
+            svg, path {
+                fill: #666;
+            }
+        }
         svg:focus,
         svg:active {
             border: 0;

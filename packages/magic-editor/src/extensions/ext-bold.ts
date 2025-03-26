@@ -1,22 +1,21 @@
 import type { Editor } from '@tiptap/vue-3'
 import ExtensionBold from '@tiptap/extension-bold'
-import CBold from '../components/bold/index.vue'
-import BoldIcon from "../icons/bold-icon.svg"; 
+import ButtonIcon from '../components/ButtonIcon.vue'
 
-const CustomBold = ExtensionBold.extend({
+const ExtBold = ExtensionBold.extend({
     addOptions() {
         return {
             ...this.parent?.(),
             onClick: ({ editor }:{editor:Editor}) => {
                 return {
-                    component: CBold,
+                    component: ButtonIcon,
                     componentProps: {
                         isActive: editor.isActive('bold'),
                         isReadonly: !editor.isEditable,
                         icons: 'bold-icon',
+                        tipText: '加粗',
                         command: () => {
                             editor.commands.toggleBold()
-                            console.log(editor.isActive('blod'))
                         }
                     }
                 }
@@ -26,4 +25,4 @@ const CustomBold = ExtensionBold.extend({
 })
 
 
-export { CustomBold }
+export { ExtBold }

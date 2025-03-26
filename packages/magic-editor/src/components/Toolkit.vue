@@ -1,14 +1,12 @@
 <template>
     <div class="carrot-tiptap-editor__toolbar" data-major-editor="true">
-        <!-- 测试组件 -->
-        <component v-for="(item, index) in cusComponentIcon" v-bind="item.componentProps" :is="item.component" :key="index"></component>
         <!-- 测试图标 -->
         <!-- <ErrorImage></ErrorImage> -->
-        <UndoUI></UndoUI>
-        <RedoUI></RedoUI>
+        <!-- <UndoUI></UndoUI> -->
+        <!-- <RedoUI></RedoUI> -->
         <ClearUI></ClearUI>
-        <BoldUI></BoldUI>
-        <ItalicUI></ItalicUI>
+        <!-- 测试组件 -->
+        <component v-for="(item, index) in cusComponentIcon" v-bind="item.componentProps" :is="item.component" :key="index"></component>
         
         <NPopover ref="npopoverCLRef" style="max-height: 270px;max-width: 300px;" trigger="click" placement="bottom" scrollable>
             <template #trigger>
@@ -102,13 +100,7 @@
             </div>
         </NPopover>
 
-        <UnderlineUI></UnderlineUI>
-        <StrikeUI></StrikeUI>
-        <CodeBgUI></CodeBgUI>
-        <CodeBlockUI></CodeBlockUI>
         <BlockquoteUI></BlockquoteUI>
-        <SubscriptUI></SubscriptUI>
-        <SuperscriptUI></SuperscriptUI>
         
         <NTooltip placement="bottom" trigger="hover">
             <template #trigger>
@@ -232,7 +224,7 @@
 
 <script lang="ts" setup name="Toolkit">
 import { ref, h, computed, reactive, inject } from "vue";
-import { Editor } from '@tiptap/vue-3'
+import { Editor, Extension } from '@tiptap/vue-3'
 import { Mark, Node } from '@tiptap/core';
 import { NPopselect, NTooltip, NPopover, NModal } from "naive-ui";
 import type { SelectOption } from "naive-ui";
@@ -243,23 +235,8 @@ import UploadImage from "./UploadImage.vue";
 import Links from "./Links.vue";
 import { colorList, alignList, lineHeighList } from '../utils/config';
 
-// 导入工具组件
-import UndoUI from "./undo/index.vue";
-import RedoUI from "./redo/index.vue";
 // 清除工具
 import ClearUI from './clear/index.vue';
-// 加粗
-import BoldUI from './bold/index.vue';
-// 斜体
-import ItalicUI from './italic/index.vue';
-// 下划线
-import UnderlineUI from './underline/index.vue';
-// 删除线
-import StrikeUI from './strike/index.vue';
-// 代码背景
-import CodeBgUI from './code-bg/index.vue';
-// 代码块
-import CodeBlockUI from './code-block/index.vue';
 //  引用
 import BlockquoteUI from './blockquote/index.vue';
 // 有序列表
@@ -270,10 +247,6 @@ import BulletListUI from './bullet-list/index.vue';
 import HorizontalRuleUI from './horizontal-rule/index.vue';
 // 段落
 import ParagraphUI from './paragraph/index.vue';
-// 上标
-import SuperscriptUI from './superscript/index.vue';
-// 下标
-import SubscriptUI from './subscript/index.vue';
 
 import ErrorImage from "../icons/error-image.svg"; 
 
@@ -466,12 +439,6 @@ const handleHeading = (val: string) => {
     });
 };
 
-// 设置文本样式
-function handleTextStyle(key: string) {
-    if (!editor.isEditable) return
-    majorEditor.setTextStyle(key);
-}
-
 // 创建任务列表
 const handleTaskList = () => {
     if (editor) {
@@ -510,14 +477,6 @@ const uploadImageSuccess = ({ file, formData }: { file: FileList, formData: Form
     emits('onUploadImage', { file, formData })
 }
 
-// 是否允许撤销|重做
-const isRedo = computed(() => {
-    return editor && editor.can().chain().focus().redo().run() || false
-});
-const isUndo = computed(() => {
-    return editor && editor.can().chain().focus().undo().run() || false
-});
-
 
 function getHList() {
     optionsHT.value = [];
@@ -552,22 +511,25 @@ const handlebColorPicker = (color: string) => {
     majorEditor.setTextStyle("backgroundColor", { color })
 }
 
-const cusComponentIcon = computed(() => {
-    let cIcon:any = []
-    editors.extensionManager.extensions.forEach(el => {
-        const { onClick } = el.options
-        if (!onClick && typeof onClick !== 'function') return
+interface CusIconType {
+    componentProps: Object,
+    component: Object
+}
 
-        const Options = onClick({
-            editor:editors
-        })
-        cIcon.push(Options)
-    })
-    return cIcon
+const cusComponentIcon = computed(() => {
+    const extensions = editors.extensionManager.extensions
+    const tiptapExtensions = extensions.reduce<CusIconType[]>((pre, cur) => {
+        const { onClick } = cur.options;
+        if (typeof onClick !== 'function') return pre;
+        const extensionData = onClick({ editor: editors });
+        return Array.isArray(extensionData)
+        ? [...pre, ...extensionData]
+        : [...pre, extensionData];
+    },[]);
+    return tiptapExtensions
 })
 
 function initialize() {
-    console.log(cusComponentIcon.value, 888)
     getHList();
 }
 

@@ -31,13 +31,13 @@ import { Color } from "@tiptap/extension-color";
 import Document from '@tiptap/extension-document';
 import ListItem from "@tiptap/extension-list-item";
 import TextStyle from "@tiptap/extension-text-style";
-import Underline from "@tiptap/extension-underline";
-import StarterKit from "@tiptap/starter-kit";
+import Underline, { UnderlineOptions } from "@tiptap/extension-underline";
+import StarterKit, { StarterKitOptions } from "@tiptap/starter-kit";
 import TaskItem from '@tiptap/extension-task-item';
 import TaskList from '@tiptap/extension-task-list';
 import Images from '@tiptap/extension-image';
 import TextAlign from '@tiptap/extension-text-align';
-import { Editor, useEditor, EditorEvents, EditorContent, BubbleMenu } from "@tiptap/vue-3";
+import { Editor, useEditor, EditorEvents, EditorContent, BubbleMenu, Extension } from "@tiptap/vue-3";
 import Placeholder from '@tiptap/extension-placeholder';
 import Table from '@tiptap/extension-table';
 import TableCell from '@tiptap/extension-table-cell';
@@ -62,7 +62,7 @@ import TablePlugin from "./plugins/TablePlugin";
 import ContextMenu from "./plugins/ContextMenu";
 
 // 自定义扩展
-import { ExtBackgroundColor, ExtImage, ExtLineHeight, ExtHeading, CustomBold } from './extends'
+import { ExtBackgroundColor, ExtImage, ExtLineHeight, ExtHeading, ExtBold, ExtItalic, ExtStrike, ExtUnderline, ExtCode, ExtCodeBlock, ExtHistory,ExtSubscript,ExtSuperscript } from './extensions'
 
 // 导入props参数类型
 import { EditorProps } from './typings';
@@ -70,7 +70,6 @@ import { EditorProps } from './typings';
 // 过滤编辑器类容，防止xss攻击, 生产环境
 import DOMPurify from 'dompurify';
 
-let editor:Editor;
 const contents = defineModel<string>("content", {
     default: "",
     required: false,
@@ -105,19 +104,31 @@ const CustomTaskItem = TaskItem.extend({
 
 const majorEditor = new MajorEditor();
 
-editor = new Editor({
+const editor:Editor = new Editor({
     // content: DOMPurify.sanitize(contents.value),
     content: contents.value,
     editable: props.isEnable,
     extensions: [
-        CustomBold,
+        ExtHistory,
+        ExtBold,
+        ExtItalic,
+        ExtStrike,
+        ExtUnderline,
+        ExtCode,
+        ExtCodeBlock,
+        ExtSubscript,
+        ExtSuperscript,
         ExtHeading,
         TextStyle,
         Color,
         StarterKit.configure({
-            bold: false
+            bold: false,
+            italic: false,
+            strike: false,
+            code: false,
+            codeBlock: false,
+            history: false
         }),
-        Underline,
         ExtLineHeight, // 自定义行高组件会影响setParagraph方法
         ExtBackgroundColor,
         // CustomDocument,

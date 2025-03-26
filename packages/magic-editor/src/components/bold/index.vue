@@ -1,32 +1,19 @@
 <template>
-    <NTooltip placement="bottom" trigger="hover">
-        <template #trigger>
-            <!-- <button :class="[
-                'toolbar_btn',
-                {
-                    'is-cell_active': isActive,
-                },
-                { 'is-disable': !editor.isEditable }
-            ]" data-toolbar-type="toolbar-btn" @click="handleTextStyle('Bold')">
-                <BoldIcon/>
-                {{ isActive }}
-            </button> -->
-            <button :class="iconClass" data-toolbar-type="toolbar-btn" @click="handleTextStyle('Bold')">
-                <BoldIcon/>
-            </button>
-        </template>
-        <span>加粗</span>
-    </NTooltip>
+<NTooltip placement="bottom" trigger="hover" v-if='icons'>
+    <template #trigger>
+        <button :class="iconClass" data-toolbar-type="toolbar-btn" @click="handle">
+            <component :is="icons"></component>
+        </button>
+    </template>
+    <span>{{ tipText }}</span>
+</NTooltip>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
 import { NTooltip } from "naive-ui";
-import { useSelectCore } from "../../hooks/useSelect";
-import BoldIcon from "../../icons/bold-icon.svg"; 
 import { Void } from '@/utils'
 
-const { majorEditor, editor } = useSelectCore();
 // 此处不能解构，解构后computed无法监听属性变化
 // { isActive, command } = props
 const props = defineProps({
@@ -40,7 +27,11 @@ const props = defineProps({
     },
     icons: {
       type: String,
-      required: false,
+      default: ''
+    },
+    tipText: {
+      type: String,
+      default: '暂无提示'
     },
     command: {
         type:Function,
@@ -50,17 +41,14 @@ const props = defineProps({
 
 const iconClass = computed(() => ({
     'toolbar_btn': true,
-    'is-cell_active': props.isActive,
-    'is-disable':  props.isReadonly
+    'toolbar-icon__active': props.isActive,
+    'toolbar-icon__readonly':  props.isReadonly
 }))
 
 
 
 // 设置文本样式
-function handleTextStyle(key: string) {
-    props.command()
-    console.log(props.isActive)
-    // if (!editor.isEditable) return
-    // majorEditor.setTextStyle(key);
+function handle() {
+    !props.isReadonly&&props.command()
 }
 </script>
