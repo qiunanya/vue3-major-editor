@@ -1,13 +1,13 @@
 <template>
-    <NTooltip placement="bottom" trigger="hover" v-if='icons'>
-        <template #trigger>
-            <button :class="iconClass" data-toolbar-type="toolbar-btn" @click="handle">
-                <component :is="icons"></component>
-            </button>
-        </template>
-        <span>{{ tipText }}</span>
-    </NTooltip>
+<NTooltip placement="bottom" trigger="hover" v-if='icons'>
+    <template #trigger>
+        <button :class="iconClass" data-toolbar-type="toolbar-btn" @click="handle">
+            <component :is="icons"></component>
+        </button>
     </template>
+    <span>{{ tipText }}</span>
+</NTooltip>
+</template>
     
     <script setup lang="ts">
     import { computed } from 'vue'

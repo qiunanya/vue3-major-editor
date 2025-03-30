@@ -1,26 +1,8 @@
 <template>
     <div class="carrot-tiptap-editor major-editor">
         <Toolkit v-if="isShowToolbar" @onUploadImage="onUploadImageCall"></Toolkit>
-        <div class="carrot-tiptap-editor__content">
-            <bubble-menu
-                :editor="editor"
-                :tippy-options="{ duration: 100 }"
-                :shouldShow="shouldShowBubbleMenu"
-                >
-                <div class="magic-bubble-menu" v-if="!editor.isActive('image')">
-                    <button @click="editor.chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
-                        <BoldIcon class="menu-icon"></BoldIcon>
-                    </button>
-                    <button @click="editor.chain().focus().toggleItalic().run()" :class="{ 'is-active': editor.isActive('italic') }">
-                        <ItalicIcon class="menu-icon"></ItalicIcon>
-                    </button>
-                    <button @click="editor.chain().focus().toggleStrike().run()" :class="{ 'is-active': editor.isActive('strike') }">
-                        <StrikeIcon class="menu-icon"></StrikeIcon>
-                    </button>
-                </div>
-            </bubble-menu>
-            <EditorContent :editor="editor"></EditorContent>
-        </div>
+        <EditorContent class="carrot-tiptap-editor__content" :editor="editor"></EditorContent>
+        <BubbleMenu></BubbleMenu>
     </div>
 </template>
 
@@ -37,19 +19,17 @@ import TaskItem from '@tiptap/extension-task-item';
 import TaskList from '@tiptap/extension-task-list';
 import Images from '@tiptap/extension-image';
 import TextAlign from '@tiptap/extension-text-align';
-import { Editor, useEditor, EditorEvents, EditorContent, BubbleMenu, Extension } from "@tiptap/vue-3";
+import { Editor, useEditor, EditorEvents, EditorContent, Extension } from "@tiptap/vue-3";
 import Placeholder from '@tiptap/extension-placeholder';
 import Table from '@tiptap/extension-table';
 import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
 import TableRow from '@tiptap/extension-table-row';
 import Link from '@tiptap/extension-link';
-import BoldIcon from "./icons/bold-icon.svg";
-import ItalicIcon from "./icons/italic-icon.svg";
-import StrikeIcon from "./icons/strike-icon.svg";
-
 // 顶部工具
 import Toolkit from "./components/Toolkit.vue";
+// 菜单
+import BubbleMenu from "@/components/bubble-menu/index.vue"
 
 // 引入核心类
 import MajorEditor from "./core/MajorEditor";
@@ -176,14 +156,6 @@ majorEditor.use(TablePlugin);
 majorEditor.use(ContextMenu);
 
 console.log(editor, majorEditor)
-// 隐藏菜单
-const shouldShowBubbleMenu = (val:any) => {
-    if (val.state) {
-        const { from, to } = val.state.selection;
-        return from !== to && !editor.isActive("customize-image")||false
-    }
-    return false
-};
 
 const onUploadImageCall = ({ file, formData }:{ file:FileList, formData:FormData }) => {
     emits('onUploadImage', { file, formData, editor: editor })

@@ -26,6 +26,9 @@ importers:
       '@tiptap/extension-gapcursor':
         specifier: ^2.6.6
         version: 2.6.6(@tiptap/core@2.6.6(@tiptap/pm@2.6.6))(@tiptap/pm@2.6.6)
+      '@tiptap/extension-highlight':
+        specifier: ^2.6.6
+        version: 2.11.7(@tiptap/core@2.6.6(@tiptap/pm@2.6.6))
       '@tiptap/extension-image':
         specifier: ^2.6.6
         version: 2.6.6(@tiptap/core@2.6.6(@tiptap/pm@2.6.6))
@@ -162,8 +165,6 @@ importers:
       vue-tsc:
         specifier: ^2.2.0
         version: 2.2.0(typescript@5.7.2)
-
-  packages/editor: {}
 
   packages/image-viewer: {}
 
@@ -667,6 +668,11 @@ packages:
     resolution: {integrity: sha512-bgx9vptVFi5yFkIw1OI53J7+xJ71Or3SOe/Q8eSpZv53DlaKpL/TzKw8Z54t1PrI2rJ6H9vrLtkvixJvBZH1Ug==}
     peerDependencies:
       '@tiptap/core': ^2.6.6
+
+  '@tiptap/extension-highlight@2.11.7':
+    resolution: {integrity: sha512-c/NH4kIpNOWCUQv8RkFNDyOcgt+2pYFpDf0QBJmzhAuv4BIeS2bDmDtuNS7VgoWRZH+xxCNXfvm2BG+kjtipEg==}
+    peerDependencies:
+      '@tiptap/core': ^2.7.0
 
   '@tiptap/extension-history@2.6.6':
     resolution: {integrity: sha512-tPTzAmPGqMX5Bd5H8lzRpmsaMvB9DvI5Dy2za/VQuFtxgXmDiFVgHRkRXIuluSkPTuANu84XBOQ0cBijqY8x4w==}
@@ -2403,6 +2409,10 @@ snapshots:
       '@tiptap/core': 2.6.6(@tiptap/pm@2.6.6)
 
   '@tiptap/extension-heading@2.6.6(@tiptap/core@2.6.6(@tiptap/pm@2.6.6))':
+    dependencies:
+      '@tiptap/core': 2.6.6(@tiptap/pm@2.6.6)
+
+  '@tiptap/extension-highlight@2.11.7(@tiptap/core@2.6.6(@tiptap/pm@2.6.6))':
     dependencies:
       '@tiptap/core': 2.6.6(@tiptap/pm@2.6.6)
 

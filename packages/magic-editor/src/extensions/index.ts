@@ -1,3 +1,4 @@
+import {ExtClear} from './ext-clear'
 import {ExtHistory} from './ext-history'
 import {ExtBackgroundColor} from './ext-bgColor'
 import {ExtImage} from './ext-image'
@@ -15,8 +16,10 @@ import {ExtOrderedList} from './ext-ordered-list'
 import {ExtBulletList} from './ext-bullet-list'
 import {ExtHorizontalRule} from './ext-horizontal-rule'
 import {ExtBlockquote} from './ext-blockquote'
+import {ExtHighlight} from './ext-highlight'
 
 export default [
+    ExtClear,
     ExtHistory,
     ExtBackgroundColor,
     ExtImage,
@@ -26,6 +29,7 @@ export default [
     ExtItalic,
     ExtStrike,
     ExtUnderline,
+    ExtHighlight,
     ExtCode,
     ExtCodeBlock,
     ExtSubscript,

@@ -46,6 +46,7 @@
         "@tiptap/extension-text-align": "^2.6.6",
         "@tiptap/extension-text-style": "^2.6.6",
         "@tiptap/extension-underline": "^2.6.6",
+        "@tiptap/extension-highlight": "^2.6.6",
         "@tiptap/pm": "^2.6.6",
         "@tiptap/starter-kit": "^2.6.6",
         "@tiptap/vue-3": "^2.6.6",

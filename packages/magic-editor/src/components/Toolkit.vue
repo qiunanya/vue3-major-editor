@@ -2,7 +2,6 @@
     <div class="carrot-tiptap-editor__toolbar" data-major-editor="true">
         <!-- 测试图标 -->
         <!-- <ErrorImage></ErrorImage> -->
-        <ClearUI></ClearUI>
         <!-- 测试组件 -->
         <component v-for="(item, index) in cusComponentIcon" v-bind="item.componentProps" :is="item.component" :key="index"></component>
         
@@ -227,8 +226,6 @@ import UploadImage from "./UploadImage.vue";
 import Links from "./Links.vue";
 import { colorList, alignList, lineHeighList } from '../utils/config';
 
-// 清除工具
-import ClearUI from './clear/index.vue';
 // 段落
 import ParagraphUI from './paragraph/index.vue';
 
