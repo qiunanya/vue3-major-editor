@@ -19,7 +19,7 @@ import TaskItem from '@tiptap/extension-task-item';
 import TaskList from '@tiptap/extension-task-list';
 import Images from '@tiptap/extension-image';
 import TextAlign from '@tiptap/extension-text-align';
-import { Editor, useEditor, EditorEvents, EditorContent, Extension } from "@tiptap/vue-3";
+import { Editor, useEditor, EditorContent } from "@tiptap/vue-3";
 import Placeholder from '@tiptap/extension-placeholder';
 import Table from '@tiptap/extension-table';
 import TableCell from '@tiptap/extension-table-cell';
@@ -47,6 +47,7 @@ import { EditorProps } from './typings';
 
 // 过滤编辑器类容，防止xss攻击, 生产环境
 import DOMPurify from 'dompurify';
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 
 const contents = defineModel<string>("content", {
     default: "",

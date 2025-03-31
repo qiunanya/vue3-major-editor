@@ -8,6 +8,12 @@ prefer-workspace-packages = true
 recursive-install = true
 shamefully-hoist = true
 
+更新包
+pnpm --recursive update
+
+pnpm安装指定版本
+pnpm add sax@3.0.0
+
 在pnpm安装本地依赖
 pnpm add images-viewer-vue3
 测试成功

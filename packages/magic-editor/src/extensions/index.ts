@@ -18,6 +18,7 @@ import {ExtHorizontalRule} from './ext-horizontal-rule'
 import {ExtBlockquote} from './ext-blockquote'
 import {ExtHighlight} from './ext-highlight'
 import {ExtColor} from './ext-color'
+import {ExtCodeBlockLowlight} from './ext-codeBlockLowlight'
 
 export default [
     ExtClear,
@@ -33,7 +34,8 @@ export default [
     ExtHighlight,
     ExtColor,
     ExtCode,
-    ExtCodeBlock,
+    // ExtCodeBlock,
+    ExtCodeBlockLowlight,
     ExtSubscript,
     ExtSuperscript,
     ExtOrderedList,

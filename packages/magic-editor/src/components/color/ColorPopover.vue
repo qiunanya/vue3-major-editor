@@ -31,24 +31,19 @@
             :style="{background: item}"
             @click.stop="handleColorPicker(item)">
         </span>
-        <span class="color-list-item disabled-icon">
+        <span class="color-list-item disabled-icon" @click.stop="handleColorPicker('')">
             <DisabledIcon></DisabledIcon>
         </span>
     </div>
     <p class="color-picker-name">颜色选择器</p>
     <!-- <input class="color-picker__input" v-model="selectColor" type="color" list="" @input="onChangeColor" /> -->
-    <n-color-picker v-model:value="selectColor" :on-update:show="colorPickerShow" :show-alpha="true" />
-    <!-- <n-color-picker
-        v-model:value="selectColor" 
-        :show-alpha="true"
-        :on-update:value="onChangeColor"
-        :swatches="[
+    <n-color-picker v-model:value="selectColor" :on-update:value="colorPickerUpdate" :swatches="[
         '#FFFFFF',
         '#18A058',
         '#2080F0',
         '#F0A020',
         'rgba(208, 48, 80, 1)',
-        ]"/> -->
+        ]" :show-alpha="true" />
 </div>
 </NPopover>
 </template>
@@ -81,8 +76,8 @@ const props = defineProps({
 })
 
 const selectColor = ref('#94ddde')
-const colorPickerShow = (value:boolean):void => {
-    console.log(value, 6666)
+const colorPickerUpdate = (value: string):void => {
+    editor.commands.setColor(value)
 }
 const onChangeColor = (evt: Event) => {
     const target = evt.target as HTMLInputElement;
