@@ -88,8 +88,8 @@ const editor:Editor = new Editor({
     editable: props.isEnable,
     extensions: [
         ...TiptapExtensions,
-        TextStyle,
-        Color,
+        // TextStyle,
+        // Color,
         StarterKit.configure({
             bold: false,
             italic: false,

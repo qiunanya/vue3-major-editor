@@ -17,6 +17,7 @@ import {ExtBulletList} from './ext-bullet-list'
 import {ExtHorizontalRule} from './ext-horizontal-rule'
 import {ExtBlockquote} from './ext-blockquote'
 import {ExtHighlight} from './ext-highlight'
+import {ExtColor} from './ext-color'
 
 export default [
     ExtClear,
@@ -30,6 +31,7 @@ export default [
     ExtStrike,
     ExtUnderline,
     ExtHighlight,
+    ExtColor,
     ExtCode,
     ExtCodeBlock,
     ExtSubscript,
@@ -37,5 +39,5 @@ export default [
     ExtOrderedList,
     ExtBulletList,
     ExtHorizontalRule,
-    ExtBlockquote
+    ExtBlockquote,
 ]

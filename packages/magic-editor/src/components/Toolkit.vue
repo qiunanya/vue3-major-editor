@@ -5,7 +5,7 @@
         <!-- 测试组件 -->
         <component v-for="(item, index) in cusComponentIcon" v-bind="item.componentProps" :is="item.component" :key="index"></component>
         
-        <NPopover ref="npopoverCLRef" style="max-height: 270px;max-width: 300px;" trigger="click" placement="bottom" scrollable>
+        <!-- <NPopover ref="npopoverCLRef" style="max-height: 270px;max-width: 300px;" trigger="click" placement="bottom" scrollable>
             <template #trigger>
                 <NTooltip placement="top" trigger="hover">
                     <template #trigger>
@@ -42,7 +42,7 @@
                     @input="onChangeColor" />
                 <button style="color: blue;margin-left: 12px;" @click.stop="handleColorPicker('')">取消字体颜色</button>
             </div>
-        </NPopover>
+        </NPopover> -->
         <NPopselect v-model:value="selectHvalue" trigger="hover" :options="optionsHT" :on-update:value="handleHeading">
             <NTooltip placement="top" trigger="hover">
                 <template #trigger>
