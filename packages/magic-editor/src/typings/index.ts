@@ -3,6 +3,7 @@ interface EditorProps {
     imageInner?: boolean;
     isEnable?: boolean;
     isShowToolbar?: boolean;
+    characterCount?: number
 }
 
 interface ContextMenuItem {

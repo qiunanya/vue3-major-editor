@@ -1,6 +1,9 @@
 import '@tiptap/extension-text-style'
-
+// import ButtonIcon from '../components/ButtonIcon.vue'
+import BackgroundColorPopover from '@/components/color/BackgroundColorPopover.vue'
 import { Extension } from '@tiptap/core'
+import { Editor } from '@tiptap/vue-3'
+import { COLOR_DEFAULT } from '@/utils/color';
 
 export type ColorOptions = {
   /**
@@ -38,7 +41,20 @@ export const ExtBackgroundColor = Extension.create<ColorOptions>({
 
   addOptions() {
     return {
+      ...this.parent?.(),
         types: ['textStyle'],
+        onClick: ({ editor }:{editor:Editor}) => {
+            return {
+                component: BackgroundColorPopover,
+                componentProps: {
+                    isActive: editor.isActive('backgroundColor'),
+                    isReadonly: !editor.isEditable,
+                    icons: 'bold-icon',
+                    colors: COLOR_DEFAULT,
+                    tipText: '字体背景色',
+                }
+            }
+        }
     }
   },
 

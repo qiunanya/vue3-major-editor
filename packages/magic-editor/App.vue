@@ -50,8 +50,10 @@
     const vue3TiptapEditorRef = ref<HTMLVue3TiptapEditorElement | null>(null)
     // const htmlContent = ref(`<p>欢迎使用vue3-tiptap-editor编辑器 🎉</p>欢迎订阅交流,<img src='https://placehold.co/800x400'/>`)
     const htmlContent = ref(`
-        <p>欢迎使用vue3-tiptap-editor编辑器 🎉</p>欢迎订阅交流
-        <p>hello tiptap</p>`)
+        <p>欢迎使用vue3-tiptap-editor编辑器 🎉</p>
+        <p>This is regular text.</p>
+        <p><sub>This is subscript.</sub></p>
+        <p><span style="vertical-align: sub">And this.</span></p>`)
 
     // 仅支持base64和URL两种模式
     const onUploadImage = ({ file, formData, editor }:{ file:FileList, formData:FormData, editor: Editor }) => {

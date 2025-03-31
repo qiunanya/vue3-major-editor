@@ -9,6 +9,7 @@ import {ExtItalic} from './ext-italic'
 import {ExtStrike} from './ext-strike'
 import {ExtUnderline} from './ext-underline'
 import {ExtCode} from './ext-code'
+// ExtCodeBlockLowlight替换了ExtCodeBlock
 import {ExtCodeBlock} from './ext-code-block'
 import {ExtSubscript} from './ext-subscript'
 import {ExtSuperscript} from './ext-superscript'
@@ -23,7 +24,6 @@ import {ExtCodeBlockLowlight} from './ext-codeBlockLowlight'
 export default [
     ExtClear,
     ExtHistory,
-    ExtBackgroundColor,
     ExtImage,
     ExtLineHeight,
     ExtHeading,
@@ -33,6 +33,7 @@ export default [
     ExtUnderline,
     ExtHighlight,
     ExtColor,
+    ExtBackgroundColor,
     ExtCode,
     // ExtCodeBlock,
     ExtCodeBlockLowlight,

@@ -3,17 +3,13 @@
         <Toolkit v-if="isShowToolbar" @onUploadImage="onUploadImageCall"></Toolkit>
         <EditorContent class="carrot-tiptap-editor__content" :editor="editor"></EditorContent>
         <BubbleMenu></BubbleMenu>
+        <CharacterCountTool></CharacterCountTool>
     </div>
 </template>
 
 <script setup lang="ts" name="EditorTiptapVue3">
-import { ref, nextTick, onBeforeUnmount, provide, watch } from "vue";
-import type { PropType } from 'vue';
-import { Color } from "@tiptap/extension-color";
-import Document from '@tiptap/extension-document';
-import ListItem from "@tiptap/extension-list-item";
-import TextStyle from "@tiptap/extension-text-style";
-import Underline, { UnderlineOptions } from "@tiptap/extension-underline";
+import { ref, nextTick, onBeforeUnmount, provide, watch, computed } from "vue";
+import CharacterCount from '@tiptap/extension-character-count'
 import StarterKit, { StarterKitOptions } from "@tiptap/starter-kit";
 import TaskItem from '@tiptap/extension-task-item';
 import TaskList from '@tiptap/extension-task-list';
@@ -30,6 +26,7 @@ import Link from '@tiptap/extension-link';
 import Toolkit from "./components/Toolkit.vue";
 // 菜单
 import BubbleMenu from "@/components/bubble-menu/index.vue"
+import CharacterCountTool from '@/components/CharacterCount.vue'
 
 // 引入核心类
 import MajorEditor from "./core/MajorEditor";
@@ -47,7 +44,6 @@ import { EditorProps } from './typings';
 
 // 过滤编辑器类容，防止xss攻击, 生产环境
 import DOMPurify from 'dompurify';
-import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 
 const contents = defineModel<string>("content", {
     default: "",
@@ -58,7 +54,8 @@ const contents = defineModel<string>("content", {
 const props = withDefaults(defineProps<EditorProps>(), {
     imageInner: true,
     isEnable: true,
-    isShowToolbar: true
+    isShowToolbar: true,
+    characterCount: 10000
 })
 
 // emit
@@ -72,10 +69,6 @@ const emits = defineEmits([
     "onUploadImage",
     'onTransaction'
 ]);
-
-const CustomDocument = Document.extend({
-  content: 'taskList',
-})
 
 const CustomTaskItem = TaskItem.extend({
   content: 'inline*',
@@ -103,7 +96,9 @@ const editor:Editor = new Editor({
             horizontalRule: false,
             blockquote: false
         }),
-        // CustomDocument,
+        CharacterCount.configure({
+          limit: props.characterCount,
+        }),
         CustomTaskItem,
         TaskList,
         TextAlign.configure({
