@@ -100,7 +100,6 @@
             </template>
             <span>添加图片</span>
         </NTooltip>
-        <Table></Table>
     </div>
 
     <UploadImage ref="UploadImageRef" @uploadImageSuccess="uploadImageSuccess"></UploadImage>
@@ -120,7 +119,6 @@ import { v4 as uuidV4 } from 'uuid';
 import UploadImage from "./UploadImage.vue";
 import Links from "./Links.vue";
 import { colorList, alignList, lineHeighList } from '../utils/config';
-import Table from "./table/Table.vue";
 
 // 段落
 import ParagraphUI from './paragraph/index.vue';
