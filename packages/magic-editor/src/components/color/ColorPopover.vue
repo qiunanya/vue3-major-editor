@@ -1,5 +1,5 @@
 <template>
-<NPopover content-class="toolbar-color-picker__popover" ref="npopoverCLRef" style="max-height: 270px;max-width: 300px;" trigger="click" placement="bottom" scrollable>
+<NPopover content-class="toolbar-color-picker__popover" ref="npopoverCLRef" style=" max-height: 270px;max-width: 300px;" :on-update:show="onUpdatePopoverShow" trigger="click" placement="bottom" scrollable>
 <template #trigger>
     <NTooltip placement="top" trigger="hover">
         <template #trigger>
@@ -20,7 +20,7 @@
 <div class="color-picker__wrap">
     <p class="color-picker-name flex-wrap">
         <span>颜色面板</span>
-        <button class="color-default__button" @click.stop="handleColorPicker('')">恢复默认</button>
+        <button class="color-default__button" @mousedown.prevent @click.stop="handleColorPicker('')">恢复默认</button>
     </p>
     
     <div class="color-picker-list">
@@ -29,14 +29,14 @@
             v-for="(item, index) in colors" 
             :key="index" 
             :style="{background: item}"
+            @mousedown.prevent
             @click.stop="handleColorPicker(item)">
         </span>
-        <span class="color-list-item disabled-icon" @click.stop="handleColorPicker('')">
+        <span class="color-list-item disabled-icon" @mousedown.prevent @click.stop="handleColorPicker('')">
             <DisabledIcon></DisabledIcon>
         </span>
     </div>
     <p class="color-picker-name">颜色选择器</p>
-    <!-- <input class="color-picker__input" v-model="selectColor" type="color" list="" @input="onChangeColor" /> -->
     <n-color-picker v-model:value="selectColor" :on-update:value="colorPickerUpdate" :swatches="[
         '#FFFFFF',
         '#18A058',
@@ -55,7 +55,6 @@ import DisabledIcon from "@/icons/disabled-icon.svg";
 
 const editor = inject('editor') as Editor
 const npopoverCLRef = ref<InstanceType<typeof NPopover> | null>(null)
- 
 const props = defineProps({
     isActive: {
         type: Boolean,
@@ -79,19 +78,21 @@ const selectColor = ref('#94ddde')
 const colorPickerUpdate = (value: string):void => {
     editor.commands.setColor(value)
 }
-const onChangeColor = (evt: Event) => {
-    const target = evt.target as HTMLInputElement;
-    handleColorPicker(target.value)
+const onUpdatePopoverShow = (value: boolean):void => {
+    // console.log('value:', value)
 }
-
 const handleColorPicker = (color: string) => {
     if (color) editor.commands.setColor(color)
     else {
         editor.commands.unsetColor()
     }
+    const { selection }  = editor.state
+    if (selection.from !== selection.to) {
+        editor.commands.setTextSelection({ from: selection.from, to: selection.to})
+        editor.commands.focus();
+    }
     if (!npopoverCLRef.value) return 
     npopoverCLRef.value.setShow(false)
-    // unref(npopoverCLRef.value).hide();
 }
 </script>
 

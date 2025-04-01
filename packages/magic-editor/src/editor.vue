@@ -27,6 +27,8 @@ import Toolkit from "./components/Toolkit.vue";
 // 菜单
 import BubbleMenu from "@/components/bubble-menu/index.vue"
 import CharacterCountTool from '@/components/CharacterCount.vue'
+import { Plugin, TextSelection } from '@tiptap/pm/state';
+import { useEventListener } from "@/hooks/useEventListener"
 
 // 引入核心类
 import MajorEditor from "./core/MajorEditor";
@@ -135,6 +137,9 @@ const editor:Editor = new Editor({
         emits('onUpdate', editor)
     }
 });
+
+useEventListener(editor)
+
 
 // 实时更新内容
 watch(contents,(n,o) => {
