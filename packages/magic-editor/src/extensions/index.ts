@@ -20,6 +20,7 @@ import {ExtBlockquote} from './ext-blockquote'
 import {ExtHighlight} from './ext-highlight'
 import {ExtColor} from './ext-color'
 import {ExtCodeBlockLowlight} from './ext-codeBlockLowlight'
+import {ExtTable} from './ext-table'
 
 export default [
     ExtClear,
@@ -43,4 +44,5 @@ export default [
     ExtBulletList,
     ExtHorizontalRule,
     ExtBlockquote,
+    ExtTable
 ]

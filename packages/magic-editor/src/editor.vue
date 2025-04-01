@@ -17,10 +17,6 @@ import Images from '@tiptap/extension-image';
 import TextAlign from '@tiptap/extension-text-align';
 import { Editor, useEditor, EditorContent } from "@tiptap/vue-3";
 import Placeholder from '@tiptap/extension-placeholder';
-import Table from '@tiptap/extension-table';
-import TableCell from '@tiptap/extension-table-cell';
-import TableHeader from '@tiptap/extension-table-header';
-import TableRow from '@tiptap/extension-table-row';
 import Link from '@tiptap/extension-link';
 // 顶部工具
 import Toolkit from "./components/Toolkit.vue";
@@ -113,12 +109,6 @@ const editor:Editor = new Editor({
         //         class: 'my-custom-img-class',
         //     },
         // }),
-        Table.configure({
-          resizable: true,
-        }),
-        TableRow,
-        TableHeader,
-        TableCell,
         Link.configure({
             openOnClick: true,
             // protocols: ['http', 'https', 'ftp'],
