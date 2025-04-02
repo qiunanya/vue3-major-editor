@@ -21,7 +21,7 @@ class TablePlugin {
         this.init()
     }
     init () {
-        this.editor.view.dom.addEventListener('contextmenu', this.contextListener.bind(this))
+        // this.editor.view.dom.addEventListener('contextmenu', this.contextListener.bind(this))
     }
     contextListener(event: MouseEvent) {
         if (this.editor.isActive('table') && event.button === 2 && this.majorEditor) {

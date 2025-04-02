@@ -1,9 +1,10 @@
 <template>
     <div class="carrot-tiptap-editor major-editor">
         <Toolkit v-if="isShowToolbar" @onUploadImage="onUploadImageCall"></Toolkit>
-        <EditorContent class="carrot-tiptap-editor__content" :editor="editor"></EditorContent>
+        <EditorContent class="carrot-tiptap-editor__content" :editor="editor" @contextmenu="onContextmenu"></EditorContent>
         <BubbleMenu></BubbleMenu>
         <CharacterCountTool></CharacterCountTool>
+        <ContextMenus ref="contextMenuRef"></ContextMenus>
     </div>
 </template>
 
@@ -25,6 +26,8 @@ import BubbleMenu from "@/components/bubble-menu/index.vue"
 import CharacterCountTool from '@/components/CharacterCount.vue'
 import { Plugin, TextSelection } from '@tiptap/pm/state';
 import { useEventListener } from "@/hooks/useEventListener"
+import { useContextMenu } from "@/hooks/useContextMenu"
+import ContextMenus from "./components/table/ContextMenu.vue";
 
 // 引入核心类
 import MajorEditor from "./core/MajorEditor";
@@ -129,7 +132,7 @@ const editor:Editor = new Editor({
 });
 
 useEventListener(editor)
-
+const {contextMenuRef, onContextmenu} = useContextMenu(editor)
 
 // 实时更新内容
 watch(contents,(n,o) => {
@@ -145,8 +148,6 @@ majorEditor.init(editor, props);
 majorEditor.use(TextPlugin);
 majorEditor.use(TablePlugin);
 majorEditor.use(ContextMenu);
-
-console.log(editor, majorEditor)
 
 const onUploadImageCall = ({ file, formData }:{ file:FileList, formData:FormData }) => {
     emits('onUploadImage', { file, formData, editor: editor })
