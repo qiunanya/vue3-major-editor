@@ -4,6 +4,7 @@ interface EditorProps {
     isEnable?: boolean;
     isShowToolbar?: boolean;
     characterCount?: number
+    placeholder?: string
 }
 
 interface ContextMenuItem {

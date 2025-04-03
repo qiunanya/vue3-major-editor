@@ -28,8 +28,7 @@ const visible = ref(false)
 const linkValue = ref('')
 const isTips = ref(false)
 
-const onPositiveClick = (evt:any) => {
-    console.log(evt);
+const onPositiveClick = () => {
     const regex = /^(http:\/\/|https:\/\/|ftp:\/\/).*/
     if (!regex.test(linkValue.value)) {
         console.log('输入地址失效的');

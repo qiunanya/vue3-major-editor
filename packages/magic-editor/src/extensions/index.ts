@@ -21,11 +21,9 @@ import {ExtHighlight} from './ext-highlight'
 import {ExtColor} from './ext-color'
 import {ExtCodeBlockLowlight} from './ext-codeBlockLowlight'
 import {ExtTable} from './ext-table'
+import {ExtLink} from './ext-link'
 
 export default [
-    ExtClear,
-    ExtHistory,
-    ExtImage,
     ExtLineHeight,
     ExtHeading,
     ExtBold,
@@ -44,5 +42,9 @@ export default [
     ExtBulletList,
     ExtHorizontalRule,
     ExtBlockquote,
-    ExtTable
+    ExtTable,
+    ExtLink,
+    ExtClear,
+    ExtHistory,
+    ExtImage,
 ]

@@ -56,7 +56,8 @@ const props = withDefaults(defineProps<EditorProps>(), {
     imageInner: true,
     isEnable: true,
     isShowToolbar: true,
-    characterCount: 10000
+    characterCount: 10000,
+    placeholder: '请输入内容...'
 })
 
 // emit
@@ -83,8 +84,6 @@ const editor:Editor = new Editor({
     editable: props.isEnable,
     extensions: [
         ...TiptapExtensions,
-        // TextStyle,
-        // Color,
         StarterKit.configure({
             bold: false,
             italic: false,
@@ -95,10 +94,7 @@ const editor:Editor = new Editor({
             orderedList: false,
             bulletList: false,
             horizontalRule: false,
-            blockquote: false
-        }),
-        CharacterCount.configure({
-          limit: props.characterCount,
+            blockquote: false,
         }),
         CustomTaskItem,
         TaskList,
@@ -112,13 +108,11 @@ const editor:Editor = new Editor({
         //         class: 'my-custom-img-class',
         //     },
         // }),
-        Link.configure({
-            openOnClick: true,
-            // protocols: ['http', 'https', 'ftp'],
-            validate: (text) => true,
+        CharacterCount.configure({
+          limit: props.characterCount,
         }),
         Placeholder.configure({
-            placeholder: '请输入内容...',
+            placeholder: props.placeholder,
         })
     ],
     onCreate({editor}) {
@@ -139,7 +133,7 @@ watch(contents,(n,o) => {
     const isSame = editor.getHTML() === contents.value
     if (isSame) return
     editor.commands.setContent(n, false)
-}, { deep: true }) 
+}, { deep: true })
 
 // init majorEditor
 majorEditor.init(editor, props);
