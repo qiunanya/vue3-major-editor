@@ -122,9 +122,9 @@ const ExtTable = ExtensionTable.extend({
                             },
                             {
                                 label: "设置单元格标题",
-                                key: "toggleHeaderRow",
+                                key: "toggleHeaderCell",
                                 command: function () {
-                                    editor.commands.toggleHeaderRow()
+                                    editor.commands.toggleHeaderCell()
                                 }
                             },
                         ]
