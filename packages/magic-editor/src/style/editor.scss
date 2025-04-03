@@ -249,7 +249,8 @@
         }
 
         .selectedCell:after {
-            background: var(--gray-2);
+            // background: var(--gray-2);
+            background: var(--selected-active-color);
             content: "";
             left: 0;
             right: 0;
@@ -261,7 +262,7 @@
         }
 
         .column-resize-handle {
-            background-color: var(--purple);
+            background-color: var(--theme-color);
             bottom: -2px;
             pointer-events: none;
             position: absolute;

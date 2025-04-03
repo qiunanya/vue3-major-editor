@@ -113,7 +113,7 @@ function open({ left, top, e }:{left:number;top:number, e:MouseEvent}) {
 }
 
 nextTick(() => {
-    const ms = menuList.value as ITableContextMenuItem[]
+    const ms = JSON.parse(JSON.stringify(menuList.value))
     newMenus.value = ms.reduce((pre:ITableContextMenuItem[], cur:ITableContextMenuItem) => {
         if (!cur.type) pre.push(cur)
         if (cur.children&&cur.children.length) {
@@ -127,7 +127,7 @@ nextTick(() => {
 const menuList = computed(() => {
     let arr:ITableContextMenuItem[] = []
     const { extensions } = editor.extensionManager
-    const table = extensions.find(el => el.name === 'custTable') as Extension
+    const table = extensions.find(el => el.name === 'table') as Extension
     const { onClick } = table.options;
     if (typeof onClick === 'function') {
         const opt = onClick({ editor });

@@ -13,7 +13,6 @@ function renderCustomHeader() {
     return h('div',{ style: { fontWeight: 'bold', textAlign: 'center'}}, '操作表格')
 }
 const ExtTable = ExtensionTable.extend({
-    name: 'custTable',
     addOptions() {
         return {
             ...this.parent?.(),
@@ -144,40 +143,9 @@ const ExtTable = ExtensionTable.extend({
         };
     },
 
-    // addExtensions() {
-    //     // 此处扩展插件会影响表格选中效果
-    //     // return [TableCell, TableHeader, TableRow];
-    //     return []
-    // },
-    addProseMirrorPlugins() {
-        // 访问内部实例
-        const editor = this.editor;
-        return [
-            new Plugin({
-                // key: new PluginKey("eventHandler"),
-                // 这可以单独控制表单事件
-                // props: {
-                //     handleClick(view: EditorView, pos: number, event: MouseEvent) {
-                        
-                //         // return true
-                //     },
-                //     handleDoubleClick(view, pos, event) {
-                //         /* … */
-                //     },
-                //     handlePaste(view, event, slice) {
-                //         /* … */
-                //     },
-                //     // 处理其他事件
-                //     handleDOMEvents: {
-                //         // 点击文本区域事件
-                //         click: (view, event) => {
-                //             // console.log('click:', view, event)
-                           
-                //         },
-                //     },
-                // },
-            }),
-        ];
+    addExtensions() {
+        // 此处扩展插件顺序：TableRow,TableHeader,TableCell，否则会影响表格选中效果
+        return [TableRow,TableHeader,TableCell];
     },
 }).configure({
     resizable: true,

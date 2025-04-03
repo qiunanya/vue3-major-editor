@@ -9,10 +9,6 @@
 </template>
 
 <script setup lang="ts" name="EditorTiptapVue3">
-import Table from '@tiptap/extension-table'
-import TableCell from '@tiptap/extension-table-cell'
-import TableHeader from '@tiptap/extension-table-header'
-import TableRow from '@tiptap/extension-table-row'
 import { ref, nextTick, onBeforeUnmount, provide, watch, computed } from "vue";
 import CharacterCount from '@tiptap/extension-character-count'
 import StarterKit, { StarterKitOptions } from "@tiptap/starter-kit";
@@ -106,12 +102,6 @@ const editor:Editor = new Editor({
         }),
         CustomTaskItem,
         TaskList,
-        Table.configure({
-          resizable: true,
-        }),
-        TableRow,
-        TableHeader,
-        TableCell,
         TextAlign.configure({
             types: ['heading','paragraph'],
         }),
