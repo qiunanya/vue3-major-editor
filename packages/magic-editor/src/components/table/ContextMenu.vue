@@ -4,7 +4,7 @@
     trigger="manual"
     :x="xRef"
     :y="yRef"
-    :options="options"
+    :options="menuList"
     :show="showDropdown"
     :on-clickoutside="onClickoutside"
     @select="handleSelect"
@@ -12,10 +12,14 @@
 </template>
 
 <script lang="ts" setup>
-import { nextTick, ref } from "vue";
+import { computed, inject, nextTick, ref } from "vue";
 import { NDropdown } from 'naive-ui'
 import { useNaiveDiscrete } from "@/hooks/navie-ui";
+import { Editor, Extension } from "@tiptap/vue-3";
+import { ITableContextMenuItem } from '@/typings/index'
+import { DropdownMixedOption } from "naive-ui/es/dropdown/src/interface";
 
+const editor = inject('editor') as Editor
 const { message, dialog, modal } = useNaiveDiscrete();
 const props = defineProps({
     isVisible: {
@@ -84,24 +88,53 @@ const options = [
         ],
     },
 ];
+const newMenus = ref<ITableContextMenuItem[]>([])
 const showDropdown = ref(props.isVisible);
 const xRef = ref(0);
 const yRef = ref(0);
  
 function handleSelect(key: string | number) {
     showDropdown.value = false;
+    const findItem = newMenus.value.find(el => el.key === key)
+    if (findItem&&findItem.command) {
+        findItem.command()
+    }
     message.info(String(key));
 }
 function open({ left, top, e }:{left:number;top:number, e:MouseEvent}) {
     e.preventDefault();
     showDropdown.value = false;
-    console.log(left,top, 777)
     nextTick().then(() => {
         showDropdown.value = true;
         xRef.value = left;
         yRef.value = top;
+        console.log('open：', left, top, e)
     });
 }
+
+nextTick(() => {
+    const ms = menuList.value as ITableContextMenuItem[]
+    newMenus.value = ms.reduce((pre:ITableContextMenuItem[], cur:ITableContextMenuItem) => {
+        if (!cur.type) pre.push(cur)
+        if (cur.children&&cur.children.length) {
+            pre = pre.concat(cur.children)
+            cur.children = []
+        }
+        return pre
+    }, [])
+})
+
+const menuList = computed(() => {
+    let arr:ITableContextMenuItem[] = []
+    const { extensions } = editor.extensionManager
+    const table = extensions.find(el => el.name === 'custTable') as Extension
+    const { onClick } = table.options;
+    if (typeof onClick === 'function') {
+        const opt = onClick({ editor });
+        arr = opt.componentProps.options
+    } else arr = []
+    return arr as DropdownMixedOption[]
+})
 function onClickoutside() {
     message.info("clickoutside");
     showDropdown.value = false;

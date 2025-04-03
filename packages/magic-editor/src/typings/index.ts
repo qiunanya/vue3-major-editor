@@ -12,11 +12,23 @@ interface ContextMenuItem {
 }
 
 interface ContextMenuOptions {
-    type: string;
+    type?: string;
     tipText: string;
-    children: Array<ContextMenuItem>;
+    children?: Array<ContextMenuItem>;
     event: MouseEvent;
     click: Function;
+    label?: string
+}
+
+type TableContextMenuItem = Pick<ContextMenuOptions, "type"|"children"|"label"> & { key: string,command?:Function, render?:Function}
+
+interface ITableContextMenuItem {
+    children?: ITableContextMenuItem[]
+    label?: string
+    type?: string
+    key: string
+    command?:Function
+    render?:Function
 }
 
 interface HTMLVue3TiptapEditorElement {
@@ -27,6 +39,8 @@ interface HTMLVue3TiptapEditorElement {
 }
 
 export type {
+    TableContextMenuItem,
+    ITableContextMenuItem,
     EditorProps,
     ContextMenuItem,
     ContextMenuOptions,

@@ -37,7 +37,7 @@ const editor = inject('editor') as Editor
 const props = defineProps({
     characterCount: {
         type:Number,
-        default: 1000
+        default: 10000
     }
 })
 const percentage = computed(() => {
