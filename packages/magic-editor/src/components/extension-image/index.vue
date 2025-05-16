@@ -4,7 +4,7 @@
         <img
             :src="src"
             :alt="alt"
-            :style="{ width: width + 'px', height: height + 'px' }"
+            :style="{ width: width+'px', height: height+'px' }"
             ref="imageElement"
         />
         <div v-if="isUploading" class="upload-status">上传中...</div>
@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, ref, onMounted } from "vue";
+import { PropType, ref, onMounted, defineEmits } from "vue";
 import { nodeViewProps, NodeViewWrapper } from "@tiptap/vue-3";
 import { NodeViewProps } from "@tiptap/core";
 
@@ -26,8 +26,8 @@ const props = defineProps({
     },
 });
 
-const emit = defineEmits(["updateAttributes"]);
-
+const emits = defineEmits(["updateAttributes"]);
+// console.log(props.editor.commands.updateImageAttributes, 4444)
 const imageElement = ref<HTMLImageElement>();
 const isUploading = ref(false);
 const width = ref(props.node.attrs.width || 400);
@@ -44,8 +44,8 @@ const handleUpload = async (file: File) => {
         formData.append("file", file);
         const response = await fetch("/upload", { method: "POST", body: formData });
         const { url } = await response.json();
-
-        emit("updateAttributes", {
+        
+        props.editor.commands.updateImageAttributes({
             src: url,
             width: width.value,
             height: height.value,
@@ -78,12 +78,13 @@ const startResize = (e: MouseEvent) => {
     
     width.value = Math.max(100, newWidth)
     height.value = Math.max(100, newHeight)
-    
-    emit('updateAttributes', {
-      width: width.value,
-      height: height.value
+    props.editor.commands.updateImageAttributes({
+      width: width.value + 'px',
+      height: height.value + 'px'
     })
+    console.log(width.value, height.value, 7987)
   }
+
 
   const onMouseUp = () => {
     document.removeEventListener('mousemove', onMouseMove)

@@ -44,7 +44,7 @@ export default [
     ExtBlockquote,
     ExtTable,
     ExtLink,
+    ExtImage,
     ExtClear,
     ExtHistory,
-    ExtImage,
 ]

@@ -1,7 +1,8 @@
 // 自定义图片插件
 // 创建一个新节点image
-import { mergeAttributes, Node, VueNodeViewRenderer, Command, RawCommands } from '@tiptap/vue-3'
-import ExtensionImageUI from '../components/extension-image/index.vue'
+import { mergeAttributes, Node, VueNodeViewRenderer, Command, RawCommands, Editor } from '@tiptap/vue-3'
+import ExtensionImageUI from '@/components/extension-image/index.vue'
+import ImageIcon from '@/components/image/ImageIcon.vue'
 
 declare module '@tiptap/core' {
     interface Commands<ReturnType> {
@@ -40,33 +41,33 @@ export const ExtImage = Node.create({
             isUploading: { default: false }
         }
     },
+    addOptions () {
+        return {
+            ...this.parent?.(),
+            onClick: ({ editor }:{editor:Editor}) => {
+                return {
+                    component: ImageIcon,
+                    componentProps: {
+                        isActive: editor.isActive('customize-image'),
+                        isReadonly: !editor.isEditable,
+                        icons: 'image-icon',
+                        tipText: '添加图片',
+                    }
+                }
+            }
+        }
+    },
     parseHTML() {
-        return [{ tag: 'div[data-type="customize-image"]' }]
+        return [{ tag: 'img[data-type="customize-image"]' }]
     },
     renderHTML({ HTMLAttributes }) {
-        return ['div', mergeAttributes(HTMLAttributes, { 'data-type': 'customize-image' })]
+        return ['img', mergeAttributes(HTMLAttributes, { 'data-type': 'customize-image' })]
     },
     
     addNodeView() {
         return VueNodeViewRenderer(ExtensionImageUI)
     },
-    // addCommands() {
-    //     return {
-    //         insertCustomImage: (options) => ({ chain }) => {
-    //             return chain()
-    //               .insertContent({
-    //                 type: this.name,
-    //                 attrs: {
-    //                   ...options,
-    //                   isUploading: !!options.file
-    //                 }
-    //             }).run()
-    //         },
-    //         updateImageAttributes: (attrs) => ({ chain }) => {
-    //             return chain().updateAttributes(this.name, attrs).run()
-    //         }
-    //     }
-    // }
+
     // 使用更精确的类型定义
     addCommands<CustomImageAttrs>() {
         return {
@@ -92,6 +93,7 @@ export const ExtImage = Node.create({
             .run()
         },
         updateImageAttributes: (attrs: Record<string, any>) => ({ chain }: { chain: any }) => {
+            console.log('attrs:', attrs)
             return chain()
             .updateAttributes(this.name, attrs)
             .run()

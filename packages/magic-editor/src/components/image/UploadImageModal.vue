@@ -24,10 +24,11 @@
     </n-modal>
 </template>
 <script setup lang="ts">
-import { ref, Ref } from "vue";
+import { inject, ref, Ref } from "vue";
 import { NTabs, NTabPane, NModal, NInput } from "naive-ui";
 import { useSelectCore } from "@/hooks/useSelect";
 import { useNaiveDiscrete } from "@/hooks/navie-ui";
+import { Editor } from "@tiptap/vue-3";
 
 interface TranserType {
     file:FileList, 
@@ -35,6 +36,7 @@ interface TranserType {
 }
 
 const { majorEditor, editor, props } = useSelectCore();
+// const editor = inject('editor') as Editor
 const { message, dialog, modal } = useNaiveDiscrete();
 
 const imageLink = ref('')
@@ -46,10 +48,11 @@ const imagesTemp:Ref<TranserType> = ref({
 })
 
 const emits = defineEmits(['uploadImageSuccess'])
+
 const onUpdatedTab = (val: string) => {
     tabPane.value = val
     if (val === 'link') {
-        editor.commands.setImage({ src: imageLink.value });
+        // editor.commands.setImage({ src: imageLink.value });
     }
 }
 const onNegativeClick = () => {
@@ -65,7 +68,7 @@ const onChangeFile = (evt: Event) => {
     const input = evt.target as HTMLInputElement;
     const file = input.files as FileList;
     const formData = new FormData()
-    console.log(file, props.imageInner, 6666)
+
     for (let i = 0; i < file.length; i++) {
         formData.append('file', file[i])
         if (file[i]) {
@@ -73,7 +76,6 @@ const onChangeFile = (evt: Event) => {
             reader.onload = (event) => {
                 const base64 = event.target?.result as string;
                 editor.commands.insertCustomImage({ src: base64, alt: '占位图片' });
-                
             };
             reader.readAsDataURL(file[i]);
         }

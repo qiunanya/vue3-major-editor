@@ -53,7 +53,6 @@ const contents = defineModel<string>("content", {
 
 // props
 const props = withDefaults(defineProps<EditorProps>(), {
-    imageInner: true,
     isEnable: true,
     isShowToolbar: true,
     characterCount: 10000,
@@ -124,7 +123,7 @@ const editor:Editor = new Editor({
         emits('onUpdate', editor)
     }
 });
-
+console.log(editor, 666)
 useEventListener(editor)
 const {contextMenuRef, onContextmenu} = useContextMenu(editor)
 

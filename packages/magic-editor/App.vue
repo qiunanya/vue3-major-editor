@@ -16,7 +16,6 @@
             <EditorTiptapVue3
                 ref="vue3TiptapEditorRef" 
                 v-model:content="htmlContent" 
-                :imageInner="imageInner"
                 :isEnable="true"
                 @onUpdate="onUpdate"
                 @onUploadImage="onUploadImage">
@@ -37,8 +36,6 @@
     import { onBeforeUnmount, ref } from "vue";
     import { Editor, HTMLVue3TiptapEditorElement } from "./src";
 
-    // true:图片内部处理，默认转化为base64, false: 不自动转化数据，需要外部处理后添加到编辑器
-    const imageInner = ref(false)
     const previewContent = ref('<h3>Vue3-Tiptap-Editor富文本编辑器</h3>')
 
     // 按需引入Button组件
