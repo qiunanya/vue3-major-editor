@@ -78,9 +78,10 @@ const startResize = (e: MouseEvent) => {
     
     width.value = Math.max(100, newWidth)
     height.value = Math.max(100, newHeight)
+    // 参数要和自定义image插件属性类型一致才会更新属性值，建议使用style，而不是图片属性宽高
     props.editor.commands.updateImageAttributes({
-      width: width.value + 'px',
-      height: height.value + 'px'
+      width: width.value,
+      height: height.value
     })
     console.log(width.value, height.value, 7987)
   }
