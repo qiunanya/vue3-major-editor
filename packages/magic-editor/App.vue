@@ -12,7 +12,7 @@
             <button style="margin-right:10px;" @click="getText">获取 Text</button>
             <button style="margin-right:10px;" @click="previews">预览</button>
         </section>
-        <div style="display: flex;">
+        <div style="display: grid;grid-template-columns: 1.2fr 0.8fr;">
             <EditorTiptapVue3
                 ref="vue3TiptapEditorRef" 
                 v-model:content="htmlContent" 
@@ -27,7 +27,7 @@
                 :isShowToolbar="false"
                 @onUploadImage="onUploadImage">
             </EditorTiptapVue3> -->
-            <div v-html="previewContent"></div>
+            <div v-html="previewContent" style="padding: 0 0.4rem;"></div>
         </div>
     </div>
 </template>
@@ -36,7 +36,7 @@
     import { onBeforeUnmount, ref } from "vue";
     import { Editor, HTMLVue3TiptapEditorElement } from "./src";
 
-    const previewContent = ref('<h3>Vue3-Tiptap-Editor富文本编辑器</h3>')
+    const previewContent = ref('')
 
     // 按需引入Button组件
     // import { Button } from '@majoreditor/ui'
@@ -89,7 +89,8 @@
     }
 
     const onUpdate = (val:Editor) => {
-        console.log("update:",val.getHTML())
+        // console.log("update:",val.getHTML())
+        console.log("update")
     }
 
     onBeforeUnmount(() => {

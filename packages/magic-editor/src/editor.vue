@@ -33,7 +33,7 @@ import ContextMenus from "./components/table/ContextMenu.vue";
 import MajorEditor from "./core/MajorEditor";
 
 // 插件
-import TextPlugin from "./plugins/TextPlugin";
+// import TextPlugin from "./plugins/TextPlugin";
 import TablePlugin from "./plugins/TablePlugin";
 import ContextMenu from "./plugins/ContextMenu";
 
@@ -123,7 +123,7 @@ const editor:Editor = new Editor({
         emits('onUpdate', editor)
     }
 });
-console.log(editor, 666)
+console.log(editor)
 useEventListener(editor)
 const {contextMenuRef, onContextmenu} = useContextMenu(editor)
 
@@ -138,7 +138,7 @@ watch(contents,(n,o) => {
 majorEditor.init(editor, props);
 
 // init plugin
-majorEditor.use(TextPlugin);
+// majorEditor.use(TextPlugin);
 majorEditor.use(TablePlugin);
 majorEditor.use(ContextMenu);
 

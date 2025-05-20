@@ -22,7 +22,6 @@
 <script setup lang="ts">
 import { Editor } from "@tiptap/vue-3";
 import { NTooltip } from "naive-ui";
-import { inject, ref } from "vue";
 import UploadImageModal from './UploadImageModal.vue';
 
 const editor = inject('editor') as Editor

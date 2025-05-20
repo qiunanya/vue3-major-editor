@@ -4,7 +4,8 @@ import dts from "vite-plugin-dts";
 import VitePluginStyleInject from 'vite-plugin-style-inject';
 import path from "path";
 import svgLoader from 'vite-svg-loader'
-import { PreRenderedAsset} from 'rollup' 
+import { PreRenderedAsset} from 'rollup'
+import AutoImport from 'unplugin-auto-import/vite' 
 
 // 统一处理所有输出格式的资源配置
 const assetFileNames = (chunkInfo:PreRenderedAsset) => {
@@ -20,6 +21,15 @@ export default defineConfig({
             rollupTypes: false,
             exclude: ['main.ts']
         }),
+        AutoImport({
+            dts: './src/typings/auto-imports.d.ts',
+            imports: ['vue'],
+            include: [
+                /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
+                /\.vue$/, /\.vue\?vue/, // .vue
+                /\.md$/, // .md
+            ],
+        })
         // VitePluginStyleInject()
     ],
     server: {

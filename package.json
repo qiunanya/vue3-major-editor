@@ -64,6 +64,7 @@
         "lowlight": "^3.3.0",
         "sass": "^1.77.5",
         "ts-node": "^10.9.2",
+        "unplugin-auto-import": "^19.2.0",
         "uuid": "^10.0.0",
         "vue": "3.4.29",
         "vue-i18n": "10",

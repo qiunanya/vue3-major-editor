@@ -25,13 +25,13 @@ import {ExtLink} from './ext-link'
 
 export default [
     ExtLineHeight,
-    ExtHeading,
     ExtBold,
     ExtItalic,
     ExtStrike,
     ExtUnderline,
     ExtHighlight,
     ExtColor,
+    ExtHeading,
     ExtBackgroundColor,
     ExtCode,
     // ExtCodeBlock,
