@@ -17,16 +17,16 @@ function getHeading () {
 }
 
 export const ExtHeading = Heading.extend({
-    name: 'customHeading',
+    name: 'extHeading',
     addOptions() {
         return {
             ...this.parent?.(),
-            levels: [1, 2, 3, 4] as Level[],
+            levels: [1, 2, 3, 4, 5, 6] as Level[],
             onClick: ({ editor }:{editor:Editor}) => {
                 return {
                     component: HeadingPopselect,
                     componentProps: {
-                        isActive: editor.isActive('customHeading'),
+                        isActive: editor.isActive('heading'),
                         isReadonly: !editor.isEditable,
                         editor,
                         levels: getHeading(),

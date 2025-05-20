@@ -3,7 +3,8 @@
     <NTooltip placement="top" trigger="hover">
         <template #trigger>
             <button :class="[{ 'is-disable': !editor.isEditable }]" data-toolbar-type="toolbar-btn">
-                <svg viewBox="0 0 1024 1024" width="200" height="200">
+                <span v-if="selectedData.label" style="font-size: medium;">{{ selectedData.label }}</span>
+                <svg v-else viewBox="0 0 1024 1024" width="200" height="200">
                     <path
                         d="M768 512v384c0 35.4 28.6 64 64 64s64-28.6 64-64V128c0-35.4-28.6-64-64-64s-64 28.6-64 64v256H256V128c0-35.4-28.6-64-64-64S128 92.6 128 128v768c0 35.4 28.6 64 64 64s64-28.6 64-64V512h512z">
                     </path>
@@ -52,11 +53,15 @@ const props = defineProps({
 })
 
 const selectHvalue = ref("4");
-
-const handleHeading = (level: Level) => {
-    console.log(level, 6666)
-    // props.editor.commands.toggleHeading({ level })
-    props.editor.chain().toggleHeading({ level }).run()
+const selectedData = ref<SelectOption>({})
+const handleHeading = (level:Level) => {
+    selectHvalue.value = level+''
+    selectedData.value = props.levels.find((el:SelectOption) => el.value === level) as SelectOption
+    if (+level===7) {
+        props.editor.commands.setParagraph()
+    } else {
+        props.editor.commands.toggleHeading({ level: +level as Level })
+    }
 }
 
 </script>
