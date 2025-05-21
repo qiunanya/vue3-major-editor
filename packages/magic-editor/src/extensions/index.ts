@@ -22,17 +22,19 @@ import {ExtColor} from './ext-color'
 import {ExtCodeBlockLowlight} from './ext-codeBlockLowlight'
 import {ExtTable} from './ext-table'
 import {ExtLink} from './ext-link'
+import {ExtTextAlign} from './ext-textAlignment'
 
 export default [
-    ExtLineHeight,
     ExtBold,
     ExtItalic,
     ExtStrike,
     ExtUnderline,
     ExtHighlight,
     ExtColor,
-    ExtHeading,
     ExtBackgroundColor,
+    ExtHeading,
+    ExtTextAlign,
+    ExtLineHeight,
     ExtCode,
     // ExtCodeBlock,
     ExtCodeBlockLowlight,

@@ -1,5 +1,37 @@
 import { Extension } from "@tiptap/core";
+import { Editor } from "@tiptap/vue-3";
+import TextLineHeightPopselect from '@/components/text/TextLineHeightPopselect.vue';
 
+const lineHeighList = [
+    {
+        label: "1",
+        value: "1",
+    },
+    {
+        label: "1.5",
+        value: "1.5",
+    },
+    {
+        label: "1.6",
+        value: "1.6",
+    },
+    {
+        label: "1.75",
+        value: "1.75",
+    },
+    {
+        label: "2",
+        value: "2",
+    },
+    {
+        label: "3",
+        value: "3",
+    },
+    {
+        label: "4",
+        value: "4",
+    },
+];
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
         CusLineHeightExt: {
@@ -45,9 +77,25 @@ export const ExtLineHeight = Extension.create<LineHeightOptions>({
     name: "lineHeight",
     addOptions() {
         return {
+            ...this.parent?.(),
             types: ["paragraph", "heading"],
             parameter: ['1', '1.5', '1.6', '1.75', '2', '3', '4', '5'], 
             defaultValue: '1.5',
+            onClick: ({ editor }:{editor:Editor}) => {
+                return {
+                    component: TextLineHeightPopselect,
+                    componentProps: {
+                        isActive: editor.isActive('lineHeight'),
+                        isReadonly: !editor.isEditable,
+                        editor,
+                        lineHeightOptions: lineHeighList,
+                        tipText: '行间距',
+                        command: (alignment:string) => {
+                            editor.commands.setLineHeight(alignment)
+                        }
+                    }
+                }
+            }
         };
     },
 

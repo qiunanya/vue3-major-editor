@@ -31,7 +31,7 @@ export type CustomImageAttrs = {
 }
 
 export const ExtImage = TiptapImage.extend({
-    name: 'customize-image',
+    name: 'customizeImage',
     group: 'block',
     atom:true,
     addAttributes() {

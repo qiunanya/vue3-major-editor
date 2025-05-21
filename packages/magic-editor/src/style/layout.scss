@@ -8,6 +8,12 @@
         align-items: center;
         // background: rgba(24, 160, 88, 0.1);
         background: #f0f0f0;
+        &.is-edit-able {
+            opacity: 0.5;
+            cursor: not-allowed;
+            user-select: none;
+            pointer-events: none;
+        }
         .history-icon {
             fill: #666;
         }

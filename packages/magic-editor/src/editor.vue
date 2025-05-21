@@ -29,14 +29,6 @@ import { useEventListener } from "@/hooks/useEventListener"
 import { useContextMenu } from "@/hooks/useContextMenu"
 import ContextMenus from "./components/table/ContextMenu.vue";
 
-// 引入核心类
-import MajorEditor from "./core/MajorEditor";
-
-// 插件
-import TextPlugin from "./plugins/TextPlugin";
-import TablePlugin from "./plugins/TablePlugin";
-import ContextMenu from "./plugins/ContextMenu";
-
 // 自定义扩展
 import TiptapExtensions from './extensions'
 
@@ -74,8 +66,6 @@ const emits = defineEmits([
 const CustomTaskItem = TaskItem.extend({
   content: 'inline*',
 })
-
-const majorEditor = new MajorEditor();
 
 const editor:Editor = new Editor({
     // content: DOMPurify.sanitize(contents.value),
@@ -134,19 +124,10 @@ watch(contents,(n,o) => {
     editor.commands.setContent(n, false)
 }, { deep: true })
 
-// init majorEditor
-majorEditor.init(editor, props);
-
-// init plugin
-majorEditor.use(TextPlugin);
-majorEditor.use(TablePlugin);
-majorEditor.use(ContextMenu);
-
 const onUploadImageCall = ({ file, formData }:{ file:FileList, formData:FormData }) => {
     emits('onUploadImage', { file, formData, editor: editor })
 }
 
-provide("majorEditor", majorEditor);
 provide("editor", editor)
 provide('props', props)
 
