@@ -1,4 +1,10 @@
 /* 此处样式，打包后和组件内部样式会重合，解决：要么引入打包的样式，要么引入组件样式，不能都引入 */
+.vue3-tiptap-editor {
+    box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+    color: #333;
+}
+
 .vue3-tiptap-editor > .vue3-tiptap-editor__toolbar {
     display: flex;
     flex-wrap: wrap;
