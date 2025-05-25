@@ -3,7 +3,7 @@
     :editor="editor"
     :tippy-options="{ duration: 100 }"
     :should-show="shouldShowBubbleMenu">
-    <div class="magic-bubble-menu">
+    <div class="editor-inner-bubble--menu">
         <button @click="editor.chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
             <BoldIcon class="menu-icon"></BoldIcon>
         </button>
@@ -33,7 +33,7 @@
     </div>
 </bubble-menu>
 </template>
-<script setup lang="ts">
+<script setup lang="ts" name="BubbleMenu">
 import { BubbleMenu, Editor } from "@tiptap/vue-3";
 import { NTooltip } from "naive-ui";
 import { inject } from "vue";

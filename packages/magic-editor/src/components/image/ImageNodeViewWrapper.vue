@@ -24,7 +24,7 @@
 </node-view-wrapper>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="ImageNodeViewWrapper">
 import { nodeViewProps, NodeViewWrapper } from "@tiptap/vue-3";
 import { NodeViewProps } from "@tiptap/core";
 

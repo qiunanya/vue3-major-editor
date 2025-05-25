@@ -3,7 +3,7 @@
 <template #trigger>
     <NTooltip placement="top" trigger="hover">
         <template #trigger>
-            <button :class="[{ 'is-disable': ''}]" data-toolbar-type="toolbar-btn">
+            <button class="toolbar-icon--btn" data-editor-toolbar-btn="true">
                 <svg viewBox="0 0 1024 1024" width="200" height="200">
                     <path d="M0 0m56.888889 0l910.222222 0q56.888889 0 56.888889 56.888889l0 910.222222q0 56.888889-56.888889 56.888889l-910.222222 0q-56.888889 0-56.888889-56.888889l0-910.222222q0-56.888889 56.888889-56.888889Z" fill="#05AFC8"></path>
                     <path d="M284.444444 853.333333H227.555556L483.555556 170.666667h56.888888L284.444444 853.333333z" fill="#FFFFFF"></path>
@@ -45,7 +45,7 @@
 </div>
 </NPopover>
 </template>
-<script setup lang="ts">
+<script setup lang="ts" name="BackgroundColorPopover">
 import { Editor } from "@tiptap/vue-3";
 import { NTooltip, NPopover, NColorPicker } from "naive-ui";
 import { inject, ref, unref } from "vue";

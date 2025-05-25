@@ -23,12 +23,11 @@
 import { NTooltip } from "naive-ui";
 import { useSelectCore } from "../../hooks/useSelect";
 
-const { majorEditor, editor } = useSelectCore();
+const { editor } = useSelectCore();
 
 // 设置文本样式
 function handleTextStyle(key: string) {
     // editor.chain().focus().setParagraph().run()
     if (!editor.isEditable) return
-    majorEditor.setTextStyle(key);
 }
 </script>

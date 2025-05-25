@@ -1,13 +1,13 @@
 <template>
 <NPopselect 
     v-model:value="selectTextAlign" 
-    trigger="hover" 
+    trigger="click" 
     :options="alignments"
     :on-update:value="handleTextAlign"
     >
     <NTooltip placement="top" trigger="hover">
         <template #trigger>
-            <button :class="[{ 'is-disable': !editor.isEditable }]" data-toolbar-type="toolbar-btn">
+            <button class="toolbar-icon--btn" data-editor-toolbar-btn="true">
                 <svg viewBox="0 0 1024 1024" width="200" height="200">
                     <path
                         d="M114.259 124.62h795.48c27.76 0 50.26 22.5 50.26 50.26 0 27.76-22.5 50.26-50.26 50.26h-795.48c-27.76 0-50.26-22.5-50.26-50.26 0-27.76 22.5-50.26 50.26-50.26zM114.259 798.86h456.6c27.76 0 50.26 22.5 50.26 50.26 0 27.76-22.5 50.26-50.26 50.26h-456.6c-27.76 0-50.26-22.5-50.26-50.26 0-27.76 22.5-50.26 50.26-50.26zM114.259 349.37h456.6c27.76 0 50.26 22.5 50.26 50.26 0 27.76-22.5 50.26-50.26 50.26h-456.6c-27.76 0-50.26-22.5-50.26-50.26 0-27.76 22.5-50.26 50.26-50.26zM114.259 574.16h795.48c27.76 0 50.26 22.5 50.26 50.26 0 27.76-22.5 50.26-50.26 50.26h-795.48c-27.76 0-50.26-22.5-50.26-50.26 0-27.76 22.5-50.26 50.26-50.26z">
@@ -23,7 +23,7 @@
 </NPopselect>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="TextAlignPopselect">
 import { Void } from "@/utils";
 import { Editor } from "@tiptap/vue-3";
 import { NPopselect, NTooltip, SelectOption } from "naive-ui";

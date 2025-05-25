@@ -3,7 +3,7 @@
 <template #trigger>
     <NTooltip placement="top" trigger="hover">
         <template #trigger>
-            <button :class="[{ 'is-disable': !editor.isEditable }]" data-toolbar-type="toolbar-btn">
+            <button class="toolbar-icon--btn" data-editor-toolbar-btn="true">
                 <svg viewBox="0 0 1024 1024">
                     <path
                         d="M938.666667 42.666667H85.333333C38.4 42.666667 0 81.066667 0 128v768c0 46.933333 38.4 85.333333 85.333333 85.333333h853.333334c46.933333 0 85.333333-38.4 85.333333-85.333333V128c0-46.933333-38.4-85.333333-85.333333-85.333333zM298.666667 896H85.333333v-213.333333h213.333334v213.333333z m0-298.666667H85.333333V384h213.333334v213.333333z m341.333333 298.666667H384v-213.333333h256v213.333333z m0-298.666667H384V384h256v213.333333z m298.666667 298.666667h-213.333334v-213.333333h213.333334v213.333333z m0-298.666667h-213.333334V384h213.333334v213.333333z m0-298.666666H85.333333V128h853.333334v170.666667z">
@@ -32,7 +32,7 @@
 </NPopover>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="Table">
 import { Editor } from '@tiptap/vue-3';
 import { inject, reactive, ref } from 'vue';
 import { NTooltip, NPopover } from "naive-ui";

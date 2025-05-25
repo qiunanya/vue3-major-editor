@@ -1,8 +1,9 @@
 /* Basic editor styles */
-.tiptap:focus {
-    outline: none;
-}
-.tiptap {
+@layer tiptap {
+    .tiptap:focus {
+        outline: none;
+    }
+
     :first-child {
         margin-top: 0;
     }
@@ -145,7 +146,7 @@
         margin: 2rem 0;
     }
 
-    // p style
+    /* p style */
     p {
         margin-block-start: 0.3rem;
         margin-block-end: 0.3rem;
@@ -180,7 +181,6 @@
     img {
         display: block;
         height: auto;
-        // margin: 1.5rem 0;
         max-width: 100%;
         &.ProseMirror-selectednode {
             outline: 3px solid var(--selected-border);
@@ -249,7 +249,6 @@
         }
 
         .selectedCell:after {
-            // background: var(--gray-2);
             background: var(--selected-active-color);
             content: "";
             left: 0;
@@ -277,7 +276,7 @@
         overflow-x: auto;
     }
 
-    &.resize-cursor {
+    .resize-cursor {
         cursor: ew-resize;
         cursor: col-resize;
     }
@@ -293,43 +292,47 @@
     width: 1.3em;
     flex: 0 0 1.3em;
     height: 1.2em;
-    // fill: rgb(51, 54, 57);
 }
 
 /* Bubble menu */
-.magic-bubble-menu {
+.editor-inner-bubble--menu {
     background-color: var(--white);
     border: 1px solid var(--gray-1);
     border-radius: 0.7rem;
     box-shadow: var(--shadow);
     display: flex;
     padding: 0.5rem;
+}
 
-    button {
-        background-color: unset;
-        border: none;
-        font-weight: bold;
-        &:hover {
-            background-color: var(--gray-3);
-            .menu-icon {
-                fill: var(--theme-color);
-            }
+.editor-inner-bubble--menu > button {
+    background-color: unset;
+    border: none;
+    font-weight: bold;
+    &:hover {
+        background-color: var(--gray-3);
+        .menu-icon {
+            fill: var(--theme-color);
         }
-        &.is-active {
-            // background-color: var(--theme-color);
-            color: var(--theme-color);
+    }
+    &.is-active {
+        color: var(--theme-color);
+        .menu-icon {
+            fill: var(--theme-color);
+        }
+        &:hover {
+            background-color: var(--theme-color);
+            color: var(--white);
             .menu-icon {
-                fill: var(--theme-color);
-            }
-            &:hover {
-                background-color: var(--theme-color);
-                color: var(--white);
-                .menu-icon {
-                    fill: var(--white);
-                }
+                fill: var(--white);
             }
         }
     }
+}
+
+.editor-inner-bubble--menu > button > svg {
+    width: 1.3em;
+    flex: 0 0 1.3em;
+    height: 1.2em;
 }
 
 /* Character count */

@@ -23,6 +23,7 @@ import {ExtCodeBlockLowlight} from './ext-codeBlockLowlight'
 import {ExtTable} from './ext-table'
 import {ExtLink} from './ext-link'
 import {ExtTextAlign} from './ext-textAlignment'
+import {ExtTaskItem} from './ext-task-list'
 
 export default [
     ExtBold,
@@ -47,6 +48,7 @@ export default [
     ExtTable,
     ExtLink,
     ExtImage,
+    ExtTaskItem,
     ExtClear,
     ExtHistory,
 ]

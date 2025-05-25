@@ -1,7 +1,7 @@
 <template>
 <NTooltip placement="bottom" trigger="hover" v-if='icons'>
     <template #trigger>
-        <button :class="iconClass" data-toolbar-type="toolbar-btn" @click="handle">
+        <button :class="iconClass" data-editor-toolbar-btn="true" @click="handle">
             <component :is="icons"></component>
         </button>
     </template>
@@ -9,7 +9,7 @@
 </NTooltip>
 </template>
     
-<script setup lang="ts">
+<script setup lang="ts" name="ButtonIcon">
 import { NTooltip } from "naive-ui";
 import { Void } from '@/utils'
 
@@ -39,9 +39,9 @@ const props = defineProps({
 })
 
 const iconClass = computed(() => ({
-    'toolbar_btn': true,
-    'toolbar-icon__active': props.isActive,
-    'toolbar-icon__readonly':  props.isReadonly
+    'toolbar-icon--btn': true,
+    'toolbar-icon--active ': props.isActive,
+    'toolbar-icon--readonly':  props.isReadonly
 }))
 
 

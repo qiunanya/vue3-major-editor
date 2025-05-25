@@ -1,8 +1,13 @@
 <template>
-<NPopselect v-model:value="selectHvalue" trigger="hover" :options="levels" :on-update:value="handleHeading">
+<NPopselect 
+    v-model:value="selectHvalue" 
+    trigger="click" 
+    :options="levels" 
+    :on-update:value="handleHeading"
+    >
     <NTooltip placement="top" trigger="hover">
         <template #trigger>
-            <button :class="[{ 'is-disable': !editor.isEditable }]" data-toolbar-type="toolbar-btn">
+            <button  class="toolbar-icon--btn" data-editor-toolbar-btn="true">
                 <span v-if="selectedData.label" style="font-size: medium;">{{ selectedData.label }}</span>
                 <svg v-else viewBox="0 0 1024 1024" width="200" height="200">
                     <path
@@ -19,7 +24,7 @@
 </NPopselect>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="HeadingPopselect">
 import { Void } from "@/utils";
 import { Editor } from "@tiptap/vue-3";
 import { NPopselect, NTooltip, SelectOption } from "naive-ui";

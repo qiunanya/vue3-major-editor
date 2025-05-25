@@ -11,7 +11,7 @@
 />
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="ContextMenu">
 import { computed, inject, nextTick, ref } from "vue";
 import { NDropdown } from 'naive-ui'
 import { useNaiveDiscrete } from "@/hooks/navie-ui";

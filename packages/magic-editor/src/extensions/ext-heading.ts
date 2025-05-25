@@ -1,5 +1,5 @@
 import Heading, { Level } from '@tiptap/extension-heading'
-import HeadingPopselect from '@/components/HeadingPopselect.vue'
+import HeadingPopselect from '@/components/text/HeadingPopselect.vue'
 import { Editor } from '@tiptap/vue-3'
 
 function getHeading () {

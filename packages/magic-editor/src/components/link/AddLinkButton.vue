@@ -1,15 +1,15 @@
 <template>
-<div>
+<div class="toolbar-icon__wrap">
 <NTooltip placement="bottom" trigger="hover">
 <template #trigger>
     <button
         :class="[
-            { 'is-disable': !editor.isEditable },
             {
-                'is-cell_active': editor.isActive('link'),
-            },
+                'toolbar-icon--active': isActive,
+            }
         ]"
-        data-toolbar-type="toolbar-btn"
+        class="toolbar-icon--btn"
+        data-editor-toolbar-btn="true"
         @click="handleLink"
     >
         <svg viewBox="0 0 1024 1024" width="200" height="200">
@@ -50,7 +50,7 @@
 </div>
 </template>
 
-<script setup lang="ts" name="Links">
+<script setup lang="ts" name="AddLinkButton">
 import { inject, ref } from "vue";
 import { useSelectCore } from "@/hooks/useSelect";
 import { useNaiveDiscrete } from "@/hooks/navie-ui";

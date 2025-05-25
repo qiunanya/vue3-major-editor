@@ -1,7 +1,7 @@
 <template>
-    <div class="carrot-tiptap-editor major-editor">
+    <div class="vue3-tiptap-editor major-editor">
         <Toolkit v-if="isShowToolbar" @onUploadImage="onUploadImageCall"></Toolkit>
-        <EditorContent class="carrot-tiptap-editor__content" :editor="editor" @contextmenu="onContextmenu"></EditorContent>
+        <EditorContent class="vue3-tiptap-editor__content" :editor="editor" @contextmenu="onContextmenu"></EditorContent>
         <BubbleMenu></BubbleMenu>
         <CharacterCountTool :characterCount="characterCount"></CharacterCountTool>
         <ContextMenus ref="contextMenuRef"></ContextMenus>
@@ -12,13 +12,9 @@
 import { ref, nextTick, onBeforeUnmount, provide, watch, computed } from "vue";
 import CharacterCount from '@tiptap/extension-character-count'
 import StarterKit, { StarterKitOptions } from "@tiptap/starter-kit";
-import TaskItem from '@tiptap/extension-task-item';
-import TaskList from '@tiptap/extension-task-list';
-import Images from '@tiptap/extension-image';
 import TextAlign from '@tiptap/extension-text-align';
 import { Editor, useEditor, EditorContent } from "@tiptap/vue-3";
 import Placeholder from '@tiptap/extension-placeholder';
-import Link from '@tiptap/extension-link';
 // 顶部工具
 import Toolkit from "./components/Toolkit.vue";
 // 菜单
@@ -63,10 +59,6 @@ const emits = defineEmits([
     'onTransaction'
 ]);
 
-const CustomTaskItem = TaskItem.extend({
-  content: 'inline*',
-})
-
 const editor:Editor = new Editor({
     // content: DOMPurify.sanitize(contents.value),
     content: contents.value,
@@ -85,18 +77,9 @@ const editor:Editor = new Editor({
             horizontalRule: false,
             blockquote: false,
         }),
-        CustomTaskItem,
-        TaskList,
         TextAlign.configure({
             types: ['heading','paragraph'],
         }),
-        // Images.configure({
-        //     inline: true,
-        //     allowBase64: true,
-        //     HTMLAttributes: {
-        //         class: 'my-custom-img-class',
-        //     },
-        // }),
         CharacterCount.configure({
           limit: props.characterCount,
         }),
@@ -141,4 +124,4 @@ defineExpose({
 
 </script>
 
-<style lang="scss" src="./style/index.scss"></style>
+<style lang="css" src="./style/index.css"></style>
