@@ -26,3 +26,14 @@ pnpm add --recursive
 
 更新pnpm版本
 pnpm self-update
+
+
+合并分支到主分支main
+1、选择目标分支
+git checkout main
+
+2、合并分支
+git merge dev
+
+3、推送分支
+git push 或者 git push origin main
