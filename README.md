@@ -3,53 +3,54 @@
 vue3-tiptap-editor是基于最新tiptap框架开发的vue3富文本组件，非法内容过滤以及防止XSS攻击、插入图片、插入表格等功能。
 
 ### 功能清单
-* 撤回/重做；
-* 清空文档；
-* 加粗；
-* 斜体；
-* 字体背景色和字体颜色；
-* 下划线；
-* 删除线；
-* 代码背景块和代码块；
-* 引用；
-* 上标和下标；
-* 链接；
-* 有序列表；
-* 无序列表；
-* 水平分割线；
-* 标题；
-* 段落间距；
-* 任务列表；
-* 插入图片；
-* 插入表格，表格列和行操作；
+- [x] 撤回/重做"
+- [x] 清空文档
+- [x] 加粗
+- [x] 斜体
+- [x] 字体背景色和字体颜色
+- [x] 下划线
+- [x] 删除线
+- [x] 代码背景块和代码块
+- [x] 引用
+- [x] 上标和下标
+- [x] 链接
+- [x] 有序列表
+- [x] 无序列表
+- [x] 水平分割线
+- [x] 标题
+- [x] 段落间距
+- [x] 任务列表
+- [x] 插入图片
+- [x] 插入表格，表格列和行操作
+
 ....待开发更多功能....
 
 
 ### 安装
 ```js
-pnpm add vue3-tiptap-editor
+pnpm add tiptap-editor-vue3
 -or-
-yarn add vue3-tiptap-editor
+yarn add tiptap-editor-vue3
 -or-
-npm install vue3-tiptap-editor
+npm install tiptap-editor-vue3
 ```
 
 ### 配置说明
 ```js
 <template>
-<Vue3TiptapEditor
+<TiptapEditorVue3
     ref="vue3TiptapEditorRef" 
     v-model:content="htmlContent" 
     :imageInner="imageInner"
     :isEnable="true"
     :isShowToolbar="true"
     @onUploadImage="onUploadImage">
-</Vue3TiptapEditor>
+</TiptapEditorVue3>
 </template>
 ```
 ```js
 // 引入组件
-import { Vue3TiptapEditor } from "vue3-tiptap-editor";
+import { TiptapEditorVue3 } from "tiptap-editor-vue3";
 
 interface Vue3TiptapEditorOptions {
     getHTML: () => string

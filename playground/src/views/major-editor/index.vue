@@ -12,14 +12,14 @@
             <button style="margin-right:10px;" @click="getText">获取Text</button>
         </section>
         <!-- v-model:content="htmlContent" -->
-        <EditorTiptapVue3
+        <TiptapEditorVue3
             ref="vue3TiptapEditorRef" 
             v-model:content="htmlContent" 
             :imageInner="imageInner"
             :isEnable="true"
             :isShowToolbar="true"
             @onUploadImage="onUploadImage">
-        </EditorTiptapVue3>
+        </TiptapEditorVue3>
     </div>
 </template>
 
