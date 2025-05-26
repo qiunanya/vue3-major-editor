@@ -26,6 +26,7 @@ import {ExtTextAlign} from './ext-textAlignment'
 import {ExtTaskItem} from './ext-task-list'
 
 export default [
+    ExtHistory,
     ExtBold,
     ExtItalic,
     ExtStrike,
@@ -49,6 +50,5 @@ export default [
     ExtLink,
     ExtImage,
     ExtTaskItem,
-    ExtClear,
-    ExtHistory,
+    ExtClear
 ]
