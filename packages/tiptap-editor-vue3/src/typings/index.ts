@@ -5,6 +5,7 @@ interface EditorProps {
     isShowToolbar?: boolean;
     characterCount?: number
     placeholder?: string
+    customFileUpload?: boolean
 }
 
 interface ContextMenuItem {

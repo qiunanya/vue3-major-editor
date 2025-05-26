@@ -40,26 +40,48 @@
     }
 
     const vue3TiptapEditorRef = ref<Vue3TiptapEditorOptions | null>(null)
-    // const htmlContent = ref(`<p>欢迎使用vue3-tiptap-editor编辑器 🎉</p>欢迎订阅交流,<img src='https://placehold.co/800x400'/>`)
     const htmlContent = ref(`
         <p>欢迎使用vue3-tiptap-editor编辑器 🎉</p>欢迎订阅交流,
         <a href="https://en.wikipedia.org/wiki/World_Wide_Web">world wide web</a>
         <a href="https://www.baidu.con">66666</a>`)
 
+    interface FileOpions {
+        file: FileList
+        editor: Editor
+    }
+
     // 仅支持base64和URL两种模式
-    const onUploadImage = ({ file, formData, editor }:{ file:FileList, formData:FormData, editor: Editor }) => {
+    const onUploadImage = ({ file, editor }:FileOpions) => {
+        const formData = new FormData()
+        // 此处可以自定义上传图片逻辑，这里需要调用 editor.commands.insertCustomImage 来插入图片
         for (let i = 0; i < file.length; i++) {
             if (file[i]) {
+                formData.append('file', file[i])
                 const reader = new FileReader();
                 reader.onload = (event) => {
                     const base64 = event.target?.result as string;
-                    editor.commands.setImage({ src: base64 });
-                };
-                reader.readAsDataURL(file[i]);
+                    const image = new Image()
+                    image.src = base64
+                    image.onload = () => {
+                        // 图片加载完成后再插入，记得传入图片宽高
+                        editor.commands.insertCustomImage({ 
+                            src: base64, 
+                            alt: '占位图片', 
+                            width: image.width, 
+                            height: image.height,
+                            title: file[i].name 
+                        });
+                    }
+                    
+                    // 监听错误事件
+                    image.onerror = () => {
+                        console.error('图片加载失败');
+                    }
+                }
+
+                reader.readAsDataURL(file[i])
             }
         }
-        console.log(file, formData, editor, 'onUploadImage');
-        
     }
 
     function getHtml() {

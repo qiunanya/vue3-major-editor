@@ -12,37 +12,33 @@
             <button style="margin-right:10px;" @click="getText">获取 Text</button>
             <button style="margin-right:10px;" @click="previews">预览</button>
         </section>
-        <div style="display: grid;grid-template-columns: 1.2fr 0.8fr;">
-            <EditorTiptapVue3
-                ref="vue3TiptapEditorRef" 
-                v-model:content="htmlContent" 
-                :isEnable="true"
-                @onUpdate="onUpdate"
-                @onUploadImage="onUploadImage">
-            </EditorTiptapVue3>
-            <!-- <EditorTiptapVue3
-                v-model:content="previewContent" 
-                :imageInner="imageInner"
-                :isEnable="false"
-                :isShowToolbar="false"
-                @onUploadImage="onUploadImage">
-            </EditorTiptapVue3> -->
-            <div v-html="previewContent" style="padding: 0 0.4rem;"></div>
-        </div>
+
+        <TiptapEditorVue3
+            ref="vue3TiptapEditorRef" 
+            v-model:content="htmlContent" 
+            :isEnable="true"
+            customFileUpload
+            @onUpdate="onUpdate"
+            @onUploadImage="onUploadImage">
+        </TiptapEditorVue3>
     </div>
+
+    <n-modal
+        v-model:show="isVisible"
+        preset="dialog"
+        title="预览"
+    >
+        <div v-html="previewContent"></div>
+    </n-modal>
 </template>
 
 <script setup lang="ts">
     import { onBeforeUnmount, ref } from "vue";
     import { Editor, HTMLVue3TiptapEditorElement } from "./src";
+    import { NModal } from "naive-ui";
 
+    const isVisible = ref(false)
     const previewContent = ref('')
-
-    // 按需引入Button组件
-    // import { Button } from '@majoreditor/ui'
-
-    // 引入组件
-    // import Vue3TiptapEditor from "./src/editor.vue";
 
     const vue3TiptapEditorRef = ref<HTMLVue3TiptapEditorElement | null>(null)
     // const htmlContent = ref(`<p>欢迎使用vue3-tiptap-editor编辑器 🎉</p>欢迎订阅交流,<img src='https://placehold.co/800x400'/>`)
@@ -53,19 +49,37 @@
         <p><span style="vertical-align: sub">And this.</span></p>`)
 
     // 仅支持base64和URL两种模式
-    const onUploadImage = ({ file, formData, editor }:{ file:FileList, formData:FormData, editor: Editor }) => {
+    const onUploadImage = ({ file, editor }:{ file: FileList, editor: Editor }) => {
+        const formData = new FormData()
+        // 此处可以自定义上传图片逻辑，这里需要调用 editor.commands.insertCustomImage 来插入图片
         for (let i = 0; i < file.length; i++) {
             if (file[i]) {
+                formData.append('file', file[i])
                 const reader = new FileReader();
                 reader.onload = (event) => {
                     const base64 = event.target?.result as string;
-                    // editor.commands.insertCustomImage({ src: base64 });
-                };
-                reader.readAsDataURL(file[i]);
+                    const image = new Image()
+                    image.src = base64
+                    image.onload = () => {
+                        // 图片加载完成后再插入，记得传入图片宽高
+                        editor.commands.insertCustomImage({ 
+                            src: base64, 
+                            alt: '占位图片', 
+                            width: image.width, 
+                            height: image.height,
+                            title: file[i].name 
+                        });
+                    }
+                    
+                    // 监听错误事件
+                    image.onerror = () => {
+                        console.error('图片加载失败');
+                    }
+                }
+
+                reader.readAsDataURL(file[i])
             }
         }
-        console.log(file, formData, editor, 'onUploadImage');
-        
     }
 
     function getHtml() {
@@ -86,6 +100,7 @@
     function previews() {
         if (!vue3TiptapEditorRef.value) return
         previewContent.value = vue3TiptapEditorRef.value.getHTML()
+        isVisible.value = !isVisible.value
     }
 
     const onUpdate = (val:Editor) => {
@@ -99,6 +114,9 @@
 </script>
 
 <style lang="scss">
+.n-dialog.n-modal {
+    width: 600px;
+}
 .app_wrapper {
     padding:15px;
     .h2 {

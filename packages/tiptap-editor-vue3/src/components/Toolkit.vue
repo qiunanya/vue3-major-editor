@@ -7,8 +7,14 @@
 >
     <!-- 测试图标 -->
     <!-- <ErrorImage></ErrorImage> -->
-    <!-- 测试组件 -->
-    <component v-for="(item, index) in cusComponentIcon" v-bind="item.componentProps" :is="item.component" :key="index"></component>
+     
+    <component 
+        v-for="(item, index) in cusComponentIcon" 
+        v-bind="item.componentProps" 
+        :is="item.component" 
+        :key="index"
+         @onUploadImageCallBack="onUploadImageCallBack">
+    </component>
 
     <!-- 自定义行高会段落冲突，暂时注释 -->
     <!-- <ParagraphUI></ParagraphUI> -->
@@ -22,6 +28,7 @@ import ParagraphUI from './paragraph/index.vue';
 import ErrorImage from "../icons/error-image.svg"; 
 
 const editor = inject('editor') as Editor
+const emits = defineEmits(['onUploadImageCallBack'])
 
 interface CusIconType {
     componentProps: Object,
@@ -40,4 +47,9 @@ const cusComponentIcon = computed(() => {
     },[]);
     return tiptapExtensions
 })
+
+const onUploadImageCallBack = (file: FileList) => {
+    emits('onUploadImageCallBack', file)
+}
+
 </script>
