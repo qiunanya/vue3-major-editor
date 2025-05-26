@@ -5,7 +5,8 @@
             <component :is="icons"></component>
         </button>
     </template>
-    <span>{{ tipText }}</span>
+    <p style="text-align: center;line-height: 1;font-size: 14px;">{{ tipText }}</p>
+    <p v-if="shortcutKeys" style="color: grey;line-height: 1;margin: 0;font-size: 12px;">{{ shortcutKeys }}</p>
 </NTooltip>
 </template>
     
@@ -32,6 +33,7 @@ const props = defineProps({
       type: String,
       default: '暂无提示'
     },
+    shortcutKeys: String,
     command: {
         type:Function,
         default:Void

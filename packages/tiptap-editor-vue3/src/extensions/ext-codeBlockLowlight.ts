@@ -29,6 +29,7 @@ const ExtCodeBlockLowlight = CodeBlockLowlight.extend({
                         isReadonly: !editor.isEditable,
                         icons: 'code-block-icon',
                         tipText: '代码块',
+                        shortcutKeys: 'Ctrl+Alt+C',
                         command: () => {
                             editor.commands.toggleCodeBlock()
                         }

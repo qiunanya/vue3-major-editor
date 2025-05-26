@@ -14,6 +14,7 @@ const ExtStrike = ExtensionStrike.extend({
                         isReadonly: !editor.isEditable,
                         icons: 'strike-icon',
                         tipText: '删除线',
+                        shortcutKeys: 'Ctrl+Shift+S',
                         command: () => {
                             editor.commands.toggleStrike()
                         }
