@@ -28,14 +28,14 @@
     h5,
     h6 {
         line-height: 1.1;
-        margin-top: 2.5rem;
+        margin-top: 1rem;
         text-wrap: pretty;
     }
 
     h1,
     h2 {
-        margin-top: 3.5rem;
-        margin-bottom: 1.5rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
     }
 
     h1 {
