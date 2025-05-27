@@ -66,7 +66,10 @@ The component wraps the image element, click directly to preview.
     <img src="https://picsum.photos/id/11/2500/1667"/>
 </ImagesViewerVue3>
 ```
+![](./image/viewer-img-demo.png)
+
 ## Options
+
 Initialize the configuration in `app.use(ImagesViewerVue3,options)` of the `main.ts` file.
 
 | Option | Allowed Value | Default  | Description |
