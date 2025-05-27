@@ -125,10 +125,10 @@ nextTick().then(res => {
         const siderBar = scrollRef.value as HTMLElement
         // siderBar.getBoundingClientRect()
         let currentWin = window as Window
-        siderBar.style.setProperty('--sider-height', `${currentWin.innerHeight - 50}`)
+        siderBar.style.setProperty('--sider-height', `${currentWin.innerHeight - 20}`)
         window.addEventListener('resize', (evt) => {
             currentWin = evt.target as Window
-            siderBar.style.setProperty('--sider-height', `${currentWin.innerHeight - 50}`)
+            siderBar.style.setProperty('--sider-height', `${currentWin.innerHeight - 20}`)
         })
     }
 })
@@ -146,23 +146,21 @@ defineExpose({
     overflow: hidden;
 
     .nav-header__wrap {
-        height: 50px;
+        height: 20px;
         overflow: hidden;
         display: flex;
-        flex-direction: column;
         .image-index {
             outline: none;
             border: none;
             text-align: center;
             flex: 1;
+            padding-left: 0.1em;
         }
-
         .query-btn {
-            flex: 1;
             background: #3a8df5;
             color: #eee;
             border: none;
-            border-radius: 4px;
+            cursor: pointer;
             &.is-disabled {
                 cursor: not-allowed;
                 opacity: 0.7;

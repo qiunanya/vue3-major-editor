@@ -78,6 +78,7 @@ const open = (evt:Event) => {
 
 <style lang="scss">
 .img-item {
+    display: inline;
     width: 100px;
     height: 100px;
     border-radius: 8px;

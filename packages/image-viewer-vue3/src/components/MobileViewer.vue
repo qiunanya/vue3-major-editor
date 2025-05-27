@@ -17,8 +17,6 @@ import { ref, nextTick, computed, inject } from 'vue'
 import type { CSSProperties } from 'vue'
 import vLazyImage from '../directive/v-lazy-image'
 
-// type ImagesType = ImageObjectTypes[]
-
 const { currentImage, activeImage } = defineProps({
     currentImage: {
         type: String,

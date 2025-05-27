@@ -82,7 +82,19 @@ export const useToolbar = (images: string[], cb:Function) => {
         imageCore.setImage(imageRef.value)
         const createImage = new Image()
         createImage.src = (imageRef.value&&imageRef.value.src) as string
-        const { width, height, naturalWidth, naturalHeight } = createImage
+
+        // 计算图片大小
+        // 将像素大小转换为KB
+        createImage.onload = () => {
+            const { width, height, naturalWidth, naturalHeight } = createImage
+            const fileSizeInKB = Number(naturalWidth * naturalHeight / 1024).toFixed(2)
+            imageInfo.value = {
+                naturalRatio: `${naturalWidth} x ${naturalHeight} px`,
+                renderRatio: `${width} x ${height} px`,
+                size: `${fileSizeInKB} KB`,
+                fixedAspectRatio: `${naturalWidth}:${naturalHeight}`
+            }
+        }
         
         if (imageRef.value && imageVieverWidgetRef.value) {
             // 重置上一张图片样式，避免样式污染
@@ -95,31 +107,6 @@ export const useToolbar = (images: string[], cb:Function) => {
         
         loadImageErrorText.value = ""
         loading.value = false
-       
-        // 计算图片大小
-        // 将像素大小转换为KB
-        const fileSizeInKB = Number(naturalWidth * naturalHeight / 1024).toFixed(2)
-        imageInfo.value = {
-            naturalRatio: `${naturalWidth} x ${naturalHeight} px`,
-            renderRatio: `${width} x ${height} px`,
-            size: `${fileSizeInKB} KB`,
-            fixedAspectRatio: `${naturalWidth}:${naturalHeight}`
-        }
-        // fetch(createImage.src)
-        // .then(response => response.blob())
-        // .then(blob => {
-        //     // 文件大小，单位为字节
-        //     const fileSize = blob.size; 
-        //     // 转换为KB并保留两位小数
-        //     const fileSizeInKB = (fileSize / 1024).toFixed(2); 
-        //     imageInfo.value = {
-        //         naturalWidth: createImage.naturalWidth,
-        //         naturalHeight: createImage.naturalHeight,
-        //         width: createImage.width,
-        //         height: createImage.height,
-        //         size: `${fileSizeInKB} KB`
-        //     }
-        // });
     }
 
     const errorImage = (evt:Event) => {
@@ -127,12 +114,6 @@ export const useToolbar = (images: string[], cb:Function) => {
         loadImageErrorText.value = "加载图片失败，请仔细检测图片访问路径！"
         // console.log('图片加载错误：',evt)
     }
-
-    // onLoad
-    const onLoad = () => {
-        
-    }
-
 
     // 切换到下一张图片
     const nextImage = () => {
@@ -173,11 +154,6 @@ export const useToolbar = (images: string[], cb:Function) => {
         const { enter, exit, toggle } = useFullscreen(imageViewerVue3Root)
         toggle()
     }
-
-
-    nextTick(() => {
-        onLoad()
-    })
 
     return {
         updateImageSrc,
