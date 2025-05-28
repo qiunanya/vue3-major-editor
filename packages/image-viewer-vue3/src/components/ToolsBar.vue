@@ -35,12 +35,17 @@
     <ArrowDownload24Regular/>
 </NIcon> 
 
-<NIcon v-if="playState" class="svg-action--btn" size="25" title="暂停">
-    <RecordStop24Regular  v-if="isMultipleImage" @click.stop.prevent="stopPlay"/>
-</NIcon> 
-<NIcon v-else class="svg-action--btn" size="25" title="播放">
-    <PlayCircle24Regular  v-if="isMultipleImage" @click.stop.prevent="autoPlay"/>
-</NIcon> 
+<template v-if="playState">
+    <NIcon v-if="isMultipleImage" class="svg-action--btn" size="25" title="暂停">
+        <RecordStop24Regular @click.stop.prevent="stopPlay"/>
+    </NIcon> 
+</template>
+<template v-else>
+    <NIcon v-if="isMultipleImage" class="svg-action--btn" size="25" title="播放">
+        <PlayCircle24Regular @click.stop.prevent="autoPlay"/>
+    </NIcon>
+</template>
+ 
 <slot></slot>
 </div>
 </template>
