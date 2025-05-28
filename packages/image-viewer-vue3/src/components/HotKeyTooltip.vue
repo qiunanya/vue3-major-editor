@@ -3,7 +3,7 @@
     <p class="item-key">{{ hotkey }}</p>
 </div>
 </template>
-<script setup>
+<script setup lang="ts" name="HotKeyTooltip">
 
 const props = defineProps({
     isActiveKey: {
@@ -37,6 +37,7 @@ const hotkey = defineModel('hotkey', { type: String, default: "Ctrl+S" })
         // border-top: 1px solid #f5f5f5;
         display: inline-block;
         // text-shadow: 0 1px 0 #f5f5f5;
+        padding: 0.2em 0.5em;
         text-transform: capitalize;
         margin-inline-start: 0.2em;
         margin-inline-end: 0.2em;

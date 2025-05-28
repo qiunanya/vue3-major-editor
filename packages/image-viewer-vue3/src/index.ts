@@ -2,6 +2,7 @@ import { createVNode, render, App } from 'vue'
 import ImageViewer from './components/viewer.vue'
 import ImageViewerUI from './components/index.vue'
 import VImageViewer from './directive/v-image-viewer'
+import HotKeyTooltip from './components/HotKeyTooltip.vue'
 import LazyLoadDirective from './directive/v-lazy-image'
 import { ImageViewerOptions, ImageViewerType, ImageViewerInstallConfig } from './types/image-viewer'
 import ImageViewerCore from './utils/ViewerCore'
@@ -58,6 +59,7 @@ async function imageViewerApi (opt:ImageViewerOptions) {
             language: config.language || 'zh',
             playSpeed: config.playSpeed,
             isDownLoad: config.isDownLoad,
+            isHiddenSiderNav: config.isHiddenSiderNav,
             handleChange: ({ image, index }: { image:string, index: number}) => {
                 callBack&&callBack(image, index)
             },
@@ -102,6 +104,7 @@ export {
     imageViewerApi,
     VImageViewer,
     ImageViewerVue3,
+    HotKeyTooltip,
     onClose,
     onUpdate
 }

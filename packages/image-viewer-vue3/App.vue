@@ -12,26 +12,25 @@
         <img class="img-item" v-image-viewer v-lazy-image="'https://picsum.photos/id/11/2500/1667'"/>
         <img class="img-item" v-image-viewer v-lazy-image="currentSrc"/>
     </div>
-
     <div>
         <h5>组件方式使用图片预览器</h5>
-        <ImageViewerVue3>
+        <ImagesViewerVue3>
             <img class="img-item" v-lazy-image="'https://picsum.photos/id/6/5000/3333'"/>
             <img class="img-item" src="https://picsum.photos/id/10/2500/1667"/>
             <img class="img-item" src="https://picsum.photos/id/11/2500/1667"/>
-        </ImageViewerVue3>
+        </ImagesViewerVue3>
     </div>
 
     <div>
         <h5>API 调用图片预览器</h5>
-        <img class="img-item" v-for="(item, index) in dataList.slice(0, 3)" :key="index" @click="toggleApi($event, index)" :src="item"/>
+        <!-- <img class="img-item" v-for="(item, index) in dataList.slice(0, 3)" :key="index" @click="toggleApi($event, index)" :src="item"/> -->
+        <img class="img-item" @click="toggleApi($event,0)" src="https://picsum.photos/id/10/2500/1667"/>
     </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import { onClose, imageViewerApi, onUpdate } from './src/index'
-import ImageViewerVue3 from "./src/components/viewer.vue"
 
 const dataList = ref([
         "https://picsum.photos/id/10/2500/1667",
@@ -85,6 +84,7 @@ const changeSrc = () => {
 const handleClose = () => {
     onClose()
 }
+
 const toggleApi = (evt:Event, index: number) => {
     if (!evt.target) return
     const iDom = evt.target as HTMLImageElement

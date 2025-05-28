@@ -52,6 +52,7 @@ app.use(ImagesViewerVue3, {
     isEnableWheel: true, // Enabled by default
     playSpeed: 2000, // playSpeed Default 2000 ms
     isDownLoad: true, // Enabled by default
+    isHiddenSiderNav: false // Enabled by default
 })
 app.mount("#app")
 ```
@@ -66,7 +67,8 @@ The component wraps the image element, click directly to preview.
     <img src="https://picsum.photos/id/11/2500/1667"/>
 </ImagesViewerVue3>
 ```
-![](./image/viewer-img-demo.png)
+![](./image/img_1.png)
+![](./image/img_2.png)
 
 ## Options
 
@@ -82,6 +84,7 @@ Initialize the configuration in `app.use(ImagesViewerVue3,options)` of the `main
 | language | 'zh' or 'en' | 'zh' | Define the prompt text display language.|
 | playSpeed | number | 2000 | play speed, Default 2000 ms.|
 | isDownLoad | boolean | true | Download enabled by default |
+| isHiddenSiderNav | boolean | false | isHiddenSiderNav enabled by default |
 
 ## Command preview image
 Add v-image-viewer to the image tag that needs to be previewed. All imgs with added instructions will be automatically added to the preview list.

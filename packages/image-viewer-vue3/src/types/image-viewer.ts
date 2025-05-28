@@ -11,7 +11,8 @@ export type ImageViewerType = {
     zIndex: number,
     language: langType,
     playSpeed: number,
-    isDownLoad: boolean
+    isDownLoad: boolean,
+    isHiddenSiderNav: boolean
 }
 
 // 从配置项中提取zindex属性类型

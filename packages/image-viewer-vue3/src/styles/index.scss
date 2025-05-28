@@ -98,14 +98,14 @@
         bottom: 0px;
         left: 0px;
         right: 0px;
-        display: grid;
-        grid-template-columns: 90px 1fr;
-        &.active-grid {
-            grid-template-columns: 0px 1fr;
-        }
-        &.close-grid {
-            grid-template-columns: 1fr;
-        }
+        display: flex;
+        // grid-template-columns: 90px 1fr;
+        // &.active-grid {
+        //     grid-template-columns: 0px 1fr;
+        // }
+        // &.close-grid {
+        //     grid-template-columns: 1fr;
+        // }
         .content-nav__wrapper {
             // background-color: rgba(0, 0, 0, 0.6);
             width:0px;
@@ -252,7 +252,7 @@
                 width: auto;
                 height: auto; 
                 object-fit: cover;
-                padding: 30px;
+                padding: 99px;
                 display: inline-block;
             }
             .image-viewer__controls {

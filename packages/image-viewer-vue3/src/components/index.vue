@@ -18,7 +18,13 @@
     </div>
     <!-- pc端 -->
     <div v-else :class="['images-viewer-vue3__content', { 'active-grid': !isVisibleNav}, { 'close-grid': !isMultipleImage}]">
-        <div :class="['content-nav__wrapper', { 'nav-active': isVisibleNav }, { 'is-hidden': getUserAgent() }]" v-if="isMultipleImage">
+        <div :class="[
+            'content-nav__wrapper', 
+            { 'nav-active': isVisibleNav }, 
+            { 'is-hidden': getUserAgent() }, 
+            { 'is-hidden': !isMultipleImage },
+            { 'is-hidden': isHiddenSiderNav },
+        ]">
             <!-- 使用Vueuse的虚拟滚动useVirtualList hook -->
             <ScrollItemNav
                 ref="scrollItemNavRef" 
@@ -29,8 +35,17 @@
             </ScrollItemNav>
         </div>
         <div class="content-viewer-image__wrapper" @wheel="onWheelListener">
-            <div :class="['image-header__inner', {'flex-end': !isMultipleImage}]">
-                <svg v-show="isMultipleImage" @click.stop.prevent="setNavState" :class="['icon-is-hover cursor image-collapse-nav__btn svg-icon__action', {'rotate-right__btn': !isVisibleNav },{ 'is-hidden': getUserAgent() }]" viewBox="0 0 1024 1024">
+            <div :class="['image-header__inner', { 'flex-end': !isMultipleImage },{ 'flex-end': isHiddenSiderNav }]">
+                <svg 
+                    v-show="isMultipleImage" 
+                    @click.stop.prevent="setNavState" 
+                    :class="[
+                        'icon-is-hover cursor image-collapse-nav__btn svg-icon__action', 
+                        {'rotate-right__btn': !isVisibleNav },
+                        { 'is-hidden': getUserAgent() }, 
+                        { 'is-hidden': isHiddenSiderNav}]" 
+                        viewBox="0 0 1024 1024"
+                    >
                     <path  d="M322.12 353.93L104.61 490.77c-18.45 11.61-18.44 38.51 0.02 50.1l217.51 136.64c19.71 12.38 45.33-1.78 45.33-25.06V378.98c0-23.29-25.64-37.45-45.35-25.05zM94.78 125.02h834.44c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5H94.78c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5zM929.22 342.34H444.11c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5h485.11c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5zM929.22 620.66H444.11c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5h485.11c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5zM929.22 898.98H94.78c-16.84 0-30.5 13.66-30.5 30.5s13.66 30.5 30.5 30.5h834.44c16.84 0 30.5-13.66 30.5-30.5s-13.66-30.5-30.5-30.5z"></path>
                 </svg>
                 <div class="image-info--group">
@@ -99,7 +114,7 @@
         </div>
     </div>
    
-    <HotKeys v-model:hotkey="hotkey" :is-active-key.camel="isActiveKey"></HotKeys>
+    <HotKeyTooltip v-model:hotkey="hotkey" :is-active-key.camel="isActiveKey"></HotKeyTooltip>
 </div>
 
 </template>
@@ -109,7 +124,7 @@ import type { PropType, Ref } from 'vue'
 import { useToolbar } from '../hooks/toolbar';
 import { debounce, getUserAgent } from '../utils';
 import { FlipAnimate } from '../utils/flip-animate';
-import HotKeys from './HotKeys.vue';
+import HotKeyTooltip from './HotKeyTooltip.vue';
 import MobileViewer from './MobileViewer.vue';
 import LoadingUI from './Loading.vue';
 import ScrollItemNav from './ScrollItemNav.vue'
@@ -189,7 +204,13 @@ const props = defineProps({
         default: () => {
             return true
         }
-    }
+    },
+    isHiddenSiderNav: {
+        type: Boolean,
+        default: () => {
+            return false
+        }
+    },
 })
 
 

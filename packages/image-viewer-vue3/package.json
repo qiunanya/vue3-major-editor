@@ -37,6 +37,7 @@
         "umds",
         "LICENSE",
         "README.md",
+        "image",
         "package.json"
     ],
     "keywords": [

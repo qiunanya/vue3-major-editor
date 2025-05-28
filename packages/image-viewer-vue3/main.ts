@@ -17,5 +17,6 @@ app.use(ImageViewerVue3, {
     isEnableWheel: true, // Enabled by default
     playSpeed: 2000, // Default 2000 ms
     isDownLoad: true, // Enabled by default
+    isHiddenSiderNav: false
 })
 app.mount("#app")
