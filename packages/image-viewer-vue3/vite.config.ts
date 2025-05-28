@@ -3,7 +3,6 @@ import vue from "@vitejs/plugin-vue";
 import dts from "vite-plugin-dts";
 import pkg from './package.json';
 import VitePluginStyleInject from 'vite-plugin-style-inject';
-import path from "path";
 
 export default defineConfig({
     plugins: [
