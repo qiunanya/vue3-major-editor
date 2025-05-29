@@ -45,7 +45,7 @@ const app = createApp(App)
 // Includes preview directive and lazy loading directive
 app.use(ImagesViewerVue3, {
     zIndex: 999, // Default 999
-    language: 'zh', // Default language 'zh'
+    language: 'zh-cn', // Default language 'zh'
     scaleRatio: 1, // Default 1
     rotateRatio: 90, // Default 90 degrees
     isEnableDrag: true, // Enabled by default
@@ -57,21 +57,8 @@ app.use(ImagesViewerVue3, {
 })
 app.mount("#app")
 ```
-# Usage
 
-## Component preview image
-The component wraps the image element, click directly to preview.
-```js
-<ImagesViewerVue3>
-    <img src="https://picsum.photos/id/6/5000/3333"/>
-    <img src="https://picsum.photos/id/10/2500/1667"/>
-    <img src="https://picsum.photos/id/11/2500/1667"/>
-</ImagesViewerVue3>
-```
-![](./image/img_1.png)
-![](./image/img_2.png)
-
-## Options
+## Config
 
 Initialize the configuration in `app.use(ImagesViewerVue3,options)` of the `main.ts` file.
 
@@ -87,6 +74,19 @@ Initialize the configuration in `app.use(ImagesViewerVue3,options)` of the `main
 | isDownLoad | boolean | true | Download enabled by default |
 | isHiddenSiderNav | boolean | false | isHiddenSiderNav enabled by default |
 | isHiddenSearch | boolean | false | Disable by default |
+# Usage
+
+## Component preview image
+The component wraps the image element, click directly to preview.
+```js
+<ImagesViewerVue3>
+    <img src="https://picsum.photos/id/6/5000/3333"/>
+    <img src="https://picsum.photos/id/10/2500/1667"/>
+    <img src="https://picsum.photos/id/11/2500/1667"/>
+</ImagesViewerVue3>
+```
+![](./image/img_1.png)
+![](./image/img_2.png)
 
 ## Command preview image
 Add v-image-viewer to the image tag that needs to be previewed. All imgs with added instructions will be automatically added to the preview list.

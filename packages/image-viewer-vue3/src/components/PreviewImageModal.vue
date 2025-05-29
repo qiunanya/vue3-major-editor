@@ -10,11 +10,11 @@
         <div v-if="isMultipleImage" class="cus-head-info">
             <span>{{images.length}}&nbsp;&nbsp;/&nbsp;</span>
         </div>
-        <MobileViewer
+        <PreviewImageMobile
             :current-image.camel="current" 
             :active-image.camel="image" 
             @on-cb="onCallBack">
-        </MobileViewer>
+        </PreviewImageMobile>
     </div>
     <!-- pc端 -->
     <div v-else :class="['images-viewer-vue3__content', { 'active-grid': !isVisibleNav}, { 'close-grid': !isMultipleImage}]">
@@ -109,22 +109,18 @@
 </div>
 
 </template>
-<script setup lang="ts">
+<script setup lang="ts" name="PreviewImageModal">
 import { watch, ref, nextTick, onBeforeUnmount, provide, inject } from 'vue';
 import type { PropType, Ref } from 'vue'
-import { useToolbar } from '../hooks/toolbar';
-import { debounce, getUserAgent } from '../utils';
-import { FlipAnimate } from '../utils/flip-animate';
+import { useToolbar,usePlayer, useNaiveDiscrete } from '@/hooks';
 import HotKeyTooltip from './HotKeyTooltip.vue';
-import MobileViewer from './MobileViewer.vue';
+import PreviewImageMobile from './PreviewImageMobile.vue';
 import LoadingUI from './Loading.vue';
-import ScrollItemNav from './ScrollItemNav.vue'
+import ScrollItemNav from './ScrollNavSiderBar.vue'
 import ToolsBar from './ToolsBar.vue';
-import { useCusShortKey } from '../utils/hotkeys';
+import { useCusShortKey, FlipAnimate, getUserAgent } from '@/utils';
 import { HotkeysEvent } from 'hotkeys-js';
-import { usePlayer } from '../hooks/player';
-import { useNaiveDiscrete } from '../hooks/useNaiveDiscrete'
-import { ImageObjectTypes, ClickNavImageType } from '../types/image-viewer';
+import { ImageObjectTypes, ClickNavImageType } from '@/types/image-viewer';
 import { NTooltip, NIcon } from "naive-ui";
 import { DismissCircle24Regular, Info24Regular, List24Regular } from '@vicons/fluent'
 import { Composer } from 'vue-i18n';

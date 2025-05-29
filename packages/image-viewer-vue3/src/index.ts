@@ -1,13 +1,18 @@
 import { createVNode, render, App } from 'vue'
-import ImageViewer from './components/viewer.vue'
-import ImageViewerUI from './components/index.vue'
+import PreviewImageWrapper from './components/PreviewImageWrapper.vue'
+import PreviewImageModal from './components/PreviewImageModal.vue'
 import VImageViewer from './directive/v-image-viewer'
 import HotKeyTooltip from './components/HotKeyTooltip.vue'
 import LazyLoadDirective from './directive/v-lazy-image'
 import { ImageViewerOptions, ImageViewerType, ImageViewerInstallConfig } from './types/image-viewer'
-import ImageViewerCore from './utils/ViewerCore'
-import { versions, asyncVerifyIllegalImage } from './utils/index'
-import { Locale } from 'vue-i18n'
+import { 
+    ImageViewerCore, 
+    versions, 
+    asyncVerifyIllegalImage, 
+    PREVIEW_WRAPPER_ROOT_CLASS, 
+    createElementNode, 
+    setBodyStyle 
+} from '@/utils'
 import i18n from '@/langs'
 // 这样导入package.json文件并使用内容，会导致vite-plugin-dts打包生成的声明文件错乱
 // import pkg from '../package.json';
@@ -27,7 +32,7 @@ export default function install(app:App, config?:ImageViewerInstallConfig) {
     console.log(`%cimages-viewer-vue3_V${versions}`, "color: #eee;background:#646cff;padding:2px 5px;border-radius:4px;")
     app.directive("image-viewer", VImageViewer)
     app.directive("lazy-image", LazyLoadDirective)
-    app.component('ImagesViewerVue3', ImageViewer)
+    app.component('ImagesViewerVue3', PreviewImageWrapper)
     app.config.globalProperties.$imageViewerApi = imageViewerApi
 }
 
@@ -48,7 +53,7 @@ async function imageViewerApi (opt:ImageViewerOptions) {
     if (previewBox) {
         previewBox&&document.body.removeChild(previewBox);
     } else {
-        vnode = createVNode(ImageViewerUI, {
+        const props = {
             visible: true,
             specifyIndex: opt.specifyIndex,
             current: opt.current,
@@ -68,16 +73,14 @@ async function imageViewerApi (opt:ImageViewerOptions) {
             handleClose: () => {
                 onClose()
             }
-        })
+        }
 
-        previewBox = document.createElement('div')
+        vnode = createVNode(PreviewImageModal, props)
+
+        previewBox = createElementNode()
         previewBox.style.zIndex = config.zIndex+'';
-        previewBox.classList.add('image-viewer-vue3__root');
         render(vnode, previewBox)
-        document.body.style.overflow = 'hidden'
-        document.body.style.margin = '0px'
-        document.body.style.padding = '0px'
-        document.body.appendChild(previewBox)
+        setBodyStyle(previewBox)
 
         // 更新外部组件，图片已加载
         callBack&&callBack(opt.current, opt.imageDom&&opt.imageDom.getAttribute('data-index'))
@@ -86,7 +89,7 @@ async function imageViewerApi (opt:ImageViewerOptions) {
 
 // 手动关闭
 function onClose () {
-    const imageViewerDom = document.querySelector('.image-viewer-vue3__root')
+    const imageViewerDom = document.querySelector(`.${PREVIEW_WRAPPER_ROOT_CLASS}`)
     if (imageViewerDom) {
         document.body.style.removeProperty('overflow')
         document.body.style.removeProperty('margin')
@@ -100,7 +103,7 @@ function onUpdate (fn?:Function) {
     fn&&(callBack=fn)
 }
 
-const ImageViewerVue3 = ImageViewer
+const ImageViewerVue3 = PreviewImageWrapper
 
 export {
     imageViewerApi,

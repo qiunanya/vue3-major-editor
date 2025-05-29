@@ -4,11 +4,11 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name='PreviewImageWrapper'>
 import { ref, onMounted, getCurrentInstance, nextTick } from 'vue';
 import type { ComponentInternalInstance } from 'vue';
 import { imageViewerApi } from '../index';
-import { ViewImageType } from '../types/image-viewer';
+import { ViewImageType } from '@/types/image-viewer';
 
 const emits = defineEmits(['on-click'])
 

@@ -12,9 +12,9 @@ interface CusCSSProperties extends CSSProperties {
     scaleX: string,
 }
 
-class ImageViewerCore {
+class ImageViewerCoreTool {
     // 配置全局变量供外部调用
-    static viewer: ImageViewerCore;
+    static viewer: ImageViewerCoreTool;
     // 配置静态属性，防止被外部修改
     private static total: number = 0;
     private currentImage: HTMLImageElement | null = null;
@@ -301,4 +301,4 @@ class ImageViewerCore {
     }
 }
 
-export default ImageViewerCore;
+export const ImageViewerCore = ImageViewerCoreTool;

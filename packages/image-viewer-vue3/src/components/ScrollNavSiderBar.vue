@@ -33,7 +33,7 @@
 </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="ScrollNavSiderBar">
 import type { Ref, PropType } from 'vue'
 import { useVirtualList } from '@vueuse/core'
 import { computed, ref, nextTick, inject, watch } from 'vue'

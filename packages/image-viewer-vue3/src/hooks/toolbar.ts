@@ -1,5 +1,4 @@
-import ImageViewerCore from '../utils/ViewerCore';
-import { downloadExe } from '../utils/index';
+import { ImageViewerCore, downloadExe } from '@/utils';
 import { ref, nextTick } from 'vue';
 import { useFullscreen } from '@vueuse/core'
 
