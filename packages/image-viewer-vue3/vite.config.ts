@@ -3,6 +3,7 @@ import vue from "@vitejs/plugin-vue";
 import dts from "vite-plugin-dts";
 import pkg from './package.json';
 import VitePluginStyleInject from 'vite-plugin-style-inject';
+import path from "path";
 
 export default defineConfig({
     plugins: [
@@ -19,6 +20,14 @@ export default defineConfig({
         port: 3000,
         // 使用手机能够访问,使用默认路由
         host: '0.0.0.0'
+    },
+    resolve: {
+        alias: [
+            {
+                find: '@',
+                replacement: path.resolve(__dirname, 'src'),
+            },
+        ]
     },
     build: {
         rollupOptions: {

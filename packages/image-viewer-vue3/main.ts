@@ -1,6 +1,8 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 
+import i18n from "./src/langs";
+
 // 图片查看器
 import ImageViewerVue3 from './src/index'
 import './src/styles/index.scss'
@@ -17,6 +19,8 @@ app.use(ImageViewerVue3, {
     isEnableWheel: true, // Enabled by default
     playSpeed: 2000, // Default 2000 ms
     isDownLoad: true, // Enabled by default
-    isHiddenSiderNav: false
+    isHiddenSiderNav: false, // Enabled by default
+    isHiddenSearch: false, // Disable by default
 })
+app.use(i18n)
 app.mount("#app")

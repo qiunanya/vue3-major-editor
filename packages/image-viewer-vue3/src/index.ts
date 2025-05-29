@@ -7,8 +7,7 @@ import LazyLoadDirective from './directive/v-lazy-image'
 import { ImageViewerOptions, ImageViewerType, ImageViewerInstallConfig } from './types/image-viewer'
 import ImageViewerCore from './utils/ViewerCore'
 import { versions, asyncVerifyIllegalImage } from './utils/index'
-// Message CSS
-import './styles/message.scss'
+import { useI18n } from 'vue-i18n'
 // 这样导入package.json文件并使用内容，会导致vite-plugin-dts打包生成的声明文件错乱
 // import pkg from '../package.json';
 
@@ -16,7 +15,6 @@ import './styles/message.scss'
 let vnode;
 const viewerCore = ImageViewerCore.getInStance()
 var callBack:Function = (image:string, index: number) => {}
-
 export default function install(app:App, config?:ImageViewerInstallConfig) {
     // 这里可以注册指令，因为App对象
     if (config) {
@@ -60,6 +58,7 @@ async function imageViewerApi (opt:ImageViewerOptions) {
             playSpeed: config.playSpeed,
             isDownLoad: config.isDownLoad,
             isHiddenSiderNav: config.isHiddenSiderNav,
+            isHiddenSearch: config.isHiddenSearch,
             handleChange: ({ image, index }: { image:string, index: number}) => {
                 callBack&&callBack(image, index)
             },

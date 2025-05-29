@@ -1,36 +1,36 @@
 <template>
-    <div class="scroll-item-nav__wrapper" ref="scrollRef">
-        <div class="nav-header__wrap">
-            <input class="image-index" :min="1" :max="maxValue" v-model="counter" placeholder="请输入张数" type="number"
-                @keydown="onKeyDown">
-            <button :class="['query-btn', {'is-disabled': isDisabled }]" type="button" @click="scrollToImage" :disabled="isDisabled">GO</button>
-        </div>
-        <div class="nav-scroll__wrap" v-bind="containerProps">
-            <div v-bind="wrapperProps">
-                <div v-for="{ index, data } in list" :key="index"
-                    :class="['list-group-item', { 'active-item': activeIndex === data.index }]" :style="{
-                        height: `${data.height}px`,
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }">
-                    <!-- <span class="index">{{ index }}</span> -->
-                    <!-- 加载动画 -->
-                    <NavLoading v-if="data.isLoad"></NavLoading>
-                    <!-- 加载错误文本 -->
-                    <span class="error-text" v-if="data.isError">加载失败</span>
-                    <img
-                        class="list-group-image" 
-                        :data-id="data.index" 
-                        v-lazy-image="data.url" 
-                        alt="picture"
-                        @load="onLoad(data, index)"
-                        @error="onError(data, index)"
-                        @click.stop.prevent="clickImge($event, data, index)">
-                </div>
+<div class="scroll-item-nav__wrapper" ref="scrollRef">
+    <div class="nav-header__wrap" v-if="isHiddenSearch">
+        <input class="image-index" :min="1" :max="maxValue" v-model="counter" placeholder="请输入张数" type="number"
+            @keydown="onKeyDown">
+        <button :class="['query-btn', {'is-disabled': isDisabled }]" type="button" @click="scrollToImage" :disabled="isDisabled">GO</button>
+    </div>
+    <div class="nav-scroll__wrap" :style="styles" v-bind="containerProps">
+        <div v-bind="wrapperProps">
+            <div v-for="{ index, data } in list" :key="index"
+                :class="['list-group-item', { 'active-item': activeIndex === data.index }]" :style="{
+                    height: `${data.height}px`,
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }">
+                <!-- <span class="index">{{ index }}</span> -->
+                <!-- 加载动画 -->
+                <NavLoading v-if="data.isLoad"></NavLoading>
+                <!-- 加载错误文本 -->
+                <span class="error-text" v-if="data.isError">加载失败</span>
+                <img
+                    class="list-group-image" 
+                    :data-id="data.index" 
+                    v-lazy-image="data.url" 
+                    alt="picture"
+                    @load="onLoad(data, index)"
+                    @error="onError(data, index)"
+                    @click.stop.prevent="clickImge($event, data, index)">
             </div>
         </div>
     </div>
+</div>
 </template>
 
 <script lang="ts" setup>
@@ -41,14 +41,19 @@ import vLazyImage from '../directive/v-lazy-image'
 import NavLoading from './NavLoading.vue'
 import { NavImageItemType } from '../types/image-viewer'
 
-// 引入图片列表
 const viewerImages = inject('images') as string[]
 
-const { maxValue } = defineProps({
+const props = defineProps({
     maxValue: {
         type: Number,
         default: 10000,
         required: true
+    },
+    isHiddenSearch: {
+        type: Boolean,
+        default: () => {
+            return false
+        }
     }
 })
 const emit = defineEmits(['on-click', 'on-input'])
@@ -79,6 +84,13 @@ const filteredItems = computed(() => {
 
 const isDisabled = computed(() => {
     return counter.value>viewerImages.length;
+})
+
+const styles = computed(() => {
+    const deviation = props.isHiddenSearch?20:0
+    return {
+        height: `calc(100vh - ${deviation}px)`
+    }
 })
 
 const onLoad = (item:NavImageItemType, index:number) => {
@@ -119,19 +131,6 @@ function scrollToImage () {
         activeIndex.value = sortIndex
     }
 }
-
-nextTick().then(res => {
-    if (scrollRef.value) {
-        const siderBar = scrollRef.value as HTMLElement
-        // siderBar.getBoundingClientRect()
-        let currentWin = window as Window
-        siderBar.style.setProperty('--sider-height', `${currentWin.innerHeight - 20}`)
-        window.addEventListener('resize', (evt) => {
-            currentWin = evt.target as Window
-            siderBar.style.setProperty('--sider-height', `${currentWin.innerHeight - 20}`)
-        })
-    }
-})
 
 defineExpose({
     scrollTo,

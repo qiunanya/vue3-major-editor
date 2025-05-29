@@ -27,7 +27,8 @@
         ]">
             <!-- 使用Vueuse的虚拟滚动useVirtualList hook -->
             <ScrollItemNav
-                ref="scrollItemNavRef" 
+                ref="scrollItemNavRef"
+                :isHiddenSearch="isHiddenSearch" 
                 v-model="currentIndex"
                 :max-value.camel="images.length"
                 @on-click="clickImge"
@@ -36,6 +37,7 @@
         </div>
         <div class="content-viewer-image__wrapper" @wheel="onWheelListener">
             <div :class="['image-header__inner', { 'flex-end': !isMultipleImage },{ 'flex-end': isHiddenSiderNav }]">
+                {{ $t('headMenus.userName') }}
                 <NIcon v-if="isMultipleImage" size="25" @click.stop.prevent="setNavState" :class="['cursor image-collapse-nav__btn',{'rotate-right__btn': !isVisibleNav }]">
                     <List24Regular/>
                 </NIcon>
@@ -128,6 +130,7 @@ import { useNaiveDiscrete } from '../hooks/useNaiveDiscrete'
 import { ImageObjectTypes, ClickNavImageType } from '../types/image-viewer';
 import { NTooltip, NIcon } from "naive-ui";
 import { DismissCircle24Regular, Info24Regular, List24Regular } from '@vicons/fluent'
+import { useI18n } from "vue-i18n";
 
 const props = defineProps({
     visible: {
@@ -202,6 +205,12 @@ const props = defineProps({
             return false
         }
     },
+    isHiddenSearch: {
+        type: Boolean,
+        default: () => {
+            return false
+        }
+    }
 })
 
 
