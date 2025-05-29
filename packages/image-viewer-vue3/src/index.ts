@@ -7,7 +7,8 @@ import LazyLoadDirective from './directive/v-lazy-image'
 import { ImageViewerOptions, ImageViewerType, ImageViewerInstallConfig } from './types/image-viewer'
 import ImageViewerCore from './utils/ViewerCore'
 import { versions, asyncVerifyIllegalImage } from './utils/index'
-import { useI18n } from 'vue-i18n'
+import { Locale } from 'vue-i18n'
+import i18n from '@/langs'
 // 这样导入package.json文件并使用内容，会导致vite-plugin-dts打包生成的声明文件错乱
 // import pkg from '../package.json';
 
@@ -19,6 +20,7 @@ export default function install(app:App, config?:ImageViewerInstallConfig) {
     // 这里可以注册指令，因为App对象
     if (config) {
         viewerCore.setConfigOptions(config as ImageViewerType)
+        i18n.global.locale.value = config.language||'zh-cn'
     }
 
     // console.log(app, config, 'install');
@@ -54,11 +56,12 @@ async function imageViewerApi (opt:ImageViewerOptions) {
             zIndex: config.zIndex,
             image: opt.imageDom,
             from: opt.from || 'api',
-            language: config.language || 'zh',
+            language: config.language || 'zh-cn',
             playSpeed: config.playSpeed,
             isDownLoad: config.isDownLoad,
             isHiddenSiderNav: config.isHiddenSiderNav,
             isHiddenSearch: config.isHiddenSearch,
+            i18n: i18n.global,
             handleChange: ({ image, index }: { image:string, index: number}) => {
                 callBack&&callBack(image, index)
             },

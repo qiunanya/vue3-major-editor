@@ -1,6 +1,6 @@
 // API预览接口参数项
 type fromType = 'api' | 'directive' | 'component';
-type langType = 'zh' | 'en';
+type langType = 'zh-cn' | 'en-us';
 
 // 预览器配置项
 export type ImageViewerType = {

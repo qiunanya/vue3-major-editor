@@ -1,6 +1,5 @@
 <template>
     <div>
-        {{ $t('headMenus.userName') }}
         <h3 style="color: #646cff;">image-viewer-vue3 图片预览器</h3>
         <button @click="handleClose">手动关闭弹窗</button>
         <button @click="changeSrc">更换src</button>

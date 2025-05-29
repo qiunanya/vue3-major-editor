@@ -1,18 +1,26 @@
 export default {
     common: {
         more: "Look More",
+        loadErrorText: 'Failed to load the image, please check the image access path carefully!',
+        renderRatio: 'render Ratio',
+        naturalRatio: 'natural Ratio',
+        fixedAspectRatio: 'fixed Aspect Ratio',
+        fileZise: 'file Zise',
+        origin: 'origin'
     },
-    leftMenus: {
-        "/": "Home",
-        Home: "Home",
-        home: "Home",
-    },
-    headMenus: {
-        subTitle: "Organization service platform",
-        userName: "ZhangSan",
-    },
-    login: {
-        personal_center: "personal center",
-        sign_out: "sign out",
-    },
+    action: {
+        previous: 'previous',
+        next: 'next',
+        enlarge: 'enlarge',
+        shrink: 'shrink',
+        rotateCounterclockwise: 'rotate Counterclockwise',
+        clockwiseRotation: 'clockwise Rotation',
+        flipHorizontal: 'flip Horizontal',
+        flipVertical: 'flip Vertical',
+        reset: 'reset',
+        fullScreen: 'full Screen',
+        download: 'download',
+        play: 'play',
+        pause: 'pause'
+    }
 };

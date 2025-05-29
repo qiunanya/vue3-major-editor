@@ -37,7 +37,6 @@
         </div>
         <div class="content-viewer-image__wrapper" @wheel="onWheelListener">
             <div :class="['image-header__inner', { 'flex-end': !isMultipleImage },{ 'flex-end': isHiddenSiderNav }]">
-                {{ $t('headMenus.userName') }}
                 <NIcon v-if="isMultipleImage" size="25" @click.stop.prevent="setNavState" :class="['cursor image-collapse-nav__btn',{'rotate-right__btn': !isVisibleNav }]">
                     <List24Regular/>
                 </NIcon>
@@ -49,12 +48,12 @@
                                     <Info24Regular/>
                                 </NIcon>
                             </template>
-                            <p style="margin: 2px 0;">{{$t('image.renderRatio')}}：{{imageInfo.renderRatio}}</p>
-                            <p style="margin: 2px 0;">{{$t('image.naturalRatio')}}：{{imageInfo.naturalRatio}}</p>
-                            <p style="margin: 2px 0;">{{$t('image.fixedAspectRatio')}}：{{imageInfo.fixedAspectRatio}}</p>
-                            <p style="margin: 2px 0;">{{$t('image.fileZise')}}：{{imageInfo.size}}</p>
+                            <p style="margin: 2px 0;">{{$t('common.renderRatio')}}：{{imageInfo.renderRatio}}</p>
+                            <p style="margin: 2px 0;">{{$t('common.naturalRatio')}}：{{imageInfo.naturalRatio}}</p>
+                            <p style="margin: 2px 0;">{{$t('common.fixedAspectRatio')}}：{{imageInfo.fixedAspectRatio}}</p>
+                            <p style="margin: 2px 0;">{{$t('common.fileZise')}}：{{imageInfo.size}}</p>
                             <p style="margin: 2px 0;" :title="updateImageSrc">
-                                {{$t('image.origin')}}：<a class="link-a" :href="updateImageSrc" target="_blank">{{updateImageSrc}}</a>
+                                {{$t('common.origin')}}：<a class="link-a" :href="updateImageSrc" target="_blank">{{updateImageSrc}}</a>
                             </p>
                         </NTooltip>
                     </section>
@@ -67,7 +66,7 @@
             </div>
             
             <div v-if="loadImageErrorText" style="user-select: text;">
-                <p style="color: orange;text-decoration: solid;">{{ $t('image.loadErrorText') }}</p>
+                <p style="color: orange;text-decoration: solid;">{{ $t('common.loadErrorText') }}</p>
                 <p>{{ updateImageSrc }}</p>
             </div>
             <img 
@@ -111,7 +110,7 @@
 
 </template>
 <script setup lang="ts">
-import { watch, ref, nextTick, onBeforeUnmount, provide } from 'vue';
+import { watch, ref, nextTick, onBeforeUnmount, provide, inject } from 'vue';
 import type { PropType, Ref } from 'vue'
 import { useToolbar } from '../hooks/toolbar';
 import { debounce, getUserAgent } from '../utils';
@@ -123,14 +122,14 @@ import ScrollItemNav from './ScrollItemNav.vue'
 import ToolsBar from './ToolsBar.vue';
 import { useCusShortKey } from '../utils/hotkeys';
 import { HotkeysEvent } from 'hotkeys-js';
-import { messages, lang } from '../langs/index';
-import { useMouse } from '../hooks/mouse';
 import { usePlayer } from '../hooks/player';
 import { useNaiveDiscrete } from '../hooks/useNaiveDiscrete'
 import { ImageObjectTypes, ClickNavImageType } from '../types/image-viewer';
 import { NTooltip, NIcon } from "naive-ui";
 import { DismissCircle24Regular, Info24Regular, List24Regular } from '@vicons/fluent'
-import { useI18n } from "vue-i18n";
+import { Composer } from 'vue-i18n';
+
+type I18nGlobal = Composer<Record<string, string>, Record<string, string>, Record<string, string>, string, false>
 
 const props = defineProps({
     visible: {
@@ -210,22 +209,9 @@ const props = defineProps({
         default: () => {
             return false
         }
-    }
+    },
+    i18n: Object as PropType<I18nGlobal>
 })
-
-
-const $t = (langkey = "") => {
-    // @ts-ignore
-    const local = messages[props.language]
-    if (local) {
-        const { image } = local
-        const keys = langkey.split('.')
-        return image[keys[1]] || langkey
-    } else {
-        console.warn(`[images-viewer-vue3]:The current language '${props.language}' is not supported`)
-        return props.language
-    }
-}
 
 const { notification } = useNaiveDiscrete()
 
@@ -257,7 +243,9 @@ const {
 
 const emits = defineEmits(['on-close', 'on-change', 'onUpdate:value']);
 
-const { onMouseDown,onMouseMove,onMouseUp, onMouseLeave } = useMouse()
+const $t = (langkey = "") => {
+    return props.i18n?.t(langkey)
+}
 
 // 自动播放
 const { scrollItemNavRef, playState, autoPlay, stopPlay, hotKeyAutoPlay} = usePlayer(currentIndex, props.images, imageRef, props.handleChange, props.playSpeed)
@@ -451,6 +439,7 @@ onBeforeUnmount( () => {
 // 注册原图片列表
 provide('images', props.images)
 provide('isMultipleImage', isMultipleImage.value)
+provide('i18n', props.i18n)
 </script>
 
 <style lang="scss" src="../styles/index.scss" scoped></style>

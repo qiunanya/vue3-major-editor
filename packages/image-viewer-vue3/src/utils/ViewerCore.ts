@@ -27,9 +27,11 @@ class ImageViewerCore {
         isEnableDrag: true,
         isEnableWheel: true,
         zIndex: 2000,
-        language: 'zh',
+        language: 'zh-cn',
         playSpeed: 2000,
         isDownLoad: true,
+        isHiddenSiderNav: false,
+        isHiddenSearch: false
     }
 
     private transforms:CusCSSProperties = {

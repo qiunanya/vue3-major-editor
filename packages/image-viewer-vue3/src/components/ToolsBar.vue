@@ -1,47 +1,47 @@
 <template>
 <div class="control-svg__btns">
-<NIcon class="svg-action--btn" size="20" title="上一张" v-if="isMultipleImage" @click.stop.prevent="previous">
+<NIcon class="svg-action--btn" size="20" :title="$t('action.previous')" v-if="isMultipleImage" @click.stop.prevent="previous">
     <ArrowPrevious24Regular/>
 </NIcon>
-<NIcon class="svg-action--btn" size="20" title="下一张" v-if="isMultipleImage" @click.stop.prevent="next">
+<NIcon class="svg-action--btn" size="20" :title="$t('action.next')" v-if="isMultipleImage" @click.stop.prevent="next">
     <ArrowNext24Regular/>
 </NIcon>
-<NIcon class="svg-action--btn" size="25" title="放大" @click.stop.prevent="zoomIn">
+<NIcon class="svg-action--btn" size="25" :title="$t('action.enlarge')" @click.stop.prevent="zoomIn">
     <ZoomIn24Regular/>
 </NIcon>
-<NIcon class="svg-action--btn" size="25" title="缩小" @click.stop.prevent="zoomOut">
+<NIcon class="svg-action--btn" size="25" :title="$t('action.shrink')" @click.stop.prevent="zoomOut">
     <ZoomOut24Regular/>
 </NIcon>
-<NIcon class="svg-action--btn" size="25" title="向左旋转" @click.stop.prevent="counterclockwise">
+<NIcon class="svg-action--btn" size="25" :title="$t('action.rotateCounterclockwise')" @click.stop.prevent="counterclockwise">
     <ArrowRotateCounterclockwise24Regular/>
 </NIcon>
-<NIcon class="svg-action--btn" size="25" title="向右旋转" @click.stop.prevent="clockwise">
+<NIcon class="svg-action--btn" size="25" :title="$t('action.clockwiseRotation')" @click.stop.prevent="clockwise">
     <ArrowRotateClockwise24Regular/>
 </NIcon>
-<NIcon class="svg-action--btn" size="25" title="水平翻转" @click.stop.prevent="inevrtX">
+<NIcon class="svg-action--btn" size="25" :title="$t('action.flipHorizontal')" @click.stop.prevent="inevrtX">
     <FlipHorizontal24Regular/>
 </NIcon>
-<NIcon class="svg-action--btn" size="25" title="垂直翻转" @click.stop.prevent="inevrtY">
+<NIcon class="svg-action--btn" size="25" :title="$t('action.flipVertical')" @click.stop.prevent="inevrtY">
     <FlipVertical24Regular/>
 </NIcon>
-<NIcon class="svg-action--btn" size="25" title="重置" @click.stop.prevent="resetStyle">
+<NIcon class="svg-action--btn" size="25" :title="$t('action.reset')" @click.stop.prevent="resetStyle">
     <ArrowReset24Regular/>
 </NIcon>
 
-<NIcon class="svg-action--btn" size="25" title="全屏查看" @click.stop.prevent="fullScreen">
+<NIcon class="svg-action--btn" size="25" :title="$t('action.fullScreen')" @click.stop.prevent="fullScreen">
     <ArrowExpand24Regular/>
 </NIcon>
-<NIcon class="svg-action--btn" size="25" title="下载" @click.stop.prevent="downloads">
+<NIcon class="svg-action--btn" size="25" :title="$t('action.download')" @click.stop.prevent="downloads">
     <ArrowDownload24Regular/>
 </NIcon> 
 
 <template v-if="playState">
-    <NIcon v-if="isMultipleImage" class="svg-action--btn" size="25" title="暂停">
+    <NIcon v-if="isMultipleImage" class="svg-action--btn" size="25" :title="$t('action.pause')">
         <RecordStop24Regular @click.stop.prevent="stopPlay"/>
     </NIcon> 
 </template>
 <template v-else>
-    <NIcon v-if="isMultipleImage" class="svg-action--btn" size="25" title="播放">
+    <NIcon v-if="isMultipleImage" class="svg-action--btn" size="25" :title="$t('action.play')">
         <PlayCircle24Regular @click.stop.prevent="autoPlay"/>
     </NIcon>
 </template>
@@ -53,6 +53,7 @@
 <script setup lang="ts">
 import { inject, ref } from 'vue'
 import { NIcon } from 'naive-ui'
+import { Composer } from 'vue-i18n';
 import { 
     ArrowPrevious24Regular,
     ArrowNext24Regular,
@@ -69,7 +70,10 @@ import {
     ArrowExpand24Regular
 } from '@vicons/fluent'
 
+type I18nGlobal = Composer<Record<string, string>, Record<string, string>, Record<string, string>, string, false>
+
 const isMultipleImage = inject('isMultipleImage')
+const i18n = inject('i18n') as I18nGlobal
 
 const { playState } = defineProps({
     playState: {
@@ -116,6 +120,10 @@ const counterclockwise = () => { emit('on-counterclockwise') }
 const stopPlay = () => { emit('on-stopPlay') }
 const autoPlay = () => { emit('on-autoPlay') }
 const fullScreen = () => { emit('on-fullScreen') }
+
+const $t = (val:string) => {
+    return i18n.t(val)
+}
 
 </script>
 
