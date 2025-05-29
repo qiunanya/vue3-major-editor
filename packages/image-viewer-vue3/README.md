@@ -53,6 +53,7 @@ app.use(ImagesViewerVue3, {
     playSpeed: 2000, // playSpeed Default 2000 ms
     isDownLoad: true, // Enabled by default
     isHiddenSiderNav: false // Enabled by default
+    isHiddenSearch: false, // Disable by default
 })
 app.mount("#app")
 ```
@@ -81,10 +82,11 @@ Initialize the configuration in `app.use(ImagesViewerVue3,options)` of the `main
 | rotateRatio | number in percentage | 90 | It defines the initial value of the image rotation angle. |
 | isEnableDrag | boolean | true | Defines whether to enable the drag and drop function. |
 | isEnableWheel | boolean | true | Defines whether to enable mouse scrolling to zoom the image. |
-| language | 'zh' or 'en' | 'zh' | Define the prompt text display language.|
+| language | 'zh-cn' or 'en-us' | 'zh-cn' | Define the prompt text display language.|
 | playSpeed | number | 2000 | play speed, Default 2000 ms.|
 | isDownLoad | boolean | true | Download enabled by default |
 | isHiddenSiderNav | boolean | false | isHiddenSiderNav enabled by default |
+| isHiddenSearch | boolean | false | Disable by default |
 
 ## Command preview image
 Add v-image-viewer to the image tag that needs to be previewed. All imgs with added instructions will be automatically added to the preview list.
