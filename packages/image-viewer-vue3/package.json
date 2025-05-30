@@ -1,7 +1,7 @@
 {
     "name": "images-viewer-vue3",
     "scope": "ImagesViewerVue3",
-    "version": "1.0.29",
+    "version": "1.0.31",
     "description": "A lightweight image viewer for Vue3",
     "type": "module",
     "main": "./dist/lib/index.cjs",

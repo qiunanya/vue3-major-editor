@@ -8,12 +8,12 @@ A lightweight image viewer for Vue3, it is based on `flip animation` technology,
 [images-viewer-vue3 demo](https://github.com/qiunanya/vue3-major-editor/tree/main/packages/image-viewer)(https://github.com/qiunanya/vue3-major-editor/tree/main/packages/image-viewer)
 
 [Case screenshot: https://blog.csdn.net/qq_41444226/article/details/144258656](https://blog.csdn.net/qq_41444226/article/details/144258656)
-
+![](https://raw.githubusercontent.com/qiunanya/vue3-major-editor/dev/packages/image-viewer-vue3/image/img_1.png)
 # Features
 * Component preview image
 * Command preview image
 * API preview image
-
+![](https://raw.githubusercontent.com/qiunanya/vue3-major-editor/dev/packages/image-viewer-vue3/image/img_2.png)
 # Function
 * Rotate image
 * Zoom image
@@ -85,8 +85,6 @@ The component wraps the image element, click directly to preview.
     <img src="https://picsum.photos/id/11/2500/1667"/>
 </ImagesViewerVue3>
 ```
-![](https://raw.githubusercontent.com/qiunanya/vue3-major-editor/dev/packages/image-viewer-vue3/image/img_1.png)
-![](https://raw.githubusercontent.com/qiunanya/vue3-major-editor/dev/packages/image-viewer-vue3/image/img_1.png)
 
 ## Command preview image
 Add v-image-viewer to the image tag that needs to be previewed. All imgs with added instructions will be automatically added to the preview list.
