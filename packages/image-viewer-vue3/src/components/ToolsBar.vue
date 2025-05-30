@@ -1,57 +1,34 @@
 <template>
 <div class="control-svg__btns">
-<NIcon class="svg-action--btn" size="20" :title="$t('action.previous')" v-if="isMultipleImage" @click.stop.prevent="previous">
-    <ArrowPrevious24Regular/>
-</NIcon>
-<NIcon class="svg-action--btn" size="20" :title="$t('action.next')" v-if="isMultipleImage" @click.stop.prevent="next">
-    <ArrowNext24Regular/>
-</NIcon>
-<NIcon class="svg-action--btn" size="25" :title="$t('action.enlarge')" @click.stop.prevent="zoomIn">
-    <ZoomIn24Regular/>
-</NIcon>
-<NIcon class="svg-action--btn" size="25" :title="$t('action.shrink')" @click.stop.prevent="zoomOut">
-    <ZoomOut24Regular/>
-</NIcon>
-<NIcon class="svg-action--btn" size="25" :title="$t('action.rotateCounterclockwise')" @click.stop.prevent="counterclockwise">
-    <ArrowRotateCounterclockwise24Regular/>
-</NIcon>
-<NIcon class="svg-action--btn" size="25" :title="$t('action.clockwiseRotation')" @click.stop.prevent="clockwise">
-    <ArrowRotateClockwise24Regular/>
-</NIcon>
-<NIcon class="svg-action--btn" size="25" :title="$t('action.flipHorizontal')" @click.stop.prevent="inevrtX">
-    <FlipHorizontal24Regular/>
-</NIcon>
-<NIcon class="svg-action--btn" size="25" :title="$t('action.flipVertical')" @click.stop.prevent="inevrtY">
-    <FlipVertical24Regular/>
-</NIcon>
-<NIcon class="svg-action--btn" size="25" :title="$t('action.reset')" @click.stop.prevent="resetStyle">
-    <ArrowReset24Regular/>
-</NIcon>
+    <template v-for="button in baseButtons" :key="button.action">
+        <NIcon
+            v-if="!button.condition || button.condition"
+            class="svg-action--btn"
+            :size="button.size"
+            :title="$t(button.title)"
+            @click.stop.prevent="button.handler"
+            >
+            <component :is="button.icon"/>
+        </NIcon>
+    </template>
 
-<NIcon class="svg-action--btn" size="25" :title="$t('action.fullScreen')" @click.stop.prevent="fullScreen">
-    <ArrowExpand24Regular/>
-</NIcon>
-<NIcon class="svg-action--btn" size="25" :title="$t('action.download')" @click.stop.prevent="downloads">
-    <ArrowDownload24Regular/>
-</NIcon> 
-
-<template v-if="playState">
-    <NIcon v-if="isMultipleImage" class="svg-action--btn" size="25" :title="$t('action.pause')">
-        <RecordStop24Regular @click.stop.prevent="stopPlay"/>
-    </NIcon> 
-</template>
-<template v-else>
-    <NIcon v-if="isMultipleImage" class="svg-action--btn" size="25" :title="$t('action.play')">
-        <PlayCircle24Regular @click.stop.prevent="autoPlay"/>
-    </NIcon>
-</template>
- 
-<slot></slot>
+    <template v-if="playState">
+        <NIcon v-if="isMultipleImage" class="svg-action--btn" size="25" :title="$t('action.pause')">
+            <RecordStop24Regular @click.stop.prevent="stopPlay"/>
+        </NIcon> 
+    </template>
+    <template v-else>
+        <NIcon v-if="isMultipleImage" class="svg-action--btn" size="25" :title="$t('action.play')">
+            <PlayCircle24Regular @click.stop.prevent="autoPlay"/>
+        </NIcon>
+    </template>
+    
+    <slot></slot>
 </div>
 </template>
 
 <script setup lang="ts">
-import { inject, ref } from 'vue'
+import { inject, ref, computed } from 'vue'
 import { NIcon } from 'naive-ui'
 import { Composer } from 'vue-i18n';
 import { 
@@ -75,7 +52,7 @@ type I18nGlobal = Composer<Record<string, string>, Record<string, string>, Recor
 const isMultipleImage = inject('isMultipleImage')
 const i18n = inject('i18n') as I18nGlobal
 
-const { playState } = defineProps({
+const props = defineProps({
     playState: {
         type: Boolean,
         default: false,
@@ -106,20 +83,93 @@ const emit = defineEmits(
     ]
 )
 
-// 自动播放过程中，手动切换图片，停止播放
-const previous = () => { emit('on-previous')}
-const next = () => { emit('on-next') }
-const resetStyle = () => { emit('on-resetStyle') }
-const downloads = () => { emit('on-downloads') }
-const zoomIn = () => { emit('on-zoomIn') }
-const zoomOut = () => { emit('on-zoomOut') }
-const inevrtY = () => { emit('on-inevrtY') }
-const inevrtX = () => { emit('on-inevrtX') }
-const clockwise = () => { emit('on-clockwise') }
-const counterclockwise = () => { emit('on-counterclockwise') }
+// Basic Button
+const baseButtons = computed(() => [
+    {
+        action: 'previous',
+        icon: ArrowPrevious24Regular,
+        size: 20,
+        title: 'action.previous',
+        condition: isMultipleImage,
+        handler: () => emit('on-previous')
+    },
+    {
+        action: 'next',
+        icon: ArrowNext24Regular,
+        size: 20,
+        title: 'action.next',
+        condition: isMultipleImage,
+        handler: () => emit('on-next')
+    },
+    {
+        action: 'zoomIn',
+        icon: ZoomIn24Regular,
+        size: 25,
+        title: 'action.enlarge',
+        handler: () => emit('on-zoomIn')
+    },
+    {
+        action: 'zoomOut',
+        icon: ZoomOut24Regular,
+        size: 25,
+        title: 'action.shrink',
+        handler: () => emit('on-zoomOut')
+    },
+    {
+        action: 'counterclockwise',
+        icon: ArrowRotateCounterclockwise24Regular,
+        size: 25,
+        title: 'action.rotateCounterclockwise',
+        handler: () => emit('on-counterclockwise')
+    },
+    {
+        action: 'clockwise',
+        icon: ArrowRotateClockwise24Regular,
+        size: 25,
+        title: 'action.clockwiseRotation',
+        handler: () => emit('on-clockwise')
+    },
+    {
+        action: 'inevrtX',
+        icon: FlipHorizontal24Regular,
+        size: 25,
+        title: 'action.flipHorizontal',
+        handler: () => emit('on-inevrtX')
+    },
+    {
+        action: 'inevrtY',
+        icon: FlipVertical24Regular,
+        size: 25,
+        title: 'action.flipVertical',
+        handler: () => emit('on-inevrtY')
+    },
+    {
+        action: 'resetStyle',
+        icon: ArrowReset24Regular,
+        size: 25,
+        title: 'action.reset',
+        handler: () => emit('on-resetStyle')
+    },
+    {
+        action: 'fullScreen',
+        icon: ArrowExpand24Regular,
+        size: 25,
+        title: 'action.fullScreen',
+        handler: () => emit('on-fullScreen')
+    },
+    {
+        action: 'downloads',
+        icon: ArrowDownload24Regular,
+        size: 25,
+        title: 'action.download',
+        condition: props.isDownLoad,
+        handler: () => emit('on-downloads')
+    }
+])
+
+// Play and Pause
 const stopPlay = () => { emit('on-stopPlay') }
 const autoPlay = () => { emit('on-autoPlay') }
-const fullScreen = () => { emit('on-fullScreen') }
 
 const $t = (val:string) => {
     return i18n.t(val)

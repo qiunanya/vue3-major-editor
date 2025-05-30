@@ -1,6 +1,9 @@
-import { ImageViewerCore, downloadExe } from '@/utils';
-import { ref, nextTick } from 'vue';
+import { ImageViewerCore, downloadExe, PREVIEW_WRAPPER_ROOT_CLASS } from '@/utils';
+import { ref } from 'vue';
 import { useFullscreen } from '@vueuse/core'
+import { useNaiveDiscrete } from './useNaiveDiscrete';
+
+const { message } = useNaiveDiscrete()
 
 export const useToolbar = (images: string[], cb:Function) => {
     // const bodyRect = document.body.getBoundingClientRect()
@@ -21,36 +24,30 @@ export const useToolbar = (images: string[], cb:Function) => {
     // 开启左侧导航栏,多图片生效
     const isMultipleImage = ref(images.length > 0 ? true:false)
 
+    const imageViewerVue3Root = document.querySelector(`.${PREVIEW_WRAPPER_ROOT_CLASS}`) as HTMLElement;
+    const { isSupported, isFullscreen, enter, exit, toggle } = useFullscreen(imageViewerVue3Root)
+
     function inevrtY(evt?:Event) {
-        // evt.preventDefault();
-        // evt.stopPropagation();
         imageCore.horizontalInvert()
     }
+
     function inevrtX(evt?:Event) {
-        // evt.preventDefault();
-        // evt.stopPropagation();
         imageCore.verticalInvert()
     }
     
     function zoomIn(evt?:Event) {
-        // evt.preventDefault();
-        // evt.stopPropagation();
-
         imageCore.zoomIn()
     }
+
     function zoomOut(evt?:Event) {
-        // evt.preventDefault();
-        // evt.stopPropagation();
         imageCore.zoomOut()
     }
+    
     function clockwise (evt?:Event) {
-        // evt.preventDefault();
-        // evt.stopPropagation();
         imageCore.rotate('+')
     }
+
     function counterclockwise (evt?:Event) {
-        // evt.preventDefault();
-        // evt.stopPropagation();
         imageCore.rotate('-')
     }
 
@@ -137,7 +134,6 @@ export const useToolbar = (images: string[], cb:Function) => {
     };
 
     const setUpdateImage = () => {
-        // console.log(currentIndex.value, imageRef.value)
         if (!imageRef.value) return
         
         const activeImage =  images[currentIndex.value]
@@ -148,10 +144,14 @@ export const useToolbar = (images: string[], cb:Function) => {
         }
     }
 
-    const fullScreen = () => {
-        const imageViewerVue3Root = document.querySelector('.image-viewer-vue3__root') as HTMLElement;
-        const { enter, exit, toggle } = useFullscreen(imageViewerVue3Root)
-        toggle()
+    const fullScreen = async () => {
+        if (!isSupported.value) {
+            message.warning('浏览器暂时不支持全屏预览功能')
+            return
+        }
+
+        if (isFullscreen.value) await exit()
+        else await enter()
     }
 
     return {

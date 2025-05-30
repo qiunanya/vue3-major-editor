@@ -289,7 +289,13 @@ class ImageViewerCoreTool {
         this.currentImage.style.removeProperty('left')
         this.currentImage.style.removeProperty('position')
         this.currentImage.style.removeProperty('transform')
-        // this.currentImage = null
+        this.currentImage.style.removeProperty('rotate')
+        this.transforms = {
+            scale: 1,
+            rotate: '0deg',
+            scaleY: '',
+            scaleX: '',
+        }
     }
 
     public destroyed() {

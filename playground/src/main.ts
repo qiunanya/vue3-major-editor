@@ -12,9 +12,9 @@ const app = createApp(App)
 app.use(TiptapEditorVue3)
 app.use(ImagesViewerVue3, {
     zIndex: 999, // Default 999
-    language: 'zh', // Default language 'zh'
+    language: 'en-us', // Default language 'zh'
     scaleRatio: 1, // Default 1
-    rotateRatio: 90, // Default 90 degrees
+    rotateRatio: 30, // Default 90 degrees
     isEnableDrag: true, // Enabled by default
     isEnableWheel: true, // Enabled by default
     playSpeed: 2000, // Default 2000 ms
