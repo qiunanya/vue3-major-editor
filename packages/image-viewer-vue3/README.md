@@ -58,7 +58,7 @@ app.use(ImagesViewerVue3, {
 app.mount("#app")
 ```
 
-## Config
+## Options
 
 Initialize the configuration in `app.use(ImagesViewerVue3,options)` of the `main.ts` file.
 
@@ -85,8 +85,8 @@ The component wraps the image element, click directly to preview.
     <img src="https://picsum.photos/id/11/2500/1667"/>
 </ImagesViewerVue3>
 ```
-![](./image/img_1.png)
-![](./image/img_2.png)
+![](https://raw.githubusercontent.com/qiunanya/vue3-major-editor/dev/packages/image-viewer-vue3/image/img_1.png)
+![](https://raw.githubusercontent.com/qiunanya/vue3-major-editor/dev/packages/image-viewer-vue3/image/img_1.png)
 
 ## Command preview image
 Add v-image-viewer to the image tag that needs to be previewed. All imgs with added instructions will be automatically added to the preview list.
