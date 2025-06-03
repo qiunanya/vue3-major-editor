@@ -12,7 +12,7 @@ const app = createApp(App)
 app.use(TiptapEditorVue3)
 app.use(ImagesViewerVue3, {
     zIndex: 999, // Default 999
-    language: 'en-us', // Default language 'zh'
+    language: 'zh-cn', // Default language 'zh'
     scaleRatio: 1, // Default 1
     rotateRatio: 30, // Default 90 degrees
     isEnableDrag: true, // Enabled by default

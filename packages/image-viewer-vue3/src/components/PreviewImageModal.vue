@@ -210,7 +210,7 @@ const props = defineProps({
     i18n: Object as PropType<I18nGlobal>
 })
 
-const { notification } = useNaiveDiscrete()
+const { message } = useNaiveDiscrete()
 
 const {
     updateImageSrc,
@@ -383,12 +383,7 @@ watch(() => currentIndex.value, (n, o) => {
 
 function updateIsActive () {
     if (currentIndex.value===props.images.length-1) {
-        notification.info({
-            content: '提示',
-            meta: '已经是最后一张图片了',
-            duration: 3000,
-            keepAliveOnHover: true
-        })
+        message.info('已经是最后一张图片了')
     }
 }
 
