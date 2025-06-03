@@ -6,7 +6,8 @@ export default {
         naturalRatio: 'natural Ratio',
         fixedAspectRatio: 'fixed Aspect Ratio',
         fileZise: 'file Zise',
-        origin: 'origin'
+        origin: 'origin',
+        imageType: 'image Type'
     },
     action: {
         previous: 'previous',

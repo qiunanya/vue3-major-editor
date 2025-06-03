@@ -2,6 +2,8 @@ import { ImageViewerCore, downloadExe, PREVIEW_WRAPPER_ROOT_CLASS } from '@/util
 import { ref } from 'vue';
 import { useFullscreen } from '@vueuse/core'
 import { useNaiveDiscrete } from './useNaiveDiscrete';
+import { getImageType } from './'
+import { ImageInfoItem } from '@/types/image-viewer'
 
 const { message } = useNaiveDiscrete()
 
@@ -15,11 +17,10 @@ export const useToolbar = (images: string[], cb:Function) => {
     const currentIndex = ref(-1)
     const activeIndex = ref(-1)
     const updateImageSrc = ref('')
-    const imageInfo = ref({
+    const imageInfo = ref<ImageInfoItem>({
         naturalRatio:'',
-        renderRatio: '',
         size: '',
-        fixedAspectRatio:''
+        type: ''
     })
     // 开启左侧导航栏,多图片生效
     const isMultipleImage = ref(images.length > 0 ? true:false)
@@ -74,7 +75,7 @@ export const useToolbar = (images: string[], cb:Function) => {
         imageCore.removeStyleProperty()
     }
 
-    const loadImage = (evt:Event) => {
+    const loadImage = async (evt:Event) => {
         imageCore.setImage(imageRef.value)
         const createImage = new Image()
         createImage.src = (imageRef.value&&imageRef.value.src) as string
@@ -86,9 +87,7 @@ export const useToolbar = (images: string[], cb:Function) => {
             const fileSizeInKB = Number(naturalWidth * naturalHeight / 1024).toFixed(2)
             imageInfo.value = {
                 naturalRatio: `${naturalWidth} x ${naturalHeight} px`,
-                renderRatio: `${width} x ${height} px`,
                 size: `${fileSizeInKB} KB`,
-                fixedAspectRatio: `${naturalWidth}:${naturalHeight}`
             }
         }
         
@@ -103,6 +102,9 @@ export const useToolbar = (images: string[], cb:Function) => {
         
         loadImageErrorText.value = ""
         loading.value = false
+
+        const res = await getImageType(createImage.src)
+        if (res) imageInfo.value.type = res.ext
     }
 
     const errorImage = (evt:Event) => {

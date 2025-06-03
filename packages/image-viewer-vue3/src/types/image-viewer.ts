@@ -58,4 +58,11 @@ export type ClickNavImageType = {
     index: number
 }
 
+// 图片信息
+export interface ImageInfoItem {
+    naturalRatio: string,
+    size: string,
+    type?: string
+}
+
 export {}

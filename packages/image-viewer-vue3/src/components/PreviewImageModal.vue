@@ -48,12 +48,13 @@
                                     <Info24Regular/>
                                 </NIcon>
                             </template>
-                            <p style="margin: 2px 0;">{{$t('common.renderRatio')}}：{{imageInfo.renderRatio}}</p>
+                            <!-- <p style="margin: 2px 0;">{{$t('common.renderRatio')}}：{{imageInfo.renderRatio}}</p> -->
                             <p style="margin: 2px 0;">{{$t('common.naturalRatio')}}：{{imageInfo.naturalRatio}}</p>
-                            <p style="margin: 2px 0;">{{$t('common.fixedAspectRatio')}}：{{imageInfo.fixedAspectRatio}}</p>
+                            <p style="margin: 2px 0;">{{$t('common.imageType')}}：{{imageInfo.type}}</p>
                             <p style="margin: 2px 0;">{{$t('common.fileZise')}}：{{imageInfo.size}}</p>
                             <p style="margin: 2px 0;" :title="updateImageSrc">
-                                {{$t('common.origin')}}：<a class="link-a" :href="updateImageSrc" target="_blank">{{updateImageSrc}}</a>
+                                {{$t('common.origin')}}：
+                                <a class="link-a" :href="updateImageSrc" target="_blank" style="color: white;">{{updateImageSrc}}</a>
                             </p>
                         </NTooltip>
                     </section>

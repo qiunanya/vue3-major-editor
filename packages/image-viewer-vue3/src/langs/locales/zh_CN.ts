@@ -6,7 +6,8 @@ export default {
         naturalRatio: '固定尺寸',
         fixedAspectRatio: '固定宽高比',
         fileZise: '文件大小',
-        origin: '来源'
+        origin: '来源',
+        imageType: '图片类型'
     },
     action: {
         previous: '上一张',
