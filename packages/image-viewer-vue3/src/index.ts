@@ -2,7 +2,6 @@ import { createVNode, render, App } from 'vue'
 import PreviewImageWrapper from './components/PreviewImageWrapper.vue'
 import PreviewImageModal from './components/PreviewImageModal.vue'
 import VImageViewer from './directive/v-image-viewer'
-import HotKeyTooltip from './components/HotKeyTooltip.vue'
 import LazyLoadDirective from './directive/v-lazy-image'
 import { ImageViewerOptions, ImageViewerType, ImageViewerInstallConfig } from './types/image-viewer'
 import { 
@@ -109,7 +108,6 @@ export {
     imageViewerApi,
     VImageViewer,
     ImageViewerVue3,
-    HotKeyTooltip,
     onClose,
     onUpdate
 }
