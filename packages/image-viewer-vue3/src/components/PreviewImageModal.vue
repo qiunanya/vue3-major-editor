@@ -48,9 +48,8 @@
                                     <Info24Regular/>
                                 </NIcon>
                             </template>
-                            <!-- <p style="margin: 2px 0;">{{$t('common.renderRatio')}}：{{imageInfo.renderRatio}}</p> -->
                             <p style="margin: 2px 0;">{{$t('common.naturalRatio')}}：{{imageInfo.naturalRatio}}</p>
-                            <p style="margin: 2px 0;">{{$t('common.imageType')}}：{{imageInfo.type}}</p>
+                            <!-- <p style="margin: 2px 0;">{{$t('common.imageType')}}：{{imageInfo.type}}</p> -->
                             <p style="margin: 2px 0;">{{$t('common.fileZise')}}：{{imageInfo.size}}</p>
                             <p style="margin: 2px 0;" :title="updateImageSrc">
                                 {{$t('common.origin')}}：
@@ -79,30 +78,26 @@
                 @mouseenter="onMouseEnterImage">
             <LoadingUI v-if="loading"></LoadingUI>
 
-            <div :class="['image-viewer__controls']">
-                <div class="control-info" v-show="isMultipleImage">
-                    <span>&nbsp;{{images.length}}&nbsp;</span>
-                    <span>/&nbsp;{{currentIndex+1}}</span>
-                </div>
-                <!-- 图片工具栏 -->
-                <ToolsBar
-                    :play-state.camel="playState"
-                    :is-downLoad.camel="isDownLoad"
-                    @on-previous="setPrevious"
-                    @on-next="setNext"
-                    @on-resetStyle="resetStyle" 
-                    @on-downloads="downloads"
-                    @on-zoomIn="zoomIn"
-                    @on-zoomOut="zoomOut" 
-                    @on-inevrtY="inevrtY"
-                    @on-inevrtX="inevrtX"
-                    @on-clockwise="clockwise"
-                    @on-counterclockwise="counterclockwise" 
-                    @on-stopPlay="stopPlay"
-                    @on-autoPlay="autoPlay"
-                    @on-fullScreen="fullScreen">
-                </ToolsBar>
-            </div>
+            <!-- 图片工具栏 -->
+            <ToolsBar
+                :play-state.camel="playState"
+                :is-downLoad.camel="isDownLoad"
+                :total-num="images.length"
+                :current="currentIndex+1"
+                @on-previous="setPrevious"
+                @on-next="setNext"
+                @on-resetStyle="resetStyle" 
+                @on-downloads="downloads"
+                @on-zoomIn="zoomIn"
+                @on-zoomOut="zoomOut" 
+                @on-inevrtY="inevrtY"
+                @on-inevrtX="inevrtX"
+                @on-clockwise="clockwise"
+                @on-counterclockwise="counterclockwise" 
+                @on-stopPlay="stopPlay"
+                @on-autoPlay="autoPlay"
+                @on-fullScreen="fullScreen">
+            </ToolsBar>
         </div>
     </div>
    

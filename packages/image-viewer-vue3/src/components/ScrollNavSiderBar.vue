@@ -21,8 +21,8 @@
                 <span class="error-text" v-if="data.isError">加载失败</span>
                 <img
                     class="list-group-image" 
-                    :data-id="data.index" 
-                    v-lazy-image="data.url" 
+                    :data-id="data.index"
+                    :src="data.url" 
                     alt="picture"
                     @load="onLoad(data, index)"
                     @error="onError(data, index)"

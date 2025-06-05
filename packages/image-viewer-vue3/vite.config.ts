@@ -53,34 +53,33 @@ export default defineConfig({
                         }
                     }
                 },
-                {
-                    format: 'cjs',
-                    dir: 'dist/lib',
-                    entryFileNames: '[name].js',
-                    // preserveModules: true,
-                    preserveModulesRoot: 'src',
-                    exports: 'named',
-                    manualChunks: (id) => {
-                        if (id.includes('node_modules')) {
-                            const indexes = id.toString().split('node_modules/')[2].split('/');
-                            let name = indexes[0];
-                            if (name.includes('@')) {
-                                name = name + '-' + indexes[1];
-                            }
-                                return 'js/npm-' + name;
-                            } else if (id.includes('src')) {
-                            const path = id.toString().split('src/')[1].replace(/\//g, '-');
-                            return 'js/' + path;
-                        }
-                    }
-                }
+                // {
+                //     format: 'cjs',
+                //     dir: 'dist/lib',
+                //     entryFileNames: '[name].js',
+                //     // preserveModules: true,
+                //     preserveModulesRoot: 'src',
+                //     exports: 'named',
+                //     manualChunks: (id) => {
+                //         if (id.includes('node_modules')) {
+                //             const indexes = id.toString().split('node_modules/')[2].split('/');
+                //             let name = indexes[0];
+                //             if (name.includes('@')) {
+                //                 name = name + '-' + indexes[1];
+                //             }
+                //                 return 'js/npm-' + name;
+                //             } else if (id.includes('src')) {
+                //             const path = id.toString().split('src/')[1].replace(/\//g, '-');
+                //             return 'js/' + path;
+                //         }
+                //     }
+                // }
             ]
         },
         lib: {
             entry: "src/index.ts",
-            name: pkg.scope,
-            // fileName: 'index',
-            // formats:['es','cjs']
+            fileName: 'index',
+            // formats:['es']
         }
     },
 });

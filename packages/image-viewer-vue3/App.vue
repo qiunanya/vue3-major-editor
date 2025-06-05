@@ -1,4 +1,5 @@
 <template>
+<div style="padding: 12px;">
     <div>
         <h3 style="color: #646cff;">image-viewer-vue3 图片预览器</h3>
         <button @click="handleClose">手动关闭弹窗</button>
@@ -25,7 +26,8 @@
         <h5>API 调用图片预览器</h5>
         <!-- <img class="img-item" v-for="(item, index) in dataList.slice(0, 3)" :key="index" @click="toggleApi($event, index)" :src="item"/> -->
         <img class="img-item" @click="toggleApi($event,0)" src="https://picsum.photos/id/10/2500/1667"/>
-    </div>
+    </div>   
+</div>
 </template>
 
 <script setup lang="ts">

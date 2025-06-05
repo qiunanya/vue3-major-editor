@@ -2,7 +2,6 @@ import { ImageViewerCore, downloadExe, PREVIEW_WRAPPER_ROOT_CLASS } from '@/util
 import { ref } from 'vue';
 import { useFullscreen } from '@vueuse/core'
 import { useNaiveDiscrete } from './useNaiveDiscrete';
-import { getImageType } from './'
 import { ImageInfoItem } from '@/types/image-viewer'
 
 const { message } = useNaiveDiscrete()
@@ -82,7 +81,7 @@ export const useToolbar = (images: string[], cb:Function) => {
 
         // 计算图片大小
         // 将像素大小转换为KB
-        createImage.onload = () => {
+        createImage.onload = async () => {
             const { width, height, naturalWidth, naturalHeight } = createImage
             const fileSizeInKB = Number(naturalWidth * naturalHeight / 1024).toFixed(2)
             imageInfo.value = {
@@ -102,9 +101,6 @@ export const useToolbar = (images: string[], cb:Function) => {
         
         loadImageErrorText.value = ""
         loading.value = false
-
-        const res = await getImageType(createImage.src)
-        if (res) imageInfo.value.type = res.ext
     }
 
     const errorImage = (evt:Event) => {
