@@ -9,6 +9,7 @@ export default defineConfig({
             '@': path.resolve(__dirname, './src')
         }
     },
+    base: '/vue3-major-editor/',
     build: {
         outDir: 'dist',
         emptyOutDir: true,
