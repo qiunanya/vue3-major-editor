@@ -33,7 +33,7 @@
             @click.stop="handleColorPicker(item)">
         </span>
         <span class="color-list-item disabled-icon" @mousedown.prevent @click.stop="handleColorPicker('')">
-            <DisabledIcon></DisabledIcon>
+            <component is="disabled-icon"></component>
         </span>
     </div>
     <p class="color-picker-name">颜色选择器</p>
@@ -51,7 +51,6 @@
 import { Editor } from "@tiptap/vue-3";
 import { NTooltip, NPopover, NColorPicker } from "naive-ui";
 import { inject, ref, unref } from "vue";
-import DisabledIcon from "@/icons/disabled-icon.svg"; 
 
 const editor = inject('editor') as Editor
 const npopoverCLRef = ref<InstanceType<typeof NPopover> | null>(null)

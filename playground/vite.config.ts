@@ -10,7 +10,7 @@ export default defineConfig({
         }
     },
     build: {
-        outDir: '../docs',
+        outDir: 'dist',
         emptyOutDir: true,
         // 规定触发警告的 chunk 大小。（以 kbs 为单位）
         chunkSizeWarningLimit: 2500, 

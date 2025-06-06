@@ -5,19 +5,19 @@
     :should-show="shouldShowBubbleMenu">
     <div class="editor-inner-bubble--menu">
         <button @click="editor.chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
-            <BoldIcon class="menu-icon"></BoldIcon>
+            <component is="bold-icon" class="menu-icon"></component>
         </button>
         <button @click="editor.chain().focus().toggleItalic().run()" :class="{ 'is-active': editor.isActive('italic') }">
-            <ItalicIcon class="menu-icon"></ItalicIcon>
+            <component is="italic-icon" class="menu-icon"></component>
         </button>
         <button @click="editor.chain().focus().toggleStrike().run()" :class="{ 'is-active': editor.isActive('strike') }">
-            <StrikeIcon class="menu-icon"></StrikeIcon>
+            <component is="strike-icon" class="menu-icon"></component>
         </button>
         
         <NTooltip placement="bottom" trigger="hover" v-if="editor.isActive('link')">
             <template #trigger>
                 <button @click="openLinkUrl" :class="{ 'is-active': editor.isActive('strike') }">
-                    <OpenLinkIcon class="menu-icon"></OpenLinkIcon>
+                    <component is="open-link-icon" class="menu-icon"></component>
                 </button>
             </template>
             <span>打开链接</span>
@@ -25,7 +25,7 @@
         <NTooltip placement="bottom" trigger="hover" v-if="editor.isActive('link')">
             <template #trigger>
                 <button @click="cancelLinkUrl" :class="{ 'is-active': editor.isActive('strike') }">
-                    <CancelLinkIcon class="menu-icon"></CancelLinkIcon>
+                    <component is="cancel-link-icon" class="menu-icon"></component>
                 </button>
             </template>
             <span>删除链接</span>
@@ -37,11 +37,6 @@
 import { BubbleMenu, Editor } from "@tiptap/vue-3";
 import { NTooltip } from "naive-ui";
 import { inject } from "vue";
-import BoldIcon from "@/icons/bold-icon.svg";
-import ItalicIcon from "@/icons/italic-icon.svg";
-import StrikeIcon from "@/icons/strike-icon.svg";
-import OpenLinkIcon from '@/icons/open-link-icon.svg';
-import CancelLinkIcon from '@/icons/cancel-link-icon.svg';
 
 const editor:Editor = inject('editor') as Editor
 
