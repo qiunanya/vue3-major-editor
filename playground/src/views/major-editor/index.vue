@@ -10,6 +10,7 @@
             <button style="margin: 0 10px;" @click="getHtml">获取HTML</button>
             <button style="margin-right:10px;" @click="getJson">获取Json</button>
             <button style="margin-right:10px;" @click="getText">获取Text</button>
+            <button style="margin-right:10px;" @click="previews">预览</button>
         </section>
         <!-- v-model:content="htmlContent" -->
         <TiptapEditorVue3
@@ -20,16 +21,24 @@
             :isShowToolbar="true"
             @onUploadImage="onUploadImage">
         </TiptapEditorVue3>
+
+        <n-drawer v-model:show="isVisible" :width="502" placement="right">
+            <n-drawer-content title="预览" closable>
+                <div v-html="previewContent"></div>
+            </n-drawer-content>
+        </n-drawer>
     </div>
 </template>
 
 <script setup lang="ts">
     import { ref } from "vue";
+    import { NDrawerContent, NDrawer } from "naive-ui";
     import { Editor, EditorEvents } from "@tiptap/vue-3";
 
     // true:图片内部处理，默认转化为base64, false: 不自动转化数据，需要外部处理后添加到编辑器
     const imageInner = ref(false)
-
+    const isVisible = ref(false)
+    const previewContent = ref('')
     // 按需引入Button组件
     // import { Button } from '@majoreditor/ui'
 
@@ -98,6 +107,11 @@
         if (vue3TiptapEditorRef.value) {
             console.log(vue3TiptapEditorRef.value.getTEXT(), 'TEXT');
         }
+    }
+    function previews() {
+        if (!vue3TiptapEditorRef.value) return
+        previewContent.value = vue3TiptapEditorRef.value.getHTML()
+        isVisible.value = !isVisible.value
     }
 </script>
 
