@@ -1,4 +1,4 @@
-import EditorTiptapVue3 from "./editor.vue";
+import TiptapEditorVue3 from "./editor.vue";
 import { App } from 'vue';
 import { Editor, JSONContent } from "@tiptap/vue-3";
 import { HTMLVue3TiptapEditorElement } from './typings'
@@ -14,13 +14,13 @@ export default function install(app:App) {
     // console.log(`%cimages-viewer-vue3_V${versions}`, "color: #eee;background:#646cff;padding:2px 5px;border-radius:4px;")
     // app.directive("image-viewer", VImageViewer)
     // app.directive("lazy-image", LazyLoadDirective)
-    app.component('EditorTiptapVue3', EditorTiptapVue3)
+    app.component('TiptapEditorVue3', TiptapEditorVue3)
     Icons(app)
     // app.config.globalProperties.$imageViewerApi = imageViewerApi
 }
 
 export { 
-    EditorTiptapVue3,
+    TiptapEditorVue3,
     Editor,
 }
 export type {

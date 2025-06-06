@@ -14,6 +14,7 @@ const ExtBold = ExtensionBold.extend({
                         isReadonly: !editor.isEditable,
                         icons: 'bold-icon',
                         tipText: '加粗',
+                        shortcutKeys: 'Ctrl+B',
                         command: () => {
                             editor.commands.toggleBold()
                         }

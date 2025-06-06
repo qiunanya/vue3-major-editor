@@ -13,6 +13,7 @@ const ExtItalic = ExtensionItalic.extend({
                         isActive: editor.isActive('italic'),
                         isReadonly: !editor.isEditable,
                         icons: 'italic-icon',
+                        shortcutKeys: 'Ctrl+I',
                         tipText: '斜体',
                         command: () => {
                             editor.commands.toggleItalic()

@@ -9,7 +9,8 @@ function getHeading () {
         if (i === 6) {
             arr.push({ label: `正文`, value: `${i + 1}`, disabled: false })
         } else {
-            arr.push({ label: `H${i + 1}`, value: `${i + 1}`, disabled: false })
+            const num = i + 1
+            arr.push({ label: `H${num} 标题 ${num}`, value: `${num}`, disabled: false })
         }
         i++;
     }

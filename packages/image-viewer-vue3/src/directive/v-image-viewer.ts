@@ -1,5 +1,5 @@
 import { DirectiveBinding, VNode } from 'vue';
-import ImageViewerCore from '../utils/ViewerCore';
+import { ImageViewerCore } from '@/utils';
 import { imageViewerApi } from '../index';
 import { ViewImageType } from '../types/image-viewer';
 import { v4 as uuidV4 } from 'uuid';

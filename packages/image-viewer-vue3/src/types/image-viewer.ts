@@ -1,6 +1,6 @@
 // API预览接口参数项
 type fromType = 'api' | 'directive' | 'component';
-type langType = 'zh' | 'en';
+type langType = 'zh-cn' | 'en-us';
 
 // 预览器配置项
 export type ImageViewerType = {
@@ -11,7 +11,9 @@ export type ImageViewerType = {
     zIndex: number,
     language: langType,
     playSpeed: number,
-    isDownLoad: boolean
+    isDownLoad: boolean,
+    isHiddenSiderNav: boolean,
+    isHiddenSearch: boolean
 }
 
 // 从配置项中提取zindex属性类型
@@ -54,6 +56,13 @@ export type ClickNavImageType = {
     evt:Event, 
     item: ImageObjectTypes, 
     index: number
+}
+
+// 图片信息
+export interface ImageInfoItem {
+    naturalRatio: string,
+    size: string,
+    type?: string
 }
 
 export {}

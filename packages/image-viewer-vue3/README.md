@@ -8,12 +8,12 @@ A lightweight image viewer for Vue3, it is based on `flip animation` technology,
 [images-viewer-vue3 demo](https://github.com/qiunanya/vue3-major-editor/tree/main/packages/image-viewer)(https://github.com/qiunanya/vue3-major-editor/tree/main/packages/image-viewer)
 
 [Case screenshot: https://blog.csdn.net/qq_41444226/article/details/144258656](https://blog.csdn.net/qq_41444226/article/details/144258656)
-
+![](https://raw.githubusercontent.com/qiunanya/vue3-major-editor/dev/packages/image-viewer-vue3/image/img_1.png)
 # Features
 * Component preview image
 * Command preview image
 * API preview image
-
+![](https://raw.githubusercontent.com/qiunanya/vue3-major-editor/dev/packages/image-viewer-vue3/image/img_2.png)
 # Function
 * Rotate image
 * Zoom image
@@ -45,16 +45,35 @@ const app = createApp(App)
 // Includes preview directive and lazy loading directive
 app.use(ImagesViewerVue3, {
     zIndex: 999, // Default 999
-    language: 'zh', // Default language 'zh'
+    language: 'zh-cn', // Default language 'zh'
     scaleRatio: 1, // Default 1
     rotateRatio: 90, // Default 90 degrees
     isEnableDrag: true, // Enabled by default
     isEnableWheel: true, // Enabled by default
     playSpeed: 2000, // playSpeed Default 2000 ms
     isDownLoad: true, // Enabled by default
+    isHiddenSiderNav: false // Enabled by default
+    isHiddenSearch: false, // Disable by default
 })
 app.mount("#app")
 ```
+
+## Options
+
+Initialize the configuration in `app.use(ImagesViewerVue3,options)` of the `main.ts` file.
+
+| Option | Allowed Value | Default  | Description |
+| ------------- |-------------| -----| -------- |
+| scaleRatio | number in percentage | 1 | It defines the initial zoom value of the image. |
+| zIndex | number in percentage | 999 | Initial value of the previewer stacking order property. |
+| rotateRatio | number in percentage | 90 | It defines the initial value of the image rotation angle. |
+| isEnableDrag | boolean | true | Defines whether to enable the drag and drop function. |
+| isEnableWheel | boolean | true | Defines whether to enable mouse scrolling to zoom the image. |
+| language | 'zh-cn' or 'en-us' | 'zh-cn' | Define the prompt text display language.|
+| playSpeed | number | 2000 | play speed, Default 2000 ms.|
+| isDownLoad | boolean | true | Download enabled by default |
+| isHiddenSiderNav | boolean | false | isHiddenSiderNav enabled by default |
+| isHiddenSearch | boolean | false | Disable by default |
 # Usage
 
 ## Component preview image
@@ -66,19 +85,6 @@ The component wraps the image element, click directly to preview.
     <img src="https://picsum.photos/id/11/2500/1667"/>
 </ImagesViewerVue3>
 ```
-## Options
-Initialize the configuration in `app.use(ImagesViewerVue3,options)` of the `main.ts` file.
-
-| Option | Allowed Value | Default  | Description |
-| ------------- |-------------| -----| -------- |
-| scaleRatio | number in percentage | 1 | It defines the initial zoom value of the image. |
-| zIndex | number in percentage | 999 | Initial value of the previewer stacking order property. |
-| rotateRatio | number in percentage | 90 | It defines the initial value of the image rotation angle. |
-| isEnableDrag | boolean | true | Defines whether to enable the drag and drop function. |
-| isEnableWheel | boolean | true | Defines whether to enable mouse scrolling to zoom the image. |
-| language | 'zh' or 'en' | 'zh' | Define the prompt text display language.|
-| playSpeed | number | 2000 | play speed, Default 2000 ms.|
-| isDownLoad | boolean | true | Download enabled by default |
 
 ## Command preview image
 Add v-image-viewer to the image tag that needs to be previewed. All imgs with added instructions will be automatically added to the preview list.

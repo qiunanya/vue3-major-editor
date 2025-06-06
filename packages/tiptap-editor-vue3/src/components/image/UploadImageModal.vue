@@ -44,7 +44,7 @@ const imagesTemp:Ref<TranserType> = ref({
     formData: new FormData()
 })
 
-const emits = defineEmits(['uploadImageSuccess'])
+const emits = defineEmits(['onUploadImageCallBack'])
 
 const onUpdatedTab = (val: string) => {
     tabPane.value = val
@@ -52,10 +52,12 @@ const onUpdatedTab = (val: string) => {
         // editor.commands.setImage({ src: imageLink.value });
     }
 }
+
 const onNegativeClick = () => {
     message.success("Cancel");
     isVisible.value = false;
 };
+
 const onPositiveClick = () => {
     isVisible.value = false;
     
@@ -76,53 +78,53 @@ const onPositiveClick = () => {
             console.error('图片加载失败');
         }
     }
-    
-    onUploadSuccess(imagesTemp.value)
 };
+
 const onChangeFile = (evt: Event) => {
     const input = evt.target as HTMLInputElement;
-    const file = input.files as FileList;
+    const files = input.files as FileList;
     const formData = new FormData()
 
-    for (let i = 0; i < file.length; i++) {
-        formData.append('file', file[i])
-        if (file[i]) {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                const base64 = event.target?.result as string;
-                const image = new Image()
-                image.src = base64
-                image.onload = () => {
-                    // 图片加载完成后再插入
-                    editor.commands.insertCustomImage({ 
-                        src: base64, 
-                        alt: '占位图片', 
-                        width: image.width, 
-                        height: image.height,
-                        title: file[i].name 
-                    });
-                }
-                
-                // 监听错误事件
-                image.onerror = () => {
-                    console.error('图片加载失败');
-                }
-            };
-            reader.readAsDataURL(file[i]);
+    // 自定义上传
+    if (props.customFileUpload) {
+        emits('onUploadImageCallBack', files)
+    } else {
+        for (let i = 0; i < files.length; i++) {
+            formData.append('file', files[i])
+            innerUploadImage(files[i])
         }
     }
-
-    imagesTemp.value.file = file
-    imagesTemp.value.formData = formData
 };
+
+const innerUploadImage = (file:File) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+        const base64 = event.target?.result as string;
+        const image = new Image()
+        image.src = base64
+        image.onload = () => {
+            // 图片加载完成后再插入
+            editor.commands.insertCustomImage({ 
+                src: base64, 
+                alt: '占位图片', 
+                width: image.width, 
+                height: image.height,
+                title: file.name 
+            });
+        }
+        
+        // 监听错误事件
+        image.onerror = () => {
+            console.error('图片加载失败');
+        }
+    };
+
+    reader.readAsDataURL(file);
+}
 
 const initialize = () => {
     isVisible.value = true;
 };
-
-const onUploadSuccess = (opt:TranserType) => {
-    emits('uploadImageSuccess', opt)
-}
 
 defineExpose({
     initialize

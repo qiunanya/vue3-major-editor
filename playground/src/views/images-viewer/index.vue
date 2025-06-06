@@ -1,4 +1,5 @@
 <template>
+<div style="padding: 12px;">
     <h3>图片预览器开发</h3>
     <!-- 指令绑定值1：v-image-viewer="'red'" -->
     <!-- 指令绑定值2：v-image-viewer:zoom="1.5" -->
@@ -55,7 +56,7 @@
         <h5>API 调用图片预览器</h5>
         <img @click="open" class="img-item" src="https://picsum.photos/id/19/2500/1667" alt="" />
     </div>
-   
+</div>
 </template>
 
 <script setup lang="ts">
@@ -78,6 +79,7 @@ const open = (evt:Event) => {
 
 <style lang="scss">
 .img-item {
+    display: inline;
     width: 100px;
     height: 100px;
     border-radius: 8px;

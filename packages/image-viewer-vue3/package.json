@@ -1,10 +1,10 @@
 {
     "name": "images-viewer-vue3",
     "scope": "ImagesViewerVue3",
-    "version": "1.0.25",
+    "version": "1.0.37",
     "description": "A lightweight image viewer for Vue3",
     "type": "module",
-    "main": "./dist/lib/index.cjs",
+    "main": "./dist/es/index.js",
     "module": "./dist/es/index.js",
     "types": "./dist/es/index.d.ts",
     "style": "./dist/es/style.css",
@@ -28,8 +28,7 @@
     "exports": {
         ".": {
             "types": "./dist/es/index.d.ts",
-            "import": "./dist/es/index.js",
-            "require": "./dist/lib/index.cjs"
+            "import": "./dist/es/index.js"
         }
     },
     "files": [
@@ -49,6 +48,6 @@
         "image-browse",
         "browse-image"
     ],
-    "author": "qiuny",
+    "author": "ZekoFront",
     "license": "MIT"
 }

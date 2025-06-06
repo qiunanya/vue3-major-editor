@@ -12,9 +12,9 @@ interface CusCSSProperties extends CSSProperties {
     scaleX: string,
 }
 
-class ImageViewerCore {
+class ImageViewerCoreTool {
     // 配置全局变量供外部调用
-    static viewer: ImageViewerCore;
+    static viewer: ImageViewerCoreTool;
     // 配置静态属性，防止被外部修改
     private static total: number = 0;
     private currentImage: HTMLImageElement | null = null;
@@ -27,9 +27,11 @@ class ImageViewerCore {
         isEnableDrag: true,
         isEnableWheel: true,
         zIndex: 2000,
-        language: 'zh',
+        language: 'zh-cn',
         playSpeed: 2000,
         isDownLoad: true,
+        isHiddenSiderNav: false,
+        isHiddenSearch: false
     }
 
     private transforms:CusCSSProperties = {
@@ -287,7 +289,13 @@ class ImageViewerCore {
         this.currentImage.style.removeProperty('left')
         this.currentImage.style.removeProperty('position')
         this.currentImage.style.removeProperty('transform')
-        // this.currentImage = null
+        this.currentImage.style.removeProperty('rotate')
+        this.transforms = {
+            scale: 1,
+            rotate: '0deg',
+            scaleY: '',
+            scaleX: '',
+        }
     }
 
     public destroyed() {
@@ -299,4 +307,4 @@ class ImageViewerCore {
     }
 }
 
-export default ImageViewerCore;
+export const ImageViewerCore = ImageViewerCoreTool;

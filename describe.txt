@@ -27,7 +27,10 @@ pnpm add --recursive
 更新pnpm版本
 pnpm self-update
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> dev
 合并分支到主分支main
 1、选择目标分支
 git checkout main

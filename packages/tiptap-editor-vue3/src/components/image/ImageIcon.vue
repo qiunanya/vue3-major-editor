@@ -15,7 +15,7 @@
 <span>添加图片</span>
 </NTooltip>
 
-<UploadImageModal ref="UploadImageRef" @uploadImageSuccess="uploadImageSuccess"></UploadImageModal>
+<UploadImageModal ref="UploadImageRef" @onUploadImageCallBack="onUploadImageCallBack"></UploadImageModal>
 </div>
 </template>
 
@@ -25,7 +25,7 @@ import { NTooltip } from "naive-ui";
 import UploadImageModal from './UploadImageModal.vue';
 
 const editor = inject('editor') as Editor
-const emits = defineEmits(['onUploadImage'])
+const emits = defineEmits(['onUploadImageCallBack'])
 const props = defineProps({
     isActive: {
         type: Boolean,
@@ -55,7 +55,7 @@ const handleUploadImg = () => {
     UploadImageRef.value && UploadImageRef.value.initialize()
 }
 
-const uploadImageSuccess = ({ file, formData }: { file: FileList, formData: FormData }) => {
-    emits('onUploadImage', { file, formData })
+const onUploadImageCallBack = (file: FileList) => {
+    emits('onUploadImageCallBack', file)
 }
 </script>

@@ -48,7 +48,7 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    z-index: 9999;
+    // z-index: 9999;
     overflow: hidden;
     opacity: 0;
     transition: opacity 1s ease;
@@ -58,8 +58,8 @@
         margin: 0;
     }
     .svg-icon__action {
-        width: 25px;
-        height: 25px;
+        width: 20px;
+        height: 20px;
         path {
             fill: #eee;
         }
@@ -98,16 +98,8 @@
         bottom: 0px;
         left: 0px;
         right: 0px;
-        display: grid;
-        grid-template-columns: 90px 1fr;
-        &.active-grid {
-            grid-template-columns: 0px 1fr;
-        }
-        &.close-grid {
-            grid-template-columns: 1fr;
-        }
+        display: flex;
         .content-nav__wrapper {
-            // background-color: rgba(0, 0, 0, 0.6);
             width:0px;
             overflow: hidden;
             transition: width 0.6s ease, opacity 0.5s ease;
@@ -186,14 +178,13 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                // background: #3A8DF5;
                 z-index: 10;
-                padding: 8px 10px;
+                padding: 8px 6px;
                 &.flex-end {
                     justify-content: flex-end;
                 }
-            } 
-            .image-info {
+            }
+            .image-info--group {
                 display: flex;
                 align-items: center;
                 .info-icon__item {
@@ -252,31 +243,8 @@
                 width: auto;
                 height: auto; 
                 object-fit: cover;
-                padding: 30px;
+                padding: 99px;
                 display: inline-block;
-            }
-            .image-viewer__controls {
-                position: fixed;
-                bottom: 0px;
-                left: 0px;
-                right: 0px;
-                display: flex;
-                justify-content: center;
-                flex-direction: column;
-                align-items: center;
-                flex-wrap: wrap;
-                padding: 10px 0;
-                z-index: 10;
-                .control-info {
-                    display: flex;
-                    align-items: center;
-                    color: #eee;
-                    padding-bottom: 6px;
-                }
-                .position {
-                    position: absolute;
-                    left: 30px;
-                }
             }
         }
     }

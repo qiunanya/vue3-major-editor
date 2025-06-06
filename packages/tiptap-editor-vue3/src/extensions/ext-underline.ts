@@ -14,6 +14,7 @@ const ExtUnderline = ExtensionUnderline.extend({
                         isReadonly: !editor.isEditable,
                         icons: 'underline-icon',
                         tipText: '下划线',
+                        shortcutKeys: 'Ctrl+U',
                         command: () => {
                             editor.commands.toggleUnderline()
                         }

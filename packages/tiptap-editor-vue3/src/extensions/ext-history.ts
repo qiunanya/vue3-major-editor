@@ -15,6 +15,7 @@ const ExtHistory = ExtensionHistory.extend({
                             isReadonly: !editor.isEditable,
                             icons: 'redo-icon',
                             tipText: '重做',
+                            shortcutKeys: 'Ctrl+Z',
                             command: () => {
                                 editor.commands.redo()
                             }
@@ -27,6 +28,7 @@ const ExtHistory = ExtensionHistory.extend({
                             isReadonly: !editor.isEditable,
                             icons: 'undo-icon',
                             tipText: '撤销',
+                            shortcutKeys: 'Ctrl+Shift+Z',
                             command: () => {
                                 editor.commands.undo()
                             }

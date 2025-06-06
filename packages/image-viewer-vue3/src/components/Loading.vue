@@ -6,7 +6,7 @@
     </div>
 </template>
 <script setup lang="ts">
-import { getUserAgent } from '../utils';
+import { getUserAgent } from '@/utils';
 
 </script>
 <style lang="scss" scoped>

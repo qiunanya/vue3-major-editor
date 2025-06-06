@@ -1,6 +1,6 @@
 {
-    "name": "editor-tiptap-vue3",
-    "scope": "EditorTiptapVue3",
+    "name": "tiptap-editor-vue3",
+    "scope": "TiptapEditorVue3",
     "version": "1.0.0",
     "description": "A vue3 high quality rich text editor",
     "type": "module",
@@ -43,9 +43,10 @@
     "keywords": [
         "Vue3-editor",
         "Rich Text",
-        "Editor"
+        "Editor",
+        "Web Rich Text"
     ],
-    "author": "qiuny",
+    "author": "ZekoFront",
     "license": "MIT"
 }
 

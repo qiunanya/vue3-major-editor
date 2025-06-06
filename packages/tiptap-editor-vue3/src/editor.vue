@@ -1,6 +1,6 @@
 <template>
     <div class="vue3-tiptap-editor major-editor">
-        <Toolkit v-if="isShowToolbar" @onUploadImage="onUploadImageCall"></Toolkit>
+        <Toolkit v-if="isShowToolbar"  @onUploadImageCallBack="onUploadImageCallBack"></Toolkit>
         <EditorContent class="vue3-tiptap-editor__content" :editor="editor" @contextmenu="onContextmenu"></EditorContent>
         <BubbleMenu></BubbleMenu>
         <CharacterCountTool :characterCount="characterCount"></CharacterCountTool>
@@ -44,6 +44,7 @@ const props = withDefaults(defineProps<EditorProps>(), {
     isEnable: true,
     isShowToolbar: true,
     characterCount: 10000,
+    customFileUpload: false,
     placeholder: '请输入内容...'
 })
 
@@ -96,7 +97,7 @@ const editor:Editor = new Editor({
         emits('onUpdate', editor)
     }
 });
-console.log(editor)
+
 useEventListener(editor)
 const {contextMenuRef, onContextmenu} = useContextMenu(editor)
 
@@ -107,9 +108,10 @@ watch(contents,(n,o) => {
     editor.commands.setContent(n, false)
 }, { deep: true })
 
-const onUploadImageCall = ({ file, formData }:{ file:FileList, formData:FormData }) => {
-    emits('onUploadImage', { file, formData, editor: editor })
+const onUploadImageCallBack = (file: FileList) => {
+    emits('onUploadImage', { file, editor })
 }
+
 
 provide("editor", editor)
 provide('props', props)
