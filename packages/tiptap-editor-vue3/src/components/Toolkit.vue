@@ -15,7 +15,10 @@
         :key="index"
          @onUploadImageCallBack="onUploadImageCallBack">
     </component>
-
+    <button class="toolbar-icon--btn" data-editor-toolbar-btn="true">
+        <span style="color: var(--theme-color);font-weight: bold;">{{ editor.storage.characterCount.characters()}}</span>
+        <span>&nbsp;/&nbsp;{{ characterCount }}</span>
+    </button>
     <!-- 自定义行高会段落冲突，暂时注释 -->
     <!-- <ParagraphUI></ParagraphUI> -->
 </div>
@@ -29,6 +32,12 @@ import ErrorImage from "../icons/error-image.svg";
 
 const editor = inject('editor') as Editor
 const emits = defineEmits(['onUploadImageCallBack'])
+const props = defineProps({
+    characterCount: {
+        type:Number,
+        default: 10000
+    }
+})
 
 interface CusIconType {
     componentProps: Object,

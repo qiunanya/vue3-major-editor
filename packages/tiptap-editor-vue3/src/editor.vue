@@ -1,9 +1,8 @@
 <template>
     <div class="vue3-tiptap-editor major-editor">
-        <Toolkit v-if="isShowToolbar"  @onUploadImageCallBack="onUploadImageCallBack"></Toolkit>
+        <Toolkit v-if="isShowToolbar" :characterCount="characterCount" @onUploadImageCallBack="onUploadImageCallBack"></Toolkit>
         <EditorContent class="vue3-tiptap-editor__content" :editor="editor" @contextmenu="onContextmenu"></EditorContent>
         <BubbleMenu></BubbleMenu>
-        <CharacterCountTool :characterCount="characterCount"></CharacterCountTool>
         <ContextMenus ref="contextMenuRef"></ContextMenus>
     </div>
 </template>
@@ -18,15 +17,13 @@ import Placeholder from '@tiptap/extension-placeholder';
 // 顶部工具
 import Toolkit from "./components/Toolkit.vue";
 // 菜单
-import BubbleMenu from "@/components/bubble-menu/index.vue"
-import CharacterCountTool from '@/components/CharacterCount.vue'
-import { Plugin, TextSelection } from '@tiptap/pm/state';
-import { useEventListener } from "@/hooks/useEventListener"
-import { useContextMenu } from "@/hooks/useContextMenu"
+import BubbleMenu from "@/components/bubble-menu/index.vue";
+import { useEventListener } from "@/hooks/useEventListener";
+import { useContextMenu } from "@/hooks/useContextMenu";
 import ContextMenus from "./components/table/ContextMenu.vue";
 
 // 自定义扩展
-import TiptapExtensions from './extensions'
+import TiptapExtensions from './extensions';
 
 // 导入props参数类型
 import { EditorProps } from './typings';
@@ -57,12 +54,11 @@ const emits = defineEmits([
     "onBlur",
     "onDestroyed",
     "onUploadImage",
-    'onTransaction'
+    "update:content"
 ]);
 
 const editor:Editor = new Editor({
-    // content: DOMPurify.sanitize(contents.value),
-    content: contents.value,
+    content: DOMPurify.sanitize(contents.value),
     editable: props.isEnable,
     extensions: [
         ...TiptapExtensions,
@@ -95,6 +91,8 @@ const editor:Editor = new Editor({
     },
     onUpdate ({editor}) {
         emits('onUpdate', editor)
+        const cleanHtml = DOMPurify.sanitize(editor.getHTML());
+        emits('update:content', cleanHtml);
     }
 });
 
@@ -118,7 +116,7 @@ provide('props', props)
 
 // expose
 defineExpose({
-    getHTML: () => editor.getHTML(),
+    getHTML: () => DOMPurify.sanitize(editor.getHTML()),
     getJSON:() => editor.getJSON(),
     getTEXT: () => editor.getText(),
     destroy: () => editor && editor.destroy()
