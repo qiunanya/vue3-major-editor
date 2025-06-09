@@ -1,7 +1,7 @@
 <template>
     <div  style="padding: 12px;">
-        <h2 class="h2">@ZekoFront</h2>
-        <router-link class="nav-item" :to="item.path" v-for="(item, index) in menuList" :key="index">{{item.meta.title }}</router-link>
+        <!-- <h2 class="h2">@ZekoFront</h2>
+        <router-link class="nav-item" :to="item.path" v-for="(item, index) in menuList" :key="index">{{item.meta.title }}</router-link> -->
         <router-view></router-view>
     </div>
 </template>
