@@ -7,7 +7,7 @@ import ImageIcon from '@/components/image/ImageIcon.vue'
 
 declare module '@tiptap/core' {
     interface Commands<ReturnType> {
-        customImage: {
+        customizeImage: {
             insertCustomImage: (attrs: {
                 src: string
                 file?: File

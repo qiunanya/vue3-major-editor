@@ -1,12 +1,12 @@
 <template>
-    <h3></h3>
     <!-- 指令绑定值1：v-image-viewer="'red'" -->
     <!-- 指令绑定值2：v-image-viewer:zoom="1.5" -->
     <!-- 指令方式打开组件 -->
     <!-- <div v-image-viewer:zoom="1.5" class="viewer-image-test">
         图片预览器
     </div> -->
-    <h2 class="h2" style="margin-right: 0.2em;">ImagesViewerVue3</h2>
+    <h2 class="h2" style="margin-right: 0.2em;display: inline;">ImagesViewerVue3</h2>
+    <button style="margin-right:10px;" @click="router.go(-1)">返回</button>
     <!-- 指令使用图片预览器 -->
     <div>
         <h5>指令使用图片预览器</h5>
@@ -60,7 +60,9 @@
 
 <script setup lang="ts">
 import { imageViewerApi, onUpdate } from 'images-viewer-vue3'
+import { useRouter } from 'vue-router'
 
+const router = useRouter();
 onUpdate((image:string, index: number) => {
     console.log(image, index)
 })

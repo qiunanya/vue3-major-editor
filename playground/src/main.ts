@@ -8,6 +8,8 @@ import "tiptap-editor-vue3/dist/es/css/style.css";
 import router from "./router";
 import { isNavigationFailure } from "vue-router";
 
+import { TextField24Regular, ImageSearch24Regular } from "@vicons/fluent"
+
 const app = createApp(App);
 
 app.use(TiptapEditorVue3);
@@ -21,7 +23,8 @@ app.use(ImagesViewerVue3, {
     playSpeed: 2000, // Default 2000 ms
 });
 app.use(router);
-
+app.component('TextField24Regular', TextField24Regular)
+app.component('ImageSearch24Regular', ImageSearch24Regular)
 app.mount("#app");
 
 /**
@@ -34,6 +37,6 @@ router.afterEach((to, from, failure) => {
         console.log("failed navigation", failure);
     }
 
-    console.log(import.meta.env.VITE_APP_TITLE, import.meta.env.VITE_NODE_ENV);
+    console.log(import.meta.env.VITE_APP_TITLE, import.meta.env.VITE_APP_ENV);
     
 });

@@ -11,12 +11,13 @@
             <button style="margin-right:10px;" @click="getJson">获取Json</button>
             <button style="margin-right:10px;" @click="getText">获取Text</button>
             <button style="margin-right:10px;" @click="previews">预览</button>
+            <button style="margin-right:10px;" @click="router.go(-1)">返回</button>
         </section>
         <!-- v-model:content="htmlContent" -->
         <TiptapEditorVue3
             ref="vue3TiptapEditorRef" 
             v-model:content="htmlContent" 
-            :imageInner="imageInner"
+            :customFileUpload="customFileUpload"
             :isEnable="true"
             :isShowToolbar="true"
             @onUploadImage="onUploadImage">
@@ -33,10 +34,12 @@
 <script setup lang="ts">
     import { ref } from "vue";
     import { NDrawerContent, NDrawer } from "naive-ui";
-    import { Editor, EditorEvents } from "@tiptap/vue-3";
+    import { Editor } from "tiptap-editor-vue3"
+    import { useRouter } from 'vue-router'
 
-    // true:图片内部处理，默认转化为base64, false: 不自动转化数据，需要外部处理后添加到编辑器
-    const imageInner = ref(false)
+    const router = useRouter();
+    // true:不自动转化数据，需要外部处理后添加到编辑器, false: 图片内部处理，默认转化为base64
+    const customFileUpload = ref(true)
     const isVisible = ref(false)
     const previewContent = ref('')
     // 按需引入Button组件
@@ -61,6 +64,7 @@
 
     // 仅支持base64和URL两种模式
     const onUploadImage = ({ file, editor }:FileOpions) => {
+        console.log(editor, 3333)
         const formData = new FormData()
         // 此处可以自定义上传图片逻辑，这里需要调用 editor.commands.insertCustomImage 来插入图片
         for (let i = 0; i < file.length; i++) {

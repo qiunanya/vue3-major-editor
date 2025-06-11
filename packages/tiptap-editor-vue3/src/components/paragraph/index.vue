@@ -21,9 +21,9 @@
 
 <script setup lang="ts">
 import { NTooltip } from "naive-ui";
-import { useSelectCore } from "../../hooks/useSelect";
+import { useEditorCore } from "@/hooks/useEditorCore";
 
-const { editor } = useSelectCore();
+const { editor } = useEditorCore();
 
 // 设置文本样式
 function handleTextStyle(key: string) {

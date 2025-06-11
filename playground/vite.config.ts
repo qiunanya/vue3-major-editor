@@ -33,7 +33,7 @@ export default defineConfig(({ mode, command}) => {
             assetsDir: 'assets',
             chunkSizeWarningLimit: 2500,
             rollupOptions: {
-            output: {
+                output: {
                     chunkFileNames: 'static/js/[name]-[hash].js',
                     entryFileNames: 'static/js/[name]-[hash].js',
                     assetFileNames: 'static/[ext]/[name]-[hash].[ext]'

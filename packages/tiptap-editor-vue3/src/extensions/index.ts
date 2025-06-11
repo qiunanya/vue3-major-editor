@@ -25,6 +25,33 @@ import {ExtLink} from './ext-link'
 import {ExtTextAlign} from './ext-textAlignment'
 import {ExtTaskItem} from './ext-task-list'
 
+export * from './ext-clear'
+export * from './ext-history'
+export * from './ext-bgColor'
+export * from './ext-image'
+export * from './ext-lineHeight'
+export * from './ext-heading'
+export * from './ext-bold'
+export * from './ext-italic'
+export * from './ext-strike'
+export * from './ext-underline'
+export * from './ext-code'
+// odeBlockLowlight替换了ExtCodeBlock
+export * from './ext-code-block'
+export * from './ext-subscript'
+export * from './ext-superscript'
+export * from './ext-ordered-list'
+export * from './ext-bullet-list'
+export * from './ext-horizontal-rule'
+export * from './ext-blockquote'
+export * from './ext-highlight'
+export * from './ext-color'
+export * from './ext-codeBlockLowlight'
+export * from './ext-table'
+export * from './ext-link'
+export * from './ext-textAlignment'
+export * from './ext-task-list'
+
 export default [
     ExtHistory,
     ExtBold,

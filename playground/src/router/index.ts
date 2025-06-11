@@ -16,7 +16,9 @@ const routes:Array<RouteRecordRaw> = [
         component: () => import('@/views/images-viewer/index.vue'),
         meta: {
             requiresAuth: true,
-            title: '图片查看器'
+            title: 'vue3图片查看器',
+            icon: 'ImageSearch24Regular',
+            desc: 'images-viewer-vue3'
         }
     },
     {
@@ -25,7 +27,9 @@ const routes:Array<RouteRecordRaw> = [
         component: () => import('@/views/major-editor/index.vue'),
         meta: {
             requiresAuth: true,
-            title: 'vue3富文本'
+            title: 'vue3富文本',
+            icon: 'TextField24Regular',
+            desc: 'tiptap-editor-vue3'
         }
     }
 ]
