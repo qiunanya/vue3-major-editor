@@ -3,7 +3,7 @@ import App from "./App.vue";
 import ImagesViewerVue3 from "images-viewer-vue3";
 // 引入组件
 import TiptapEditorVue3 from "tiptap-editor-vue3";
-import "tiptap-editor-vue3/dist/es/css/style.css";
+import "tiptap-editor-vue3/dist/css/style.css";
 
 import router from "./router";
 import { isNavigationFailure } from "vue-router";
@@ -35,8 +35,5 @@ app.mount("#app");
 router.afterEach((to, from, failure) => {
     if (isNavigationFailure(failure)) {
         console.log("failed navigation", failure);
-    }
-
-    console.log(import.meta.env.VITE_APP_TITLE, import.meta.env.VITE_APP_ENV);
-    
+    }    
 });

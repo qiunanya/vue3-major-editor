@@ -3,7 +3,7 @@ import '@tiptap/extension-text-style'
 import BackgroundColorPopover from '@/components/color/BackgroundColorPopover.vue'
 import { Extension } from '@tiptap/core'
 import { Editor } from '@tiptap/vue-3'
-import { COLOR_DEFAULT } from '@/utils/color';
+import { COLOR_DEFAULT } from '@/utils';
 
 export type ColorOptions = {
   /**
