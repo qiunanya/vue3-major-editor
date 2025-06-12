@@ -43,6 +43,8 @@ const ExtensionTextAlign = TiptapTextAlign.extend({
             }
         }
     }
+}).configure({
+    types: ['heading','paragraph'],
 })
 
 

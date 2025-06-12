@@ -1,6 +1,6 @@
 import { Extensions, JSONContent } from '@tiptap/vue-3'
 interface EditorProps {
-    extensions?: Extensions[];
+    extensions: Array<Extensions>;
     isEnable?: boolean;
     isShowToolbar?: boolean;
     characterCount?: number
