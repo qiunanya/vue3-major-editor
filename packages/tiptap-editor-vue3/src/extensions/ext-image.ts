@@ -30,7 +30,7 @@ export type CustomImageAttrs = {
     title?: string
 }
 
-export const ExtImage = TiptapImage.extend({
+export const ExtensionImage = TiptapImage.extend({
     name: 'customizeImage',
     group: 'block',
     atom:true,
@@ -67,7 +67,7 @@ export const ExtImage = TiptapImage.extend({
                 return {
                     component: ImageIcon,
                     componentProps: {
-                        isActive: editor.isActive('customize-image'),
+                        isActive: editor.isActive('customizeImage'),
                         isReadonly: !editor.isEditable,
                         icons: 'image-icon',
                         tipText: '添加图片',

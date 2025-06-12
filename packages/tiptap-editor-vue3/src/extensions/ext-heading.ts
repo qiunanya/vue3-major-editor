@@ -1,4 +1,4 @@
-import Heading, { Level } from '@tiptap/extension-heading'
+import TiptapHeading, { Level } from '@tiptap/extension-heading'
 import HeadingPopselect from '@/components/text/HeadingPopselect.vue'
 import { Editor } from '@tiptap/vue-3'
 
@@ -17,8 +17,8 @@ function getHeading () {
     return arr
 }
 
-export const ExtHeading = Heading.extend({
-    name: 'extHeading',
+export const ExtensionHeading = TiptapHeading.extend({
+    name: 'extensionHeading',
     addOptions() {
         return {
             ...this.parent?.(),
@@ -27,7 +27,7 @@ export const ExtHeading = Heading.extend({
                 return {
                     component: HeadingPopselect,
                     componentProps: {
-                        isActive: editor.isActive('heading'),
+                        isActive: editor.isActive('extensionHeading'),
                         isReadonly: !editor.isEditable,
                         editor,
                         levels: getHeading(),

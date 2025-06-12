@@ -2,7 +2,7 @@ import type { Editor } from '@tiptap/vue-3'
 import Highlight from '@tiptap/extension-highlight'
 import ButtonIcon from '../components/ButtonIcon.vue'
 
-const ExtHighlight = Highlight.extend({
+const ExtensionHighlight = Highlight.extend({
     addOptions() {
         return {
             ...this.parent?.(),
@@ -50,4 +50,4 @@ const ExtHighlight = Highlight.extend({
 })
 
 
-export { ExtHighlight }
+export { ExtensionHighlight }

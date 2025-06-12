@@ -1,8 +1,8 @@
 import type { Editor } from '@tiptap/vue-3'
-import ExtensionCodeBlock from '@tiptap/extension-code-block'
+import TiptapCodeBlock from '@tiptap/extension-code-block'
 import ButtonIcon from '../components/ButtonIcon.vue'
 
-const ExtCodeBlock = ExtensionCodeBlock.extend({
+const ExtensionCodeBlock = TiptapCodeBlock.extend({
     addOptions() {
         return {
             ...this.parent?.(),
@@ -26,4 +26,4 @@ const ExtCodeBlock = ExtensionCodeBlock.extend({
 })
 
 
-export { ExtCodeBlock }
+export { ExtensionCodeBlock }

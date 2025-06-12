@@ -1,8 +1,8 @@
 import type { Editor } from '@tiptap/vue-3'
-import Blockquote from '@tiptap/extension-blockquote'
+import TiptapBlockquote from '@tiptap/extension-blockquote'
 import ButtonIcon from '../components/ButtonIcon.vue'
 
-const ExtBlockquote = Blockquote.extend({
+const ExtensionBlockquote = TiptapBlockquote.extend({
     addOptions() {
         return {
             ...this.parent?.(),
@@ -25,4 +25,4 @@ const ExtBlockquote = Blockquote.extend({
 })
 
 
-export { ExtBlockquote }
+export { ExtensionBlockquote }

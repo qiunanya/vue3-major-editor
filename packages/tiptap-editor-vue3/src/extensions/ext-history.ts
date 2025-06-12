@@ -1,8 +1,8 @@
 import type { Editor } from '@tiptap/vue-3'
-import ExtensionHistory from '@tiptap/extension-history'
+import TiptapHistory from '@tiptap/extension-history'
 import ButtonIcon from '../components/ButtonIcon.vue'
 
-const ExtHistory = ExtensionHistory.extend({
+const ExtensionHistory = TiptapHistory.extend({
     addOptions() {
         return {
             ...this.parent?.(),
@@ -41,4 +41,4 @@ const ExtHistory = ExtensionHistory.extend({
 })
 
 
-export { ExtHistory }
+export { ExtensionHistory }

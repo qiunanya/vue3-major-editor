@@ -1,8 +1,8 @@
 import type { Editor } from '@tiptap/vue-3'
-import ExtensionItalic from '@tiptap/extension-italic'
+import TiptapItalic from '@tiptap/extension-italic'
 import ButtonIcon from '../components/ButtonIcon.vue'
 
-const ExtItalic = ExtensionItalic.extend({
+const ExtensionItalic = TiptapItalic.extend({
     addOptions() {
         return {
             ...this.parent?.(),
@@ -26,4 +26,4 @@ const ExtItalic = ExtensionItalic.extend({
 })
 
 
-export { ExtItalic }
+export { ExtensionItalic }

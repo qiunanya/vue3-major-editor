@@ -1,8 +1,8 @@
 import type { Editor } from '@tiptap/vue-3'
-import ExtensionBold from '@tiptap/extension-bold'
+import TiptapBold from '@tiptap/extension-bold'
 import ButtonIcon from '../components/ButtonIcon.vue'
 
-const ExtBold = ExtensionBold.extend({
+const ExtensionBold = TiptapBold.extend({
     addOptions() {
         return {
             ...this.parent?.(),
@@ -26,4 +26,4 @@ const ExtBold = ExtensionBold.extend({
 })
 
 
-export { ExtBold }
+export { ExtensionBold }

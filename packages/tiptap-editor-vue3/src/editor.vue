@@ -38,6 +38,7 @@ const contents = defineModel<string>("content", {
 
 // props
 const props = withDefaults(defineProps<EditorProps>(), {
+    extensions: undefined,
     isEnable: true,
     isShowToolbar: true,
     characterCount: 10000,

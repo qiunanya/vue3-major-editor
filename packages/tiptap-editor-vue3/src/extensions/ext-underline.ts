@@ -1,8 +1,8 @@
 import type { Editor } from '@tiptap/vue-3'
-import ExtensionUnderline from '@tiptap/extension-underline'
+import TiptapUnderline from '@tiptap/extension-underline'
 import ButtonIcon from '../components/ButtonIcon.vue'
 
-const ExtUnderline = ExtensionUnderline.extend({
+const ExtensionUnderline = TiptapUnderline.extend({
     addOptions() {
         return {
             ...this.parent?.(),
@@ -26,4 +26,4 @@ const ExtUnderline = ExtensionUnderline.extend({
 })
 
 
-export { ExtUnderline }
+export { ExtensionUnderline }

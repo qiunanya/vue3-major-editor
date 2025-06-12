@@ -1,6 +1,6 @@
-import { JSONContent } from '@tiptap/vue-3'
+import { Extensions, JSONContent } from '@tiptap/vue-3'
 interface EditorProps {
-    imageInner?: boolean;
+    extensions?: Extensions[];
     isEnable?: boolean;
     isShowToolbar?: boolean;
     characterCount?: number

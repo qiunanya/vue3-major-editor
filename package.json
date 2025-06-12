@@ -63,6 +63,7 @@
         "hotkeys-js": "^3.13.7",
         "image-type": "^6.0.0",
         "lowlight": "^3.3.0",
+        "pinia": "^3.0.3",
         "sass": "^1.77.5",
         "ts-node": "^10.9.2",
         "unplugin-auto-import": "^19.2.0",

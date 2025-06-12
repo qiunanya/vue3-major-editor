@@ -36,8 +36,8 @@ declare module '@tiptap/core' {
 /**
  * This extension allows you to backgroundColor your text.
  */
-export const ExtBackgroundColor = Extension.create<ColorOptions>({
-  name: 'backgroundColor',
+export const ExtensionBackgroundColor = Extension.create<ColorOptions>({
+  name: 'extensionBackgroundColor',
 
   addOptions() {
     return {
@@ -47,7 +47,7 @@ export const ExtBackgroundColor = Extension.create<ColorOptions>({
             return {
                 component: BackgroundColorPopover,
                 componentProps: {
-                    isActive: editor.isActive('backgroundColor'),
+                    isActive: editor.isActive('extensionBackgroundColor'),
                     isReadonly: !editor.isEditable,
                     icons: 'bold-icon',
                     colors: COLOR_DEFAULT,
