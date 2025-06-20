@@ -1,3 +1,60 @@
+## vue3-tiptap-editor 
+
+vue3-tiptap-editor是基于最新tiptap框架开发的vue3富文本组件，非法内容过滤以及防止XSS攻击、插入图片、插入表格等功能。
+
+### 功能清单
+- [x] 撤回/重做"
+- [x] 清空文档
+- [x] 加粗
+- [x] 斜体
+- [x] 字体背景色和字体颜色
+- [x] 下划线
+- [x] 删除线
+- [x] 代码背景块和代码块
+- [x] 引用
+- [x] 上标和下标
+- [x] 链接
+- [x] 有序列表
+- [x] 无序列表
+- [x] 水平分割线
+- [x] 标题
+- [x] 段落间距
+- [x] 任务列表
+- [x] 插入图片
+- [x] 插入表格，表格列和行操作
+
+....待开发更多功能....
+
+
+### 安装
+```js
+pnpm add tiptap-editor-vue3
+-or-
+yarn add tiptap-editor-vue3
+-or-
+npm install tiptap-editor-vue3
+```
+
+### 配置说明
+```js
+import { createApp } from "vue";
+import App from "./App.vue";
+import router from "./router";
+// 引入组件
+import TiptapEditorVue3 from "tiptap-editor-vue3";
+import "tiptap-editor-vue3/dist/es/css/style.css";
+
+const app = createApp(App)
+app.use(TiptapEditorVue3)
+app.use(router)
+
+app.mount("#app")
+
+
+```
+### 使用组件
+
+```vue
 <template>
     <div class="app_wrapper">
         <section class="cus-header">
@@ -43,6 +100,7 @@
     const customFileUpload = ref(true)
     const isVisible = ref(false)
     const previewContent = ref('')
+    // 自定义工具栏，不需要可以不用传递参数即可显示全部工具栏
     const extensions = ref<AnyExtension[]>([ExtensionBold, ExtensionItalic])
     // 按需引入Button组件
     // import { Button } from '@majoreditor/ui'
@@ -120,16 +178,42 @@
         isVisible.value = !isVisible.value
     }
 </script>
+```
 
-<style lang="scss">
-    .app_wrapper {
-        .h2 {
-            margin: 5px 0;
-            color: #646cff;
-        }
-        .cus-header {
-            display: flex;
-            align-items: center;
-        }
-    }
-</style>
+### 组件传递参数
+
+| 参数             | 类型    | 描述                                                    |
+| ---------------- | ------- | ------------------------------------------------------- |
+| isEnable         | boolean | 启用编辑器                                              |
+| isShowToolbar    | boolean | 启用工具栏                                              |
+| characterCount   | number  | 字数提示                                                |
+| customFileUpload | boolean | 自定义上传，开启后通过onUploadImage事件监听上传文件内容 |
+| extensions      | AnyExtension[] | 自定义工具栏，比如加粗，倾斜等到                    |
+| placeholder      | string  | 输入提示文本                                            |
+
+
+### 工具栏清单
+- ExtensionHistory 撤回/重做
+- ExtensionBold  加粗
+- ExtensionItalic 倾斜
+- ExtensionStrike 删除线
+- ExtensionUnderline 下划线
+- ExtensionHighlight 高亮
+- ExtensionColor 颜色
+- ExtensionBackgroundColor 背景颜色
+- ExtensionHeading 标题
+- ExtensionTextAlign 对齐方式
+- ExtensionLineHeight 行高
+- ExtensionCode 代码背景
+- ExtensionCodeBlockLowlight 代码块
+- ExtensionSubscript 上标
+- ExtensionSuperscript 下标
+- ExtensionOrderedList 有序列表
+- ExtensionBulletList 无序列表
+- ExtensionHorizontalRule 水平线
+- ExtensionBlockquote 引用
+- ExtensionTable 表格
+- ExtensionLink 链接
+- ExtensionImage 图片
+- ExtensionTaskItem 任务列表
+- ExtensionClear 清空文档内容

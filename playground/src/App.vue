@@ -1,3 +1,9 @@
 <template>
-    <router-view style="padding: 12px;"></router-view>
+    <router-view></router-view>
 </template>
+
+<style>
+#app {
+    padding: 12px;
+}
+</style>
