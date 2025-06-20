@@ -1,13 +1,13 @@
 import { Editor, getMarkRange } from '@tiptap/core';
 import TiptapColor from '@tiptap/extension-color';
-import { COLOR_DEFAULT } from '@/utils/color';
+import { COLOR_DEFAULT } from '@/utils';
 import ColorPopover from '@/components/color/ColorPopover.vue';
 import TextStyle from '@tiptap/extension-text-style';
 import { Plugin, TextSelection, PluginKey } from '@tiptap/pm/state'
 import { EditorView } from '@tiptap/pm/view'
 
 // 访问 ProseMirror API 示例
-const ExtColor = TiptapColor.extend({
+const ExtensionColor = TiptapColor.extend({
   addOptions() {
     return {
       ...this.parent?.(),
@@ -69,4 +69,4 @@ const ExtColor = TiptapColor.extend({
   },
 });
 
-export { ExtColor };
+export { ExtensionColor };

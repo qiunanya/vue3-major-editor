@@ -52,7 +52,6 @@
 
 <script setup lang="ts" name="AddLinkButton">
 import { inject, ref } from "vue";
-import { useSelectCore } from "@/hooks/useSelect";
 import { useNaiveDiscrete } from "@/hooks/navie-ui";
 import { NModal, NInput, NTooltip, NSwitch } from "naive-ui";
 import { Editor } from "@tiptap/vue-3";

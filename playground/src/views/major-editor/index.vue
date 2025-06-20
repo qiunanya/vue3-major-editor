@@ -17,6 +17,7 @@
             ref="vue3TiptapEditorRef" 
             v-model:content="htmlContent" 
             :imageInner="imageInner"
+            :extensions="extensions"
             :isEnable="true"
             :isShowToolbar="true"
             @onUploadImage="onUploadImage">
@@ -33,12 +34,13 @@
 <script setup lang="ts">
     import { ref } from "vue";
     import { NDrawerContent, NDrawer } from "naive-ui";
-    import { Editor, EditorEvents } from "@tiptap/vue-3";
+    import { Editor, AnyExtension, ExtensionBold, ExtensionItalic } from 'tiptap-editor-vue3'
 
     // true:图片内部处理，默认转化为base64, false: 不自动转化数据，需要外部处理后添加到编辑器
     const imageInner = ref(false)
     const isVisible = ref(false)
     const previewContent = ref('')
+    const extensions = ref<AnyExtension[]>([ExtensionBold, ExtensionItalic])
     // 按需引入Button组件
     // import { Button } from '@majoreditor/ui'
 

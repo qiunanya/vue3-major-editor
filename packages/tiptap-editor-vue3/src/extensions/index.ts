@@ -1,54 +1,81 @@
-import {ExtClear} from './ext-clear'
-import {ExtHistory} from './ext-history'
-import {ExtBackgroundColor} from './ext-bgColor'
-import {ExtImage} from './ext-image'
-import {ExtLineHeight} from './ext-lineHeight'
-import {ExtHeading} from './ext-heading'
-import {ExtBold} from './ext-bold'
-import {ExtItalic} from './ext-italic'
-import {ExtStrike} from './ext-strike'
-import {ExtUnderline} from './ext-underline'
-import {ExtCode} from './ext-code'
+import {ExtensionClear} from './ext-clear'
+import {ExtensionHistory} from './ext-history'
+import {ExtensionBackgroundColor} from './ext-bgColor'
+import {ExtensionImage} from './ext-image'
+import {ExtensionLineHeight} from './ext-lineHeight'
+import {ExtensionHeading} from './ext-heading'
+import {ExtensionBold} from './ext-bold'
+import {ExtensionItalic} from './ext-italic'
+import {ExtensionStrike} from './ext-strike'
+import {ExtensionUnderline} from './ext-underline'
+import {ExtensionCode} from './ext-code'
 // ExtCodeBlockLowlight替换了ExtCodeBlock
-import {ExtCodeBlock} from './ext-code-block'
-import {ExtSubscript} from './ext-subscript'
-import {ExtSuperscript} from './ext-superscript'
-import {ExtOrderedList} from './ext-ordered-list'
-import {ExtBulletList} from './ext-bullet-list'
-import {ExtHorizontalRule} from './ext-horizontal-rule'
-import {ExtBlockquote} from './ext-blockquote'
-import {ExtHighlight} from './ext-highlight'
-import {ExtColor} from './ext-color'
-import {ExtCodeBlockLowlight} from './ext-codeBlockLowlight'
-import {ExtTable} from './ext-table'
-import {ExtLink} from './ext-link'
-import {ExtTextAlign} from './ext-textAlignment'
-import {ExtTaskItem} from './ext-task-list'
+import {ExtensionCodeBlock} from './ext-code-block'
+import {ExtensionSubscript} from './ext-subscript'
+import {ExtensionSuperscript} from './ext-superscript'
+import {ExtensionOrderedList} from './ext-ordered-list'
+import {ExtensionBulletList} from './ext-bullet-list'
+import {ExtensionHorizontalRule} from './ext-horizontal-rule'
+import {ExtensionBlockquote} from './ext-blockquote'
+import {ExtensionHighlight} from './ext-highlight'
+import {ExtensionColor} from './ext-color'
+import {ExtensionCodeBlockLowlight} from './ext-codeBlockLowlight'
+import {ExtensionTable} from './ext-table'
+import {ExtensionLink} from './ext-link'
+import {ExtensionTextAlign} from './ext-textAlignment'
+import {ExtensionTaskItem} from './ext-task-list'
+
+export * from './ext-clear'
+export * from './ext-history'
+export * from './ext-bgColor'
+export * from './ext-image'
+export * from './ext-lineHeight'
+export * from './ext-heading'
+export * from './ext-bold'
+export * from './ext-italic'
+export * from './ext-strike'
+export * from './ext-underline'
+export * from './ext-code'
+// odeBlockLowlight替换了ExtCodeBlock
+export * from './ext-code-block'
+export * from './ext-subscript'
+export * from './ext-superscript'
+export * from './ext-ordered-list'
+export * from './ext-bullet-list'
+export * from './ext-horizontal-rule'
+export * from './ext-blockquote'
+export * from './ext-highlight'
+export * from './ext-color'
+export * from './ext-codeBlockLowlight'
+export * from './ext-table'
+export * from './ext-link'
+export * from './ext-textAlignment'
+export * from './ext-task-list'
 
 export default [
-    ExtHistory,
-    ExtBold,
-    ExtItalic,
-    ExtStrike,
-    ExtUnderline,
-    ExtHighlight,
-    ExtColor,
-    ExtBackgroundColor,
-    ExtHeading,
-    ExtTextAlign,
-    ExtLineHeight,
-    ExtCode,
+    ExtensionHistory,
+    ExtensionBold,
+    ExtensionItalic,
+    ExtensionStrike,
+    ExtensionUnderline,
+    ExtensionHighlight,
+    ExtensionColor,
+    ExtensionBackgroundColor,
+    ExtensionHeading,
+    ExtensionTextAlign,
+    ExtensionLineHeight,
+    ExtensionCode,
     // ExtCodeBlock,
-    ExtCodeBlockLowlight,
-    ExtSubscript,
-    ExtSuperscript,
-    ExtOrderedList,
-    ExtBulletList,
-    ExtHorizontalRule,
-    ExtBlockquote,
-    ExtTable,
-    ExtLink,
-    ExtImage,
-    ExtTaskItem,
-    ExtClear
+    ExtensionCodeBlockLowlight,
+    ExtensionSubscript,
+    ExtensionSuperscript,
+    ExtensionOrderedList,
+    ExtensionBulletList,
+    ExtensionHorizontalRule,
+    ExtensionBlockquote,
+    ExtensionTable,
+    ExtensionLink,
+    ExtensionImage,
+    ExtensionTaskItem,
+    ExtensionClear
 ]

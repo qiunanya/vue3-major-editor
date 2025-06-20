@@ -4,8 +4,8 @@ import { Editor } from "@tiptap/vue-3";
 import { useNaiveDiscrete } from "../hooks/navie-ui"
 
 const { message, dialog } = useNaiveDiscrete()
-const ExtClear = Extension.create({
-    name: "clear",
+const ExtensionClear = Extension.create({
+    name: "extensionClear",
     addOptions() {
         return {
            ...this.parent?.(),
@@ -13,7 +13,7 @@ const ExtClear = Extension.create({
                 return {
                     component: ButtonIcon,
                     componentProps: {
-                        isActive: editor.isActive('clear'),
+                        isActive: editor.isActive('extensionClear'),
                         isReadonly: !editor.isEditable,
                         icons: 'clear-icon',
                         tipText: '清空文档',
@@ -42,4 +42,4 @@ const ExtClear = Extension.create({
     }
 });
 
-export { ExtClear }
+export { ExtensionClear }

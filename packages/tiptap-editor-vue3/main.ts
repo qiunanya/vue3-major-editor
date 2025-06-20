@@ -1,4 +1,5 @@
 import { createApp } from "vue";
+
 import App from "./App.vue";
 // 引入组件
 import EditorTiptapVue3 from "./src/index";

@@ -3,9 +3,10 @@ import App from "./App.vue";
 import ImagesViewerVue3 from 'images-viewer-vue3';
 // 引入组件
 import TiptapEditorVue3 from "tiptap-editor-vue3";
-import "tiptap-editor-vue3/dist/es/css/style.css";
+import "tiptap-editor-vue3/dist/css/style.css";
 
 import router from "./router";
+import { TextField24Regular, ImageSearch24Regular } from "@vicons/fluent"
 
 const app = createApp(App)
 
@@ -20,5 +21,6 @@ app.use(ImagesViewerVue3, {
     playSpeed: 2000, // Default 2000 ms
 })
 app.use(router)
-
+app.component('TextField24Regular', TextField24Regular)
+app.component('ImageSearch24Regular', ImageSearch24Regular)
 app.mount("#app")

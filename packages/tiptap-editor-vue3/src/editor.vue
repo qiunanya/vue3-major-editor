@@ -8,11 +8,10 @@
 </template>
 
 <script setup lang="ts" name="EditorTiptapVue3">
-import { ref, nextTick, onBeforeUnmount, provide, watch, computed } from "vue";
+import { provide, watch } from "vue";
 import CharacterCount from '@tiptap/extension-character-count'
-import StarterKit, { StarterKitOptions } from "@tiptap/starter-kit";
-import TextAlign from '@tiptap/extension-text-align';
-import { Editor, useEditor, EditorContent } from "@tiptap/vue-3";
+import StarterKit from "@tiptap/starter-kit";
+import { Editor, EditorContent, AnyExtension } from "@tiptap/vue-3";
 import Placeholder from '@tiptap/extension-placeholder';
 // 顶部工具
 import Toolkit from "./components/Toolkit.vue";
@@ -25,9 +24,6 @@ import ContextMenus from "./components/table/ContextMenu.vue";
 // 自定义扩展
 import TiptapExtensions from './extensions';
 
-// 导入props参数类型
-import { EditorProps } from './typings';
-
 // 过滤编辑器类容，防止xss攻击, 生产环境
 import DOMPurify from 'dompurify';
 
@@ -37,12 +33,31 @@ const contents = defineModel<string>("content", {
 });
 
 // props
-const props = withDefaults(defineProps<EditorProps>(), {
-    isEnable: true,
-    isShowToolbar: true,
-    characterCount: 10000,
-    customFileUpload: false,
-    placeholder: '请输入内容...'
+const props = defineProps({
+    extensions: {
+        type: Array<AnyExtension>,
+        default: []
+    },
+    isEnable: {
+        type: Boolean,
+        default: true
+    },
+    isShowToolbar: {
+        type: Boolean,
+        default: true
+    },
+    customFileUpload: {
+        type: Boolean,
+        default: false
+    },
+    characterCount: {
+        type: Number|| String,
+        default: 10000
+    },
+    placeholder: {
+        type: String,
+        default: '请输入内容...'
+    }
 })
 
 // emit
@@ -56,12 +71,12 @@ const emits = defineEmits([
     "onUploadImage",
     "update:content"
 ]);
-
+const extensionSet = props.extensions.length?props.extensions:TiptapExtensions
 const editor:Editor = new Editor({
     content: DOMPurify.sanitize(contents.value),
     editable: props.isEnable,
     extensions: [
-        ...TiptapExtensions,
+        ...extensionSet,
         StarterKit.configure({
             bold: false,
             italic: false,
@@ -73,9 +88,6 @@ const editor:Editor = new Editor({
             bulletList: false,
             horizontalRule: false,
             blockquote: false,
-        }),
-        TextAlign.configure({
-            types: ['heading','paragraph'],
         }),
         CharacterCount.configure({
           limit: props.characterCount,

@@ -1,9 +1,7 @@
 import {  h  } from "vue";
 import { Editor } from "@tiptap/core";
-import ExtensionTable from "@tiptap/extension-table";
+import TiptapTable from "@tiptap/extension-table";
 import Table from "@/components/table/Table.vue";
-import { Plugin, PluginKey } from "@tiptap/pm/state";
-import { EditorView } from "@tiptap/pm/view";
 import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
@@ -12,7 +10,7 @@ import { ITableContextMenuItem } from '@/typings/index'
 function renderCustomHeader() {
     return h('div',{ style: { fontWeight: 'bold', textAlign: 'center'}}, '操作表格')
 }
-const ExtTable = ExtensionTable.extend({
+const ExtensionTable = TiptapTable.extend({
     addOptions() {
         return {
             ...this.parent?.(),
@@ -151,4 +149,4 @@ const ExtTable = ExtensionTable.extend({
     resizable: true,
 });
 
-export { ExtTable };
+export { ExtensionTable };

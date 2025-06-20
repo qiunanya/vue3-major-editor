@@ -25,7 +25,7 @@
 </template>
 <script setup lang="ts" name="UploadImageModal">
 import { NTabs, NTabPane, NModal, NInput } from "naive-ui";
-import { useSelectCore } from "@/hooks/useSelect";
+import { useEditorCore } from "@/hooks/useEditorCore";
 import { useNaiveDiscrete } from "@/hooks/navie-ui";
 
 interface TranserType {
@@ -33,7 +33,7 @@ interface TranserType {
     formData:FormData
 }
 
-const { editor, props } = useSelectCore();
+const { editor, props } = useEditorCore();
 const { message, dialog, modal } = useNaiveDiscrete();
 
 const imageLink = ref('')

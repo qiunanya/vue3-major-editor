@@ -1,5 +1,5 @@
 import { VueNodeViewRenderer, type Editor } from '@tiptap/vue-3'
-import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
+import TiptapCodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import ButtonIcon from '../components/ButtonIcon.vue'
 import CodeBlockComponent from '@/components/CodeBlockLowlight.vue'
 import css from 'highlight.js/lib/languages/css'
@@ -17,7 +17,7 @@ lowlights.register('css', css)
 lowlights.register('js', js)
 lowlights.register('ts', ts)
 
-const ExtCodeBlockLowlight = CodeBlockLowlight.extend({
+const ExtensionCodeBlockLowlight = TiptapCodeBlockLowlight.extend({
     addOptions() {
         return {
             ...this.parent?.(),
@@ -25,7 +25,7 @@ const ExtCodeBlockLowlight = CodeBlockLowlight.extend({
                 return {
                     component: ButtonIcon,
                     componentProps: {
-                        isActive: editor.isActive('codeBlock'),
+                        isActive: editor.isActive('codeBlockLowlight'),
                         isReadonly: !editor.isEditable,
                         icons: 'code-block-icon',
                         tipText: '代码块',
@@ -44,4 +44,4 @@ const ExtCodeBlockLowlight = CodeBlockLowlight.extend({
 }).configure({lowlight:lowlights})
 
 
-export { ExtCodeBlockLowlight }
+export { ExtensionCodeBlockLowlight }

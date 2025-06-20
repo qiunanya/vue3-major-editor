@@ -1,8 +1,8 @@
 import type { Editor } from '@tiptap/vue-3'
-import ExtensionSuperscript from '@tiptap/extension-superscript'
+import TiptapSuperscript from '@tiptap/extension-superscript'
 import ButtonIcon from '../components/ButtonIcon.vue'
 
-const ExtSuperscript = ExtensionSuperscript.extend({
+const ExtensionSuperscript = TiptapSuperscript.extend({
     name: 'Superscript',
     addOptions() {
         return {
@@ -33,4 +33,4 @@ const ExtSuperscript = ExtensionSuperscript.extend({
 })
 
 
-export { ExtSuperscript }
+export { ExtensionSuperscript }

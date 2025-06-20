@@ -4,10 +4,10 @@
     "version": "1.0.0",
     "description": "A vue3 high quality rich text editor",
     "type": "module",
-    "main": "./dist/lib/index.cjs",
-    "module": "./dist/es/index.js",
-    "types": "./dist/es/index.d.ts",
-    "style": "./dist/es/css/style.css",
+    "main": "./dist/tiptap-editor-vue3.umd.cjs",
+    "module": "./dist/tiptap-editor-vue3.js",
+    "types": "./dist/index.d.ts",
+    "style": "./dist/css/style.css",
     "scripts": {
         "dev": "vite",
         "build": "pnpm run clean && vite build",
@@ -27,14 +27,14 @@
     },
     "exports": {
         ".": {
-            "types": "./dist/es/index.d.ts",
-            "import": "./dist/es/index.js",
-            "require": "./dist/lib/index.cjs"
+            "types": "./dist/index.d.ts",
+            "import": "./dist/tiptap-editor-vue3.js",
+            "require": "./dist/tiptap-editor-vue3.umd.cjs"
         },
-        "./dist/es/css/style.css": "./dist/es/css/style.css"
+        "./dist/css/style.css": "./dist/css/style.css"
     },
     "files": [
-        "dist",
+        "dist/*",
         "umds",
         "LICENSE",
         "README.md",

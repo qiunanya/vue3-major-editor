@@ -13,7 +13,7 @@
         v-bind="item.componentProps" 
         :is="item.component" 
         :key="index"
-         @onUploadImageCallBack="onUploadImageCallBack">
+        @onUploadImageCallBack="onUploadImageCallBack">
     </component>
     <button class="toolbar-icon--btn" data-editor-toolbar-btn="true">
         <span style="color: var(--theme-color);font-weight: bold;">{{ editor.storage.characterCount.characters()}}</span>

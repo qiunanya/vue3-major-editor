@@ -1,5 +1,5 @@
 import type { Editor } from '@tiptap/vue-3'
-import TextAlign from '@tiptap/extension-text-align'
+import TiptapTextAlign from '@tiptap/extension-text-align'
 import TextAlignPopselect from '@/components/text/TextAlignPopselect.vue'
 
 const alignList = [
@@ -21,8 +21,8 @@ const alignList = [
     },
 ]
 
-const ExtTextAlign = TextAlign.extend({
-    name: 'extTextAlign',
+const ExtensionTextAlign = TiptapTextAlign.extend({
+    name: 'extensionTextAlign',
     addOptions() {
         return {
             ...this.parent?.(),
@@ -30,7 +30,7 @@ const ExtTextAlign = TextAlign.extend({
                 return {
                     component: TextAlignPopselect,
                     componentProps: {
-                        isActive: editor.isActive('extTextAlign'),
+                        isActive: editor.isActive('extensionTextAlign'),
                         isReadonly: !editor.isEditable,
                         editor,
                         alignments: alignList,
@@ -43,7 +43,9 @@ const ExtTextAlign = TextAlign.extend({
             }
         }
     }
+}).configure({
+    types: ['heading','paragraph'],
 })
 
 
-export { ExtTextAlign }
+export { ExtensionTextAlign }

@@ -1,29 +1,26 @@
 import TiptapEditorVue3 from "./editor.vue";
 import { App } from 'vue';
-import { Editor, JSONContent } from "@tiptap/vue-3";
 import { HTMLVue3TiptapEditorElement } from './typings'
 import Icons from './icons'
 
 export default function install(app:App) {
-    // 这里可以注册指令，因为App对象
-    // if (config) {
-    //     viewerCore.setConfigOptions(config as ImageViewerType)
-    // }
-
-    // // console.log(app, config, 'install');
-    // console.log(`%cimages-viewer-vue3_V${versions}`, "color: #eee;background:#646cff;padding:2px 5px;border-radius:4px;")
-    // app.directive("image-viewer", VImageViewer)
-    // app.directive("lazy-image", LazyLoadDirective)
+    // console.log(`%cTiptapEditorVue3_V${versions}`, "color: #eee;background:#646cff;padding:2px 5px;border-radius:4px;")
     app.component('TiptapEditorVue3', TiptapEditorVue3)
     Icons(app)
-    // app.config.globalProperties.$imageViewerApi = imageViewerApi
 }
+
+export * from './extensions'
 
 export { 
     TiptapEditorVue3,
-    Editor,
 }
+
+export * from '@tiptap/vue-3'
+export type * from '@tiptap/vue-3'
+
+// export * from '@tiptap/core'
+// export type * from '@tiptap/core'
+
 export type {
-    HTMLVue3TiptapEditorElement,
-    JSONContent
+    HTMLVue3TiptapEditorElement
 }

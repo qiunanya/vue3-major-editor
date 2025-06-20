@@ -1,7 +1,6 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import dts from "vite-plugin-dts";
-import VitePluginStyleInject from 'vite-plugin-style-inject';
 import path from "path";
 import svgLoader from 'vite-svg-loader'
 import { PreRenderedAsset} from 'rollup'
@@ -10,14 +9,15 @@ import AutoImport from 'unplugin-auto-import/vite'
 // 统一处理所有输出格式的资源配置
 const assetFileNames = (chunkInfo:PreRenderedAsset) => {
     return chunkInfo.names.some(e => e.endsWith('.css')) ? 'css/style.css' : 'assets/[name]-[hash][extname]';
-};
+}
+
 export default defineConfig({
     plugins: [
         vue(),
         svgLoader(),
         dts({
-            outDir: ['dist/es', 'dist/lib'],
-            include: ["src/**/*.ts", "src/**/*.tsx"],
+            include: ["src"],
+            insertTypesEntry: true,
             rollupTypes: false,
             exclude: ['main.ts']
         }),
@@ -30,7 +30,6 @@ export default defineConfig({
                 /\.md$/, // .md
             ],
         })
-        // VitePluginStyleInject()
     ],
     server: {
         port: 3001,
@@ -46,33 +45,24 @@ export default defineConfig({
         ]
     },
     build: {
+        minify: 'esbuild',
         rollupOptions: {
             external: ['vue'],
-            output: [
-                {
-                    format: 'es',
-                    dir: 'dist/es',
-                    entryFileNames: '[name].js',
-                    preserveModules: true,
-                    preserveModulesRoot: 'src',
-                    assetFileNames
-                },
-                {
-                    format: 'cjs',
-                    dir: 'dist/lib',
-                    entryFileNames: '[name].js',
-                    preserveModules: true,
-                    preserveModulesRoot: 'src',
-                    exports: 'named',
-                    assetFileNames
+            output: {
+                exports: 'named',
+                inlineDynamicImports: true,
+                assetFileNames,
+                globals: {
+                    vue: 'vue'
                 }
-            ]
+            }
         },
         lib: {
             entry: "src/index.ts",
-            name: "editor-tiptap-vue3",
-            // fileName: 'index',
-            // formats:['es','cjs']
+            name: "TiptapEditorVue3",
+            fileName: 'tiptap-editor-vue3',
+            // formats:['es'],
+            
         }
     },
 });

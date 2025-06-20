@@ -1,8 +1,8 @@
 import type { Editor } from '@tiptap/vue-3'
-import ExtensionStrike from '@tiptap/extension-strike'
+import TiptapStrike from '@tiptap/extension-strike'
 import ButtonIcon from '../components/ButtonIcon.vue'
 
-const ExtStrike = ExtensionStrike.extend({
+const ExtensionStrike = TiptapStrike.extend({
     addOptions() {
         return {
             ...this.parent?.(),
@@ -26,4 +26,4 @@ const ExtStrike = ExtensionStrike.extend({
 })
 
 
-export { ExtStrike }
+export { ExtensionStrike }
