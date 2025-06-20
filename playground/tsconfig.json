@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "baseUrl": ".",
         "jsx": "preserve", // jsx 不转
         "strict": true,
         "target": "ES2015", // 遵循es5版本
@@ -10,10 +11,6 @@
         "noImplicitAny": true, // 禁止使用any类型
         "strictNullChecks": true, // 检查null和undefined类型
         "lib": ["esnext", "dom"], // 编译时用的库
-        "baseUrl": "./",
-        "paths": {
-            "@/*":["./src/*"]
-        }
     },
     "include": [
         "src/**/*.ts",

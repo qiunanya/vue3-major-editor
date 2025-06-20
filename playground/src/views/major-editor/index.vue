@@ -34,7 +34,7 @@
 <script setup lang="ts">
     import { ref } from "vue";
     import { NDrawerContent, NDrawer } from "naive-ui";
-    import { Editor } from "tiptap-editor-vue3"
+    import { AnyExtension, Editor, ExtensionBold, ExtensionItalic } from "tiptap-editor-vue3"
     import { useRouter } from 'vue-router'
 
     const router = useRouter();
@@ -42,6 +42,7 @@
     const customFileUpload = ref(true)
     const isVisible = ref(false)
     const previewContent = ref('')
+    const extensions = ref<AnyExtension[]>([ExtensionBold, ExtensionItalic])
     // 按需引入Button组件
     // import { Button } from '@majoreditor/ui'
 
