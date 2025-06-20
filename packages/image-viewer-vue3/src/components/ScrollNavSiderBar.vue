@@ -37,7 +37,6 @@
 import type { Ref, PropType } from 'vue'
 import { useVirtualList } from '@vueuse/core'
 import { computed, ref, nextTick, inject, watch } from 'vue'
-import vLazyImage from '../directive/v-lazy-image'
 import NavLoading from './NavLoading.vue'
 import { NavImageItemType } from '../types/image-viewer'
 

@@ -19,7 +19,6 @@
             v-model:content="htmlContent" 
             :customFileUpload="customFileUpload"
             :isEnable="true"
-            :extensions="extensions"
             :isShowToolbar="true"
             @onUploadImage="onUploadImage">
         </TiptapEditorVue3>
